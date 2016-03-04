@@ -2,15 +2,25 @@
   "use strict";
   if (navigator.cookies) return;
   class CookieJar {
-    constructor(document, defSecure, defReadPath) {
+    constructor = (document, defSecure, defReadPath) => {
       this.doc_ = document;
       this.defSecure_ = defSecure;
       this.defReadPath_ = defReadPath;
     }
-    has(name, path) {
-      return this.getAll(name, path).then(x=>x.length);
-    }
-    get(name, path) {
+    readAllAsString = () => new Promise((ok, fail) => ok(this.doc_.cookie));
+    writeAsString = (setCookieString) => new Promise((ok, fail) => {
+      this.doc_.cookie = setCookieString;
+      ok();
+    });
+    has = (name, path) => this.readAll(name, path).then(allValues => !!allValues.length);
+    read = (name, path) => this.readAll(name, path).then(allCookies => {
+      if (name != null) return allCookies[0];
+      return allCookies.reduce((r,nc) => {
+        if (!r.hasOwnProperty(nc.name)) r[nc.name] = nc.value;
+        return r;
+      }, {});
+    });
+    readAll = (name, path) => new Promise((ok, fail) => {
       if (path != null && path !== this.defReadPath_) {
         // TODO: iframe with unpredictable long pathname inside
         // requested path, maybe by appending as many
@@ -18,49 +28,33 @@
         // in the URL
         throw new Error('Cannot read cookies from requested path ' + JSON.stringify(path) + ' from path ' + JSON.stringify(this.defReadPath_) + ': not yet implemented.');
       }
-      return this.getAll(name, path).then(allCookies => {
-        if (name != null) return allCookies[0];
-        return allCookies.reduce((r,nc) => {
-          if (!r.hasOwnProperty(nc.name)) r[nc.name] = nc.value;
-          return r;
-        }, {});
-      });
-    }
-    getAll(name, path) {
-      if (name != null) name = String(name);
-      if (name != null && name.indexOf(';') !== -1) throw new Error('Character ";" is not allowed in cookie name');
-      if (name != null && name.indexOf('=') !== -1) throw new Error('Character "=" is not allowed in cookie name');
-      if (name && name.match(/[()<>@,;:\\""\/\[\]?={} \0-\x1f\x7f]|[^\x21-\x7e]/)) {
-        // Does not match document.cookie behavior!
-        throw new Error('Unsupported character in cookie name');
-      }
-      return new Promise((ok, fail) => {
-        let allValues = [];
-        try {
-          let jar = String(document.cookie || '');
-          for (let i = 0, j = jar.length, k = jar.indexOf(';');
-               k = (k == -1) ? j : k, i < j;
-               i = k + 1 + (jar[k + 1] == ' ' ? 1 : 0), k = jar.indexOf(';', i)) {
-            let nv = jar.substr(i, k - i), c = nv.indexOf('=');
-            if (c !== -1) {
-              let n = nv.substr(0, c);
-              if (name == null || name === n) {
-                let v = nv.substr(c + 1);
-                if (name == null) allValues.push({name: n, value: v});
-                else allValues.push(v);
-              }
-            }
-          }
-          ok(allValues);
-        } catch (x) {
-          fail(x);
+      if (name != null) {
+        name = String(name || '');
+        if (name.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie name');
+        if (name.indexOf('=') !== -1) throw new SyntaxError('Character "=" is not allowed in cookie name');
+        if (name.match(/[()<>@,;:\\""\/\[\]?={} \0-\x1f\x7f]|[^\x21-\x7e]/)) {
+          // Does not match document.cookie behavior!
+          throw new SyntaxError('Unsupported character in cookie name');
         }
+      }
+      return this.readAllAsString().then(jar => {
+        let allValues = [];
+        for (let i = 0, j = jar.length, k = jar.indexOf(';');
+             k = (k == -1) ? j : k, i < j;
+             i = k + 1 + (jar[k + 1] == ' ' ? 1 : 0), k = jar.indexOf(';', i)) {
+          let nv = jar.substr(i, k - i), c = nv.indexOf('=');
+          let n = (c === -1) ? null : nv.substr(0, c);
+          if (name == null || name === n) {
+            let v = nv.substr(c + 1);
+            if (name == null) allValues.push({name: n, value: v});
+            else allValues.push(v);
+          }
+        }
+        ok(allValues);
       });
-    }
-    delete(name, options) {
-      return this.set(name, undefined, options);
-    }
-    set(name, value, options) {
+    });
+    delete = (name, options) => this.set(name, undefined, options);
+    write = (name, value, options) => new Promise((ok, fail) => {
       name = String(name || '') || undefined;
       if (!name) throw new Error('Cookie name is required');
       if (name.match(/[()<>@,;:\\""\/\[\]?={} \0-\x1f\x7f]|[^\x21-\x7e]/)) {
@@ -110,16 +104,8 @@
         if (v != null) setCookieParts.push('=', v);
       }
       let setCookie = setCookieParts.join('');
-      return new Promise((ok, fail) => {
-        try {
-	  console.log('Set-Cookie: %s', setCookie);
-          document.cookie = setCookie;
-          ok();
-        } catch(x) {
-          fail(x);
-        }
-      });
-    }
+      return this.writeAsString(setCookie);
+    })
   };
   navigator.cookies = new CookieJar(self.document, location.protocol === 'https:', String(location.pathname.replace(/[^\/]*$/, '')));
 })();
