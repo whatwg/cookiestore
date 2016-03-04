@@ -7,105 +7,122 @@
       this.defSecure_ = defSecure;
       this.defReadPath_ = defReadPath;
     }
-    readAllAsString = () => new Promise((ok, fail) => ok(this.doc_.cookie));
-    writeAsString = (setCookieString) => new Promise((ok, fail) => {
-      this.doc_.cookie = setCookieString;
-      ok();
-    });
-    has = (name, path) => this.readAll(name, path).then(allValues => !!allValues.length);
-    read = (name, path) => this.readAll(name, path).then(allCookies => {
-      if (name != null) return allCookies[0];
-      return allCookies.reduce((r,nc) => {
-        if (!r.hasOwnProperty(nc.name)) r[nc.name] = nc.value;
-        return r;
-      }, {});
-    });
-    readAll = (name, path) => new Promise((ok, fail) => {
-      if (path != null && path !== this.defReadPath_) {
-        // TODO: iframe with unpredictable long pathname inside
-        // requested path, maybe by appending as many
-        // randomly-selected '$' and ':' as needed to reach 2083 chars
-        // in the URL
-        throw new Error('Cannot read cookies from requested path ' + JSON.stringify(path) + ' from path ' + JSON.stringify(this.defReadPath_) + ': not yet implemented.');
-      }
-      if (name != null) {
-        name = String(name || '');
-        if (name.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie name');
-        if (name.indexOf('=') !== -1) throw new SyntaxError('Character "=" is not allowed in cookie name');
-        if (name.match(/[()<>@,;:\\""\/\[\]?={} \0-\x1f\x7f]|[^\x21-\x7e]/)) {
-          // Does not match document.cookie behavior!
-          throw new SyntaxError('Unsupported character in cookie name');
+    // API level 1: document.cookie async, anything goes
+    readAllAsString() {
+      return new Promise((ok, fail) => ok(this.doc_.cookie));
+    }
+    writeAsString(setCookieString) {
+      return new Promise((ok, fail) => {
+        this.doc_.cookie = setCookieString;
+        ok();
+      });
+    }
+    // API level 2: structure and some enforcement, implemented in terms of API level 1
+    readAll(name, path) {
+      return new Promise((ok, fail) => {
+        if (path != null && path !== this.defReadPath_) {
+          // TODO: iframe with unpredictable long pathname inside
+          // requested path, maybe by appending as many
+          // randomly-selected '$' and ':' as needed to reach 2083 chars
+          // in the URL
+          throw new Error('Cannot read cookies from requested path ' + JSON.stringify(path) + ' from path ' + JSON.stringify(this.defReadPath_) + ': not yet implemented.');
         }
-      }
-      return this.readAllAsString().then(jar => {
-        let allValues = [];
-        for (let i = 0, j = jar.length, k = jar.indexOf(';');
-             k = (k == -1) ? j : k, i < j;
-             i = k + 1 + (jar[k + 1] == ' ' ? 1 : 0), k = jar.indexOf(';', i)) {
-          let nv = jar.substr(i, k - i), c = nv.indexOf('=');
-          let n = (c === -1) ? null : nv.substr(0, c);
-          if (name == null || name === n) {
-            let v = nv.substr(c + 1);
-            if (name == null) allValues.push({name: n, value: v});
-            else allValues.push(v);
+        if (name != null) {
+          name = String(name || '');
+          if (name.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie name');
+          if (name.indexOf('=') !== -1) throw new SyntaxError('Character "=" is not allowed in cookie name');
+          if (name.match(/[()<>@,;:\\""\/\[\]?={} \0-\x1f\x7f]|[^\x21-\x7e]/)) {
+            // Does not match document.cookie behavior!
+            throw new SyntaxError('Unsupported character in cookie name');
           }
         }
-        ok(allValues);
+        return this.readAllAsString().then(jar => {
+          let allValues = [];
+          for (let i = 0, j = jar.length, k = jar.indexOf(';');
+               k = (k == -1) ? j : k, i < j;
+               i = k + 1 + (jar[k + 1] == ' ' ? 1 : 0), k = jar.indexOf(';', i)) {
+            let nv = jar.substr(i, k - i), c = nv.indexOf('=');
+            let n = (c === -1) ? null : nv.substr(0, c);
+            if (name == null || name === n) {
+              let v = nv.substr(c + 1);
+              if (name == null) allValues.push({name: n, value: v});
+              else allValues.push(v);
+            }
+          }
+          ok(allValues);
+        });
       });
-    });
-    delete = (name, options) => this.set(name, undefined, options);
-    write = (name, value, options) => new Promise((ok, fail) => {
-      name = String(name || '') || undefined;
-      if (!name) throw new Error('Cookie name is required');
-      if (name.match(/[()<>@,;:\\""\/\[\]?={} \0-\x1f\x7f]|[^\x21-\x7e]/)) {
-        // Does not match document.cookie behavior!
-        throw new Error('Unsupported character in cookie name');
-      }
-      options = options || {};
-      let expires = String(options.expires || '') || undefined;
-      if (expires && expires.indexOf(';') !== -1) throw new Error('Character ";" is not allowed in cookie "expires" attribute');
-      let maxAge = options.maxAge;
-      if (maxAge != null) maxAge = maxAge | 0;
-      let domain = String(options.domain || '') || undefined;
-      if (domain && domain.indexOf(';') !== -1) throw new Error('Character ";" is not allowed in cookie "domain" attribute');
-      let path = String(options.path || '/');
-      if (path && path.indexOf(';') !== -1) throw new Error('Character ";" is not allowed in cookie "path" attribute');
-      let secure = options.secure;
-      if (secure == null) secure = this.defSecure_;
-      secure = !!secure;
-      let httpOnly = !!options.httpOnly;
-      if (value == null && maxAge == null && expires == null) maxAge = 0;
-      value = String(value || '');
-      if (value.match(/[^\x2D-\x3A\x21\x23-\x2B\x3C-\x5B\x5D-\x7E]/)) {
-        // Does not match document.cookie behavior!
-        throw new Error('Unsupported character in cookie value');
-      }
-      let setCookieParts = [name, '=', value];
-      if (domain != null) setCookieParts.push('; domain=', domain);
-      if (path != null) setCookieParts.push('; path=', path);
-      if (expires != null) setCookieParts.push('; expires=', expires);
-      if (maxAge != null) setCookieParts.push('; max-age=', maxAge);
-      if (secure) setCookieParts.push('; secure');
-      if (httpOnly) setCookieParts.push('; httpOnly');
-      for (let k in options) {
-        if (!Object.prototype.hasOwnProperty.call(options, k)) continue;
-        let v = options[k];
-        if (typeof(v) === 'function') continue;
-        if (k.indexOf(';') != -1) throw new Error('Character ";" is not allowed in cookie extended attribute name: ' + JSON.stringify(k));
-        if (k.indexOf('=') != -1) throw new Error('Character "=" is not allowed in cookie extended attribute name: ' + JSON.stringify(k));
-        if (k !== k.replace(/^[ \t]*([^ \t](.*[^ \t])?)\s*$/, '$1')) throw new Error('Cookie extended attribute name cannot begin or end with whitespace');
-        let ck = k.replace(/-([a-z])/g, x => x[1].toUpperCase());
-        if (k != ck) throw new Error('Use camel-case in attribute names: ' + JSON.stringify(k));
-        if (k.match(/^expires|maxAge|domain|path|secure|httpOnly$/)) continue;
-        if (v != null) v = String(v);
-        if (v && v.indexOf(';') != -1) throw new Error('Character ";" is not allowed in cookie extended attribute ' + JSON.stringify(k) + ' value: ' + JSON.stringify(v));
-        if (v && v !== v.replace(/^[ \t]*([^ \t](.*[^ \t])?)\s*$/, '$1')) throw new Error('Cookie extended attribute value cannot begin or end with whitespace');
-        setCookieParts.push('; ', k);
-        if (v != null) setCookieParts.push('=', v);
-      }
-      let setCookie = setCookieParts.join('');
-      return this.writeAsString(setCookie);
-    })
+    }
+    write(name, value, options) {
+      return new Promise((ok, fail) => {
+        name = String(name || '') || undefined;
+        if (!name) throw new Error('Cookie name is required');
+        if (name.match(/[()<>@,;:\\""\/\[\]?={} \0-\x1f\x7f]|[^\x21-\x7e]/)) {
+          // Does not match document.cookie behavior!
+          throw new Error('Unsupported character in cookie name');
+        }
+        options = options || {};
+        let expires = String(options.expires || '') || undefined;
+        if (expires && expires.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie "expires" attribute');
+        let maxAge = options.maxAge;
+        if (maxAge != null) maxAge = maxAge | 0;
+        let domain = String(options.domain || '') || undefined;
+        if (domain && domain.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie "domain" attribute');
+        let path = String(options.path || '/');
+        if (path && path.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie "path" attribute');
+        let secure = options.secure;
+        if (secure == null) secure = this.defSecure_;
+        secure = !!secure;
+        let httpOnly = !!options.httpOnly;
+        if (value == null && maxAge == null && expires == null) maxAge = 0;
+        value = String(value || '');
+        if (value.match(/[^\x2D-\x3A\x21\x23-\x2B\x3C-\x5B\x5D-\x7E]/)) {
+          // Does not match document.cookie behavior!
+          throw new Error('Unsupported character in cookie value');
+        }
+        let setCookieParts = [name, '=', value];
+        if (domain != null) setCookieParts.push('; domain=', domain);
+        if (path != null) setCookieParts.push('; path=', path);
+        if (expires != null) setCookieParts.push('; expires=', expires);
+        if (maxAge != null) setCookieParts.push('; max-age=', maxAge);
+        if (secure) setCookieParts.push('; secure');
+        if (httpOnly) setCookieParts.push('; httpOnly');
+        for (let k in options) {
+          if (!Object.prototype.hasOwnProperty.call(options, k)) continue;
+          let v = options[k];
+          if (typeof(v) === 'function') continue;
+          if (k.indexOf(';') != -1) throw new SyntaxError('Character ";" is not allowed in cookie extended attribute name: ' + JSON.stringify(k));
+          if (k.indexOf('=') != -1) throw new SyntaxError('Character "=" is not allowed in cookie extended attribute name: ' + JSON.stringify(k));
+          if (k !== k.replace(/^[ \t]*([^ \t](.*[^ \t])?)\s*$/, '$1')) throw new SyntaxError('Cookie extended attribute name cannot begin or end with whitespace');
+          let ck = k.replace(/-([a-z])/g, x => x[1].toUpperCase());
+          if (k != ck) throw new SyntaxError('Use camel-case in attribute names: ' + JSON.stringify(k));
+          if (k.match(/^expires|maxAge|domain|path|secure|httpOnly$/)) continue;
+          if (v != null) v = String(v);
+          if (v && v.indexOf(';') != -1) throw new SyntaxError('Character ";" is not allowed in cookie extended attribute ' + JSON.stringify(k) + ' value: ' + JSON.stringify(v));
+          if (v && v !== v.replace(/^[ \t]*([^ \t](.*[^ \t])?)\s*$/, '$1')) throw new SyntaxError('Cookie extended attribute value cannot begin or end with whitespace');
+          setCookieParts.push('; ', k);
+          if (v != null) setCookieParts.push('=', v);
+        }
+        let setCookie = setCookieParts.join('');
+        return this.writeAsString(setCookie);
+      });
+    }
+    // Sugar
+    has(name, path) {
+      return this.readAll(name, path).then(allValues => !!allValues.length);
+    }
+    read(name, path) {
+      return this.readAll(name, path).then(allCookies => {
+        if (name != null) return allCookies[0];
+        return allCookies.reduce((r,nc) => {
+          if (!r.hasOwnProperty(nc.name)) r[nc.name] = nc.value;
+          return r;
+        }, {});
+      });
+    }
+    delete(name, options) {
+      return this.set(name, undefined, options);
+    }
   };
   navigator.cookies = new CookieJar(self.document, location.protocol === 'https:', String(location.pathname.replace(/[^\/]*$/, '')));
 })();
