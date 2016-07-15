@@ -71,7 +71,7 @@ This API adopts the interpretation of Max-Age=0 common to most modern browsers.
 
 ## Using the async cookies API
 
-*Note:* This is largely inspired by (@esprehn)'s [API sketch](https://github.com/bsittler/async-cookies-api/issues/14)
+*Note:* This is largely inspired by the [API sketch](https://github.com/bsittler/async-cookies-api/issues/14)
 
 ### Reading
 
