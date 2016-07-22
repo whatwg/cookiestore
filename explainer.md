@@ -367,7 +367,7 @@ This API may have the unintended side-effect of making cookies easier to use and
 
 ### Surprises
 
-Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from non-script contexts) may be quite surprising from a web security standpoint.
+Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.
 
 ### Prefixes
 
