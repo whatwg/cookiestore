@@ -12,8 +12,8 @@ This proposal outlines an asynchronous API using Promises for the following cook
    [ServiceWorker](https://github.com/slightlyoff/ServiceWorker) contexts
  * monitor script-visible cookies for changes
    * ... using `CookieObserver` in long-running script contexts (e.g. `document`)
-   * ... using a `cookiechange` event
-   in ephemeral script contexts ([ServiceWorker](https://github.com/slightlyoff/ServiceWorker))
+   * ... using `CookieChangeEvent` after registration during the `InstallEvent`
+   in ephemeral [ServiceWorker](https://github.com/slightlyoff/ServiceWorker) contexts
    * ... again including for script-supplied in-scope request paths
    in [ServiceWorker](https://github.com/slightlyoff/ServiceWorker) contexts
 
