@@ -290,9 +290,13 @@ A ServiceWorker does not have a persistent JavaScript execution context, so a di
   // that if null or omitted.
   event.registerCookieChangeInterest(cookieStore); // all cookies, url === SW scope url
   // Call it more than once to register additional interests:
-  event.registerCookieChangeInterest(cookieStore, '/sw-scope/auth/', [{name: '__Host-AUTHTOKEN', matchType: 'prefix'}]);
+  let url = '/sw-scope/auth/';
+  let interests = [{name: '__Host-AUTHTOKEN', matchType: 'prefix'}];
+  event.registerCookieChangeInterest(cookieStore, url, interests);
   ...
 ```
+
+*Note:* cookie changes which occur at paths not yet known during handling of the `InstallEvent` cannot be monitored in a ServiceWorker using this API.
 
 You also need to be sure to handle the `CookieChangeEvent`:
 
