@@ -31,24 +31,28 @@ A well-designed and opinionated API may actually make cookies easier to deal wit
 scripts, with the potential effect of reducing their accidental misuse. An efficient monitoring API, in particular,
 can be used to replace power-hungry polling cookie scanners.
 
+The API must interoperate well enough with existing cookie APIs (HTTP-level, HTML-level and script-level) that it can be adopted incrementally by a large or complex website.
+
 ### Opinions
 
 This API defaults cookie paths to '/' for write and delete operations. The implicit relative path-scoping of cookies
-to `.` has caused a lot of additional complexity for relatively little gain given their security equivalence under the
+to '.' has caused a lot of additional complexity for relatively little gain given their security equivalence under the
 same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain.
 
-This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional
-leakage to unsecured connections on the same domain.
+This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain.
 
 This API defaults cookies to "Domain"-less, which in conjunction with "Secure" provides origin-scoped cookie
 behavior in most modern browsers.
 
 Serialization of expiration times for non-session cookies in a special cookie-specific format has proven cumbersome,
-so this API allows JavaScript Date objects to be used instead. The inconsistently-implemented Max-Age parameter is not
-implemented.
+so this API allows JavaScript Date objects and numeric timestamps (milliseconds since the beginning of the Unix epoch) to be used instead. The inconsistently-implemented Max-Age parameter is not exposed, although similar functionality is available for the specific case of expiring a cookie.
 
 Name-only or value-only cookies (i.e. those with no `=` in their HTTP Cookie header serialization) are not settable
-through this API and will not be included in results returned from it.
+through this API and will not be included in results returned from it unless the user agent normalizes them to include a `=`.
+
+Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API mandates UTF-8 interpretation for cookies read or written by this API.
+
+Use of cookie-change-driven scripts has been hampered by the absence of a power-efficient (non-polling) API for this. This API provides observers for efficient monitoring in document contexts and interest registration for efficient monitoring in ServiceWorker contexts.
 
 ### Compatiblity
 
@@ -61,11 +65,11 @@ for the current state of this convergence.
 
 Differences across browsers in how bytes outside the printable-ASCII subset are interpreted has led to
 long-lasting user- and developer-visible incompatibilities across browsers making internationalized use of cookies
-needlessly cumbersome. This API requires on UTF-8 interpretation for cookie data and `USVString` for the script interface,
-with the additional note that subsequent uses of document.cookie to read the cookie or `document.cookie` or
-`<meta http-equiv=set-cookie>` to update it will also use a UTF-8 interpretation of the cookie data. In practice this
-will likely require changes in the behavior of `WinINet`-based user agents but should bring their behavior into concordance
-with most modern user agents.
+needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and uses `USVString` for the script interface,
+with the additional side-effects that subsequent uses of `document.cookie` to read a cookie read or written through this interface and subsequent uses of `document.cookie` or
+`<meta http-equiv=set-cookie>` to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
+will change the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance
+with other modern user agents.
 
 ## Using the async cookies API
 
@@ -78,7 +82,7 @@ of the ServiceWorker's registered scope. In a document it defaults to the path o
 changes from `replaceState` or `document.domain`.
 
 ```js
-async function getOneSimpleCookie() {
+async function getOneSimpleOriginCookie() {
   let cookie = await cookieStore.get('__Host-COOKIENAME');
   console.log(cookie ? ('Current value: ' + cookie.value) : 'Not set');
 }
@@ -108,7 +112,7 @@ async function countCookies() {
 Sometimes an expected cookie is known by a prefix rather than by an exact name:
 
 ```js
-async function countMatchingCookies() {
+async function countMatchingSimpleOriginCookies() {
   let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'prefix'});
   console.log('How many matching cookies? %d', cookieList.length);
   cookieList.forEach(cookie => console.log('Matching cookie %s has value %o', cookie.name, cookie.value));
@@ -120,7 +124,7 @@ async function countMatchingCookies() {
 You can set a cookie too:
 
 ```js
-async function setOneSimpleCookie() {
+async function setOneSimpleOriginSessionCookie() {
   await cookieStore.set('__Host-COOKIENAME', 'cookie-value');
   console.log('Set!');
 }
@@ -130,10 +134,10 @@ That defaults to path `/` and *implicit* domain, and defaults to a Secure-if-htt
 will be visible to scripts. You can override these defaults if needed:
 
 ```js
-async function setOneDayCookieWithDate() {
+async function setOneDaySecureCookieWithDate() {
   // one day ahead, ignoring a possible leap-second
   let inTwentyFourHours = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  await cookieStore.set('__Secure-', 'cookie-value', {
+  await cookieStore.set('__Secure-COOKIENAME', 'cookie-value', {
       path: '/cgi-bin/',
       expires: inTwentyFourHours,
       secure: true,
@@ -147,10 +151,10 @@ async function setOneDayCookieWithDate() {
 Of course the numeric form (milliseconds since the beginning of 1970 UTC) works too:
 
 ```js
-async function setOneDayCookieWithMillisecondsSinceEpoch() {
+async function setOneDayUnsecuredCookieWithMillisecondsSinceEpoch() {
   // one day ahead, ignoring a possible leap-second
   let inTwentyFourHours = Date.now() + 24 * 60 * 60 * 1000;
-  await cookieStore.set('COOKIENAME', 'cookie-value', {
+  await cookieStore.set('LEGACYCOOKIENAME', 'cookie-value', {
       path: '/cgi-bin/',
       expires: inTwentyFourHours,
       secure: false,
@@ -164,7 +168,7 @@ async function setOneDayCookieWithMillisecondsSinceEpoch() {
 Sometimes an expiration date comes from existing script it's not easy or convenient to replace, though:
 
 ```js
-async function setCookieWithHttpLikeExpirationString() {
+async function setSecureCookieWithHttpLikeExpirationString() {
   await cookieStore.set('__Secure-COOKIENAME', 'cookie-value', {
       path: '/cgi-bin/',
       expires: 'Mon, 07 Jun 2021 07:07:07 GMT',
@@ -184,7 +188,7 @@ Clearing (deleting) a cookie is accomplished by expiration, that is by replacing
 an expiration in the past:
 
 ```js
-async function setExpiredCookieWithDomainPathAndFallbackValue() {
+async function setExpiredSecureCookieWithDomainPathAndFallbackValue() {
   let theVeryRecentPast = Date.now();
   let expiredCookieSentinelValue = 'EXPIRED';
   await cookieStore.set('__Secure-COOKIENAME', expiredCookieSentinelValue, {
@@ -203,7 +207,7 @@ In this case the cookie's value is not important unless a clock is somehow re-se
 A syntactic shorthand is also provided which is equivalent to the above except that the clock's accuracy and monotonicity becomes irrelevant:
 
 ```js
-async function deleteSimpleCookie() {
+async function deleteSimpleOriginCookie() {
   await cookieStore.delete('__Host-COOKIENAME');
   console.log('Expired! Deleted!! Cleared!!1!');
 }
@@ -212,10 +216,11 @@ async function deleteSimpleCookie() {
 Again, the path and/or domain can be specified explicitly here.
 
 ```js
-async function deleteCookieWithDomainAndPath() {
+async function deleteSecureCookieWithDomainAndPath() {
   await cookieStore.delete('__Secure-COOKIENAME', {
       path: '/cgi-bin/',
-      domain: 'example.org'
+      domain: 'example.org',
+      secure: true
     });
   console.log('Expired! Deleted!! Cleared!!1!');
 }
@@ -228,6 +233,8 @@ This API has semantics aligned with the interpretation of `Max-Age=0` common to 
 A cookie write operation (`set` or `delete`) may fail to actually set the requested cookie. A cookie name, value or
 parameter validation problem (for instance, a semicolon `;` cannot appear in any of these) will result in the promise being rejected. Likewise, exceeding implementation size limits, setting an out-of-supported-range expiration date, or setting a
 cookie on a different eTLD+1 domain will also reject the promise and the cookie will not be set/modified. Other implementation-specific limits could lead to rejection, too.
+
+A cookie write operation for a cookie using one of the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) will be rejected if the other cookie parameters do not conform to the special rules for the prefix. For both prefixes the Secure parameter must be set (either explicitly set to `true` or implicitly due to the script running on a secure origin), and the script must be running on a secure origin. Additionally for the `__Host-` prefix the Path parameter must have the value `/` (either explicitly or implicitly) and the Domain parameter must be absent.
 
 ### Monitoring
 
@@ -263,7 +270,12 @@ let observer = new CookieObserver(callback);
 // If null or omitted this defaults to location.pathname
 let url = location.pathname;
 // If null or omitted this defaults to interest in all cookies
-let interests = [{name: '__Secure-COOKIENAME'}, {name: '__Host-COOKIEN', matchType: 'prefix'}];
+let interests = [
+  // Interested in all secure cookies named __Secure-COOKIENAME
+  {name: '__Secure-COOKIENAME'},
+  // Interested in all simple origin cookies named __Host-COOKIEN*
+  {name: '__Host-COOKIEN', matchType: 'prefix'}
+];
 observer.observe(cookieStore, url, interests);
 ```
 
@@ -291,6 +303,7 @@ A ServiceWorker does not have a persistent JavaScript execution context, so a di
   event.registerCookieChangeInterest(cookieStore); // all cookies, url === SW scope url
   // Call it more than once to register additional interests:
   let url = '/sw-scope/auth/';
+  // Interested in all simple origin cookies named __Host-AUTHTOKEN*
   let interests = [{name: '__Host-AUTHTOKEN', matchType: 'prefix'}];
   event.registerCookieChangeInterest(cookieStore, url, interests);
   ...
@@ -333,10 +346,31 @@ addEventListener('cookiechange', function(event) {
 
 Other than cookie access from ServiceWorker contexts, this API is not intended to expose any new capabilities to the web.
 
-However, this API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured `http` contexts this could result in a web less safe for users. 
+### Gotcha!
 
-For that reason it may be desirable to restrict its use, or at least the use of the `set` and `delete` operations, to secure origins running in secure contexts.
+Although browser cookie implementations are now evolving in the direction of better security and fewer surprising and error-prone defaults, there are at present few guarantees about cookie data security.
+
+ * unsecured origins can typically overwrite cookies used on secure origins
+ * superdomains can typically overwrite cookies seen by subdomains
+ * cross-site scripting attacts and other script and header injection attacks can be used to forge cookies too
+ * cookie read operations (both from script and on web servers) don't give any indication of where the cookie came from
+ * browsers sometimes truncate, transform or evict cookie data in surprising and counterintuitive ways
+   * ... due to reaching storage limits
+   * ... due to character encoding differences
+   * ... due to differing syntactic and semantic rules for cookies
+
+For these reasons it is best to use caution when interpreting any cookie's value, and never execute a cookie's value as script, HTML, CSS, XML, PDF, or any other executable format.
+
+### Restrict?
+
+This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured `http` contexts this could result in a web less safe for users. For that reason it may be desirable to restrict its use, or at least the use of the `set` and `delete` operations, to secure origins running in secure contexts.
+
+### Surprises
 
 Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from non-script contexts) may be quite surprising from a web security standpoint.
 
-Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and -- in the case of `__Host-` -- disallow overwriting with an explicit `Domain` or non-`/` `Path` attribute (effectively enforcing same-origin semantics.)
+### Prefixes
+
+Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and -- in the case of `__Host-` -- disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
+
+Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily.
