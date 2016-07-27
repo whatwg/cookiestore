@@ -2,7 +2,22 @@
 
 This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [service workers](https://github.com/slightlyoff/ServiceWorker).
 
-[HTTP cookies](https://tools.ietf.org/html/rfc6265) have, since their [origins at Netscape (preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html) for the web. Unfortunately the synchronous single-threaded script-level interface to them - also originating in the Netscape browser -  [has been a source of complexity and performance woes](https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html) exacerbated by the move in many browsers from a single-process, single-threaded model without a general expectation of responsiveness for scripted event handling while processing cookie operations to the modern web which strives for smoothly responsive high performance in a multithreaded, multi-process environment where a cookie operation in one part of a web application cannot block the rest of the application, web origin, or the browser as a whole.
+[HTTP cookies](https://tools.ietf.org/html/rfc6265) have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html) for the web. 
+
+The synchronous single-threaded script-level `document.cookie` and `<meta http-equiv="set-cookie" ...>` interface to cookies has been a source of [complexity and performance woes](https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html) further exacerbated by the move in many browsers from:
+  - a single browser process,
+  - a single-threaded event loop model, and
+  - no general expectation of responsiveness for scripted event handling while processing cookie operations
+
+... to the modern web which strives for smoothly responsive high performance in:
+  - multiple browser processes,
+  - a multithreaded, multiple-event loop model, and
+  - an expectation of responsiveness.
+
+On the modern a web a cookie operation in one part of a web application cannot block:
+  - the rest of the web application,
+  - the rest of the web origin, or
+  - the browser as a whole.
 
 Newer parts of the web built in service workers [need access to cookies too](https://github.com/slightlyoff/ServiceWorker/issues/707) but cannot use the synchronous, blocking `document.cookie` and `<meta http-equiv="set-cookie" ...>` interfaces at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
 
@@ -476,7 +491,7 @@ Prefix rules are also enforced in write operations by this API, but may not be e
 
 ### URL scoping
 
-Although a service worker script cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the service worker script, remotely controlled using postMessage, the caches API, or IndexedDB. This means that cookie access inside the scope of the service worker is technically possible already, it's just not very convenient.
+Although a service worker script cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the service worker script. This means that cookie access inside the scope of the service worker is technically possible already, it's just not very convenient.
 
 When the service worker is scoped more narrowly than `/` it may still be able to read path-scoped cookies from outside its scope by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.
 
