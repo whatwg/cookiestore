@@ -1,5 +1,10 @@
-explainer.md
 # Async cookies API explained
+
+This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [service workers](https://github.com/slightlyoff/ServiceWorker).
+
+[HTTP cookies](https://tools.ietf.org/html/rfc6265) have, since their origins at [Netscape (description preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html) for the web. Unfortunately the synchronous single-threaded script-level interface to them - also originating in the Netscape browser -  [has been a source of complexity and performance woes](https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html) exacerbated by the move in many browsers from a single-process, single-threaded model without a general expectation of responsiveness for scripted event handling while processing cookie operations to the modern web which strives for smoothly responsive high performance in a multithreaded, multi-process environment where a cookie operation in one part of a web application cannot block the rest of the application, web origin, or the browser as a whole.
+
+Newer parts of the web built in service workers [need access to cookies too](https://github.com/slightlyoff/ServiceWorker/issues/707) but cannot use the synchronous, blocking `document.cookie` and `<meta http-equiv="set-cookie" ...>` interfaces at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
 
 ## Summary
 
@@ -9,13 +14,13 @@ This proposal outlines an asynchronous API using Promises for the following cook
  * delete (or "expire") cookies
  * read (or "get") script-visible cookies
    * ... including for specified in-scope request paths in
-   [ServiceWorker](https://github.com/slightlyoff/ServiceWorker) contexts
+   [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
  * monitor script-visible cookies for changes
    * ... using `CookieObserver` in long-running script contexts (e.g. `document`)
    * ... using `CookieChangeEvent` after registration during the `InstallEvent`
-   in ephemeral [ServiceWorker](https://github.com/slightlyoff/ServiceWorker) contexts
+   in ephemeral [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
    * ... again including for script-supplied in-scope request paths
-   in [ServiceWorker](https://github.com/slightlyoff/ServiceWorker) contexts
+   in [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
 
 ### Motivations
 
@@ -52,7 +57,7 @@ through this API and will not be included in results returned from it unless the
 
 Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API mandates UTF-8 interpretation for cookies read or written by this API.
 
-Use of cookie-change-driven scripts has been hampered by the absence of a power-efficient (non-polling) API for this. This API provides observers for efficient monitoring in document contexts and interest registration for efficient monitoring in ServiceWorker contexts.
+Use of cookie-change-driven scripts has been hampered by the absence of a power-efficient (non-polling) API for this. This API provides observers for efficient monitoring in document contexts and interest registration for efficient monitoring in service worker contexts.
 
 Scripts should not have to write and then read "test cookies" to determine whether script-initiated cookie write access is possible, nor should they have to correlate with cooperating server-side versions of the same write-then-read test to determine that script-initiated cookie read access is impossible despite cookies working at the HTTP level.
 
@@ -79,8 +84,8 @@ with other modern user agents.
 
 ### Reading
 
-You can read the first in-scope script-visible value for a given cookie name. In a ServiceWorker this defaults to the path
-of the ServiceWorker's registered scope. In a document it defaults to the path of the current document and does not respect
+You can read the first in-scope script-visible value for a given cookie name. In a service worker context this defaults to the path
+of the service worker's registered scope. In a document it defaults to the path of the current document and does not respect
 changes from `replaceState` or `document.domain`.
 
 ```js
@@ -110,7 +115,7 @@ getOneSimpleOriginCookieAsync().then(
 
 Remaining examples use this syntax and omit the calling code.
 
-In a ServiceWorker you can read a cookie from the point of view of a particular in-scope URL, which may be useful when
+In a service worker context you can read a cookie from the point of view of a particular in-scope URL, which may be useful when
 handling regular (same-origin, in-scope) fetch events or foreign fetch events.
 
 ```js
@@ -141,7 +146,7 @@ let countMatchingSimpleOriginCookies = async () => {
 };
 ```
 
-In a ServiceWorker you may need to read more than one cookie from an in-scope path different from the default, for instance while handling a fetch event:
+In a service worker context you may need to read more than one cookie from an in-scope path different from the default, for instance while handling a fetch event:
 
 ```js
 let countMatchingCookiesForRequestUrl = async () => {
@@ -326,7 +331,7 @@ let callback = (cookieChanges, observer) => {
 };
 let observer = new CookieObserver(callback);
 // If null or omitted this defaults to location.pathname in a
-// document context or worker scope in a ServiceWorker context.
+// document context or worker scope in a service worker context.
 let url = location.pathname;
 // If null or omitted this defaults to interest in all
 // script-visible cookies.
@@ -355,16 +360,16 @@ Eventually you may want to stop monitoring for script-visible cookie changes:
 observer.disconnect();
 ```
 
-#### ServiceWorker
+#### Service worker
 
-A ServiceWorker does not have a persistent JavaScript execution context, so a different API is needed for interest registration. Register your interest while handling the `InstallEvent` to ensure your ServiceWorker will run when a cookie you care about changes.
+A service worker does not have a persistent JavaScript execution context, so a different API is needed for interest registration. Register your interest while handling the `InstallEvent` to ensure your service worker will run when a cookie you care about changes.
 
 ```js
   ...
-  // Cookie change interest is registered during the InstallEvent in a ServiceWorker;
-  // parameters are identical to CookieObserver's observe(...) method. The url
-  // must be inside the registration scope of the ServiceWorker, and defaults to
-  // the registration scope if null or omitted.
+  // Cookie change interest is registered during the InstallEvent in a service
+  // worker context; parameters are identical to CookieObserver's observe(...)
+  // method. The url must be inside the registration scope of the service worker,
+  // and defaults to the registration scope if null or omitted.
   event.registerCookieChangeInterest(cookieStore); // all cookies, url === SW scope url
   // Call it more than once to register additional interests:
   let url = '/sw-scope/';
@@ -387,7 +392,7 @@ A ServiceWorker does not have a persistent JavaScript execution context, so a di
   ...
 ```
 
-*Note:* cookie changes which occur at paths not yet known during handling of the `InstallEvent` cannot be monitored in a ServiceWorker using this API.
+*Note:* cookie changes which occur at paths not yet known during handling of the `InstallEvent` cannot be monitored in a service worker context after the execution context ends using this API.
 
 You also need to be sure to handle the `CookieChangeEvent`:
 
@@ -430,11 +435,11 @@ addEventListener('cookiechange', event => {
 });
 ```
 
-*Note:* a ServiceWorker script needs to be prepared to handle "duplicate" notifications after updates to the ServiceWorker script with identical or overlapping cookie change interests compared to those interests previously registered.
+*Note:* a service worker script needs to be prepared to handle "duplicate" notifications after updates to the service worker script with identical or overlapping cookie change interests compared to those interests previously registered.
 
 ## Security
 
-Other than cookie access from ServiceWorker contexts, this API is not intended to expose any new capabilities to the web.
+Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.
 
 ### Gotcha!
 
@@ -471,9 +476,9 @@ Prefix rules are also enforced in write operations by this API, but may not be e
 
 ### URL scoping
 
-Although a ServiceWorker cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the ServiceWorker, remotely controlled using postMessage, the caches API, or IndexedDB. This means that cookie access inside the scope of the ServiceWorker is technically possible already, it's just not very convenient.
+Although a service worker script cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the service worker script, remotely controlled using postMessage, the caches API, or IndexedDB. This means that cookie access inside the scope of the service worker is technically possible already, it's just not very convenient.
 
-When the ServiceWorker is scoped more narrowly than `/` it may still be able to read path-scoped cookies from outside its scope by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped ServiceWorker today and I was reluctant to remove that restriction without further discussion of the implications.
+When the service worker is scoped more narrowly than `/` it may still be able to read path-scoped cookies from outside its scope by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.
 
 ### Cookie aversion
 
