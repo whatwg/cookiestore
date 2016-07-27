@@ -84,62 +84,82 @@ of the ServiceWorker's registered scope. In a document it defaults to the path o
 changes from `replaceState` or `document.domain`.
 
 ```js
-async function getOneSimpleOriginCookie() {
+function getOneSimpleOriginCookie() {
+  return cookieStore.get('__Host-COOKIENAME').then(function(cookie) {
+    console.log(cookie ? ('Current value: ' + cookie.value) : 'Not set');
+  });
+}
+getOneSimpleOriginCookie().then(function() {
+  console.log('getOneSimpleOriginCookie succeeded!');
+}, function(reason) {
+  console.error('getOneSimpleOriginCookie did not succeed: ', reason);
+});
+```
+
+You can use exactly the same Promise-based API with the newer `async` ... `await` syntax and arrow functions for more readable code:
+
+```js
+let getOneSimpleOriginCookieAsync = async () => {
   let cookie = await cookieStore.get('__Host-COOKIENAME');
   console.log(cookie ? ('Current value: ' + cookie.value) : 'Not set');
-}
+};
+getOneSimpleOriginCookieAsync().then(
+  () => console.log('getOneSimpleOriginCookieAsync succeeded!'),
+  reason => console.error('getOneSimpleOriginCookieAsync did not succeed: ', reason));
 ```
+
+Remaining examples use this syntax and omit the calling code.
 
 In a ServiceWorker you can read a cookie from the point of view of a particular in-scope URL, which may be useful when
 handling regular (same-origin, in-scope) fetch events or foreign fetch events.
 
 ```js
-async function getOneCookieForRequestUrl() {
+let getOneCookieForRequestUrl = async () => {
   let cookie = await cookieStore.get('__Secure-COOKIENAME', {url: '/cgi-bin/reboot.php'});
   console.log(cookie ? ('Current value in /cgi-bin is ' + cookie.value) : 'Not set in /cgi-bin');
-}
+};
 ```
 
 Sometimes you need to see the whole script-visible in-scope subset of cookie jar, including potential reuse of the same
 cookie name at multiple paths and/or domains (the paths and domains are not exposed to script by this API, though):
 
 ```js
-async function countCookies() {
+let countCookies = async () => {
   let cookieList = await cookieStore.getAll();
   console.log('How many cookies? %d', cookieList.length);
   cookieList.forEach(cookie => console.log('Cookie %s has value %o', cookie.name, cookie.value));
-}
+};
 ```
 
 Sometimes an expected cookie is known by a prefix rather than by an exact name:
 
 ```js
-async function countMatchingSimpleOriginCookies() {
+let countMatchingSimpleOriginCookies = async () => {
   let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'startsWith'});
   console.log('How many matching cookies? %d', cookieList.length);
   cookieList.forEach(cookie => console.log('Matching cookie %s has value %o', cookie.name, cookie.value));
-}
+};
 ```
 
 In a ServiceWorker you may need to read more than one cookie from an in-scope path different from the default, for instance while handling a fetch event:
 
 ```js
-async function countMatchingCookiesForRequestUrl() {
+let countMatchingCookiesForRequestUrl = async () => {
   // 'equals' is the default matchType and indicates exact matching
   let cookieList = await cookieStore.getAll({name: 'LEGACYSORTPREFERENCE', matchType: 'equals', url: '/pictures/'});
   console.log('How many legacy sort preference cookies? %d', cookieList.length);
   cookieList.forEach(cookie => console.log('Legacy sort preference cookie has value %o', cookie.value));
-}
+};
 ```
 
 You might even need to read all of them:
 
 ```js
-async function countAllCookiesForRequestUrl() {
+let countAllCookiesForRequestUrl = async () => {
   let cookieList = await cookieStore.getAll({url: '/sw-scope/session2/document5/'});
   console.log('How many script-visible cookies? %d', cookieList.length);
   cookieList.forEach(cookie => console.log('Cookie %s has value %o', cookie.name, cookie.value));
-}
+};
 ```
 
 ### Writing
@@ -147,17 +167,17 @@ async function countAllCookiesForRequestUrl() {
 You can set a cookie too:
 
 ```js
-async function setOneSimpleOriginSessionCookie() {
+let setOneSimpleOriginSessionCookie = async () => {
   await cookieStore.set('__Host-COOKIENAME', 'cookie-value');
   console.log('Set!');
-}
+};
 ```
 
 That defaults to path `/` and *implicit* domain, and defaults to a Secure-if-https-origin, non-HttpOnly session cookie which
 will be visible to scripts. You can override these defaults if needed:
 
 ```js
-async function setOneDaySecureCookieWithDate() {
+let setOneDaySecureCookieWithDate = async () => {
   // one day ahead, ignoring a possible leap-second
   let inTwentyFourHours = new Date(Date.now() + 24 * 60 * 60 * 1000);
   await cookieStore.set('__Secure-COOKIENAME', 'cookie-value', {
@@ -168,13 +188,13 @@ async function setOneDaySecureCookieWithDate() {
       domain: 'example.org'
     });
   console.log('Set!');
-}
+};
 ```
 
 Of course the numeric form (milliseconds since the beginning of 1970 UTC) works too:
 
 ```js
-async function setOneDayUnsecuredCookieWithMillisecondsSinceEpoch() {
+let setOneDayUnsecuredCookieWithMillisecondsSinceEpoch = async () => {
   // one day ahead, ignoring a possible leap-second
   let inTwentyFourHours = Date.now() + 24 * 60 * 60 * 1000;
   await cookieStore.set('LEGACYCOOKIENAME', 'cookie-value', {
@@ -185,13 +205,13 @@ async function setOneDayUnsecuredCookieWithMillisecondsSinceEpoch() {
       domain: 'example.org'
     });
   console.log('Set!');
-}
+};
 ```
 
 Sometimes an expiration date comes from existing script it's not easy or convenient to replace, though:
 
 ```js
-async function setSecureCookieWithHttpLikeExpirationString() {
+let setSecureCookieWithHttpLikeExpirationString = async () => {
   await cookieStore.set('__Secure-COOKIENAME', 'cookie-value', {
       path: '/cgi-bin/',
       expires: 'Mon, 07 Jun 2021 07:07:07 GMT',
@@ -200,7 +220,7 @@ async function setSecureCookieWithHttpLikeExpirationString() {
       domain: 'example.org'
     });
   console.log('Set!');
-}
+};
 ```
 
 In this case the syntax is that of the HTTP cookies spec; any other syntax will result in promise rejection.
@@ -211,7 +231,7 @@ Clearing (deleting) a cookie is accomplished by expiration, that is by replacing
 an expiration in the past:
 
 ```js
-async function setExpiredSecureCookieWithDomainPathAndFallbackValue() {
+let setExpiredSecureCookieWithDomainPathAndFallbackValue = async () => {
   let theVeryRecentPast = Date.now();
   let expiredCookieSentinelValue = 'EXPIRED';
   await cookieStore.set('__Secure-COOKIENAME', expiredCookieSentinelValue, {
@@ -222,7 +242,7 @@ async function setExpiredSecureCookieWithDomainPathAndFallbackValue() {
       domain: 'example.org'
     });
   console.log('Expired! Deleted!! Cleared!!1!');
-}
+};
 ```
 
 In this case the cookie's value is not important unless a clock is somehow re-set incorrectly or otherwise behaves nonmonotonically or incoherently.
@@ -230,23 +250,23 @@ In this case the cookie's value is not important unless a clock is somehow re-se
 A syntactic shorthand is also provided which is equivalent to the above except that the clock's accuracy and monotonicity becomes irrelevant:
 
 ```js
-async function deleteSimpleOriginCookie() {
+let deleteSimpleOriginCookie = async () => {
   await cookieStore.delete('__Host-COOKIENAME');
   console.log('Expired! Deleted!! Cleared!!1!');
-}
+};
 ```
 
 Again, the path and/or domain can be specified explicitly here.
 
 ```js
-async function deleteSecureCookieWithDomainAndPath() {
+let deleteSecureCookieWithDomainAndPath = async () => {
   await cookieStore.delete('__Secure-COOKIENAME', {
       path: '/cgi-bin/',
       domain: 'example.org',
       secure: true
     });
   console.log('Expired! Deleted!! Cleared!!1!');
-}
+};
 ```
 
 This API has semantics aligned with the interpretation of `Max-Age=0` common to most modern browsers.
