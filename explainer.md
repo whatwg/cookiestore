@@ -115,9 +115,30 @@ Sometimes an expected cookie is known by a prefix rather than by an exact name:
 
 ```js
 async function countMatchingSimpleOriginCookies() {
-  let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'prefix'});
+  let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'startsWith'});
   console.log('How many matching cookies? %d', cookieList.length);
   cookieList.forEach(cookie => console.log('Matching cookie %s has value %o', cookie.name, cookie.value));
+}
+```
+
+In a ServiceWorker you may need to read more than one cookie from an in-scope path different from the default, for instance while handling a fetch event:
+
+```js
+async function countMatchingCookiesForRequestUrl() {
+  // 'equals' is the default matchType and indicates exact matching
+  let cookieList = await cookieStore.getAll({name: 'LEGACYSORTPREFERENCE', matchType: 'equals', url: '/pictures/'});
+  console.log('How many legacy sort preference cookies? %d', cookieList.length);
+  cookieList.forEach(cookie => console.log('Legacy sort preference cookie has value %o', cookie.value));
+}
+```
+
+You might even need to read all of them:
+
+```js
+async function countAllCookiesForRequestUrl() {
+  let cookieList = await cookieStore.getAll({url: '/sw-scope/session2/document5/'});
+  console.log('How many script-visible cookies? %d', cookieList.length);
+  cookieList.forEach(cookie => console.log('Cookie %s has value %o', cookie.name, cookie.value));
 }
 ```
 
