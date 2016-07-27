@@ -54,6 +54,8 @@ Internationalized cookie usage from scripts has to date been slow and browser-sp
 
 Use of cookie-change-driven scripts has been hampered by the absence of a power-efficient (non-polling) API for this. This API provides observers for efficient monitoring in document contexts and interest registration for efficient monitoring in ServiceWorker contexts.
 
+Scripts should not have to write and then read "test cookies" to determine whether script-initiated cookie write access is possible, nor should they have to correlate with cooperating server-side versions of the same write-then-read test to determine that script-initiated cookie read access is impossible despite cookies working at the HTTP level.
+
 ### Compatiblity
 
 Some user-agents implement non-standard extensions to cookie behavior. The intent of this specification,
@@ -242,53 +244,75 @@ A cookie write operation for a cookie using one of the `__Host-` and `__Secure-`
 
 #### Single execution context
 
-You can monitor for script-visible cookie changes during the lifetime of your script's execution context:
+You can monitor for script-visible cookie changes (creation, modification and deletion) during the lifetime of your script's execution context:
 
 ```js
 // This will get invoked (asynchronously) shortly after the observe(...) call to
-// provide an initial snapshot; in that case the length of the cookieChangeList may
-// be 0, indicating no matching script-visible cookies for any URL currently observed
-let callback = cookieChanges => {
-  console.log('Script-visible cookie changes: %d', cookieChanges.updates.length);
-  cookieChanges.updates.forEach(cookieChange => {
+// provide an initial snapshot; in that case the length of cookieChanges may be 0,
+// indicating no matching script-visible cookies for any URL+cookieStore currently
+// observed. The CookieObserver instance is passed as the second parameter to allow
+// additional calls to observe or disconnect.
+let callback = (cookieChanges, observer) => {
+  console.log(
+    '%d script-visible cookie changes for CookieObserver %o',
+    cookieChanges.length,
+    observer);
+  cookieChanges.forEach(cookieChange => {
+    console.log(
+      'CookieChange type %s for observed url %s in CookieStore %o',
+      cookieChange.type,
+      // Note that this will be the passed-in or defaulted value for the corresponding
+      // call to observe(...).
+      cookieChange.url,
+      // This is the same CookieStore passed to observe(...)
+      cookieChange.cookieStore);
     switch(cookieChange.type) {
     case 'visible':
+      // Creation or modification (e.g. change in value, or removal of HttpOnly), or
+      // appearance to script due to change in policy or permissions
       console.log('Cookie %s now visible to script with value %s', cookieChange.name, cookieChange.value);
-      cookieChange.urls.forEach(url => console.log('... for observed URL %s', url));
       break;
     case 'hidden':
+      // Deletion/expiration or disappearance (e.g. due to modification adding HttpOnly),
+      // or disappearance from script due to change in policy or permissions
       console.log('Cookie %s expired or no longer visible to script', cookieChange.name);
-      cookieChange.urls.forEach(url => console.log('... for observed URL %s', url));
       break;
     default:
-      throw 'Unhandled change type ' + cookieChange.type;
+      console.error('Unexpected CookieChange type, ')
+      throw 'Unexpected CookieChange type ' + cookieChange.type;
     }
-    console.log('Should be true:', cookieChange.cookieStore === cookieStore);
-  })
+  });
 };
 let observer = new CookieObserver(callback);
-// If null or omitted this defaults to location.pathname
+// If null or omitted this defaults to location.pathname in a
+// document context or worker scope in a ServiceWorker context.
 let url = location.pathname;
-// If null or omitted this defaults to interest in all cookies
+// If null or omitted this defaults to interest in all
+// script-visible cookies.
 let interests = [
-  // Interested in all secure cookies named __Secure-COOKIENAME
-  {name: '__Secure-COOKIENAME'},
-  // Interested in all simple origin cookies named __Host-COOKIEN*
-  {name: '__Host-COOKIEN', matchType: 'prefix'}
+  // Interested in all secure cookies named '__Secure-COOKIENAME';
+  // the default matchType is 'equals' at the given URL.
+  {name: '__Secure-COOKIENAME', url: url},
+  // Interested in all simple origin cookies named like
+  // /^__Host-COOKIEN.*$/ at the default URL.
+  {name: '__Host-COOKIEN', matchType: 'startsWith'},
+  // Interested in all cookies named 'OLDCOOKIENAME' at the given URL.
+  {name: 'OLDCOOKIENAME', matchType: 'equals', url: url},
+  // Interested in all simple origin cookies named like
+  // /^__Host-AUTHTOKEN.*$/ at the given URL.
+  {name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + '/auth'}
 ];
-observer.observe(cookieStore, url, interests);
+observer.observe(cookieStore, interests);
 ```
 
-Successive attempts to `observe` on the same CookieObserver with effectively identical or overlapping interests are ignored to allow straightforward idempotent setup code.
+Successive attempts to `observe` on the same CookieObserver are additive but a single change to a single cookie will only be reported once for each URL where it is observed in a given CookieStore.
 
 Eventually you may want to stop monitoring for script-visible cookie changes:
 
 ```js
-// Again, url and interests are both optional
-observer.unobserve(cookieStore, url, interests);
+// No more callbacks until another call to observer.observe(...)
+observer.disconnect();
 ```
-
-Attempts to `unobserve` not corresponding to a previous `observe` on the same CookieObserver are ignored to allow straightforward idempotent cleanup code.
 
 #### ServiceWorker
 
@@ -299,13 +323,26 @@ A ServiceWorker does not have a persistent JavaScript execution context, so a di
   // Cookie change interest is registered during the InstallEvent in a ServiceWorker;
   // parameters are identical to CookieObserver's observe(...) method. The url
   // must be inside the registration scope of the ServiceWorker, and defaults to
-  // that if null or omitted.
+  // the registration scope if null or omitted.
   event.registerCookieChangeInterest(cookieStore); // all cookies, url === SW scope url
   // Call it more than once to register additional interests:
-  let url = '/sw-scope/auth/';
-  // Interested in all simple origin cookies named __Host-AUTHTOKEN*
-  let interests = [{name: '__Host-AUTHTOKEN', matchType: 'prefix'}];
-  event.registerCookieChangeInterest(cookieStore, url, interests);
+  let url = '/sw-scope/';
+  // If null or omitted this defaults to interest in all
+  // script-visible cookies.
+  let interests = [
+    // Interested in all secure cookies named '__Secure-COOKIENAME';
+    // the default matchType is 'equals' at the given URL.
+    {name: '__Secure-COOKIENAME', url: url},
+    // Interested in all simple origin cookies named like
+    // /^__Host-COOKIEN.*$/ at the default URL.
+    {name: '__Host-COOKIEN', matchType: 'startsWith'},
+    // Interested in all cookies named 'OLDCOOKIENAME' at the given URL.
+    {name: 'OLDCOOKIENAME', matchType: 'equals', url: url},
+    // Interested in all simple origin cookies named like
+    // /^__Host-AUTHTOKEN.*$/ at the given URL.
+    {name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + '/auth'}
+  ];
+  event.registerCookieChangeInterest(cookieStore, interests);
   ...
 ```
 
@@ -318,25 +355,37 @@ You also need to be sure to handle the `CookieChangeEvent`:
 // snapshot of the script-visible cookie jar; in that case the length of the cookieChangeList may
 // be 0, indicating no matching script-visible cookies for any URL for which cookie interest was
 // registered.
-addEventListener('cookiechange', function(event) {
+addEventListener('cookiechange', event => {
   // event.detail is CookieChanges, analogous to the one passed to CookieObserver's callback
   let cookieChanges = event.detail;
-  console.log('ServiceWorker script-visible cookie changes: %d', cookieChanges.updates.length);
-  cookieChanges.updates.forEach(cookieChange => {
+  console.log(
+    '%d script-visible cookie changes',
+    cookieChanges.length);
+  cookieChanges.forEach(cookieChange => {
+    console.log(
+      'CookieChange type %s for observed url %s in CookieStore %o',
+      cookieChange.type,
+      // Note that this will be the passed-in or defaulted value for the corresponding
+      // call to observe(...).
+      cookieChange.url,
+      // This is the same CookieStore passed to observe(...)
+      cookieChange.cookieStore);
     switch(cookieChange.type) {
     case 'visible':
+      // Creation or modification (e.g. change in value, or removal of HttpOnly), or
+      // appearance to script due to change in policy or permissions
       console.log('Cookie %s now visible to script with value %s', cookieChange.name, cookieChange.value);
-      cookieChange.urls.forEach(url => console.log('... for observed URL %s', url));
       break;
     case 'hidden':
+      // Deletion/expiration or disappearance (e.g. due to modification adding HttpOnly),
+      // or disappearance from script due to change in policy or permissions
       console.log('Cookie %s expired or no longer visible to script', cookieChange.name);
-      cookieChange.urls.forEach(url => console.log('... for observed URL %s', url));
       break;
     default:
-      throw 'Unhandled change type ' + cookieChange.type;
+      console.error('Unexpected CookieChange type, ')
+      throw 'Unexpected CookieChange type ' + cookieChange.type;
     }
-    console.log('Should be true:', cookieChange.cookieStore === cookieStore);
-  })
+  });
 });
 ```
 
@@ -369,8 +418,26 @@ This API may have the unintended side-effect of making cookies easier to use and
 
 Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.
 
+Other surprises are documented in [Section 1 of HTTP State Management Mechanism (RFC 6265)](https://tools.ietf.org/html/rfc6265#section-1) - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
+
+Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.
+
 ### Prefixes
 
 Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and -- in the case of `__Host-` -- disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
 
-Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily.
+Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.
+
+### URL scoping
+
+Although a ServiceWorker cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the ServiceWorker, remotely controlled using postMessage, the caches API, or IndexedDB. This means that cookie access inside the scope of the ServiceWorker is technically possible already, it's just not very convenient.
+
+When the ServiceWorker is scoped more narrowly than `/` it may still be able to read path-scoped cookies from outside its scope by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped ServiceWorker today and I was reluctant to remove that restriction without further discussion of the implications.
+
+### Cookie aversion
+
+To reduce complexity for developers and eliminate ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won't invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)
+
+Today writing to `document.cookie` in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.
+
+Likewise, today reading `document.cookie` in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.
