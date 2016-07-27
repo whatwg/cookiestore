@@ -115,7 +115,7 @@ Sometimes an expected cookie is known by a prefix rather than by an exact name:
 
 ```js
 async function countMatchingSimpleOriginCookies() {
-  let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'prefix'});
+  let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'startsWith'});
   console.log('How many matching cookies? %d', cookieList.length);
   cookieList.forEach(cookie => console.log('Matching cookie %s has value %o', cookie.name, cookie.value));
 }
