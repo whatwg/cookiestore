@@ -299,6 +299,8 @@ cookie on a different eTLD+1 domain will also reject the promise and the cookie 
 
 A cookie write operation for a cookie using one of the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) will be rejected if the other cookie parameters do not conform to the special rules for the prefix. For both prefixes the Secure parameter must be set (either explicitly set to `true` or implicitly due to the script running on a secure origin), and the script must be running on a secure origin. Additionally for the `__Host-` prefix the Path parameter must have the value `/` (either explicitly or implicitly) and the Domain parameter must be absent.
 
+A cookie write operation from an unsecured web origin creating, modifying or overwriting a `Secure`-flagged cookie will be rejected unless browser implementation details prevent this, in accordance with [Leave Secure Cookies Alone](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00). In any case the `Secure` flag must be false either explicitly or implicitly in all cookie write operations using this API when running on an unsecured web origin or the operation will be rejected.
+
 ### Monitoring
 
 *Note:* multiple cookie changes in rapid succession may cause the user agent to only check for script-visible changes (relative to the last time the observer was called or the event was fired) after all the changes have been applied. In some cases (for instance, a very short-lived cookie being set and then expiring) this may cause the observer/event handler to miss the (now-expired) ephemeral cookie entirely.
