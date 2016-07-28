@@ -9,10 +9,10 @@ The synchronous single-threaded script-level `document.cookie` and `<meta http-e
   - a single-threaded event loop model, and
   - no general expectation of responsiveness for scripted event handling while processing cookie operations
 
-... to the modern web which strives for smoothly responsive high performance in:
-  - multiple browser processes,
-  - a multithreaded, multiple-event loop model, and
-  - an expectation of responsiveness.
+... to the modern web which strives for smoothly responsive high performance:
+  - in multiple browser processes,
+  - with a multithreaded, multiple-event loop model, and
+  - with an expectation of responsiveness on human-reflex time scales.
 
 On the modern a web a cookie operation in one part of a web application cannot block:
   - the rest of the web application,
