@@ -499,8 +499,26 @@ When the service worker is scoped more narrowly than `/` it may still be able to
 
 ### Cookie aversion
 
-To reduce complexity for developers and eliminate ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won't invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)
+To reduce complexity for developers and eliminate the need for ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won't invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)
 
 Today writing to `document.cookie` in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.
 
 Likewise, today reading `document.cookie` in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.
+
+## Fakeable: polyfills, replacements and shims
+
+This API is designed:
+
+- using Promises ⇔ async functions,
+- using neither opaque nor nontransferable data types,
+- with no thread-blocking operations,
+- with no strong transactional guarantees,
+- with no guarantees of predictable realtime performance,
+- with no explicit object sealing or other API-level tamper-resistance,
+- with no custom getters/setters,
+- with no explicit timing guarantees about when exactly changes made through this API will take effect and
+- with no explicit coherency guarantees about read operations in the presence of overlapping reads or writes.
+
+So long as these continue to hold, a polyfill, a replacement or a shim using postMessage or a similar cross-context messaging primitive and exposing a CookieStore to a different execution contexts (e.g. to a sandboxed IFRAME) using the same API should be possible.
+
+Most of this API's behavior should also be implementable as a polyfill atop `document.cookie` for document contexts where that API already exists. There are limits to this, though: some `document.cookie` operations silently fail in ways not currently easily detectable or predictable by scripts and so a native implementation of the async cookies API would reject the operation when a `document.cookie`-based polyfill would instead incorrectly treat the operation as resolved. Also, any `document.cookie`-based polyfill would introduce detectable blocking pauses in the script context's event loop - this is generally undesirable for performance reasons and is one of the motivations for the new API.
