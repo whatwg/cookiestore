@@ -509,7 +509,7 @@ Likewise, today reading `document.cookie` in contexts where script-initiated coo
 
 Some topics have frequently come up in discussion of this proposal but are not explicit goals. They are enumerated here in order to explain why they are not explicit goals of the proposed API.
 
-### Common subset
+### Common subset [non-goal]
 
 It is not a goal of this proposal to only allow the common interoperable subset of current `document.cookie` behavior. Doing so would introduce some unacceptable limitations:
 
@@ -518,11 +518,11 @@ It is not a goal of this proposal to only allow the common interoperable subset 
 - no support for cookies larger than the smallest interoperable size; and
 - no support for efficient cookie change monitoring.
 
-### Bug-for-bug compatible
+### Bug-for-bug compatible [non-goal]
 
 On the other hand, it is also not a goal of this proposal to allow all cookie behavior available through any current `document.cookie` implementation. By restricting behavior to a reasonable extension of a useful subset of current behavior, changing defaults and behavior where absolutely necessary, the API can remain straightforward enough to be implementable by many browsers while still offering useful features in a form usable across browsers without major differences in behavior for which content authors/app developers would need to make special allowances.
 
-### Polyfilling
+### Polyfilling [non-goal]
 
 It is not a goal of this proposal to restrict the new API's semantics or implementation such that it could be built entirely in terms of the existing `document.cookie` API.
 
@@ -532,7 +532,7 @@ Most of this API's behavior could be approximated by a polyfill atop `document.c
 - any `document.cookie`-based polyfill would introduce detectable blocking pauses in the script context's event loop - this is generally undesirable for performance reasons and is one of the motivations for the new API, and
 - any `document.cookie`-based polyfill would pay a high performance price for cookie monitoring since it would need to run a high-frequency cookie scanner for change detection.
 
-### API forwarding
+### API forwarding [non-goal]
 
 It is not a goal of this API to support cross-context API forwarding, but the present form of the proposal does not prevent it either.
 
