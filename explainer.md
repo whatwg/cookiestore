@@ -23,7 +23,7 @@ Newer parts of the web built in service workers [need access to cookies too](htt
 
 ## Summary
 
-This proposal outlines an asynchronous API using Promises for the following cookie operations:
+This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:
 
  * write (or "set") cookies
  * delete (or "expire") cookies
@@ -293,13 +293,17 @@ This API has semantics aligned with the interpretation of `Max-Age=0` common to 
 
 #### Rejection
 
-A cookie write operation (`set` or `delete`) may fail to actually set the requested cookie. A cookie name, value or
-parameter validation problem (for instance, a semicolon `;` cannot appear in any of these) will result in the promise being rejected. Likewise, exceeding implementation size limits, setting an out-of-supported-range expiration date, or setting a
-cookie on a different eTLD+1 domain will also reject the promise and the cookie will not be set/modified. Other implementation-specific limits could lead to rejection, too.
+Any cookie write operation that would result in a cookie setting failure should be rejected.
 
-A cookie write operation for a cookie using one of the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) will be rejected if the other cookie parameters do not conform to the special rules for the prefix. For both prefixes the Secure parameter must be set (either explicitly set to `true` or implicitly due to the script running on a secure origin), and the script must be running on a secure origin. Additionally for the `__Host-` prefix the Path parameter must have the value `/` (either explicitly or implicitly) and the Domain parameter must be absent.
+In addition to any rejections covered by cookie setting failures, the following operations will be rejected regardless of whether they would not result in a cookie setting failure according to the HTTP cookies specification:
 
-A cookie write operation from an unsecured web origin creating, modifying or overwriting a `Secure`-flagged cookie will be rejected unless browser implementation details prevent this, in accordance with [Leave Secure Cookies Alone](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00). In any case the `Secure` flag must be false either explicitly or implicitly in all cookie write operations using this API when running on an unsecured web origin or the operation will be rejected.
+Syntactic rejection: a cookie write operation (`set` or `delete`) may fail to actually set the requested cookie. A cookie name, value or parameter validation problem (for instance, a semicolon `;` cannot appear in any of these) will result in the promise being rejected.
+
+Implementation limits: exceeding implementation size limits, setting an out-of-supported-range expiration date, or setting a cookie on a different eTLD+1 domain will also reject the promise and the cookie will not be set/modified. Other implementation-specific limits could lead to rejection, too.
+
+Special prefixes: a cookie write operation for a cookie using one of the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) will be rejected if the other cookie parameters do not conform to the special rules for the prefix. For both prefixes the Secure parameter must be set (either explicitly set to `true` or implicitly due to the script running on a secure origin), and the script must be running on a secure origin. Additionally for the `__Host-` prefix the Path parameter must have the value `/` (either explicitly or implicitly) and the Domain parameter must be absent.
+
+`Secure`-from-unsecured: a cookie write operation from an unsecured web origin creating, modifying or overwriting a `Secure`-flagged cookie will be rejected unless browser implementation details prevent this, in accordance with [Leave Secure Cookies Alone](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00). In any case the `Secure` flag must be false either explicitly or implicitly in all cookie write operations using this API when running on an unsecured web origin or the operation will be rejected.
 
 ### Monitoring
 
