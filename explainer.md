@@ -23,7 +23,7 @@ Newer parts of the web built in service workers [need access to cookies too](htt
 
 ## Summary
 
-This proposal outlines an asynchronous API using Promises for the following cookie operations:
+This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:
 
  * write (or "set") cookies
  * delete (or "expire") cookies
@@ -293,13 +293,17 @@ This API has semantics aligned with the interpretation of `Max-Age=0` common to 
 
 #### Rejection
 
-A cookie write operation (`set` or `delete`) may fail to actually set the requested cookie. A cookie name, value or
-parameter validation problem (for instance, a semicolon `;` cannot appear in any of these) will result in the promise being rejected. Likewise, exceeding implementation size limits, setting an out-of-supported-range expiration date, or setting a
-cookie on a different eTLD+1 domain will also reject the promise and the cookie will not be set/modified. Other implementation-specific limits could lead to rejection, too.
+Any cookie write operation that would result in a cookie setting failure should be rejected.
 
-A cookie write operation for a cookie using one of the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) will be rejected if the other cookie parameters do not conform to the special rules for the prefix. For both prefixes the Secure parameter must be set (either explicitly set to `true` or implicitly due to the script running on a secure origin), and the script must be running on a secure origin. Additionally for the `__Host-` prefix the Path parameter must have the value `/` (either explicitly or implicitly) and the Domain parameter must be absent.
+In addition to any rejections covered by cookie setting failures, the following operations will be rejected regardless of whether they would not result in a cookie setting failure according to the HTTP cookies specification:
 
-A cookie write operation from an unsecured web origin creating, modifying or overwriting a `Secure`-flagged cookie will be rejected unless browser implementation details prevent this, in accordance with [Leave Secure Cookies Alone](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00). In any case the `Secure` flag must be false either explicitly or implicitly in all cookie write operations using this API when running on an unsecured web origin or the operation will be rejected.
+Syntactic rejection: a cookie write operation (`set` or `delete`) may fail to actually set the requested cookie. A cookie name, value or parameter validation problem (for instance, a semicolon `;` cannot appear in any of these) will result in the promise being rejected.
+
+Implementation limits: exceeding implementation size limits, setting an out-of-supported-range expiration date, or setting a cookie on a different eTLD+1 domain will also reject the promise and the cookie will not be set/modified. Other implementation-specific limits could lead to rejection, too.
+
+Special prefixes: a cookie write operation for a cookie using one of the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) will be rejected if the other cookie parameters do not conform to the special rules for the prefix. For both prefixes the Secure parameter must be set (either explicitly set to `true` or implicitly due to the script running on a secure origin), and the script must be running on a secure origin. Additionally for the `__Host-` prefix the Path parameter must have the value `/` (either explicitly or implicitly) and the Domain parameter must be absent.
+
+`Secure`-from-unsecured: a cookie write operation from an unsecured web origin creating, modifying or overwriting a `Secure`-flagged cookie will be rejected unless browser implementation details prevent this, in accordance with [Leave Secure Cookies Alone](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00). In any case the `Secure` flag must be false either explicitly or implicitly in all cookie write operations using this API when running on an unsecured web origin or the operation will be rejected.
 
 ### Monitoring
 
@@ -499,8 +503,55 @@ When the service worker is scoped more narrowly than `/` it may still be able to
 
 ### Cookie aversion
 
-To reduce complexity for developers and eliminate ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won't invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)
+To reduce complexity for developers and eliminate the need for ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won't invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)
 
 Today writing to `document.cookie` in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.
 
 Likewise, today reading `document.cookie` in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.
+
+## Non-goals
+
+Some topics have frequently come up in discussion of this proposal but are not explicit goals. They are enumerated here in order to explain why they are not explicit goals of the proposed API.
+
+### Common subset [non-goal]
+
+It is not a goal of this proposal to only allow the common interoperable subset of current `document.cookie` behavior. Doing so would introduce some unacceptable limitations:
+
+- no support for characters outside the printable-ASCII range;
+- no support for implicit-`Domain` cookies distinct from explicit-`Domain` cookies;
+- no support for cookies larger than the smallest interoperable size; and
+- no support for efficient cookie change monitoring.
+
+### Bug-for-bug compatible [non-goal]
+
+On the other hand, it is also not a goal of this proposal to allow all cookie behavior available through any current `document.cookie` implementation. By restricting behavior to a reasonable extension of a useful subset of current behavior, changing defaults and behavior where absolutely necessary, the API can remain straightforward enough to be implementable by many browsers while still offering useful features in a form usable across browsers without major differences in behavior for which content authors/app developers would need to make special allowances.
+
+### Polyfilling [non-goal]
+
+It is not a goal of this proposal to restrict the new API's semantics or implementation such that it could be built entirely in terms of the existing `document.cookie` API.
+
+Most of this API's behavior could be approximated by a polyfill atop `document.cookie` for document contexts where that API already exists. There are limits to such an approximation:
+
+- some `document.cookie` operations silently fail in ways not currently easily detectable or predictable by scripts and so a native implementation of the async cookies API would reject the operation when a `document.cookie`-based polyfill would instead incorrectly treat the operation as resolved,
+- any `document.cookie`-based polyfill would introduce detectable blocking pauses in the script context's event loop - this is generally undesirable for performance reasons and is one of the motivations for the new API, and
+- any `document.cookie`-based polyfill would pay a high performance price for cookie monitoring since it would need to run a high-frequency cookie scanner for change detection.
+
+### API forwarding [non-goal]
+
+It is not a goal of this API to support cross-context API forwarding, but the present form of the proposal does not prevent it either.
+
+This API is currently designed:
+
+- with Promises ⇔ async functions for all operations, 
+- with neither opaque nor nontransferable data types,
+- with no thread-blocking operations,
+- with no strong transactional guarantees,
+- with no guarantees of predictable realtime performance,
+- with no explicit object sealing or other API-level tamper-resistance,
+- with no custom getters/setters,
+- with no explicit timing guarantees about when exactly changes made through this API will take effect and
+- with no explicit coherency guarantees about read operations in the presence of overlapping reads or writes.
+
+So long as these continue to hold, a replacement or a shim using postMessage or a similar cross-context messaging primitive and exposing a CookieStore to a different execution contexts (e.g. to a sandboxed IFRAME) using the same API should be possible.
+
+Any forwarding of the API should be done bearing in mind the implications (including security and privacy, among others) of the forwarding and ensuring the forwarding implementation does not open up new security holes or violate privacy expectations of site visitors/app users.
