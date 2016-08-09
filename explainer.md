@@ -55,9 +55,9 @@ The API must interoperate well enough with existing cookie APIs (HTTP-level, HTM
 
 ### Opinions
 
-This API defaults cookie paths to '/' for write and delete operations. The implicit relative path-scoping of cookies
-to '.' has caused a lot of additional complexity for relatively little gain given their security equivalence under the
-same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain.
+This API defaults cookie paths to `/` for cookie write operations, including deletion/expiration. The implicit relative path-scoping of cookies to `.` has caused a lot of additional complexity for relatively little gain given their security equivalence under the same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain. Cookie paths without a trailing `/` are treated as if they had a trailing `/` appended for cookie write operations. Cookie paths must start with `/` for write operations, and must not contain any `..` path segments. Query parameters and URL fragments are not allowed in paths for cookie write operations.
+
+URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
 
 This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) [creation or modification of `Secure`-flagged cookies from unsecured web origins](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00) and [enforces special rules for the `__Host-` and `__Secure-` cookie name prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00).
 
@@ -69,8 +69,6 @@ so this API allows JavaScript Date objects and numeric timestamps (milliseconds 
 
 Name-only or value-only cookies (i.e. those with no `=` in their HTTP Cookie header serialization) are not settable
 through this API and will not be included in results returned from it unless the user agent normalizes them to include a `=`.
-
-Cookie paths without a trailing '/' are treated as if they had a trailing '/' appended for cookie write operations. Cookie paths without a trailing '/' are treated as if the final path segment had been removed for cookie read operations. Cookie paths must start with '/' for write operations, and may not contain any '..' path segments. Relative cookie paths are resolved for cookie read operations.
 
 Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API mandates UTF-8 interpretation for cookies read or written by this API.
 
@@ -142,7 +140,7 @@ let getOneCookieForRequestUrl = async () => {
 };
 ```
 
-Sometimes you need to see the whole script-visible in-scope subset of cookie jar, including potential reuse of the same
+Sometimes you need to see the whole script-visible in-scope subset of the cookie jar, including potential reuse of the same
 cookie name at multiple paths and/or domains (the paths and domains are not exposed to script by this API, though):
 
 ```js
@@ -195,8 +193,7 @@ let setOneSimpleOriginSessionCookie = async () => {
 };
 ```
 
-That defaults to path `/` and *implicit* domain, and defaults to a Secure-if-https-origin, non-HttpOnly session cookie which
-will be visible to scripts. You can override these defaults if needed:
+That defaults to path `/` and *implicit* domain, and defaults to a Secure-if-https-origin, non-HttpOnly session cookie which will be visible to scripts. You can override these defaults if needed:
 
 ```js
 let setOneDaySecureCookieWithDate = async () => {
@@ -246,6 +243,29 @@ let setSecureCookieWithHttpLikeExpirationString = async () => {
 ```
 
 In this case the syntax is that of the HTTP cookies spec; any other syntax will result in promise rejection.
+
+You can set multiple cookies too, but - as with HTTP `Set-Cookie` - the multiple write operations have no guarantee of atomicity:
+
+```js
+let setThreeSimpleOriginSessionCookiesSequentially = async () => {
+  await cookieStore.set('__Host-🍪', '🔵cookie-value1🔴');
+  await cookieStore.set('__Host-🌟', '🌠cookie-value2🌠');
+  await cookieStore.set('__Host-🌱', '🔶cookie-value3🔷');
+  console.log('All set!');
+};
+```
+
+If the relative order is unimportant the operations can be performed without specifying the order:
+
+```js
+let setThreeSimpleOriginSessionCookiesNonsequentially = async () => {
+  await Promise.all([
+    cookieStore.set('__Host-🍪', '🔵cookie-value1🔴'),
+    cookieStore.set('__Host-🌟', '🌠cookie-value2🌠'),
+    cookieStore.set('__Host-🌱', '🔶cookie-value3🔷')]);
+  console.log('All set!');
+};
+```
 
 #### Clearing
 
@@ -353,9 +373,10 @@ let callback = (cookieChanges, observer) => {
   });
 };
 let observer = new CookieObserver(callback);
-// If null or omitted this defaults to location.pathname in a
-// document context or worker scope in a service worker context.
-let url = location.pathname;
+// If null or omitted this defaults to location.pathname up to and
+// including the final '/' in a document context, or worker scope up
+// to and including the final '/' in a service worker context.
+let url = (location.pathname).replace(/[^\/]+$/, '');
 // If null or omitted this defaults to interest in all
 // script-visible cookies.
 let interests = [
@@ -365,11 +386,14 @@ let interests = [
   // Interested in all simple origin cookies named like
   // /^__Host-COOKIEN.*$/ at the default URL.
   {name: '__Host-COOKIEN', matchType: 'startsWith'},
+  // Interested in all simple origin cookies named '__Host-🍪'
+  // at the default URL.
+  {name: '__Host-🍪'},
   // Interested in all cookies named 'OLDCOOKIENAME' at the given URL.
   {name: 'OLDCOOKIENAME', matchType: 'equals', url: url},
   // Interested in all simple origin cookies named like
   // /^__Host-AUTHTOKEN.*$/ at the given URL.
-  {name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + '/auth'}
+  {name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + 'auth/'}
 ];
 observer.observe(cookieStore, interests);
 ```
@@ -389,12 +413,6 @@ A service worker does not have a persistent JavaScript execution context, so a d
 
 ```js
   ...
-  // Cookie change interest is registered during the InstallEvent in a service
-  // worker context; parameters are identical to CookieObserver's observe(...)
-  // method. The url must be inside the registration scope of the service worker,
-  // and defaults to the registration scope if null or omitted.
-  event.registerCookieChangeInterest(cookieStore); // all cookies, url === SW scope url
-  // Call it more than once to register additional interests:
   let url = '/sw-scope/';
   // If null or omitted this defaults to interest in all
   // script-visible cookies.
@@ -405,12 +423,22 @@ A service worker does not have a persistent JavaScript execution context, so a d
     // Interested in all simple origin cookies named like
     // /^__Host-COOKIEN.*$/ at the default URL.
     {name: '__Host-COOKIEN', matchType: 'startsWith'},
+    // Interested in all simple origin cookies named '__Host-🍪'
+    // at the default URL.
+    {name: '__Host-🍪'},
     // Interested in all cookies named 'OLDCOOKIENAME' at the given URL.
     {name: 'OLDCOOKIENAME', matchType: 'equals', url: url},
     // Interested in all simple origin cookies named like
     // /^__Host-AUTHTOKEN.*$/ at the given URL.
-    {name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + '/auth'}
+    {name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + 'auth/'}
   ];
+  // Cookie change interest is registered during the InstallEvent in a service
+  // worker context; parameters are identical to CookieObserver's observe(...)
+  // method. The url must be inside the directory portion of the registration scope
+  // of the service worker, and defaults to the directory portion of the registration
+  // scope if null or omitted.
+  event.registerCookieChangeInterest(cookieStore); // all cookies, default url
+  // Call it more than once to register additional interests:
   event.registerCookieChangeInterest(cookieStore, interests);
   ...
 ```
@@ -501,7 +529,7 @@ Prefix rules are also enforced in write operations by this API, but may not be e
 
 Although a service worker script cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the service worker script. This means that cookie access inside the scope of the service worker is technically possible already, it's just not very convenient.
 
-When the service worker is scoped more narrowly than `/` it may still be able to read path-scoped cookies from outside its scope by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.
+When the service worker is scoped more narrowly than `/` it may still be able to read path-scoped cookies from outside its scope's path space by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.
 
 ### Cookie aversion
 
