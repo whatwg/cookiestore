@@ -70,6 +70,8 @@ so this API allows JavaScript Date objects and numeric timestamps (milliseconds 
 Name-only or value-only cookies (i.e. those with no `=` in their HTTP Cookie header serialization) are not settable
 through this API and will not be included in results returned from it unless the user agent normalizes them to include a `=`.
 
+Cookie paths without a trailing '/' are treated as if they had a trailing '/' appended for cookie write operations. Cookie paths without a trailing '/' are treated as if the final path segment had been removed for cookie read operations. Cookie paths must start with '/' for write operations, and may not contain any '..' path segments. Relative cookie paths are resolved for cookie read operations.
+
 Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API mandates UTF-8 interpretation for cookies read or written by this API.
 
 Use of cookie-change-driven scripts has been hampered by the absence of a power-efficient (non-polling) API for this. This API provides observers for efficient monitoring in document contexts and interest registration for efficient monitoring in service worker contexts.
