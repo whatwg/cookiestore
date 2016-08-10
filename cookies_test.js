@@ -292,6 +292,6 @@ addEventListener('load', () => runAllTests().then(() => console.log('All tests c
   testObservation_ =
     eval(String(testObservation_).split('auth/').join('auth'));
 
-  testObservation = () => new Promise(testObservation_);
+  let testObservation = () => new Promise(testObservation_);
 
 })();
