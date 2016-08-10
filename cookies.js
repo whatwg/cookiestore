@@ -50,7 +50,7 @@ if (self.document) (function() {
       this.doc_ = document;
     }
     async set(setCookieString) {
-      console.log('Set-Cookie: %s', setCookieString);
+      console.info('Set-Cookie: %s', setCookieString);
       this.doc_.cookie = setCookieString;
     }
     async get() {
