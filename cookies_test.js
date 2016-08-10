@@ -23,21 +23,22 @@ addEventListener('load', () => runAllTests().then(() => console.log('All tests c
     await getOneSimpleOriginCookieAsync().then(
       () => console.log('getOneSimpleOriginCookieAsync succeeded!'),
       reason => console.error('getOneSimpleOriginCookieAsync did not succeed: ', reason));
-    await getOneCookieForRequestUrl();
-    await countCookies();
-    await countMatchingSimpleOriginCookies();
-    await countMatchingCookiesForRequestUrl();
-    await countAllCookiesForRequestUrl();
-    await setOneSimpleOriginSessionCookie();
-    await setOneDaySecureCookieWithDate();
-    await setOneDayUnsecuredCookieWithMillisecondsSinceEpoch();
-    await setSecureCookieWithHttpLikeExpirationString();
-    await setThreeSimpleOriginSessionCookiesSequentially();
-    await setThreeSimpleOriginSessionCookiesNonsequentially();
-    await setExpiredSecureCookieWithDomainPathAndFallbackValue();
-    await deleteSimpleOriginCookie();
-    await deleteSecureCookieWithDomainAndPath();
-    testObservation();
+    await Promise.all([
+      getOneCookieForRequestUrl(),
+      countCookies(),
+      countMatchingSimpleOriginCookies(),
+      countMatchingCookiesForRequestUrl(),
+      countAllCookiesForRequestUrl(),
+      setOneSimpleOriginSessionCookie(),
+      setOneDaySecureCookieWithDate(),
+      setOneDayUnsecuredCookieWithMillisecondsSinceEpoch(),
+      setSecureCookieWithHttpLikeExpirationString(),
+      setThreeSimpleOriginSessionCookiesSequentially(),
+      setThreeSimpleOriginSessionCookiesNonsequentially(),
+      setExpiredSecureCookieWithDomainPathAndFallbackValue(),
+      deleteSimpleOriginCookie(),
+      deleteSecureCookieWithDomainAndPath(),
+      testObservation()]);
   };
   
   let getOneSimpleOriginCookieAsync = async () => {
@@ -219,7 +220,7 @@ addEventListener('load', () => runAllTests().then(() => console.log('All tests c
   deleteSecureCookieWithDomainAndPath =
     eval(String(deleteSecureCookieWithDomainAndPath).split('example.org').join(location.hostname));
 
-  let testObservation = async() => {
+  let testObservation = new Promise(resolve => {
     // This will get invoked (asynchronously) shortly after the observe(...) call to
     // provide an initial snapshot; in that case the length of cookieChanges may be 0,
     // indicating no matching script-visible cookies for any URL+cookieStore currently
@@ -255,6 +256,9 @@ addEventListener('load', () => runAllTests().then(() => console.log('All tests c
           throw 'Unexpected CookieChange type ' + cookieChange.type;
         }
       });
+      // Resolve promise after first callback
+      if (resolve) resolve();
+      resolve = null;
     };
     let observer = new CookieObserver(callback);
     // If null or omitted this defaults to location.pathname up to and
