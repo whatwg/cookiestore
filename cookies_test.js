@@ -220,7 +220,7 @@ addEventListener('load', () => runAllTests().then(() => console.log('All tests c
   deleteSecureCookieWithDomainAndPath =
     eval(String(deleteSecureCookieWithDomainAndPath).split('example.org').join(location.hostname));
 
-  let testObservation = () => new Promise(resolve => {
+  let testObservation = resolve => {
     // This will get invoked (asynchronously) shortly after the observe(...) call to
     // provide an initial snapshot; in that case the length of cookieChanges may be 0,
     // indicating no matching script-visible cookies for any URL+cookieStore currently
@@ -286,10 +286,12 @@ addEventListener('load', () => runAllTests().then(() => console.log('All tests c
     observer.observe(cookieStore, interests);
     // Default interest: all script-visible changes, default URL
     observer.observe(cookieStore);
-  });
+  };
 
   // FIXME: remove this once IFRAME puppets and ServiceWorker support are implemented in the polyfill
   testObservation =
     eval(String(testObservation).split('auth/').join('auth'));
+
+  testObservation = () => new Promise(testObservation);
 
 })();
