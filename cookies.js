@@ -229,7 +229,7 @@ if (self.document) (function() {
       });
       if (!copiedInterests.length) return;
       this.interests_.push({cookieStore: cookieStore, interests: copiedInterests, cookies_: null});
-      this.schedule_();
+      this.schedule_(true);
     }
     disconnect() {
       this.interests_ = null;
@@ -239,7 +239,7 @@ if (self.document) (function() {
         this.timer_ = null;
       }
     }
-    schedule_() {
+    schedule_(skipWaiting) {
       navigator.getBattery().then(batteryManager => {
         if (this.timer_) return;
         let interval = SLOW_OBSERVER_INTERVAL;
@@ -249,7 +249,8 @@ if (self.document) (function() {
             interval = FAST_OBSERVER_INTERVAL;
           }
         }
-        this.timer_ = setTimeout(() => this.tick_().then(() => this.schedule_()), interval);
+        if (skipWaiting) interval = 0;
+        this.timer_ = setTimeout(() => this.tick_().then(() => this.schedule_(false)), interval);
       });
     }
     async tick_() {
@@ -263,7 +264,7 @@ if (self.document) (function() {
         let oldCookies = cookies_;
         let newCookies = interestEntry.cookies_ = allCookies;
         let oldCookiesFlat = {};
-        (oldCookies || {}).forEach(({name, value}) => {
+        (oldCookies || []).forEach(({name, value}) => {
           oldCookiesFlat[name + '='] = oldCookiesFlat[name + '='] || [];
           oldCookiesFlat[name + '='].push(name + '=' + value);
         });
@@ -274,7 +275,7 @@ if (self.document) (function() {
         });
         let changes = [];
         let newSame = {};
-        (oldCookies || {}).forEach(({name, value}, index) => {
+        (oldCookies || []).forEach(({name, value}, index) => {
           if (oldCookiesFlat[name + '='].join(';') === (newCookiesFlat[name + '='] || []).join(';')) {
             newSame[name + '='] = true;
           } else {
@@ -298,7 +299,7 @@ if (self.document) (function() {
         }
         if (oldCookies == null) forceReport = true;
       });
-      if (forceReport || observed.length) this.callback_.call(null, observed, cookieObserver);
+      if (forceReport || observed.length) this.callback_.call(null, observed, this);
     }
   };
   if (!self.cookieStore) self.cookieStore = new CookieStore(new AsyncCookieJar_(self.document));
