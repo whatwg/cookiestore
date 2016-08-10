@@ -1,7 +1,8 @@
 // async cookies API polyfill for document contexts
 if (self.document) (function() {
-  const DISALLOWED_IN_COOKIE_NAME_RE = /[()<>@,;:\\""\/\[\]?={} \0-\x1f\x7f]|[^\x21-\x7e\u00A0-\uFFFD]/;
-  const DISALLOWED_IN_COOKIE_VALUE_RE = /[^\x2D-\x3A\x21\x23-\x2B\x3C-\x5B\x5D-\x7E\u00A0-\uFFFD]/;
+  'use strict';
+  const DISALLOWED_IN_COOKIE_NAME_RE = /[()<>@,;:\\""\/\[\]?={} \0-\x1f\x7f]|[^\x21-\x7e\u00A0-\u{10FFFF}/u;
+  const DISALLOWED_IN_COOKIE_VALUE_RE = /[^\x2D-\x3A\x21\x23-\x2B\x3C-\x5B\x5D-\x7E\u00A0-\u{10FFFF}/u;
   // based on https://tools.ietf.org/html/rfc3986#appendix-B
   const uriRegExp = /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/;
   const uriSchemeGroup = 2;
