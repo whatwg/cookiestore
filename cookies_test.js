@@ -1,6 +1,7 @@
 addEventListener('load', () => runAllTests().then(() => console.log('All tests complete.')), true);
   
 (() => {
+  'use strict';
 
   function getOneSimpleOriginCookie() {
     return cookieStore.get('__Host-COOKIENAME').then(function(cookie) {
