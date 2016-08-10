@@ -8,7 +8,8 @@ if (self.document) (function() {
   const uriAuthorityGroup = 4;
   const uriPathGroup = 5;
   const defUriGroups = String(location.href).match(uriRegExp) || [];
-  const defReadPath = (defUriGroups[uriPathGroup] || '/').replace(/[^\/]+$/, '');
+  const dirName = path => path.replace(/(^|\/)\.\.$/, '$1../').replace(/[^\/]+$/, '');
+  const defReadPath = dirName(defUriGroups[uriPathGroup] || '/');
   const defOrigin = defUriGroups[uriSchemeGroup] + '://' + defUriGroups[uriAuthorityGroup];
   const defSecure = defUriGroups[uriSchemeGroup] === 'https:';
   const resolvePath = path => {
@@ -26,7 +27,7 @@ if (self.document) (function() {
     if (url == null) url = defReadPath;
     url = String(url);
     const urlGroups = url.match(uriRegExp) || [];
-    const urlPath = resolvePath(String(urlGroups[uriPathGroup] || defReadPath)).replace(/[^\/]+$/, '');
+    const urlPath = resolvePath(dirName(String(urlGroups[uriPathGroup] || defReadPath)));
     const origin = [
       urlGroups[uriSchemeGroup] || defUriGroups[uriSchemeGroup],
       urlGroups[uriAuthorityGroup] || defUriGroups[uriAuthorityGroup]].join('://').toLowerCase();
@@ -74,7 +75,7 @@ if (self.document) (function() {
         {},
         (typeof nameOrOptions === 'object') ? nameOrOptions : {name: nameOrOptions},
         moreOptions);
-      let {name, url = defReadPath, matchType = 'equals'} = options || {};
+      let {name, url = defReadPath, matchType} = options || {};
       if (name != null) {
       	name = String(name);
         if (name.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie name');
@@ -90,7 +91,7 @@ if (self.document) (function() {
       }
       url = readPathForUrl(url);
       let cookieList = [];
-      let jar = String(awat this.asyncCookieJar_.get() || '');
+      let jar = String(await this.asyncCookieJar_.get() || '');
       for (let i = 0, j = jar.length, k = jar.indexOf(';');
            k = (k == -1) ? j : k, i < j;
            i = k + 1 + (jar[k + 1] == ' ' ? 1 : 0), k = jar.indexOf(';', i)) {
@@ -183,7 +184,7 @@ if (self.document) (function() {
           throw new SyntaxError([
             'Cookies with the ',
             JSON.stringify(HOST_PREFIX),
-            ' prefix cannot have the domain parameter'].join('')));
+            ' prefix cannot have the domain parameter'].join(''));
         }
       }
       let setCookieParts = [name, '=', value];
@@ -207,7 +208,7 @@ if (self.document) (function() {
     }
     observe(cookieStore, interests) {
       const copiedInterests = [];
-      (interests || [{}]).forEach(({name, url = defReadPath, matchType = 'equals'} = {}) => {
+      (interests || [{}]).forEach(({name, url = defReadPath, matchType} = {}) => {
         if (name != null) {
         	name = String(name);
           if (name.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie name');
@@ -239,16 +240,17 @@ if (self.document) (function() {
       }
     }
     schedule_() {
-      if (this.timer_) return;
-      let interval = SLOW_OBSERVER_INTERVAL;
-      if (self.document.visibilityState === 'visible') {
-        const batteryManager = await navigator.getBattery();
-        const level = batteryManager.level;
-        if (level > VERY_LOW_BATTERY_THRESHOLD && level > LOW_BATTERY_THRESHOLD || batteryManager.charging) {
-          interval = FAST_OBSERVER_INTERVAL;
+      navigator.getBattery().then(batteryManager => {
+        if (this.timer_) return;
+        let interval = SLOW_OBSERVER_INTERVAL;
+        if (self.document.visibilityState === 'visible') {
+          const level = batteryManager.level;
+          if (level > VERY_LOW_BATTERY_THRESHOLD && level > LOW_BATTERY_THRESHOLD || batteryManager.charging) {
+            interval = FAST_OBSERVER_INTERVAL;
+          }
         }
-      }
-      this.timer_ = setTimeout(() => this.tick_().then(() => this.schedule_()), interval);
+        this.timer_ = setTimeout(() => this.tick_().then(() => this.schedule_()), interval);
+      });
     }
     async tick_() {
       this.timer_ = null;
@@ -257,7 +259,7 @@ if (self.document) (function() {
       let allCookies = await cookieStore.getAll();
       let forceReport = false;
       this.interests_.forEach(interestEntry => {
-        {cookieStore, interests, cookies_} = interestEntry;
+        let {cookieStore, interests, cookies_} = interestEntry;
         let oldCookies = cookies_;
         let newCookies = interestEntry.cookies_ = allCookies;
         let oldCookiesFlat = {};
@@ -275,13 +277,12 @@ if (self.document) (function() {
         (oldCookies || {}).forEach(({name, value}, index) => {
           if (oldCookiesFlat[name + '='].join(';') === (newCookiesFlat[name + '='] || []).join(';')) {
             newSame[name + '='] = true;
-            continue;
+          } else {
+            changes.push({type: 'hidden', name: name, value: value, index: index});
           }
-          changes.push({type: 'hidden', name: name, value: value, index: index});
         });
         newCookies.forEach(({name, value}, index) => {
-          if (newSame[name + '=']) continue;
-          changes.push({type: 'visible', name: name, value: value, index: index});
+          if (!newSame[name + '=']) changes.push({type: 'visible', name: name, value: value, index: index});
         });
         if (oldCookies == null || changes.length > 0) {
           interests.forEach(({name, url, matchType}) => {
