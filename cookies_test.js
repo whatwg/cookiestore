@@ -286,7 +286,7 @@ addEventListener('load', () => runAllTests().then(() => console.log('All tests c
     observer.observe(cookieStore, interests);
     // Default interest: all script-visible changes, default URL
     observer.observe(cookieStore);
-  };
+  });
 
   // FIXME: remove this once IFRAME puppets and ServiceWorker support are implemented in the polyfill
   testObservation =
