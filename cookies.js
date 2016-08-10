@@ -11,7 +11,7 @@ if (self.document) (function() {
   const dirName = path => path.replace(/(^|\/)\.\.$/, '$1../').replace(/[^\/]+$/, '');
   const defReadPath = dirName(defUriGroups[uriPathGroup] || '/');
   const defOrigin = defUriGroups[uriSchemeGroup] + '://' + defUriGroups[uriAuthorityGroup];
-  const defSecure = defUriGroups[uriSchemeGroup] === 'https:';
+  const defSecure = defUriGroups[uriSchemeGroup] === 'https';
   const resolvePath = path => {
     path = String(path || defReadPath);
     if (path[0] !== '/') path = defReadPath + path;
@@ -143,9 +143,9 @@ if (self.document) (function() {
       // Add implicit trailing '/' if omitted. Does not match IE Set-Cookie behavior.
       path = path.replace(/([^\/]$)/, '$1/');
       let secure = options.secure;
-      if (secure == null) secure = this.defSecure_;
+      if (secure == null) secure = defSecure;
       secure = !!secure;
-      if (secure && !this.defSecure_) throw new SyntaxError('Secure cookies can only be modified from secure contexts');
+      if (secure && !defSecure) throw new SyntaxError('Secure cookies can only be modified from secure contexts');
       let httpOnly = !!options.httpOnly;
       if (value == null && maxAge == null && expires == null) maxAge = 0;
       value = String(value || '');
@@ -154,7 +154,7 @@ if (self.document) (function() {
         throw new SyntaxError('Unsupported character in cookie value');
       }
       if (name.substr(0, SECURE_PREFIX.length) === SECURE_PREFIX) {
-        if (!this.defSecure_) {
+        if (!defSecure) {
           throw new SyntaxError([
             'Cookies with the ',
             JSON.stringify(SECURE_PREFIX),
@@ -164,7 +164,7 @@ if (self.document) (function() {
           throw new SyntaxError('Cookies with the ' + JSON.stringify(SECURE_PREFIX) + ' prefix must use the Secure flag');
         }
       } else if (name.substr(0, HOST_PREFIX.length) === HOST_PREFIX) {
-        if (!this.defSecure_) {
+        if (!defSecure) {
           throw new SyntaxError([
             'Cookies with the ',
             JSON.stringify(HOST_PREFIX),
@@ -180,7 +180,7 @@ if (self.document) (function() {
             ' prefix must have path ',
             JSON.stringify('/')].join(''));
         }
-        if (domain !== null) {
+        if (domain != null) {
           throw new SyntaxError([
             'Cookies with the ',
             JSON.stringify(HOST_PREFIX),
