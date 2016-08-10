@@ -151,14 +151,32 @@ addEventListener('load', () => runAllTests().then(() => console.log('All tests c
     await cookieStore.set('__Host-🌟', '🌠cookie-value2🌠');
     await cookieStore.set('__Host-🌱', '🔶cookie-value3🔷');
     console.log('All set!');
+    // NOTE: this assumes no concurrent writes from elsewhere; it also
+    // uses three separate cookie jar read operations where a single getAll
+    // would be more efficient, but this way the CookieStore does the filtering
+    // for us.
+    let matchingValues = await Promise.all(['🍪', '🌟', '🌱'].map(async ಠ_ಠ => (await cookieStore.get('__Host-' + ಠ_ಠ)).value));
+    let actual = matchingValues.join(';');
+    let expected = '🔵cookie-value1🔴;🌠cookie-value2🌠;🔶cookie-value3🔷';
+    if (actual !== expected) throw new Error('Expected ' + JSON.stringify(expected) + ' but got ' + JSON.stringify(actual));
+    console.log('All verified!');
   };
   
   let setThreeSimpleOriginSessionCookiesNonsequentially = async () => {
     await Promise.all([
-      cookieStore.set('__Host-🍪', '🔵cookie-value1🔴'),
-      cookieStore.set('__Host-🌟', '🌠cookie-value2🌠'),
-      cookieStore.set('__Host-🌱', '🔶cookie-value3🔷')]);
+      cookieStore.set('__Host-unordered🍪', '🔵unordered-cookie-value1🔴'),
+      cookieStore.set('__Host-unordered🌟', '🌠unordered-cookie-value2🌠'),
+      cookieStore.set('__Host-unordered🌱', '🔶unordered-cookie-value3🔷')]);
     console.log('All set!');
+    // NOTE: this assumes no concurrent writes from elsewhere; it also
+    // uses three separate cookie jar read operations where a single getAll
+    // would be more efficient, but this way the CookieStore does the filtering
+    // for us.
+    let matchingCookies = await Promise.all(['🍪', '🌟', '🌱'].map(ಠ_ಠ => cookieStore.get('__Host-unordered' + ಠ_ಠ)));
+    let actual = matchingCookies.map(({value}) => value).join(';');
+    let expected = '🔵unordered-cookie-value1🔴;🌠unordered-cookie-value2🌠;🔶unordered-cookie-value3🔷';
+    if (actual !== expected) throw new Error('Expected ' + JSON.stringify(expected) + ' but got ' + JSON.stringify(actual));
+    console.log('All verified!');
   };
   
   let setExpiredSecureCookieWithDomainPathAndFallbackValue = async () => {
@@ -261,7 +279,7 @@ addEventListener('load', () => runAllTests().then(() => console.log('All tests c
       {name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + 'auth/'}
     ];
     observer.observe(cookieStore, interests);
-    // Default interest: all changes
+    // Default interest: all script-visible changes, default URL
     observer.observe(cookieStore);
   };
 
