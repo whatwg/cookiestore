@@ -21,6 +21,55 @@ On the modern a web a cookie operation in one part of a web application cannot b
 
 Newer parts of the web built in service workers [need access to cookies too](https://github.com/slightlyoff/ServiceWorker/issues/707) but cannot use the synchronous, blocking `document.cookie` and `<meta http-equiv="set-cookie" ...>` interfaces at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
 
+## A taste of the proposed change
+
+Although it is tempting to [rethink cookies](https://discourse.wicg.io/t/rethinking-cookies/744) entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.
+
+Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in `Set-Cookie` format:
+
+```js
+document.cookie =
+  '__Secure-COOKIENAME=cookie-value' +
+  '; Path=/' +
+  '; expires=Fri, 12 Aug 2016 23:05:17 GMT' +
+  '; Secure' +
+  '; Domain=example.org';
+// now we could assume the write succeeded, but since
+// failure is silent it is difficult to tell, so we
+// read to see whether the write succeeded
+var successRegExp =
+  /(^|; ?)__Secure-COOKIENAME=cookie-value(;|$)/;
+if (String(document.cookie).match(successRegExp)) {
+  console.log('It worked!');
+} else {
+  console.error('It did not work, and we do not know why');
+}
+```
+
+What if you could instead write:
+
+```js
+cookieStore.set(
+  '__Secure-COOKIENAME',
+  'cookie-value',
+  {
+    expires: Date.now() + 24*60*60*1000,
+    domain: 'example.org'
+  }).then(function() {
+    console.log('It worked!');
+  }, function(reason) {
+    console.error(
+      'It did not work, and this is why:',
+      reason);
+  });
+// Meanwhile we can do other things while waiting for
+// the cookie store to process the write...
+```
+
+This also has the advantage of not relying on `document` and not blocking, which together make it usable from [service workers](https://github.com/slightlyoff/ServiceWorker), which otherwise do not have cookie access from script.
+
+This proposal also includes a power-efficient monitoring API to replace `setTimeout`-based polling cookie monitors with cookie change observers.
+
 ## Summary
 
 This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:
