@@ -128,10 +128,9 @@ getOneSimpleOriginCookieAsync().then(
   reason => console.error('getOneSimpleOriginCookieAsync did not succeed: ', reason));
 ```
 
-Remaining examples use this syntax and omit the calling code.
+Remaining examples use this syntax along with destructuring for clarity, and omit the calling code.
 
-In a service worker context you can read a cookie from the point of view of a particular in-scope URL, which may be useful when
-handling regular (same-origin, in-scope) fetch events or foreign fetch events.
+In a service worker context you can read a cookie from the point of view of a particular in-scope URL, which may be useful when handling regular (same-origin, in-scope) fetch events or foreign fetch events.
 
 ```js
 let getOneCookieForRequestUrl = async () => {
@@ -157,7 +156,7 @@ Sometimes an expected cookie is known by a prefix rather than by an exact name:
 let countMatchingSimpleOriginCookies = async () => {
   let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'startsWith'});
   console.log('How many matching cookies? %d', cookieList.length);
-  cookieList.forEach(cookie => console.log('Matching cookie %s has value %o', cookie.name, cookie.value));
+  cookieList.forEach(({name, value}) => console.log('Matching cookie %s has value %o', name, value));
 };
 ```
 
@@ -166,9 +165,10 @@ In a service worker context you may need to read more than one cookie from an in
 ```js
 let countMatchingCookiesForRequestUrl = async () => {
   // 'equals' is the default matchType and indicates exact matching
-  let cookieList = await cookieStore.getAll({name: 'LEGACYSORTPREFERENCE', matchType: 'equals', url: '/pictures/'});
+  let cookieList =
+    await cookieStore.getAll({name: 'LEGACYSORTPREFERENCE', matchType: 'equals', url: '/pictures/'});
   console.log('How many legacy sort preference cookies? %d', cookieList.length);
-  cookieList.forEach(cookie => console.log('Legacy sort preference cookie has value %o', cookie.value));
+  cookieList.forEach(({value}) => console.log('Legacy sort preference cookie has value %o', value);
 };
 ```
 
@@ -178,7 +178,7 @@ You might even need to read all of them:
 let countAllCookiesForRequestUrl = async () => {
   let cookieList = await cookieStore.getAll({url: '/sw-scope/session2/document5/'});
   console.log('How many script-visible cookies? %d', cookieList.length);
-  cookieList.forEach(cookie => console.log('Cookie %s has value %o', cookie.name, cookie.value));
+  cookieList.forEach(({name, value}) => console.log('Cookie %s has value %o', name, value));
 };
 ```
 
@@ -256,10 +256,17 @@ let setThreeSimpleOriginSessionCookiesSequentially = async () => {
   // uses three separate cookie jar read operations where a single getAll
   // would be more efficient, but this way the CookieStore does the filtering
   // for us.
-  let matchingValues = await Promise.all(['🍪', '🌟', '🌱'].map(async ಠ_ಠ => (await cookieStore.get('__Host-' + ಠ_ಠ)).value));
+  let matchingValues = await Promise.all(['🍪', '🌟', '🌱'].map(
+    async ಠ_ಠ => (await cookieStore.get('__Host-' + ಠ_ಠ)).value));
   let actual = matchingValues.join(';');
   let expected = '🔵cookie-value1🔴;🌠cookie-value2🌠;🔶cookie-value3🔷';
-  if (actual !== expected) throw new Error('Expected ' + JSON.stringify(expected) + ' but got ' + JSON.stringify(actual));
+  if (actual !== expected) {
+    throw new Error([
+      'Expected ',
+      JSON.stringify(expected),
+      ' but got ',
+      JSON.stringify(actual)].join(''));
+  }
   console.log('All verified!');
 };
 ```
@@ -277,10 +284,18 @@ let setThreeSimpleOriginSessionCookiesNonsequentially = async () => {
   // uses three separate cookie jar read operations where a single getAll
   // would be more efficient, but this way the CookieStore does the filtering
   // for us.
-  let matchingCookies = await Promise.all(['🍪', '🌟', '🌱'].map(ಠ_ಠ => cookieStore.get('__Host-unordered' + ಠ_ಠ)));
+  let matchingCookies = await Promise.all(['🍪', '🌟', '🌱'].map(
+    ಠ_ಠ => cookieStore.get('__Host-unordered' + ಠ_ಠ)));
   let actual = matchingCookies.map(({value}) => value).join(';');
-  let expected = '🔵unordered-cookie-value1🔴;🌠unordered-cookie-value2🌠;🔶unordered-cookie-value3🔷';
-  if (actual !== expected) throw new Error('Expected ' + JSON.stringify(expected) + ' but got ' + JSON.stringify(actual));
+  let expected =
+    '🔵unordered-cookie-value1🔴;🌠unordered-cookie-value2🌠;🔶unordered-cookie-value3🔷';
+  if (actual !== expected) {
+    throw new Error([
+      'Expected ',
+      JSON.stringify(expected),
+      ' but got ',
+      JSON.stringify(actual)].join(''));
+  }
   console.log('All verified!');
 };
 ```
@@ -354,68 +369,74 @@ Special prefixes: a cookie write operation for a cookie using one of the `__Host
 You can monitor for script-visible cookie changes (creation, modification and deletion) during the lifetime of your script's execution context:
 
 ```js
-// This will get invoked (asynchronously) shortly after the observe(...) call to
-// provide an initial snapshot; in that case the length of cookieChanges may be 0,
-// indicating no matching script-visible cookies for any URL+cookieStore currently
-// observed. The CookieObserver instance is passed as the second parameter to allow
-// additional calls to observe or disconnect.
-let callback = (cookieChanges, observer) => {
-  console.log(
-    '%d script-visible cookie changes for CookieObserver %o',
-    cookieChanges.length,
-    observer);
-  cookieChanges.forEach(cookieChange => {
+let startMonitoring = new Promise(resolve => {
+  // This will get invoked (asynchronously) shortly after the observe(...) call to
+  // provide an initial snapshot; in that case the length of cookieChanges may be 0,
+  // indicating no matching script-visible cookies for any URL+cookieStore currently
+  // observed. The CookieObserver instance is passed as the second parameter to allow
+  // additional calls to observe or disconnect.
+  let callback = (cookieChanges, observer) => {
     console.log(
-      'CookieChange type %s for observed url %s in CookieStore %o',
-      cookieChange.type,
-      // Note that this will be the passed-in or defaulted value for the corresponding
-      // call to observe(...).
-      cookieChange.url,
-      // This is the same CookieStore passed to observe(...)
-      cookieChange.cookieStore);
-    switch(cookieChange.type) {
-    case 'visible':
-      // Creation or modification (e.g. change in value, or removal of HttpOnly), or
-      // appearance to script due to change in policy or permissions
-      console.log('Cookie %s now visible to script with value %s', cookieChange.name, cookieChange.value);
-      break;
-    case 'hidden':
-      // Deletion/expiration or disappearance (e.g. due to modification adding HttpOnly),
-      // or disappearance from script due to change in policy or permissions
-      console.log('Cookie %s expired or no longer visible to script', cookieChange.name);
-      break;
-    default:
-      console.error('Unexpected CookieChange type, ')
-      throw 'Unexpected CookieChange type ' + cookieChange.type;
-    }
-  });
-};
-let observer = new CookieObserver(callback);
-// If null or omitted this defaults to location.pathname up to and
-// including the final '/' in a document context, or worker scope up
-// to and including the final '/' in a service worker context.
-let url = (location.pathname).replace(/[^\/]+$/, '');
-// If null or omitted this defaults to interest in all
-// script-visible cookies.
-let interests = [
-  // Interested in all secure cookies named '__Secure-COOKIENAME';
-  // the default matchType is 'equals' at the given URL.
-  {name: '__Secure-COOKIENAME', url: url},
-  // Interested in all simple origin cookies named like
-  // /^__Host-COOKIEN.*$/ at the default URL.
-  {name: '__Host-COOKIEN', matchType: 'startsWith'},
-  // Interested in all simple origin cookies named '__Host-🍪'
-  // at the default URL.
-  {name: '__Host-🍪'},
-  // Interested in all cookies named 'OLDCOOKIENAME' at the given URL.
-  {name: 'OLDCOOKIENAME', matchType: 'equals', url: url},
-  // Interested in all simple origin cookies named like
-  // /^__Host-AUTHTOKEN.*$/ at the given URL.
-  {name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + 'auth/'}
-];
-observer.observe(cookieStore, interests);
-// Default interest: all script-visible changes, default URL
-observer.observe(cookieStore);
+      '%d script-visible cookie changes for CookieObserver %o',
+      cookieChanges.length,
+      observer);
+    cookieChanges.forEach(({cookieStore, type, url, name, value}) => {
+      console.log(
+        'CookieChange type %s for observed url %s in CookieStore %o',
+        type,
+        // Note that this will be the passed-in or defaulted value for the corresponding
+        // call to observe(...).
+        url,
+        // This is the same CookieStore passed to observe(...)
+        cookieStore);
+      switch(type) {
+      case 'visible':
+        // Creation or modification (e.g. change in value, or removal of HttpOnly), or
+        // appearance to script due to change in policy or permissions
+        console.log('Cookie %s now visible to script with value %s', name, value);
+        break;
+      case 'hidden':
+        // Deletion/expiration or disappearance (e.g. due to modification adding HttpOnly),
+        // or disappearance from script due to change in policy or permissions
+        console.log('Cookie %s with value %s expired or no longer visible to script', name, value);
+        break;
+      default:
+        throw 'Unexpected CookieChange type ' + type;
+      }
+    });
+    if (resolve == null) return;
+    // Resolve on completion of first callback
+    resolve();
+    resolve = null;
+  };
+  stopMonitoring();
+  let observer = self.observer = new CookieObserver(callback);
+  // If null or omitted this defaults to location.pathname up to and
+  // including the final '/' in a document context, or worker scope up
+  // to and including the final '/' in a service worker context.
+  let url = (location.pathname).replace(/[^\/]+$/, '');
+  // If null or omitted this defaults to interest in all
+  // script-visible cookies.
+  let interests = [
+    // Interested in all secure cookies named '__Secure-COOKIENAME';
+    // the default matchType is 'equals' at the given URL.
+    {name: '__Secure-COOKIENAME', url: url},
+    // Interested in all simple origin cookies named like
+    // /^__Host-COOKIEN.*$/ at the default URL.
+    {name: '__Host-COOKIEN', matchType: 'startsWith'},
+    // Interested in all simple origin cookies named '__Host-🍪'
+    // at the default URL.
+    {name: '__Host-🍪'},
+    // Interested in all cookies named 'OLDCOOKIENAME' at the given URL.
+    {name: 'OLDCOOKIENAME', matchType: 'equals', url: url},
+    // Interested in all simple origin cookies named like
+    // /^__Host-AUTHTOKEN.*$/ at the given URL.
+    {name: '__Host-AUTHTOKEN', matchType: 'startsWith', url: url + 'auth/'}
+  ];
+  observer.observe(cookieStore, interests);
+  // Default interest: all script-visible changes, default URL
+  observer.observe(cookieStore);
+});
 ```
 
 Successive attempts to `observe` on the same CookieObserver are additive but a single change to a single cookie will only be reported once for each URL where it is observed in a given CookieStore.
@@ -423,8 +444,13 @@ Successive attempts to `observe` on the same CookieObserver are additive but a s
 Eventually you may want to stop monitoring for script-visible cookie changes:
 
 ```js
-// No more callbacks until another call to observer.observe(...)
-observer.disconnect();
+let stopMonitoring = () => {
+  if (self.observer == null) return;
+  let observer = self.observer;
+  self.observer = null;
+  // No more callbacks until another call to observer.observe(...)
+  observer.disconnect();
+};
 ```
 
 #### Service worker
@@ -432,7 +458,7 @@ observer.disconnect();
 A service worker does not have a persistent JavaScript execution context, so a different API is needed for interest registration. Register your interest while handling the `InstallEvent` to ensure your service worker will run when a cookie you care about changes.
 
 ```js
-  ...
+addEventListener('install', event => {
   let url = '/sw-scope/';
   // If null or omitted this defaults to interest in all
   // script-visible cookies.
@@ -460,7 +486,7 @@ A service worker does not have a persistent JavaScript execution context, so a d
   event.registerCookieChangeInterest(cookieStore); // all cookies, default url
   // Call it more than once to register additional interests:
   event.registerCookieChangeInterest(cookieStore, interests);
-  ...
+});
 ```
 
 *Note:* cookie changes which occur at paths not yet known during handling of the `InstallEvent` cannot be monitored in a service worker context after the execution context ends using this API.
@@ -475,38 +501,35 @@ You also need to be sure to handle the `CookieChangeEvent`:
 addEventListener('cookiechange', event => {
   // event.detail is CookieChanges, analogous to the one passed to CookieObserver's callback
   let cookieChanges = event.detail;
-  console.log(
-    '%d script-visible cookie changes',
-    cookieChanges.length);
-  cookieChanges.forEach(cookieChange => {
+  console.log('%d script-visible cookie changes for ServiceWorker', cookieChanges.length);
+  cookieChanges.forEach(({cookieStore, type, url, name, value}) => {
     console.log(
       'CookieChange type %s for observed url %s in CookieStore %o',
-      cookieChange.type,
+      type,
       // Note that this will be the passed-in or defaulted value for the corresponding
       // call to observe(...).
-      cookieChange.url,
+      url,
       // This is the same CookieStore passed to observe(...)
-      cookieChange.cookieStore);
-    switch(cookieChange.type) {
+      cookieStore);
+    switch(type) {
     case 'visible':
       // Creation or modification (e.g. change in value, or removal of HttpOnly), or
       // appearance to script due to change in policy or permissions
-      console.log('Cookie %s now visible to script with value %s', cookieChange.name, cookieChange.value);
+      console.log('Cookie %s now visible to script with value %s', name, value);
       break;
     case 'hidden':
       // Deletion/expiration or disappearance (e.g. due to modification adding HttpOnly),
       // or disappearance from script due to change in policy or permissions
-      console.log('Cookie %s expired or no longer visible to script', cookieChange.name);
+      console.log('Cookie %s with value %s expired or no longer visible to script', name, value);
       break;
     default:
-      console.error('Unexpected CookieChange type, ')
-      throw 'Unexpected CookieChange type ' + cookieChange.type;
+      throw 'Unexpected CookieChange type ' + type;
     }
   });
 });
 ```
 
-*Note:* a service worker script needs to be prepared to handle "duplicate" notifications after updates to the service worker script with identical or overlapping cookie change interests compared to those interests previously registered.
+*Note:* a service worker script needs to be prepared to handle "duplicate" notifications after updates to the service worker script with overlapping cookie change interests compared to those interests previously registered.
 
 ## Security
 
