@@ -160,7 +160,8 @@ if (self.document) (function() {
       if (secure && !defSecure) throw new SyntaxError('Secure cookies can only be modified from secure contexts');
       let httpOnly = !!options.httpOnly;
       if (value == null && maxAge == null && expires == null) maxAge = 0;
-      value = String(value || '');
+      value = value == null ? '' : String(value);
+      if (name === '' && value === '') throw new SyntaxError('Cookies must have a nonempty name or value');
       if (value.match(DISALLOWED_IN_COOKIE_VALUE_RE) || value !== decodeURIComponent(encodeURIComponent(value))) {
         // Does not match document.cookie behavior!
         throw new SyntaxError('Unsupported character in cookie value');
