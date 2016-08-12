@@ -121,18 +121,30 @@ if (self.document) (function() {
       options = options || {};
       let expires = null;
       let maxAge = null;
-      let expiresAsNumber;
-      if (options.expires != null && !isNaN(expiresAsNumber = Number(options.expires))) {
-        maxAge = (expiresAsNumber - Date.now()) / 1000;
-      } else {
-        expires = String(options.expires || '') || undefined;
+      let expiresAsNumber = (new Date(Number(options.expires))).getTime();
+      // FIXME: this should instead use the HTTP Set-Cookie date/time parsing algorithm
+      let parsedExpires = new Date(String(options.expires));
+      if (options.expires != null && !isNaN(expiresAsNumber)) {
+        expires = (new Date(expiresAsNumber)).toGMTString();
+      } else if (options.expires != null) {
+        if (isNaN(parsedExpires.getTime())) throw new SyntaxError('Unable to parse cookie "expires" attribute');
+        expires = parsedExpires.toGMTString();
       }
       if (expires && expires.indexOf(';') !== -1) {
         throw new SyntaxError('Character ";" is not allowed in cookie "expires" attribute');
       }
-      let domain = String(options.domain || '') || undefined;
-      if (domain && domain.indexOf(';') !== -1) {
+      let domain = null;
+      if (options.domain != null) domain = String(options.domain);
+      if (domain != null && domain.indexOf(';') !== -1) {
         throw new SyntaxError('Character ";" is not allowed in cookie "domain" attribute');
+      }
+      if (domain != null) domain = new URL(location.protocol + '//' + domain).host;
+      // FIXME: this should also check the public suffix list
+      if (domain != null &&
+          domain != location.host &&
+          domain != location.hostname &&
+          !location.hostname.endsWith('.' + domain)) {
+        throw new SyntaxError('Cookie "domain" attribute does not match host');
       }
       let path = String(options.path || '/');
       if (path[0] !== '/') throw new SyntaxError('The "path" attribute must begin with "/"');
