@@ -217,8 +217,15 @@ if (self.document) (function() {
       this.callback_ = callback;
       this.timer_ = null;
       this.interests_ = [];
+      this.newInterests_ = [];
+      this.insideTick_ = false;
+      this.newSchedule_ = false;
     }
     observe(cookieStore, interests) {
+      if (cookieStore == null) throw new TypeError('Non-null first argument required');
+      if (typeof cookieStore.getAll !== 'function') {
+        throw new TypeError('Observed CookieStore must have a getAll method');
+      }
       const copiedInterests = [];
       (interests || [{}]).forEach(({name, url = defReadPath, matchType} = {}) => {
         if (name != null) {
@@ -240,20 +247,29 @@ if (self.document) (function() {
         copiedInterests.push({name: name, url: url, matchType: matchType});
       });
       if (!copiedInterests.length) return;
-      this.interests_.push({cookieStore: cookieStore, interests: copiedInterests, cookies_: null});
+      this.newInterests_.push({cookieStore: cookieStore, interests: copiedInterests, cookies_: null});
       this.schedule_(true);
     }
     disconnect() {
-      this.interests_ = null;
-      this.snapshots_ = null;
+      this.interests_ = [];
+      this.newInterests_ = [];
       if (this.timer_) {
         clearTimeout(this.timer_);
         this.timer_ = null;
       }
     }
     schedule_(skipWaiting) {
+      if (this.insideTick_) {
+        this.newSchedule_ = skipWaiting;
+        return;
+      }
+      this.newSchedule_ = false;
       navigator.getBattery().then(batteryManager => {
-        if (this.timer_) return;
+        if (this.timer_ && !skipWaiting) return;
+        if (this.timer_) {
+          clearTimeout(this.timer_);
+          this.timer_ = null;
+        }
         let interval = SLOW_OBSERVER_INTERVAL;
         if (self.document.visibilityState === 'visible') {
           const level = batteryManager.level;
@@ -262,63 +278,78 @@ if (self.document) (function() {
           }
         }
         if (skipWaiting) interval = 0;
-        this.timer_ = setTimeout(() => this.tick_().then(() => this.schedule_(false)), interval);
+        let handler = () => this.tick_().then(() => this.schedule_(this.newSchedule_));
+        this.timer_ = setTimeout(handler, interval);
       });
     }
     async tick_() {
       this.timer_ = null;
-      let reported = {};
-      let observed = [];
-      let allCookies = null;
-      let forceReport = false;
-      let oldCookieStore = null;
-      let storeIndex = -1;
-      this.interests_.forEach(interestEntry => {
-        let {cookieStore, interests, cookies_} = interestEntry;
-        if (oldCookieStore !== cookieStore || allCookies === null) {
-          oldCookieStore = cookieStore;
-          ++storeIndex;
-          allCookies = await cookieStore.getAll();
+      this.newSchedule_ = false;
+      this.insideTick_ = true;
+      try {
+        if (this.newInterests_.length) {
+          this.interests_ = this.interests_.concat(this.interests_, this.newInterests_)
+          this.newInterests_ = [];
         }
-        let oldCookies = cookies_;
-        let newCookies = interestEntry.cookies_ = allCookies;
-        let oldCookiesFlat = {};
-        (oldCookies || []).forEach(({name, value}) => {
-          oldCookiesFlat[name + '='] = oldCookiesFlat[name + '='] || [];
-          oldCookiesFlat[name + '='].push(name + '=' + value);
-        });
-        let newCookiesFlat = {};
-        newCookies.forEach(({name, value}) => {
-          newCookiesFlat[name + '='] = newCookiesFlat[name + '='] || [];
-          newCookiesFlat[name + '='].push(name + '=' + value);
-        });
-        let changes = [];
-        let newSame = {};
-        (oldCookies || []).forEach(({name, value}, index) => {
-          if (oldCookiesFlat[name + '='].join(';') === (newCookiesFlat[name + '='] || []).join(';')) {
-            newSame[name + '='] = true;
-          } else {
-            changes.push({type: 'hidden', name: name, value: value, index: index});
+        let reported = {};
+        let observed = [];
+        let allCookies = null;
+        let forceReport = false;
+        let oldCookieStore = null;
+        let storeIndex = -1;
+        let interestEntries = this.interests_;
+        for (let i = 0, j = interestEntries.length; i < j; ++i) {
+          let {cookieStore, interests, cookies_} = interestEntries[i];
+          if (oldCookieStore !== cookieStore) {
+            oldCookieStore = cookieStore;
+            ++storeIndex;
+            allCookies = await cookieStore.getAll();
+            // A call to disconnect() while awaiting a cookie store
+            // snapshot causes an early return without reporting
+            if (this.interests_ !== interestEntries) return;
           }
-        });
-        newCookies.forEach(({name, value}, index) => {
-          if (!newSame[name + '=']) changes.push({type: 'visible', name: name, value: value, index: index});
-        });
-        if (oldCookies == null || changes.length > 0) {
-          interests.forEach(({name, url, matchType}) => {
-            let matching =
-              changes.filter(change => name === change.name || matchType === 'startsWith' && change.name.startsWith(name));
-            matching.forEach(({type, name, value, index}) => {
-              let serialized = storeIndex + ';' + type + ';' + name + '=' + value + ';' + index + ';' + url;
-              if (reported[serialized]) return;
-              observed.push({type: type, name: name, value: value, url: url, cookieStore: cookieStore, index: index});
-              reported[serialized] = true;
-            });
+          let oldCookies = cookies_;
+          let newCookies = interestEntries[i].cookies_ = allCookies;
+          let oldCookiesFlat = {};
+          (oldCookies || []).forEach(({name, value}) => {
+            oldCookiesFlat[name + '='] = oldCookiesFlat[name + '='] || [];
+            oldCookiesFlat[name + '='].push(name + '=' + value);
           });
+          let newCookiesFlat = {};
+          newCookies.forEach(({name, value}) => {
+            newCookiesFlat[name + '='] = newCookiesFlat[name + '='] || [];
+            newCookiesFlat[name + '='].push(name + '=' + value);
+          });
+          let changes = [];
+          let newSame = {};
+          (oldCookies || []).forEach(({name, value}, index) => {
+            if (oldCookiesFlat[name + '='].join(';') === (newCookiesFlat[name + '='] || []).join(';')) {
+              newSame[name + '='] = true;
+            } else {
+              changes.push({type: 'hidden', name: name, value: value, index: index});
+            }
+          });
+          newCookies.forEach(({name, value}, index) => {
+            if (!newSame[name + '=']) changes.push({type: 'visible', name: name, value: value, index: index});
+          });
+          if (oldCookies == null || changes.length > 0) {
+            interests.forEach(({name, url, matchType}) => {
+              let matching =
+                changes.filter(change => name === change.name || matchType === 'startsWith' && change.name.startsWith(name));
+              matching.forEach(({type, name, value, index}) => {
+                let serialized = storeIndex + ';' + type + ';' + name + '=' + value + ';' + index + ';' + url;
+                if (reported[serialized]) return;
+                observed.push({type: type, name: name, value: value, url: url, cookieStore: cookieStore, index: index});
+                reported[serialized] = true;
+              });
+            });
+          }
+          if (oldCookies == null) forceReport = true;
         }
-        if (oldCookies == null) forceReport = true;
-      });
-      if (forceReport || observed.length) this.callback_.call(null, observed, this);
+        if (forceReport || observed.length) this.callback_.call(null, observed, this);
+      } finally {
+        this.insideTick_ = false;
+      }
     }
   };
   if (!self.cookieStore) self.cookieStore = new CookieStore(new AsyncCookieJar_(self.document));
