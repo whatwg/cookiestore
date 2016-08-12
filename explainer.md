@@ -652,7 +652,7 @@ On the other hand, it is also not a goal of this proposal to allow all cookie be
 
 It is not a goal of this proposal to restrict the new API's semantics or implementation such that it could be built entirely in terms of the existing `document.cookie` API.
 
-Most of this API's behavior could be approximated by a polyfill atop `document.cookie` for document contexts where that API already exists. There are limits to such an approximation:
+Most of this API's behavior could be approximated by a [polyfill atop `document.cookie`](https://github.com/bsittler/async-cookies-api/blob/gh-pages/cookies.js) for document contexts where that API already exists. There are limits to such an approximation:
 
 - some `document.cookie` operations silently fail in ways not currently easily detectable or predictable by scripts and so a native implementation of the async cookies API would reject the operation when a `document.cookie`-based polyfill would instead incorrectly treat the operation as resolved,
 - any `document.cookie`-based polyfill would introduce detectable blocking pauses in the script context's event loop - this is generally undesirable for performance reasons and is one of the motivations for the new API, and
