@@ -98,6 +98,8 @@ if (self.document) (function() {
            k = (k == -1) ? j : k, i < j;
            i = k + 1 + (jar[k + 1] == ' ' ? 1 : 0), k = jar.indexOf(';', i)) {
        	let nv = jar.substr(i, k - i), c = nv.indexOf('=');
+       	// Ignore empty segments.
+       	if (nv === '') continue;
        	let n = (c === -1) ? '' : nv.substr(0, c);
         // NOTE: some of the reported names and/or values will not be allowed in write operations.
         if (name === n || matchType === 'startsWith' && n.substr(0, name.length) === name) {
