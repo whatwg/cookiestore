@@ -98,13 +98,11 @@ if (self.document) (function() {
            k = (k == -1) ? j : k, i < j;
            i = k + 1 + (jar[k + 1] == ' ' ? 1 : 0), k = jar.indexOf(';', i)) {
        	let nv = jar.substr(i, k - i), c = nv.indexOf('=');
-        if (c !== -1) {
-          let n = nv.substr(0, c);
-          // NOTE: some of the reported names and/or values will not be allowed in write operations.
-          if (name === n || matchType === 'startsWith' && n.substr(0, name.length) === name) {
-            let v = nv.substr(c + 1);
-            cookieList.push({name: n, value: v});
-          }
+       	let n = (c === -1) ? '' : nv.substr(0, c);
+        // NOTE: some of the reported names and/or values will not be allowed in write operations.
+        if (name === n || matchType === 'startsWith' && n.substr(0, name.length) === name) {
+          let v = nv.substr(c + 1);
+          cookieList.push({name: n, value: v});
         }
       }
       return cookieList;
@@ -113,8 +111,8 @@ if (self.document) (function() {
       await this.set(name, undefined, options);
     }
     async set(name, value, options) {
-      name = String(name || '') || undefined;
-      if (!name) throw new SyntaxError('Cookie name is required');
+      if (name == null) name = '';
+      name = String(name);
       if (name.match(DISALLOWED_IN_COOKIE_NAME_RE) || name !== decodeURIComponent(encodeURIComponent(name))) {
         throw new SyntaxError('Unsupported character in cookie name');
       }
@@ -271,10 +269,17 @@ if (self.document) (function() {
       this.timer_ = null;
       let reported = {};
       let observed = [];
-      let allCookies = await cookieStore.getAll();
+      let allCookies = null;
       let forceReport = false;
+      let oldCookieStore = null;
+      let storeIndex = -1;
       this.interests_.forEach(interestEntry => {
         let {cookieStore, interests, cookies_} = interestEntry;
+        if (oldCookieStore !== cookieStore || allCookies === null) {
+          oldCookieStore = cookieStore;
+          ++storeIndex;
+          allCookies = await cookieStore.getAll();
+        }
         let oldCookies = cookies_;
         let newCookies = interestEntry.cookies_ = allCookies;
         let oldCookiesFlat = {};
@@ -304,7 +309,7 @@ if (self.document) (function() {
             let matching =
               changes.filter(change => name === change.name || matchType === 'startsWith' && change.name.startsWith(name));
             matching.forEach(({type, name, value, index}) => {
-              let serialized = type + ';' + name + '=' + value + ';' + index + ';' + url;
+              let serialized = storeIndex + ';' + type + ';' + name + '=' + value + ';' + index + ';' + url;
               if (reported[serialized]) return;
               observed.push({type: type, name: name, value: value, url: url, cookieStore: cookieStore, index: index});
               reported[serialized] = true;
