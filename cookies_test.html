@@ -9,11 +9,23 @@
   </head>
   <body>
     <h1>cookies_test</h1>
-    <p>See <a
+    <noscript><b>Note:</b> this page will not work when scripts are not allowed.</noscript>
+    <p><b>Cookies:</b> this website uses HTTP cookies, small files stored on your
+    computer and automatically sent with subsequent HTTP requests, to demonstrate and exercise
+    an <a href="https://github.com/WICG/async-cookies-api">asynchronous
+    cookie API for scripts</a>. If you use any of the buttons on this page,
+    you accept this site's use of cookies now and in the future. See <a
     href="https://github.com/WICG/async-cookies-api">https://github.com/WICG/async-cookies-api</a> for
-    explanation.</p>
+    explanation of the API.</p>
+    <button style="visibility: hidden" id="run-tests-button"><span id="tests-status-indicator"></span> Accept cookies and
+    run tests</button>
     <p>This should be more interesting with the developer tools JS console open.
     At present this requires a recent development version of Google Chrome or Chromium with the Experimental JavaScript
     <tt>chrome://flags/#enable-javascript-harmony</tt> flag active.</p>
+    <button style="visibility: hidden" id="toggle-https-button"><span
+    id="https-status-indicator"></span> Toggle https</button>
+    <p>The document-based polyfill runs best in an https page 🔒 - the polyfill
+    is also usable but some tests fail when run in an unsecured http page 🔓 due
+    to its reliance on Secure cookie access.</p>
   </body>
 </html>
