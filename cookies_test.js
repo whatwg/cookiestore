@@ -20,7 +20,7 @@
   addEventListener('load', () => {
     const runTestsButton = document.getElementById('run-tests-button');
     const testsStatusIndicator = document.getElementById('tests-status-indicator');
-    const setTestStatus = glyph => setIndicator(testsStatusIndicator, glyph);
+    const setTestStatus = glyph => setStatusIndicator(testsStatusIndicator, glyph);
     runTestsButton.addEventListener('click', () => {
       console.log('Got a click on #run-tests-button');
       setTestStatus('⋯');
