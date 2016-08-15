@@ -33,10 +33,10 @@
     <button style="visibility: hidden" id="toggle-https-button"><span
     id="https-status-indicator"></span> Toggle https</button>
     <p>The <a href="https://github.com/WICG/async-cookies-api/blob/gh-pages/cookies.js">document-based
-    polyfill</a> included by this page runs best in an <a onclick="void(location.protocol = 'https:')"
+    polyfill</a> included by this page runs best in an <a onclick="!!void(location.protocol = 'https:')"
     href="#">https page 🔒</a> -
     the polyfill is also usable but some tests fail when run in an <a
-    onclick="void(location.protocol = 'http:')" href="#">unsecured http page ⚠🔓</a> due
+    onclick="!!void(location.protocol = 'http:')" href="#">unsecured http page ⚠🔓</a> due
     to its reliance on <tt>Secure</tt> cookie access.</p>
   </body>
 </html>
