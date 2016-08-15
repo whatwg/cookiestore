@@ -1,8 +1,42 @@
-addEventListener('load', () => runAllTests().then(() => console.log('All tests complete.')), true);
-  
 (() => {
   'use strict';
 
+  const setStatusIndicator = (indicator, glyph) => {
+    while(indicator.firstChild) indicator.removeChild(indicator.firstChild);
+    indicator.appendChild(document.createTextNode(glyph));
+  };
+
+  addEventListener('load', () => {
+    const toggleHttpsButton = document.getElementById('toggle-https-button');
+    const httpsStatusIndicator = document.getElementById('https-status-indicator');
+    toggleHttpsButton.addEventListener('click', () => {
+      console.log('Got a click on #toggle-https-button');
+      location.protocol = location.protocol != 'https:' ? 'https:' : 'http:';
+    }, true);
+    setStatusIndicator(httpsStatusIndicator, location.protocol != 'https:' ? '🔓' : '🔒');
+    toggleHttpsButton.style.visibility = '';
+  }, true);
+  
+  addEventListener('load', () => {
+    const runTestsButton = document.getElementById('run-tests-button');
+    const testsStatusIndicator = document.getElementById('tests-status-indicator');
+    const setTestStatus = glyph => setIndicator(testsStatusIndicator, glyph);
+    runTestsButton.addEventListener('click', () => {
+      console.log('Got a click on #run-tests-button');
+      setTestStatus('⋯');
+      runAllTests().then(() => {
+        console.log('All tests complete.');
+        setTestStatus('☑️');
+      }, reason => {
+        console.error('Test suite failure:', reason);
+        setTestStatus('☒');
+      });
+    }, true);
+    setTestStatus('☐');
+    runTestsButton.style.visibility = '';
+    console.log('Waiting for click on #run-tests-button');
+  }, true);
+    
   function getOneSimpleOriginCookie() {
     return cookieStore.get('__Host-COOKIENAME').then(function(cookie) {
       console.log(cookie ? ('Current value: ' + cookie.value) : 'Not set');
