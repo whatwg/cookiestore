@@ -163,7 +163,9 @@ if (self.document) (function() {
       let httpOnly = !!options.httpOnly;
       if (value == null && maxAge == null && expires == null) maxAge = 0;
       value = value == null ? '' : String(value);
-      if (name === '' && value === '') throw new SyntaxError('Cookies must have a nonempty name or value');
+      if (name === '' && value.indexOf('=') !== '-1') {
+        throw new SyntaxError('Character "=" is not allowed in cookie value with empty name');
+      }
       if (value.match(DISALLOWED_IN_COOKIE_VALUE_RE) || value !== decodeURIComponent(encodeURIComponent(value))) {
         // Does not match document.cookie behavior!
         throw new SyntaxError('Unsupported character in cookie value');
