@@ -32,6 +32,7 @@
       }, reason => {
         console.error('Test suite failure:', reason);
         setTestStatus('☒\uFE0F');
+        Promise.reject(reason);
       });
     }, true);
     setTestStatus('☐\uFE0F');
