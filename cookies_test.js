@@ -13,7 +13,7 @@
       console.log('Got a click on #toggle-https-button');
       location.protocol = location.protocol != 'https:' ? 'https:' : 'http:';
     }, true);
-    setStatusIndicator(httpsStatusIndicator, location.protocol != 'https:' ? '⚠️🔓' : '🔒');
+    setStatusIndicator(httpsStatusIndicator, location.protocol != 'https:' ? '⚠\uFE0F' : '🔒');
     toggleHttpsButton.style.visibility = '';
   }, true);
   
@@ -26,13 +26,13 @@
       setTestStatus('⋯');
       runAllTests().then(() => {
         console.log('All tests complete.');
-        setTestStatus('☑️');
+        setTestStatus('☑\uFE0F');
       }, reason => {
         console.error('Test suite failure:', reason);
-        setTestStatus('☒');
+        setTestStatus('☒\uFE0F');
       });
     }, true);
-    setTestStatus('☐');
+    setTestStatus('☐\uFE0F');
     runTestsButton.style.visibility = '';
     console.log('Waiting for click on #run-tests-button');
   }, true);
