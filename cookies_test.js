@@ -46,7 +46,12 @@
   }
   
   self.runAllTests = async () => {
-    await cookieStore.set('TEST', 'value')
+    await testObservation();
+    // These use the same cookie names and so cannot run interleaved
+    await testNoNameAndNoValue();
+    await testNoNameMultipleValues();
+    await testNoNameEqualsInValue();
+    await cookieStore.set('TEST', 'value');
     console.log.apply(console, ['All cookies'].concat(await cookieStore.getAll()));
     console.log('First cookie', await cookieStore.get());
     console.log.apply(console, ['All TEST cookies'].concat(await cookieStore.getAll('TEST')));
@@ -59,25 +64,20 @@
     await getOneSimpleOriginCookieAsync().then(
       () => console.log('getOneSimpleOriginCookieAsync succeeded!'),
       reason => console.error('getOneSimpleOriginCookieAsync did not succeed: ', reason));
-    await Promise.all([
-      getOneCookieForRequestUrl(),
-      countCookies(),
-      countMatchingSimpleOriginCookies(),
-      countMatchingCookiesForRequestUrl(),
-      countAllCookiesForRequestUrl(),
-      setOneSimpleOriginSessionCookie(),
-      setOneDaySecureCookieWithDate(),
-      setOneDayUnsecuredCookieWithMillisecondsSinceEpoch(),
-      setSecureCookieWithHttpLikeExpirationString(),
-      setThreeSimpleOriginSessionCookiesSequentially(),
-      setThreeSimpleOriginSessionCookiesNonsequentially(),
-      setExpiredSecureCookieWithDomainPathAndFallbackValue(),
-      deleteSimpleOriginCookie(),
-      deleteSecureCookieWithDomainAndPath(),
-      testObservation(),
-      testNoNameAndNoValue(),
-      testNoNameMultipleValues(),
-      testNoNameEqualsInValue()]);
+    await getOneCookieForRequestUrl();
+    await countCookies();
+    await countMatchingSimpleOriginCookies();
+    await countMatchingCookiesForRequestUrl();
+    await countAllCookiesForRequestUrl();
+    await setOneSimpleOriginSessionCookie();
+    await setOneDaySecureCookieWithDate();
+    await setOneDayUnsecuredCookieWithMillisecondsSinceEpoch();
+    await setSecureCookieWithHttpLikeExpirationString();
+    await setThreeSimpleOriginSessionCookiesSequentially();
+    await setThreeSimpleOriginSessionCookiesNonsequentially();
+    await setExpiredSecureCookieWithDomainPathAndFallbackValue();
+    await deleteSimpleOriginCookie();
+    await deleteSecureCookieWithDomainAndPath();
   };
   
   let getOneSimpleOriginCookieAsync = async () => {
