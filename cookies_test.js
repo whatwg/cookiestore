@@ -343,7 +343,7 @@
     let expected2 = '';
     if (actual2 !== expected2) {
       console.error(
-        'Expected ' + JSON.stringify(expected) + ' but got ' + JSON.stringify(actual),
+        'Expected ' + JSON.stringify(expected2) + ' but got ' + JSON.stringify(actual2),
         'https://crbug.com/601786');
       // FIXME: once https://crbug.com/601786 is fixed ensure the cookie actually got set
       //throw new Error('Expected ' + JSON.stringify(expected) + ' but got ' + JSON.stringify(actual));
