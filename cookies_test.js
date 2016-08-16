@@ -13,7 +13,9 @@
       console.log('Got a click on #toggle-https-button');
       location.protocol = location.protocol != 'https:' ? 'https:' : 'http:';
     }, true);
-    setStatusIndicator(httpsStatusIndicator, location.protocol != 'https:' ? '⚠\uFE0F' : '🔒');
+    setStatusIndicator(
+      httpsStatusIndicator,
+      location.protocol != 'https:' ? '⚠\uFE0F' : '🔒\uFE0F');
     toggleHttpsButton.style.visibility = '';
   }, true);
   
