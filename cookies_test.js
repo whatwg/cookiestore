@@ -74,7 +74,10 @@
       setExpiredSecureCookieWithDomainPathAndFallbackValue(),
       deleteSimpleOriginCookie(),
       deleteSecureCookieWithDomainAndPath(),
-      testObservation()]);
+      testObservation(),
+      testNoNameAndNoValue(),
+      testNoNameMultipleValues(),
+      testNoNameEqualsInValue()]);
   };
   
   let getOneSimpleOriginCookieAsync = async () => {
@@ -330,4 +333,50 @@
 
   let testObservation = () => new Promise(testObservation_);
 
+  let testNoNameAndNoValue = async () => {
+    await cookieStore.set('', 'first-value');
+    let actual1 = (await cookieStore.getAll('')).map(({value}) => value).join(';');
+    let expected1 = 'first-value';
+    if (actual1 !== expected1) throw new Error('Expected ' + JSON.stringify(expected1) + ' but got ' + JSON.stringify(actual1));
+    await cookieStore.set('', '');
+    let actual2 = (await cookieStore.getAll('')).map(({value}) => value).join(';');
+    let expected2 = '';
+    if (actual2 !== expected2) {
+      console.error(
+        'Expected ' + JSON.stringify(expected) + ' but got ' + JSON.stringify(actual),
+        'https://crbug.com/601786');
+      // FIXME: once https://crbug.com/601786 is fixed ensure the cookie actually got set
+      //throw new Error('Expected ' + JSON.stringify(expected) + ' but got ' + JSON.stringify(actual));
+    }
+    await cookieStore.delete('');
+  };
+  
+  let testNoNameMultipleValues = async () => {
+    await cookieStore.set('', 'first-value');
+    let actual1 = (await cookieStore.getAll('')).map(({value}) => value).join(';');
+    let expected1 = 'first-value';
+    if (actual1 !== expected1) throw new Error('Expected ' + JSON.stringify(expected1) + ' but got ' + JSON.stringify(actual1));
+    await cookieStore.set('', 'second-value');
+    let actual2 = (await cookieStore.getAll('')).map(({value}) => value).join(';');
+    let expected2 = 'second-value';
+    if (actual2 !== expected2) throw new Error('Expected ' + JSON.stringify(expected2) + ' but got ' + JSON.stringify(actual2));
+    await cookieStore.delete('');
+  };
+  
+  let testNoNameEqualsInValue = async () => {
+    await cookieStore.set('', 'first-value');
+    let actual1 = (await cookieStore.getAll('')).map(({value}) => value).join(';');
+    let expected1 = 'first-value';
+    if (actual1 !== expected1) throw new Error('Expected ' + JSON.stringify(expected1) + ' but got ' + JSON.stringify(actual1));
+    try {
+      await cookieStore.set('', 'suspicious-value=resembles-name-and-value');
+    } catch (expectedError) {
+      let actual2 = (await cookieStore.getAll('')).map(({value}) => value).join(';');
+      let expected2 = 'first-value';
+      if (actual2 !== expected2) throw new Error('Expected ' + JSON.stringify(expected2) + ' but got ' + JSON.stringify(actual2));
+      return;
+    }
+    throw new Error('Expected promise rejection when setting a cookie with no name and "=" in value');
+  };
+  
 })();
