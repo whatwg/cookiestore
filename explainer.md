@@ -410,7 +410,7 @@ Special prefixes: a cookie write operation for a cookie using one of the `__Host
 
 ### Monitoring
 
-*Note:* multiple cookie changes in rapid succession may cause the user agent to only check for script-visible changes (relative to the last time the observer was called or the event was fired) after all the changes have been applied. In some cases (for instance, a very short-lived cookie being set and then expiring) this may cause the observer/event handler to miss the (now-expired) ephemeral cookie entirely.
+*Note:* multiple cookie changes in rapid succession may cause the user agent to only check for script-visible changes (relative to the last time the observer was called or the event was fired) after all the changes have been applied. In some cases (for instance, a very short-lived cookie being set and then expiring) this may cause the observer/event handler to miss the (now-expired) ephemeral cookie entirely. Expiration of a cookie monitored by a service worker might not deliver the cookie change event until the next time a document or service worker in the cookie's domain or origin is used.
 
 #### Single execution context
 
