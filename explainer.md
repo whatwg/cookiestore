@@ -76,7 +76,7 @@ This proposal outlines an asynchronous API using Promises/async functions for th
 
  * [write](#writing) (or "set") cookies
  * [delete](#clearing) (or "expire") cookies
- * [read](#writing) (or "get") [script-visible](#script-visibility) cookies
+ * [read](#reading) (or "get") [script-visible](#script-visibility) cookies
    * ... including for specified in-scope request paths in
    [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
  * [monitor](#monitoring) [script-visible](#script-visibility) cookies for changes
