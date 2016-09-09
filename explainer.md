@@ -80,15 +80,15 @@ This proposal outlines an asynchronous API using Promises/async functions for th
    * ... including for specified in-scope request paths in
    [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
  * [monitor](#monitoring) [script-visible](#script-visibility) cookies for changes
-   * ... using `CookieObserver` in long-running script contexts (e.g. `document`)
-   * ... using `CookieChangeEvent` after registration during the `InstallEvent`
+   * ... [using `CookieObserver`](#single-execution-context) in long-running script contexts (e.g. `document`)
+   * ... [using `CookieChangeEvent`](#service-worker) after registration during the `InstallEvent`
    in ephemeral [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
    * ... again including for script-supplied in-scope request paths
    in [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
 
 #### Script-visibility
 
-A cookie is script-visible when it does not have the `HttpOnly` cookie flag.
+A cookie is script-visible when it is in-scope and does not have the `HttpOnly` cookie flag.
 
 ### Motivations
 
