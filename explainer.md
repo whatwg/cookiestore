@@ -74,17 +74,21 @@ This proposal also includes a power-efficient monitoring API to replace `setTime
 
 This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:
 
- * write (or "set") cookies
- * delete (or "expire") cookies
- * read (or "get") script-visible cookies
+ * [write](#writing) (or "set") cookies
+ * [delete](#clearing) (or "expire") cookies
+ * [read](#writing) (or "get") [script-visible](#script-visibility) cookies
    * ... including for specified in-scope request paths in
    [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
- * monitor script-visible cookies for changes
+ * [monitor](#monitoring) [script-visible](#script-visibility) cookies for changes
    * ... using `CookieObserver` in long-running script contexts (e.g. `document`)
    * ... using `CookieChangeEvent` after registration during the `InstallEvent`
    in ephemeral [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
    * ... again including for script-supplied in-scope request paths
    in [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
+
+#### Script-visibility
+
+A cookie is script-visible when it does not have the `HttpOnly` cookie flag.
 
 ### Motivations
 
