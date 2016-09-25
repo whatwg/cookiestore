@@ -86,7 +86,7 @@ This proposal outlines an asynchronous API using Promises/async functions for th
    * ... again including for script-supplied in-scope request paths
    in [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
 
-#### Script-visibility
+#### Script visibility
 
 A cookie is script-visible when it is in-scope and does not have the `HttpOnly` cookie flag.
 
