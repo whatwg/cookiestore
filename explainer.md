@@ -569,15 +569,6 @@ addEventListener('cookiechange', event => {
       // This means we do not need to maintain our own shadow cookie jar and disambiguates in
       // cases where the same cookie name appears more than once in the store with differing scope
       all);
-  cookieChanges.forEach(({cookieStore, type, url, name, value}) => {
-    console.log(
-      'CookieChange type %s for observed url %s in CookieStore %o',
-      type,
-      // Note that this will be the passed-in or defaulted value for the corresponding
-      // call to observe(...).
-      url,
-      // This is the same CookieStore passed to observe(...)
-      cookieStore);
     switch(type) {
     case 'visible':
       // Creation or modification (e.g. change in value, or removal of HttpOnly), or
