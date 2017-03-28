@@ -331,11 +331,11 @@ if (self.document) (function() {
             if (oldCookiesFlat[name + '='].join(';') === (newCookiesFlat[name + '='] || []).join(';')) {
               newSame[name + '='] = true;
             } else {
-              changes.push({type: 'hidden', name: name, value: value, index: index});
+              changes.push({type: 'hidden', name: name, value: value, index: index, all: allCookies});
             }
           });
           newCookies.forEach(({name, value}, index) => {
-            if (!newSame[name + '=']) changes.push({type: 'visible', name: name, value: value, index: index});
+            if (!newSame[name + '=']) changes.push({type: 'visible', name: name, value: value, index: index, all: allCookies});
           });
           if (oldCookies == null || changes.length > 0) {
             interests.forEach(({name, url, matchType}) => {
