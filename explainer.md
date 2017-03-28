@@ -432,15 +432,18 @@ let startMonitoring = new Promise(resolve => {
       '%d script-visible cookie changes for CookieObserver %o',
       cookieChanges.length,
       observer);
-    cookieChanges.forEach(({cookieStore, type, url, name, value}) => {
+    cookieChanges.forEach(({cookieStore, type, url, name, value, all}) => {
       console.log(
-        'CookieChange type %s for observed url %s in CookieStore %o',
+        'CookieChange type %s for observed url %s in CookieStore %o; all: %o',
         type,
         // Note that this will be the passed-in or defaulted value for the corresponding
         // call to observe(...).
         url,
         // This is the same CookieStore passed to observe(...)
-        cookieStore);
+        cookieStore,
+        // This means we do not need to maintain our own shadow cookie jar and disambiguates in
+        // cases where the same cookie name appears more than once in the store with differing scope
+        all);
       switch(type) {
       case 'visible':
         // Creation or modification (e.g. change in value, or removal of HttpOnly), or
@@ -554,6 +557,18 @@ addEventListener('cookiechange', event => {
   // event.detail is CookieChanges, analogous to the one passed to CookieObserver's callback
   let cookieChanges = event.detail;
   console.log('%d script-visible cookie changes for ServiceWorker', cookieChanges.length);
+  cookieChanges.forEach(({cookieStore, type, url, name, value, all}) => {
+    console.log(
+      'CookieChange type %s for observed url %s in CookieStore %o; all: %o',
+      type,
+      // Note that this will be the passed-in or defaulted value for the corresponding
+      // call to observe(...).
+      url,
+      // This is the same CookieStore passed to observe(...)
+      cookieStore,
+      // This means we do not need to maintain our own shadow cookie jar and disambiguates in
+      // cases where the same cookie name appears more than once in the store with differing scope
+      all);
   cookieChanges.forEach(({cookieStore, type, url, name, value}) => {
     console.log(
       'CookieChange type %s for observed url %s in CookieStore %o',
