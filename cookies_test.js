@@ -98,20 +98,20 @@
   let countCookies = async () => {
     let cookieList = await cookieStore.getAll();
     console.log('How many cookies? %d', cookieList.length);
-    cookieList.forEach(cookie => console.log('Cookie %s has value %o', cookie.name, cookie.value));
+    cookieList.forEach(({name, value}) => console.log('Cookie %s has value %o', name, value));
   };
   
   let countMatchingSimpleOriginCookies = async () => {
     let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'startsWith'});
     console.log('How many matching cookies? %d', cookieList.length);
-    cookieList.forEach(cookie => console.log('Matching cookie %s has value %o', cookie.name, cookie.value));
+    cookieList.forEach(({name, value}) => console.log('Matching cookie %s has value %o', name, value));
   };
   
   let countMatchingCookiesForRequestUrl = async () => {
     // 'equals' is the default matchType and indicates exact matching
     let cookieList = await cookieStore.getAll({name: 'LEGACYSORTPREFERENCE', matchType: 'equals', url: '/pictures/'});
     console.log('How many legacy sort preference cookies? %d', cookieList.length);
-    cookieList.forEach(cookie => console.log('Legacy sort preference cookie has value %o', cookie.value));
+    cookieList.forEach(({value}) => console.log('Legacy sort preference cookie has value %o', value));
   };
   
   // FIXME: remove this once IFRAME puppets are implemented in the polyfill
@@ -121,7 +121,7 @@
   let countAllCookiesForRequestUrl = async () => {
     let cookieList = await cookieStore.getAll({url: '/sw-scope/session2/document5/'});
     console.log('How many script-visible cookies? %d', cookieList.length);
-    cookieList.forEach(cookie => console.log('Cookie %s has value %o', cookie.name, cookie.value));
+    cookieList.forEach(({name, value}) => console.log('Cookie %s has value %o', name, value));
   };
   
   // FIXME: remove this once IFRAME puppets are implemented in the polyfill
@@ -271,32 +271,32 @@
         '%d script-visible cookie changes for CookieObserver %o',
         cookieChanges.length,
         observer);
-      cookieChanges.forEach(cookieChange => {
+      cookieChanges.forEach(({cookieStore, type, url, name, value, all}) => {
         console.log(
           'CookieChange type %s for observed url %s in CookieStore %o; all: %o',
-          cookieChange.type,
+          type,
           // Note that this will be the passed-in or defaulted value for the corresponding
           // call to observe(...).
-          cookieChange.url,
+          url,
           // This is the same CookieStore passed to observe(...)
-          cookieChange.cookieStore,
+          cookieStore,
           // This means we do not need to maintain our own shadow cookie jar and disambiguates in
           // cases where the same cookie name appears more than once in the store with differing scope
-          cookieChange.all);
-        switch(cookieChange.type) {
+          all);
+        switch(type) {
         case 'visible':
           // Creation or modification (e.g. change in value, or removal of HttpOnly), or
           // appearance to script due to change in policy or permissions
-          console.log('Cookie %s now visible to script with value %s', cookieChange.name, cookieChange.value);
+          console.log('Cookie %s now visible to script with value %s', name, value);
           break;
         case 'hidden':
           // Deletion/expiration or disappearance (e.g. due to modification adding HttpOnly),
           // or disappearance from script due to change in policy or permissions
-          console.log('Cookie %s expired or no longer visible to script', cookieChange.name);
+          console.log('Cookie %s expired or no longer visible to script', name);
           break;
         default:
           console.error('Unexpected CookieChange type, ')
-          throw 'Unexpected CookieChange type ' + cookieChange.type;
+          throw 'Unexpected CookieChange type ' + type;
         }
       });
       // Resolve promise after first callback
