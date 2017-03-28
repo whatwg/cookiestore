@@ -273,13 +273,16 @@
         observer);
       cookieChanges.forEach(cookieChange => {
         console.log(
-          'CookieChange type %s for observed url %s in CookieStore %o',
+          'CookieChange type %s for observed url %s in CookieStore %o; all: %o',
           cookieChange.type,
           // Note that this will be the passed-in or defaulted value for the corresponding
           // call to observe(...).
           cookieChange.url,
           // This is the same CookieStore passed to observe(...)
-          cookieChange.cookieStore);
+          cookieChange.cookieStore,
+          // This means we do not need to maintain our own shadow cookie jar and disambiguates in
+          // cases where the same cookie name appears more than once in the store with differing scope
+          cookieChange.all);
         switch(cookieChange.type) {
         case 'visible':
           // Creation or modification (e.g. change in value, or removal of HttpOnly), or
