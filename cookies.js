@@ -331,20 +331,20 @@ if (self.document) (function() {
             if (oldCookiesFlat[name + '='].join(';') === (newCookiesFlat[name + '='] || []).join(';')) {
               newSame[name + '='] = true;
             } else {
-              changes.push({type: 'hidden', name: name, value: value, index: index, all: allCookies});
+              changes.push({type: 'hidden', name: name, value: value, index: index});
             }
           });
           newCookies.forEach(({name, value}, index) => {
-            if (!newSame[name + '=']) changes.push({type: 'visible', name: name, value: value, index: index, all: allCookies});
+            if (!newSame[name + '=']) changes.push({type: 'visible', name: name, value: value, index: index});
           });
           if (oldCookies == null || changes.length > 0) {
             interests.forEach(({name, url, matchType}) => {
               let matching =
                 changes.filter(change => name === change.name || matchType === 'startsWith' && change.name.startsWith(name));
-              matching.forEach(({type, name, value, index}) => {
+              matching.forEach(({type, name, value, index, all}) => {
                 let serialized = storeIndex + ';' + type + ';' + name + '=' + value + ';' + index + ';' + url;
                 if (reported[serialized]) return;
-                observed.push({type: type, name: name, value: value, url: url, cookieStore: cookieStore, index: index});
+                observed.push({type: type, name: name, value: value, url: url, cookieStore: cookieStore, index: index, all: allCookies});
                 reported[serialized] = true;
               });
             });
