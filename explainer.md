@@ -593,7 +593,7 @@ addEventListener('cookiechange', event => {
 
 The power and resource consumption of this feature of the API will need to be carefully balanced against its utility, and for this reason delivery of a change event may be deferred until after the next browser start-up (for unrelated reasons) in cases where the change notification is for a cookie expiration and the browser is not already running.
 
-This API will cause new service worker start-up after browser start-up in cases where a cookie monitored by the service worker expired while the browser was not running. This will not block other parts of browser start-up, however.
+This API may cause new service worker start-up after browser start-up in cases where a cookie monitored by the service worker expired while the browser was not running. This will not block other parts of browser start-up, however. Expiration of a cookie monitored by a service worker also might not deliver the cookie change event until the next time a document or service worker in the cookie's domain or origin is used.
 
 ## Security
 
