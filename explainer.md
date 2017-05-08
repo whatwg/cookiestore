@@ -589,6 +589,10 @@ addEventListener('cookiechange', event => {
 
 *Note:* a service worker script needs to be prepared to handle "duplicate" notifications after updates to the service worker script with overlapping cookie change interests compared to those interests previously registered.
 
+The power and resource consumption of this feature of the API will need to be carefully balanced against its utility, and for this reason delivery of a change event may be deferred until after the next browser start-up (for unrelated reasons) in cases where the change notification is for a cookie expiration and the browser is not already running.
+
+This API will cause new service worker start-up after browser start-up in cases where a cookie monitored by the service worker expired while the browser was not running. This will not block other parts of browser start-up, however. For this reason, other parts of an application need to be prepared to run after a cookie they rely on has expired but before the change event has been delivered. The (read API)[#reading] should be used in cases where a consistent view of the cookie store is needed prior to completing another task - for instance, displaying a user's private messages might best be deferred until the presence of an (unexpired) session cookie is verified.
+
 ## Security
 
 Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.
