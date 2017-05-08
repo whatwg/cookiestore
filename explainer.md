@@ -416,6 +416,8 @@ Special prefixes: a cookie write operation for a cookie using one of the `__Host
 
 *Note:* multiple cookie changes in rapid succession may cause the user agent to only check for script-visible changes (relative to the last time the observer was called or the event was fired) after all the changes have been applied. In some cases (for instance, a very short-lived cookie being set and then expiring) this may cause the observer/event handler to miss the (now-expired) ephemeral cookie entirely. Expiration of a cookie monitored by a service worker might not deliver the cookie change event until the next time a document or service worker in the cookie's domain or origin is used.
 
+Other parts of an application need to be prepared to run after a cookie they rely on has expired but before the change event has been delivered. The (read API)[#reading] should be used in cases where a consistent view of the cookie store is needed prior to completing another task - for instance, displaying a user's private messages might best be deferred until the presence of an (unexpired) session cookie is verified.
+
 #### Single execution context
 
 You can monitor for script-visible cookie changes (creation, modification and deletion) during the lifetime of your script's execution context:
@@ -591,7 +593,7 @@ addEventListener('cookiechange', event => {
 
 The power and resource consumption of this feature of the API will need to be carefully balanced against its utility, and for this reason delivery of a change event may be deferred until after the next browser start-up (for unrelated reasons) in cases where the change notification is for a cookie expiration and the browser is not already running.
 
-This API will cause new service worker start-up after browser start-up in cases where a cookie monitored by the service worker expired while the browser was not running. This will not block other parts of browser start-up, however. For this reason, other parts of an application need to be prepared to run after a cookie they rely on has expired but before the change event has been delivered. The (read API)[#reading] should be used in cases where a consistent view of the cookie store is needed prior to completing another task - for instance, displaying a user's private messages might best be deferred until the presence of an (unexpired) session cookie is verified.
+This API will cause new service worker start-up after browser start-up in cases where a cookie monitored by the service worker expired while the browser was not running. This will not block other parts of browser start-up, however.
 
 ## Security
 
