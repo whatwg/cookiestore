@@ -5,4 +5,4 @@ At present the best starting point for understanding this API is [the explainer]
 
 The [document-based polyfill](cookies.js) runs best in [🔒&#xFE0F; an `https` page](https://wicg.github.io/async-cookies-api/cookies_test) - the polyfill is also usable but some [tests](cookies_test.js) fail when run in [⚠&#xFE0F; an unsecured `http` page](http://wicg.github.io/async-cookies-api/cookies_test.html) due to its reliance on `Secure` cookie access.
 
-There is also a [related WICG discourse thread](https://discourse.wicg.io/t/rfc-proposal-for-an-asynchronous-cookies-api/1652) and a [Blink intent-to-implement](https://groups.google.com/a/chromium.org/d/msg/blink-dev/gU-tSdjR4rA/hAYgmxiHCAAJ) for this proposal.
+There is also a [related WICG discourse thread](https://discourse.wicg.io/t/rfc-proposal-for-an-asynchronous-cookies-api/1652) and a [Blink intent-to-implement discussion](https://groups.google.com/a/chromium.org/d/msg/blink-dev/gU-tSdjR4rA/hAYgmxiHCAAJ) for this proposal.
