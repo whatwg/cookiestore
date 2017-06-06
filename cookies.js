@@ -161,6 +161,7 @@ if (self.document) (function() {
       secure = !!secure;
       if (secure && !defSecure) throw new SyntaxError('Secure cookies can only be modified from secure contexts');
       let httpOnly = !!options.httpOnly;
+      if (httpOnly) throw new SyntaxError('HttpOnly cookies can only be modified from Set-Cookie response headers');
       if (value == null && maxAge == null && expires == null) maxAge = 0;
       value = value == null ? '' : String(value);
       if (name === '' && value.indexOf('=') !== -1) {
