@@ -245,7 +245,7 @@ let setOneSimpleOriginSessionCookie = async () => {
 };
 ```
 
-That defaults to path `/` and *implicit* domain, and defaults to a Secure-if-https-origin, non-HttpOnly session cookie which will be visible to scripts. You can override these defaults if needed:
+That defaults to path `/` and *implicit* domain, and defaults to a Secure-if-https-origin, non-HttpOnly session cookie which will be visible to scripts. You can override any of these defaults except for HttpOnly (which is not settable from script in modern browsers) if needed:
 
 ```js
 let setOneDaySecureCookieWithDate = async () => {
@@ -255,7 +255,6 @@ let setOneDaySecureCookieWithDate = async () => {
       path: '/cgi-bin/',
       expires: inTwentyFourHours,
       secure: true,
-      httpOnly: true,
       domain: 'example.org'
     });
   console.log('Set!');
@@ -272,7 +271,6 @@ let setOneDayUnsecuredCookieWithMillisecondsSinceEpoch = async () => {
       path: '/cgi-bin/',
       expires: inTwentyFourHours,
       secure: false,
-      httpOnly: true,
       domain: 'example.org'
     });
   console.log('Set!');
@@ -287,7 +285,6 @@ let setSecureCookieWithHttpLikeExpirationString = async () => {
       path: '/cgi-bin/',
       expires: 'Mon, 07 Jun 2021 07:07:07 GMT',
       secure: true,
-      httpOnly: false,
       domain: 'example.org'
     });
   console.log('Set!');
@@ -365,7 +362,6 @@ let setExpiredSecureCookieWithDomainPathAndFallbackValue = async () => {
       path: '/cgi-bin/',
       expires: theVeryRecentPast,
       secure: true,
-      httpOnly: true,
       domain: 'example.org'
     });
   console.log('Expired! Deleted!! Cleared!!1!');

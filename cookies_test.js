@@ -140,7 +140,6 @@
         path: '/cgi-bin/',
         expires: inTwentyFourHours,
         secure: true,
-        httpOnly: true,
         domain: 'example.org'
       });
     console.log('Set!');
@@ -159,7 +158,6 @@
         path: '/cgi-bin/',
         expires: inTwentyFourHours,
         secure: false,
-        httpOnly: true,
         domain: 'example.org'
       });
     console.log('Set!');
@@ -176,7 +174,6 @@
         path: '/cgi-bin/',
         expires: 'Mon, 07 Jun 2021 07:07:07 GMT',
         secure: true,
-        httpOnly: false,
         domain: 'example.org'
       });
     console.log('Set!');
@@ -228,7 +225,6 @@
         path: '/cgi-bin/',
         expires: theVeryRecentPast,
         secure: true,
-        httpOnly: true,
         domain: 'example.org'
       });
     console.log('Expired! Deleted!! Cleared!!1!');
