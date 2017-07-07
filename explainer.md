@@ -14,7 +14,7 @@ The synchronous single-threaded script-level `document.cookie` and `<meta http-e
   - with a multithreaded, multiple-event loop model, and
   - with an expectation of responsiveness on human-reflex time scales.
 
-On the modern a web a cookie operation in one part of a web application cannot block:
+On the modern web a cookie operation in one part of a web application cannot block:
   - the rest of the web application,
   - the rest of the web origin, or
   - the browser as a whole.
