@@ -73,10 +73,11 @@ if (self.document) (function() {
       return cookieList[0];
     }
     async getAll(nameOrOptions, moreOptions) {
+      // moreOptions is only meaningful when nameOrOptions is not an object
       let options = Object.assign(
         {},
         (typeof nameOrOptions === 'object') ? nameOrOptions : {name: nameOrOptions},
-        moreOptions);
+        (typeof nameOrOptions === 'object') ? {} : moreOptions);
       let {name, url = defReadPath, matchType} = options || {};
       if (name != null) {
       	name = String(name);
