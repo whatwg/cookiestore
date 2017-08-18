@@ -414,7 +414,7 @@ Special prefixes: a cookie write operation for a cookie using one of the `__Host
 
 Other parts of an application need to be prepared to run after a cookie they rely on has expired but before the change event has been delivered. The (read API)[#reading] should be used in cases where a consistent view of the cookie store is needed prior to completing another task - for instance, displaying a user's private messages might best be deferred until the presence of an (unexpired) session cookie is verified.
 
-To avoid unneccessary work (executing JavaScript needlessly, or even starting an otherwise-stopped service worker for an unrelated cookie change, e.g. [CSRF token cookies updated on every HTTP request](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet#Double_Submit_Cookie)), monitoring interfaces allow the cookies names or name prefices of interest to be specified.
+To avoid unneccessary work (executing JavaScript needlessly, or even starting an otherwise-stopped service worker for an unrelated cookie change, e.g. [CSRF token cookies updated on every HTTP request](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet#Double_Submit_Cookie)), monitoring interfaces allow the cookies names or name prefixes of interest to be specified.
 
 #### Single execution context
 
