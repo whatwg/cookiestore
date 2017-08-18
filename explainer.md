@@ -202,7 +202,7 @@ let countCookies = async () => {
 };
 ```
 
-Sometimes an expected cookie is known by a prefix rather than by an exact name:
+Sometimes an expected cookie is known by a prefix rather than by an exact name, for instance when reading all cookies managed by a particular library (e.g. in [this one](https://developers.google.com/+/web/api/javascript#gapiinteractivepost_interactive_posts) the name prefix identifies the library) or when reading all cookie names owned by a particular application on a shared web host (a name prefix is often used to identify the owning application):
 
 ```js
 let countMatchingSimpleOriginCookies = async () => {
@@ -212,7 +212,7 @@ let countMatchingSimpleOriginCookies = async () => {
 };
 ```
 
-In a service worker context you may need to read more than one cookie from an in-scope path different from the default, for instance while handling a fetch event:
+In a service worker context you may need to read more than one cookie from an in-scope path different from the default, for instance while handling a fetch event which has important cookies scoped to a sub-path containing the fetched resource to avoid cookie name collisions:
 
 ```js
 let countMatchingCookiesForRequestUrl = async () => {
@@ -413,6 +413,8 @@ Special prefixes: a cookie write operation for a cookie using one of the `__Host
 *Note:* multiple cookie changes in rapid succession may cause the user agent to only check for script-visible changes (relative to the last time the observer was called or the event was fired) after all the changes have been applied. In some cases (for instance, a very short-lived cookie being set and then expiring) this may cause the observer/event handler to miss the (now-expired) ephemeral cookie entirely. Expiration of a cookie monitored by a service worker might not deliver the cookie change event until the next time a document or service worker in the cookie's domain or origin is used.
 
 Other parts of an application need to be prepared to run after a cookie they rely on has expired but before the change event has been delivered. The (read API)[#reading] should be used in cases where a consistent view of the cookie store is needed prior to completing another task - for instance, displaying a user's private messages might best be deferred until the presence of an (unexpired) session cookie is verified.
+
+To avoid unneccessary work (executing JavaScript needlessly, or even starting an otherwise-stopped service worker for an unrelated cookie change, e.g. [CSRF token cookies updated on every HTTP request](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet#Double_Submit_Cookie)), monitoring interfaces allow the cookies names or name prefices of interest to be specified.
 
 #### Single execution context
 
