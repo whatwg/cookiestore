@@ -1,4 +1,4 @@
-# Async cookies API explained
+# CookieStore async cookies API explained
 
 This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [service workers](https://github.com/slightlyoff/ServiceWorker).
 
@@ -147,7 +147,7 @@ with other modern user agents.
 
 ## Using the async cookies API
 
-*Note:* This is largely inspired by the [API sketch](https://github.com/WICG/async-cookies-api/issues/14)
+*Note:* This is largely inspired by the [API sketch](https://github.com/WICG/cookie-store/issues/14)
 
 ### Reading
 
