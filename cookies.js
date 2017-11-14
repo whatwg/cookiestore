@@ -38,7 +38,7 @@ if (self.document) (function() {
       // requested path, maybe by appending as many
       // randomly-selected '$' and ':' as needed to reach 2083 chars
       // in the URL could be used to read same-origin, different-path cookies.
-      throw new SyntaxError([
+      throw new TypeError([
         'Cannot read cookies at requested URL ',
         JSON.stringify(url),
         ' from ',
@@ -81,8 +81,8 @@ if (self.document) (function() {
       let {name, url = defReadPath, matchType} = options || {};
       if (name != null) {
       	name = String(name);
-        if (name.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie name');
-        if (name.indexOf('=') !== -1) throw new SyntaxError('Character "=" is not allowed in cookie name');
+        if (name.indexOf(';') !== -1) throw new TypeError('Character ";" is not allowed in cookie name');
+        if (name.indexOf('=') !== -1) throw new TypeError('Character "=" is not allowed in cookie name');
       } else {
         name = '';
         if (matchType == null) matchType = 'startsWith';
@@ -90,7 +90,7 @@ if (self.document) (function() {
       if (matchType == null) matchType = 'equals';
       matchType = String(matchType);
       if (matchType !== 'equals' && matchType !== 'startsWith') {
-        throw new SyntaxError('Unrecognized matchType ' + JSON.stringify(matchType));
+        throw new TypeError('Unrecognized matchType ' + JSON.stringify(matchType));
       }
       url = readPathForUrl(url);
       let cookieList = [];
@@ -117,7 +117,7 @@ if (self.document) (function() {
       if (name == null) name = '';
       name = String(name);
       if (name.match(DISALLOWED_IN_COOKIE_NAME_RE) || name !== decodeURIComponent(encodeURIComponent(name))) {
-        throw new SyntaxError('Unsupported character in cookie name');
+        throw new TypeError('Unsupported character in cookie name');
       }
       options = options || {};
       let expires = null;
@@ -128,16 +128,16 @@ if (self.document) (function() {
       if (options.expires != null && !isNaN(expiresAsNumber)) {
         expires = (new Date(expiresAsNumber)).toGMTString();
       } else if (options.expires != null) {
-        if (isNaN(parsedExpires.getTime())) throw new SyntaxError('Unable to parse cookie "expires" attribute');
+        if (isNaN(parsedExpires.getTime())) throw new TypeError('Unable to parse cookie "expires" attribute');
         expires = parsedExpires.toGMTString();
       }
       if (expires && expires.indexOf(';') !== -1) {
-        throw new SyntaxError('Character ";" is not allowed in cookie "expires" attribute');
+        throw new TypeError('Character ";" is not allowed in cookie "expires" attribute');
       }
       let domain = null;
       if (options.domain != null) domain = String(options.domain);
       if (domain != null && domain.indexOf(';') !== -1) {
-        throw new SyntaxError('Character ";" is not allowed in cookie "domain" attribute');
+        throw new TypeError('Character ";" is not allowed in cookie "domain" attribute');
       }
       if (domain != null) domain = new URL(location.protocol + '//' + domain).host;
       // FIXME: this should also check the public suffix list
@@ -145,62 +145,62 @@ if (self.document) (function() {
           domain != location.host &&
           domain != location.hostname &&
           !location.hostname.endsWith('.' + domain)) {
-        throw new SyntaxError('Cookie "domain" attribute does not match host');
+        throw new TypeError('Cookie "domain" attribute does not match host');
       }
       let path = String(options.path || '/');
-      if (path[0] !== '/') throw new SyntaxError('The "path" attribute must begin with "/"');
+      if (path[0] !== '/') throw new TypeError('The "path" attribute must begin with "/"');
       if (path.match(/(^|\/)\.\.(\/|$)/)) {
-        throw new SyntaxError('The cookie "path" attribute must not contain ".." path segments');
+        throw new TypeError('The cookie "path" attribute must not contain ".." path segments');
       }
-      if (path.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie "path" attribute');
-      if (path.indexOf('?') !== -1) throw new SyntaxError('Character "?" is not allowed in cookie "path" attribute');
-      if (path.indexOf('#') !== -1) throw new SyntaxError('Character "#" is not allowed in cookie "path" attribute');
+      if (path.indexOf(';') !== -1) throw new TypeError('Character ";" is not allowed in cookie "path" attribute');
+      if (path.indexOf('?') !== -1) throw new TypeError('Character "?" is not allowed in cookie "path" attribute');
+      if (path.indexOf('#') !== -1) throw new TypeError('Character "#" is not allowed in cookie "path" attribute');
       // Add implicit trailing '/' if omitted. Does not match IE Set-Cookie behavior.
       path = path.replace(/([^\/]$)/, '$1/');
       let secure = options.secure;
       if (secure == null) secure = defSecure;
       secure = !!secure;
-      if (secure && !defSecure) throw new SyntaxError('Secure cookies can only be modified from secure contexts');
+      if (secure && !defSecure) throw new TypeError('Secure cookies can only be modified from secure contexts');
       let httpOnly = !!options.httpOnly;
-      if (httpOnly) throw new SyntaxError('HttpOnly cookies can only be modified from Set-Cookie response headers');
+      if (httpOnly) throw new TypeError('HttpOnly cookies can only be modified from Set-Cookie response headers');
       if (value == null && maxAge == null && expires == null) maxAge = 0;
       value = value == null ? '' : String(value);
       if (name === '' && value.indexOf('=') !== -1) {
-        throw new SyntaxError('Character "=" is not allowed in cookie value with empty name');
+        throw new TypeError('Character "=" is not allowed in cookie value with empty name');
       }
       if (value.match(DISALLOWED_IN_COOKIE_VALUE_RE) || value !== decodeURIComponent(encodeURIComponent(value))) {
         // Does not match document.cookie behavior!
-        throw new SyntaxError('Unsupported character in cookie value');
+        throw new TypeError('Unsupported character in cookie value');
       }
       if (name.substr(0, SECURE_PREFIX.length) === SECURE_PREFIX) {
         if (!defSecure) {
-          throw new SyntaxError([
+          throw new TypeError([
             'Cookies with the ',
             JSON.stringify(SECURE_PREFIX),
             ' prefix can only be modified from secure contexts'].join(''));
         }
         if (!secure) {
-          throw new SyntaxError('Cookies with the ' + JSON.stringify(SECURE_PREFIX) + ' prefix must use the Secure flag');
+          throw new TypeError('Cookies with the ' + JSON.stringify(SECURE_PREFIX) + ' prefix must use the Secure flag');
         }
       } else if (name.substr(0, HOST_PREFIX.length) === HOST_PREFIX) {
         if (!defSecure) {
-          throw new SyntaxError([
+          throw new TypeError([
             'Cookies with the ',
             JSON.stringify(HOST_PREFIX),
             ' prefix can only be modified from secure contexts'].join(''));
         }
         if (!secure) {
-          throw new SyntaxError('Cookies with the ' + JSON.stringify(HOST_PREFIX) + ' prefix must use the secure flag');
+          throw new TypeError('Cookies with the ' + JSON.stringify(HOST_PREFIX) + ' prefix must use the secure flag');
         }
         if (path !== '/') {
-          throw new SyntaxError([
+          throw new TypeError([
             'Cookies with the ',
             JSON.stringify(HOST_PREFIX),
             ' prefix must have path ',
             JSON.stringify('/')].join(''));
         }
         if (domain != null) {
-          throw new SyntaxError([
+          throw new TypeError([
             'Cookies with the ',
             JSON.stringify(HOST_PREFIX),
             ' prefix cannot have the domain parameter'].join(''));
@@ -237,8 +237,8 @@ if (self.document) (function() {
       (interests || [{}]).forEach(({name, url = defReadPath, matchType} = {}) => {
         if (name != null) {
         	name = String(name);
-          if (name.indexOf(';') !== -1) throw new SyntaxError('Character ";" is not allowed in cookie name');
-          if (name.indexOf('=') !== -1) throw new SyntaxError('Character "=" is not allowed in cookie name');
+          if (name.indexOf(';') !== -1) throw new TypeError('Character ";" is not allowed in cookie name');
+          if (name.indexOf('=') !== -1) throw new TypeError('Character "=" is not allowed in cookie name');
         } else {
           name = '';
           if (matchType == null) matchType = 'startsWith';
@@ -249,7 +249,7 @@ if (self.document) (function() {
         if (matchType == null) matchType = 'equals';
         matchType = String(matchType);
         if (matchType !== 'equals' && matchType !== 'startsWith') {
-          throw new SyntaxError('Unrecognized matchType ' + JSON.stringify(matchType));
+          throw new TypeError('Unrecognized matchType ' + JSON.stringify(matchType));
         }
         copiedInterests.push({name: name, url: url, matchType: matchType});
       });
