@@ -397,6 +397,52 @@ Dictionary {{CookieListItem}} Members</h5>
 </dl>
 
 
+<h4 id="CookieChangeEvent">
+The {{CookieChangeEvent}} Interface</h4>
+
+<pre class="idl">
+[
+  Exposed=(ServiceWorker,Window),
+  Constructor(DOMString type, optional CookieChangeEventInit eventInitDict)
+] interface CookieChangeEvent : Event {
+  readonly attribute CookieList changed;
+  readonly attribute CookieList deleted;
+};
+</pre>
+
+<h5 id="CookieChangeEvent-attributes">
+Attributes</h5>
+
+<dl dfn-type=attribute dfn-for="CookieChangeEvent">
+	: <dfn>changed</dfn>
+	:: changed
+
+	: <dfn>deleted</dfn>
+	:: deleted cookies
+</dl>
+
+<h5 id="CookieChangeEventInit">
+{{CookieChangeEventInit}}</h5>
+
+<pre class="idl">
+dictionary CookieChangeEventInit : EventInit {
+  CookieList changed;
+  CookieList deleted;
+};
+</pre>
+
+<h6 id="CookieChangeEventInit-members">
+{{CookieChangeEventInit}} Members
+</h5>
+<dl dfn-type=dict-member dfn-for="CookieChangeEventInit">
+	: <dfn>changed</dfn>
+	:: changed
+
+	: <dfn>deleted</dfn>
+	:: deleted cookies
+</dl>
+
+
 <h2 id="ServiceWorkerGlobalScopeCookieStore">
 The ServiceWorkerGlobalScopeCookieStore Interface</h2>
 
