@@ -7,11 +7,317 @@ Group: cookie-store
 Repository: WICG/cookie-store
 URL: https://github.com/WICG/cookie-store
 Editor: Your Name, Your Company http://example.com/your-company, your-email@example.com, http://example.com/your-personal-website
+Markup Shorthands: markdown yes
 Abstract: An asynchronous Javascript cookies API for documents and workers
 </pre>
 
-Introduction {#intro}
-=====================
+<h2 id="intro">
+Introduction</h2>
 
-Introduction here.
+This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [service workers](https://github.com/slightlyoff/ServiceWorker).
 
+[HTTP cookies](https://tools.ietf.org/html/rfc6265) have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html) for the web. 
+
+The synchronous single-threaded script-level `document.cookie` and `<meta http-equiv="set-cookie" ...>` interface to cookies has been a source of [complexity and performance woes](https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html) further exacerbated by the move in many browsers from:
+  - a single browser process,
+  - a single-threaded event loop model, and
+  - no general expectation of responsiveness for scripted event handling while processing cookie operations
+
+... to the modern web which strives for smoothly responsive high performance:
+  - in multiple browser processes,
+  - with a multithreaded, multiple-event loop model, and
+  - with an expectation of responsiveness on human-reflex time scales.
+
+On the modern web a cookie operation in one part of a web application cannot block:
+  - the rest of the web application,
+  - the rest of the web origin, or
+  - the browser as a whole.
+
+Newer parts of the web built in service workers [need access to cookies too](https://github.com/slightlyoff/ServiceWorker/issues/707) but cannot use the synchronous, blocking `document.cookie` and `<meta http-equiv="set-cookie" ...>` interfaces at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
+
+<h3 id="intro-proposed-change>
+A Taste of the Proposed Change
+</h3>
+
+Although it is tempting to [rethink cookies](https://discourse.wicg.io/t/rethinking-cookies/744) entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.
+
+Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in `Set-Cookie` format:
+
+```js
+document.cookie =
+  '__Secure-COOKIENAME=cookie-value' +
+  '; Path=/' +
+  '; expires=Fri, 12 Aug 2016 23:05:17 GMT' +
+  '; Secure' +
+  '; Domain=example.org';
+// now we could assume the write succeeded, but since
+// failure is silent it is difficult to tell, so we
+// read to see whether the write succeeded
+var successRegExp =
+  /(^|; ?)__Secure-COOKIENAME=cookie-value(;|$)/;
+if (String(document.cookie).match(successRegExp)) {
+  console.log('It worked!');
+} else {
+  console.error('It did not work, and we do not know why');
+}
+```
+
+What if you could instead write:
+
+```js
+cookieStore.set(
+  '__Secure-COOKIENAME',
+  'cookie-value',
+  {
+    expires: Date.now() + 24*60*60*1000,
+    domain: 'example.org'
+  }).then(function() {
+    console.log('It worked!');
+  }, function(reason) {
+    console.error(
+      'It did not work, and this is why:',
+      reason);
+  });
+// Meanwhile we can do other things while waiting for
+// the cookie store to process the write...
+```
+
+This also has the advantage of not relying on `document` and not blocking, which together make it usable from [service workers](https://github.com/slightlyoff/ServiceWorker), which otherwise do not have cookie access from script.
+
+This proposal also includes a power-efficient monitoring API to replace `setTimeout`-based polling cookie monitors with cookie change observers.
+
+<h3 id="intro-summary">
+Summary
+</h3>
+
+This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:
+
+	* [write](#writing) (or "set") cookies
+	* [delete](#clearing) (or "expire") cookies
+	* [read](#reading) (or "get") [script-visible](#script-visibility) cookies
+		* ... including for specified in-scope request paths in
+			[service worker](https://github.com/slightlyoff/ServiceWorker) contexts
+	* [monitor](#monitoring) [script-visible](#script-visibility) cookies for changes
+		* ... [using `CookieObserver`](#single-execution-context) in long-running script contexts (e.g. `document`)
+		* ... [using `CookieChangeEvent`](#service-worker) after registration during the `InstallEvent`
+			in ephemeral [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
+		* ... again including for script-supplied in-scope request paths
+			in [service worker](https://github.com/slightlyoff/ServiceWorker) contexts
+
+<h4 id="script-visibility">
+Script visibility
+</h4>
+
+A cookie is script-visible when it is in-scope and does not have the `HttpOnly` cookie flag.
+
+<h4 id="intro-motivation">
+Motivations
+</h4>
+
+Some service workers [need access to cookies](https://github.com/slightlyoff/ServiceWorker/issues/707) but
+cannot use the synchronous, blocking `document.cookie` interface as they both have no `document` and
+also cannot block the event loop as that would interfere with handling of unrelated events.
+
+A new API may also provide a rare and valuable chance to address
+some [outstanding cross-browser incompatibilities](https://github.com/inikulin/cookie-compat) and bring [divergent
+specs and user-agent behavior](https://github.com/whatwg/html/issues/804) into closer correspondence.
+
+A well-designed and opinionated API may actually make cookies easier to deal with correctly from
+scripts, with the potential effect of reducing their accidental misuse. An efficient monitoring API, in particular,
+can be used to replace power-hungry polling cookie scanners.
+
+The API must interoperate well enough with existing cookie APIs (HTTP-level, HTML-level and script-level) that it can be adopted incrementally by a large or complex website.
+
+<h4 id="intro-opinions">
+Opinions
+</h4>
+
+This API defaults cookie paths to `/` for cookie write operations, including deletion/expiration. The implicit relative path-scoping of cookies to `.` has caused a lot of additional complexity for relatively little gain given their security equivalence under the same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain. Cookie paths without a trailing `/` are treated as if they had a trailing `/` appended for cookie write operations. Cookie paths must start with `/` for write operations, and must not contain any `..` path segments. Query parameters and URL fragments are not allowed in paths for cookie write operations.
+
+URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
+
+This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) [creation or modification of `Secure`-flagged cookies from unsecured web origins](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00) and [enforces special rules for the `__Host-` and `__Secure-` cookie name prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00).
+
+This API defaults cookies to "Domain"-less, which in conjunction with "Secure" provides origin-scoped cookie
+behavior in most modern browsers. When practical the [`__Host-` cookie name prefix](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) should be used with these cookies so that cooperating browsers origin-scope them.
+
+Serialization of expiration times for non-session cookies in a special cookie-specific format has proven cumbersome,
+so this API allows JavaScript Date objects and numeric timestamps (milliseconds since the beginning of the Unix epoch) to be used instead. The inconsistently-implemented Max-Age parameter is not exposed, although similar functionality is available for the specific case of expiring a cookie.
+
+Cookies without `=` in their HTTP Cookie header serialization are treated as having an empty name, consistent with the majority of current browsers. Cookies with an empty name cannot be set using values containing `=` as this would result in ambiguous serializations in the majority of current browsers.
+
+Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API mandates UTF-8 interpretation for cookies read or written by this API.
+
+Use of cookie-change-driven scripts has been hampered by the absence of a power-efficient (non-polling) API for this. This API provides observers for efficient monitoring in document contexts and interest registration for efficient monitoring in service worker contexts.
+
+Scripts should not have to write and then read "test cookies" to determine whether script-initiated cookie write access is possible, nor should they have to correlate with cooperating server-side versions of the same write-then-read test to determine that script-initiated cookie read access is impossible despite cookies working at the HTTP level.
+
+<h4 id="intro-compat">
+Compatiblity
+</h4>
+
+Some user-agents implement non-standard extensions to cookie behavior. The intent of this specification,
+though, is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented
+across modern browsers. As new cookie features are specified and adopted it is expected that this API will be
+extended to include them. A secondary goal is to converge with `document.cookie` behavior, `<meta http-equiv=set-cookie>`,
+and the http cookie specification. See https://github.com/whatwg/html/issues/804 and https://inikulin.github.io/cookie-compat/
+for the current state of this convergence.
+
+Differences across browsers in how bytes outside the printable-ASCII subset are interpreted has led to
+long-lasting user- and developer-visible incompatibilities across browsers making internationalized use of cookies
+needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and uses `USVString` for the script interface,
+with the additional side-effects that subsequent uses of `document.cookie` to read a cookie read or written through this interface and subsequent uses of `document.cookie` or
+`<meta http-equiv=set-cookie>` to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
+will change the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance
+with other modern user agents.
+
+<h2 id="api">
+The API</h2>
+
+<h3 id="CookieStore">
+The {{CookieStore}} Interface</h3>
+
+<xmp class="idl">
+[
+  Exposed=(ServiceWorker,Window),
+  RuntimeEnabled=AsyncCookies
+] interface CookieStore : EventTarget {
+  [RaisesException] Promise<CookieList?> getAll(
+      USVString name, optional CookieStoreGetOptions options);
+  [RaisesException] Promise<CookieList?> getAll(
+      optional CookieStoreGetOptions options);
+  [RaisesException] Promise<CookieListItem?> get(
+      USVString name, optional CookieStoreGetOptions options);
+  [RaisesException] Promise<CookieListItem?> get(
+      optional CookieStoreGetOptions options);
+  [RaisesException] Promise<boolean> has(
+      USVString name, optional CookieStoreGetOptions options);
+  [RaisesException] Promise<boolean> has(
+      optional CookieStoreGetOptions options);
+
+  [RaisesException] Promise<void> set(
+      USVString name, USVString value, optional CookieStoreSetOptions options);
+  [RaisesException] Promise<void> set(
+      CookieStoreSetOptions options);
+
+  [RaisesException] Promise<void> delete(
+      USVString name, optional CookieStoreSetOptions options);
+  [RaisesException] Promise<void> delete(
+      CookieStoreSetOptions options);
+
+  attribute EventHandler onchange;
+};
+</xmp>
+
+<h4 id="CookieStore-attributes">
+Attributes</h4>
+
+<dl dfn-type=attribute dfn-for=CookieStore>
+	: <dfn>onchange</dfn>
+	::
+		Something changed
+</dl>
+
+<h4 id="CookieStore-methods">
+Methods</h4>
+
+<dl dfn-type=method dfn-for="CookieStore">
+	: <dfn>getAll(name, options)</dfn>
+	::
+		Get all the cookies
+
+		<pre class=argumentdef for="CookieStore/getAll(name, options)">
+			name: name
+			options: options
+		</pre>
+	: <dfn>getAll(options)</dfn>
+	::
+		Get all the cookies
+
+		<pre class=argumentdef for="CookieStore/getAll(options)">
+			options: options
+		</pre>
+
+	: <dfn>get(name, options)</dfn>
+	::
+		Get something
+
+		<pre class=argumentdef for="CookieStore/get(name, options)">
+			name: name
+			options: options
+		</pre>
+	: <dfn>get(options)</dfn>
+	::
+		Get something
+
+		<pre class=argumentdef for="CookieStore/get(options)">
+			options: options
+		</pre>
+	: <dfn>has(name, options)</dfn>
+	::
+		Has something
+
+		<pre class=argumentdef for="CookieStore/has(name, options)">
+			name: name
+			options: options
+		</pre>
+	: <dfn>has(options)</dfn>
+	::
+		Has something
+
+		<pre class=argumentdef for="CookieStore/has(options)">
+			options: options
+		</pre>
+	: <dfn>set(name, value, options)</dfn>
+	::
+		Set cookie
+
+		<pre class=argumentdef for="CookieStore/set(name, value, options)">
+			name: name
+		value: value
+		options: options
+		</pre>
+	: <dfn>set(options)</dfn>
+	::
+		Set cookie
+
+		<pre class=argumentdef for="CookieStore/set(options)">
+			options: options
+		</pre>
+	: <dfn>delete(name, options)</dfn>
+	::
+		Delete something
+
+		<pre class=argumentdef for="CookieStore/delete(name, options)">
+			name: name
+			options: options
+		</pre>
+	: <dfn>delete(options)</dfn>
+	::
+		Delete something
+
+		<pre class=argumentdef for="CookieStore/delete(options)">
+			options: options
+		</pre>
+</dl>
+
+<h4 id="CookieStore-options">
+Options</h4>
+
+<h5 id="CookieStore-set-options">
+CookieStoreSetOptions</h5>
+
+<pre class="idl">
+enum CookieMatchType {
+  "equals",
+  "startsWith"
+};
+</pre>
+
+<pre class="idl">
+dictionary CookieStoreGetOptions {
+  USVString name;
+  USVString url;
+  CookieMatchType matchType = "equals";
+};
+</pre>
