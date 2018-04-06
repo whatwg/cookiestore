@@ -177,7 +177,6 @@ The {{CookieStore}} Interface</h2>
 <xmp class="idl">
 [
   Exposed=(ServiceWorker,Window),
-  RuntimeEnabled=AsyncCookies
 ] interface CookieStore : EventTarget {
   [RaisesException] Promise<CookieList?> getAll(
       USVString name, optional CookieStoreGetOptions options);
