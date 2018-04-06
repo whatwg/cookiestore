@@ -373,3 +373,21 @@ Dictionary {{CookieStoreSetOptions}} Members</h5>
 	:: http only
 </dl>
 
+<h2 id="ServiceWorkerGlobalScopeCookieStore">
+The ServiceWorkerGlobalScopeCookieStore Interface</h2>
+
+<pre class="idl">
+partial interface ServiceWorkerGlobalScope {
+    [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
+};
+</pre>
+
+<h2 id="WindowCookieStore">
+The {{WindowCookieStore}} Interface</h2>
+
+<pre class="idl">
+partial interface Window {
+    [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
+};
+</pre>
+
