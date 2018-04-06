@@ -35,7 +35,7 @@ On the modern web a cookie operation in one part of a web application cannot blo
 
 Newer parts of the web built in service workers [need access to cookies too](https://github.com/slightlyoff/ServiceWorker/issues/707) but cannot use the synchronous, blocking `document.cookie` and `<meta http-equiv="set-cookie" ...>` interfaces at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
 
-<h3 id="intro-proposed-change>
+<h3 id="intro-proposed-change">
 A Taste of the Proposed Change
 </h3>
 
