@@ -298,7 +298,7 @@ Methods</h3>
 </dl>
 
 <h3 id="CookieStore-dictionaries">
-Dictinaries</h3>
+Dictionaries</h3>
 
 <h4 dictionary lt="CookieStoreGetOptions">
 {{CookieStoreGetOptions}}</h4>
