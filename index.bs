@@ -1,0 +1,17 @@
+<pre class='metadata'>
+Title: Cookie-Store
+Shortname: cookiestore
+Level: 1
+Status: LD
+Group: cookie-store
+Repository: WICG/cookie-store
+URL: https://github.com/WICG/cookie-store
+Editor: Your Name, Your Company http://example.com/your-company, your-email@example.com, http://example.com/your-personal-website
+Abstract: An asynchronous Javascript cookies API for documents and workers
+</pre>
+
+Introduction {#intro}
+=====================
+
+Introduction here.
+
