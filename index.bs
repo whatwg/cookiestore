@@ -764,14 +764,14 @@ Gotcha!</h3>
 
 Although browser cookie implementations are now evolving in the direction of better security and fewer surprising and error-prone defaults, there are at present few guarantees about cookie data security.
 
- * unsecured origins can typically overwrite cookies used on secure origins
- * superdomains can typically overwrite cookies seen by subdomains
- * cross-site scripting attacts and other script and header injection attacks can be used to forge cookies too
- * cookie read operations (both from script and on web servers) don't give any indication of where the cookie came from
- * browsers sometimes truncate, transform or evict cookie data in surprising and counterintuitive ways
-   * ... due to reaching storage limits
-   * ... due to character encoding differences
-   * ... due to differing syntactic and semantic rules for cookies
+	* unsecured origins can typically overwrite cookies used on secure origins
+	* superdomains can typically overwrite cookies seen by subdomains
+	* cross-site scripting attacts and other script and header injection attacks can be used to forge cookies too
+	* cookie read operations (both from script and on web servers) don't give any indication of where the cookie came from
+	* browsers sometimes truncate, transform or evict cookie data in surprising and counterintuitive ways
+		* ... due to reaching storage limits
+		* ... due to character encoding differences
+		* ... due to differing syntactic and semantic rules for cookies
 
 For these reasons it is best to use caution when interpreting any cookie's value, and never execute a cookie's value as script, HTML, CSS, XML, PDF, or any other executable format.
 
