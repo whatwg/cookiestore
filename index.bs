@@ -171,11 +171,8 @@ with the additional side-effects that subsequent uses of `document.cookie` to re
 will change the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.
 
-<h2 id="api">
-The API</h2>
-
-<h3 id="CookieStore">
-The {{CookieStore}} Interface</h3>
+<h2 id="CookieStore">
+The {{CookieStore}} Interface</h2>
 
 <xmp class="idl">
 [
@@ -209,8 +206,8 @@ The {{CookieStore}} Interface</h3>
 };
 </xmp>
 
-<h4 id="CookieStore-attributes">
-Attributes</h4>
+<h3 id="CookieStore-attributes">
+Attributes</h3>
 
 <dl dfn-type=attribute dfn-for=CookieStore>
 	: <dfn>onchange</dfn>
@@ -218,8 +215,8 @@ Attributes</h4>
 		Something changed
 </dl>
 
-<h4 id="CookieStore-methods">
-Methods</h4>
+<h3 id="CookieStore-methods">
+Methods</h3>
 
 <dl dfn-type=method dfn-for="CookieStore">
 	: <dfn>getAll(name, options)</dfn>
@@ -301,11 +298,11 @@ Methods</h4>
 		</pre>
 </dl>
 
-<h4 id="CookieStore-options">
-Options</h4>
+<h3 id="CookieStore-options">
+Options</h3>
 
-<h5 dictionary lt="CookieStoreGetOptions">
-{{CookieStoreGetOptions}}</h5>
+<h4 dictionary lt="CookieStoreGetOptions">
+{{CookieStoreGetOptions}}</h4>
 
 <pre class="idl">
 enum CookieMatchType {
@@ -322,8 +319,8 @@ dictionary CookieStoreGetOptions {
 };
 </pre>
 
-<h6 id="dictionary-get-options-members">
-Dictionary {{CookieStoreGetOptions}} Members</h6>
+<h5 id="dictionary-get-options-members">
+Dictionary {{CookieStoreGetOptions}} Members</h5>
 
 <dl dfn-type=dict-member dfn-for="CookieStoreGetOptions">
 	: <dfn>name</dfn>
@@ -336,8 +333,8 @@ Dictionary {{CookieStoreGetOptions}} Members</h6>
 	:: how to match a cookie
 </dl>
 
-<h5 dictionary lt="CookieStoreSetOptions">
-{{CookieStoreSetOptions}}</h5>
+<h4 dictionary lt="CookieStoreSetOptions">
+{{CookieStoreSetOptions}}</h4>
 
 <pre class="idl">
 dictionary CookieStoreSetOptions {
@@ -351,8 +348,8 @@ dictionary CookieStoreSetOptions {
 };
 </pre>
 
-<h6 id="dictionary-set-options-members">
-Dictionary {{CookieStoreSetOptions}} Members</h6>
+<h5 id="dictionary-set-options-members">
+Dictionary {{CookieStoreSetOptions}} Members</h5>
 
 <dl dfn-type=dict-member dfn-for="CookieStoreSetOptions">
 	: <dfn>name</dfn>
