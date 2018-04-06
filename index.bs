@@ -43,6 +43,7 @@ Although it is tempting to [rethink cookies](https://discourse.wicg.io/t/rethink
 
 Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in `Set-Cookie` format:
 
+<div class="example">
 ```js
 document.cookie =
   '__Secure-COOKIENAME=cookie-value' +
@@ -61,9 +62,11 @@ if (String(document.cookie).match(successRegExp)) {
   console.error('It did not work, and we do not know why');
 }
 ```
+</div>
 
 What if you could instead write:
 
+<div class="example">
 ```js
 cookieStore.set(
   '__Secure-COOKIENAME',
@@ -81,6 +84,7 @@ cookieStore.set(
 // Meanwhile we can do other things while waiting for
 // the cookie store to process the write...
 ```
+</div>
 
 This also has the advantage of not relying on `document` and not blocking, which together make it usable from [service workers](https://github.com/slightlyoff/ServiceWorker), which otherwise do not have cookie access from script.
 
