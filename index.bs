@@ -759,7 +759,8 @@ Attributes</h3>
 Security</h2>
 Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.
 
-### Gotcha!
+<h3 id="gotcha">
+Gotcha!</h3>
 
 Although browser cookie implementations are now evolving in the direction of better security and fewer surprising and error-prone defaults, there are at present few guarantees about cookie data security.
 
@@ -774,11 +775,13 @@ Although browser cookie implementations are now evolving in the direction of bet
 
 For these reasons it is best to use caution when interpreting any cookie's value, and never execute a cookie's value as script, HTML, CSS, XML, PDF, or any other executable format.
 
-### Restrict?
+<h3 id="restrict">
+Restrict?</h3>
 
 This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured `http` contexts this could result in a web less safe for users. For that reason it may be desirable to restrict its use, or at least the use of the `set` and `delete` operations, to secure origins running in secure contexts.
 
-### Surprises
+<h3 id="surprises">
+Surprises</h3>
 
 Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.
 
@@ -786,19 +789,22 @@ Other surprises are documented in [Section 1 of HTTP State Management Mechanism 
 
 Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.
 
-### Prefixes
+<h3 id="prefixes">
+Prefixes</h3>
 
 Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and -- in the case of `__Host-` -- disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
 
 Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.
 
-### URL scoping
+<h3 id="url-scoping">
+URL scoping</h3>
 
 Although a service worker script cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the service worker script. This means that cookie access inside the scope of the service worker is technically possible already, it's just not very convenient.
 
 When the service worker is scoped more narrowly than `/` it may still be able to read path-scoped cookies from outside its scope's path space by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.
 
-### Cookie aversion
+<h3 id="aversion">
+Cookie aversion</h3>
 
 To reduce complexity for developers and eliminate the need for ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won't invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)
 
