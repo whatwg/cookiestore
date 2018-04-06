@@ -208,6 +208,9 @@ The {{CookieStore}} Interface</h2>
 <h3 id="CookieStore-attributes">
 Attributes</h3>
 
+<h4 id="CookieStore-attributes-onchange">
+{{onchange}}
+</h4>
 <dl dfn-type=attribute dfn-for=CookieStore>
 	: <dfn>onchange</dfn>
 	::
@@ -216,6 +219,9 @@ Attributes</h3>
 
 <h3 id="CookieStore-methods">
 Methods</h3>
+
+<h4 id="CookieStore-methods-getAll">
+{{CookieStore/getAll}}</h4>
 
 <dl dfn-type=method dfn-for="CookieStore">
 	: <dfn>getAll(name, options)</dfn>
@@ -233,7 +239,12 @@ Methods</h3>
 		<pre class=argumentdef for="CookieStore/getAll(options)">
 			options: options
 		</pre>
+</dl>
 
+<h4 id="CookieStore-methods-get">
+{{CookieStore/get}}</h4>
+
+<dl dfn-type=method dfn-for="CookieStore">
 	: <dfn>get(name, options)</dfn>
 	::
 		Get something
@@ -249,6 +260,13 @@ Methods</h3>
 		<pre class=argumentdef for="CookieStore/get(options)">
 			options: options
 		</pre>
+</dl>
+
+
+<h4 id="CookieStore-methods-has">
+{{CookieStore/has}}</h4>
+
+<dl dfn-type=method dfn-for="CookieStore">
 	: <dfn>has(name, options)</dfn>
 	::
 		Has something
@@ -264,6 +282,12 @@ Methods</h3>
 		<pre class=argumentdef for="CookieStore/has(options)">
 			options: options
 		</pre>
+</dl>
+
+<h4 id="CookieStore-methods-set">
+{{CookieStore/set(name, value, options)|set}}</h4>
+
+<dl dfn-type=method dfn-for="CookieStore">
 	: <dfn>set(name, value, options)</dfn>
 	::
 		Set cookie
@@ -280,6 +304,13 @@ Methods</h3>
 		<pre class=argumentdef for="CookieStore/set(options)">
 			options: options
 		</pre>
+
+</dl>
+
+<h4 id="CookieStore-methods-delete">
+{{CookieStore/delete(name, options)|delete}}</h4>
+
+<dl dfn-type=method dfn-for="CookieStore">
 	: <dfn>delete(name, options)</dfn>
 	::
 		Delete something
