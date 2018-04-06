@@ -304,8 +304,8 @@ Methods</h4>
 <h4 id="CookieStore-options">
 Options</h4>
 
-<h5 id="CookieStore-set-options">
-CookieStoreSetOptions</h5>
+<h5 dictionary lt="CookieStoreGetOptions">
+{{CookieStoreGetOptions}}</h5>
 
 <pre class="idl">
 enum CookieMatchType {
@@ -321,3 +321,59 @@ dictionary CookieStoreGetOptions {
   CookieMatchType matchType = "equals";
 };
 </pre>
+
+<h6 id="dictionary-get-options-members">
+Dictionary {{CookieStoreGetOptions}} Members</h6>
+
+<dl dfn-type=dict-member dfn-for="CookieStoreGetOptions">
+	: <dfn>name</dfn>
+	:: name of cookie
+
+	: <dfn>url</dfn>
+	:: some url
+
+	: <dfn>matchType</dfn>
+	:: how to match a cookie
+</dl>
+
+<h5 dictionary lt="CookieStoreSetOptions">
+{{CookieStoreSetOptions}}</h5>
+
+<pre class="idl">
+dictionary CookieStoreSetOptions {
+  USVString name;
+  USVString value;
+  DOMTimeStamp? expires = null;
+  USVString domain;
+  USVString path = "/";
+  boolean? secure;
+  boolean httpOnly = false;
+};
+</pre>
+
+<h6 id="dictionary-set-options-members">
+Dictionary {{CookieStoreSetOptions}} Members</h6>
+
+<dl dfn-type=dict-member dfn-for="CookieStoreSetOptions">
+	: <dfn>name</dfn>
+	:: name of cookie
+
+	: <dfn>value</dfn>
+	:: value for cookie
+
+	: <dfn>expires</dfn>
+	:: expiration
+
+	: <dfn>domain</dfn>
+	:: domain
+
+	: <dfn>path</dfn>
+	:: path
+
+	: <dfn>secure</dfn>
+	:: secure
+
+	: <dfn>httpOnly</dfn>
+	:: http only
+</dl>
+
