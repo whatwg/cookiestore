@@ -297,8 +297,8 @@ Methods</h3>
 		</pre>
 </dl>
 
-<h3 id="CookieStore-options">
-Options</h3>
+<h3 id="CookieStore-dictionaries">
+Dictinaries</h3>
 
 <h4 dictionary lt="CookieStoreGetOptions">
 {{CookieStoreGetOptions}}</h4>
@@ -373,6 +373,30 @@ Dictionary {{CookieStoreSetOptions}} Members</h5>
 	:: http only
 </dl>
 
+<h4 dictionary lt="CookieItemList">
+{{CookieItemList}}</h4>
+
+<xmp class="idl">
+dictionary CookieListItem {
+  USVString name;
+  USVString value;
+};
+
+typedef sequence<CookieListItem> CookieList;
+</xmp>
+
+<h5 id="dictionary-cookie-list-item-members">
+Dictionary {{CookieListItem}} Members</h5>
+
+<dl dfn-type=dict-member dfn-for="CookieListItem">
+	: <dfn>name</dfn>
+	:: name of cookie
+
+	: <dfn>value</dfn>
+	:: value of cookie
+</dl>
+
+
 <h2 id="ServiceWorkerGlobalScopeCookieStore">
 The ServiceWorkerGlobalScopeCookieStore Interface</h2>
 
@@ -383,7 +407,7 @@ partial interface ServiceWorkerGlobalScope {
 </pre>
 
 <h2 id="WindowCookieStore">
-The {{WindowCookieStore}} Interface</h2>
+The WindowCookieStore Interface</h2>
 
 <pre class="idl">
 partial interface Window {
