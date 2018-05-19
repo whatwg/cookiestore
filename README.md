@@ -1,7 +1,7 @@
 # Async Cookies API
 
 This repository documents an API for accessing HTTP cookies asynchronously from
-Document and Service Worker execution contexts.
+Document and Service Worker global contexts.
 
 * [The explainer](explainer.md) is a developer-oriented preview of the API.
 * [The specification draft](https://wicg.github.io/cookie-store/) is aimed at
@@ -40,5 +40,11 @@ The Async Cookies API has also been discussed in the following places.
 * [WICG discourse thread](https://discourse.wicg.io/t/rfc-proposal-for-an-asynchronous-cookies-api/1652)
 * [Blink intent-to-implement](https://groups.google.com/a/chromium.org/d/msg/blink-dev/gU-tSdjR4rA/hAYgmxiHCAAJ)
 
-The best resource for understanding cookies is the latest draft of
+The best resource for understanding the deep technical aspects of cookies is
+the most recent draft of
 [RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02).
+
+This API aims to replace
+[document.cookie](https://www.w3.org/TR/html/dom.html#dom-document-cookie)
+and
+[navigator.cookieEnabled](https://www.w3.org/TR/html/webappapis.html#cookies).
