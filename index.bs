@@ -20,7 +20,7 @@ This is a proposal to bring an asynchronous cookie API to scripts running in HTM
 
 [HTTP cookies](https://tools.ietf.org/html/rfc6265) have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html) for the web.
 
-The synchronous single-threaded script-level `document.cookie` and `<meta http-equiv="set-cookie" ...>` interface to cookies has been a source of [complexity and performance woes](https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html) further exacerbated by the move in many browsers from:
+The synchronous single-threaded script-level `document.cookie` interface to cookies has been a source of [complexity and performance woes](https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html) further exacerbated by the move in many browsers from:
   - a single browser process,
   - a single-threaded event loop model, and
   - no general expectation of responsiveness for scripted event handling while processing cookie operations
@@ -35,7 +35,7 @@ On the modern web a cookie operation in one part of a web application cannot blo
   - the rest of the web origin, or
   - the browser as a whole.
 
-Newer parts of the web built in service workers [need access to cookies too](https://github.com/slightlyoff/ServiceWorker/issues/707) but cannot use the synchronous, blocking `document.cookie` and `<meta http-equiv="set-cookie" ...>` interfaces at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
+Newer parts of the web built in service workers [need access to cookies too](https://github.com/slightlyoff/ServiceWorker/issues/707) but cannot use the synchronous, blocking `document.cookie` interface at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
 
 <h3 id="intro-proposed-change">
 A Taste of the Proposed Change
@@ -165,15 +165,14 @@ Compatiblity
 Some user-agents implement non-standard extensions to cookie behavior. The intent of this specification,
 though, is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented
 across modern browsers. As new cookie features are specified and adopted it is expected that this API will be
-extended to include them. A secondary goal is to converge with `document.cookie` behavior, `<meta http-equiv=set-cookie>`,
+extended to include them. A secondary goal is to converge with `document.cookie` behavior
 and the http cookie specification. See https://github.com/whatwg/html/issues/804 and https://inikulin.github.io/cookie-compat/
 for the current state of this convergence.
 
 Differences across browsers in how bytes outside the printable-ASCII subset are interpreted has led to
 long-lasting user- and developer-visible incompatibilities across browsers making internationalized use of cookies
 needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and uses `USVString` for the script interface,
-with the additional side-effects that subsequent uses of `document.cookie` to read a cookie read or written through this interface and subsequent uses of `document.cookie` or
-`<meta http-equiv=set-cookie>` to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
+with the additional side-effects that subsequent uses of `document.cookie` to read a cookie read or written through this interface and subsequent uses of `document.cookie` to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
 will change the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.
 

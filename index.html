@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 150b038a54cb926cf8e3d36fd8b108c226cb94b8" name="generator">
   <link href="https://github.com/WICG/cookie-store" rel="canonical">
-  <meta content="3c2a6f5ba41daffb2824aca03fd04fe7442ab8c3" name="document-revision">
+  <meta content="72b48d69c1af7b18f0b12a9a69254bd71449f41d" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1562,7 +1562,7 @@ Parts of this work may be from another specification document.  If so, those par
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content"> Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p>This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and <a href="https://github.com/slightlyoff/ServiceWorker">service workers</a>.</p>
    <p><a href="https://tools.ietf.org/html/rfc6265">HTTP cookies</a> have, since their origins at Netscape <a href="https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html">(documentation preserved by archive.org)</a>, provided a <a href="http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html">valuable state-management mechanism</a> for the web.</p>
-   <p>The synchronous single-threaded script-level <code>document.cookie</code> and <code>&lt;meta http-equiv="set-cookie" ...></code> interface to cookies has been a source of <a href="https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html">complexity and performance woes</a> further exacerbated by the move in many browsers from:</p>
+   <p>The synchronous single-threaded script-level <code>document.cookie</code> interface to cookies has been a source of <a href="https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html">complexity and performance woes</a> further exacerbated by the move in many browsers from:</p>
    <ul>
     <li data-md="">
      <p>a single browser process,</p>
@@ -1589,7 +1589,7 @@ Parts of this work may be from another specification document.  If so, those par
     <li data-md="">
      <p>the browser as a whole.</p>
    </ul>
-   <p>Newer parts of the web built in service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies too</a> but cannot use the synchronous, blocking <code>document.cookie</code> and <code>&lt;meta http-equiv="set-cookie" ...></code> interfaces at all as they both have no <code>document</code> and also cannot block the event loop as that would interfere with handling of unrelated events.</p>
+   <p>Newer parts of the web built in service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies too</a> but cannot use the synchronous, blocking <code>document.cookie</code> interface at all as they both have no <code>document</code> and also cannot block the event loop as that would interfere with handling of unrelated events.</p>
    <h3 class="heading settled" data-level="1.1" id="intro-proposed-change"><span class="secno">1.1. </span><span class="content"> A Taste of the Proposed Change </span><a class="self-link" href="#intro-proposed-change"></a></h3>
    <p>Although it is tempting to <a href="https://discourse.wicg.io/t/rethinking-cookies/744">rethink cookies</a> entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.</p>
    <p>Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in <code>Set-Cookie</code> format:</p>
@@ -1689,13 +1689,13 @@ so this API allows JavaScript Date objects and numeric timestamps (milliseconds 
    <p>Some user-agents implement non-standard extensions to cookie behavior. The intent of this specification,
 though, is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented
 across modern browsers. As new cookie features are specified and adopted it is expected that this API will be
-extended to include them. A secondary goal is to converge with <code>document.cookie</code> behavior, <code>&lt;meta http-equiv=set-cookie></code>,
+extended to include them. A secondary goal is to converge with <code>document.cookie</code> behavior
 and the http cookie specification. See https://github.com/whatwg/html/issues/804 and https://inikulin.github.io/cookie-compat/
 for the current state of this convergence.</p>
    <p>Differences across browsers in how bytes outside the printable-ASCII subset are interpreted has led to
 long-lasting user- and developer-visible incompatibilities across browsers making internationalized use of cookies
 needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and uses <code>USVString</code> for the script interface,
-with the additional side-effects that subsequent uses of <code>document.cookie</code> to read a cookie read or written through this interface and subsequent uses of <code>document.cookie</code> or <code>&lt;meta http-equiv=set-cookie></code> to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
+with the additional side-effects that subsequent uses of <code>document.cookie</code> to read a cookie read or written through this interface and subsequent uses of <code>document.cookie</code> to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
 will change the behavior of <code>WinINet</code>-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.</p>
    <h2 class="heading settled" data-level="2" id="CookieStore"><span class="secno">2. </span><span class="content"> The <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore">CookieStore</a></code> Interface</span><a class="self-link" href="#CookieStore"></a></h2>
