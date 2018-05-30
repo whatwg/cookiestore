@@ -244,11 +244,11 @@ function getOneSimpleOriginCookie() {
     console.log(cookie ? ('Current value: ' + cookie.value) : 'Not set');
   });
 }
-getOneSimpleOriginCookie().then(function() {
-  console.log('getOneSimpleOriginCookie succeeded!');
-}, function(reason) {
-  console.error('getOneSimpleOriginCookie did not succeed: ', reason);
-});
+
+getOneSimpleOriginCookie().then(
+  () => console.log('getOneSimpleOriginCookie succeeded!'),
+  reason => console.error('getOneSimpleOriginCookie did not succeed: ', reason)
+);
 ```
 </div>
 
@@ -256,10 +256,11 @@ You can use exactly the same Promise-based API with the newer `async` ... `await
 
 <div class="example">
 ```js
-let getOneSimpleOriginCookieAsync = async () => {
+async function getOneSimpleOriginCookieAsync() {
   let cookie = await cookieStore.get('__Host-COOKIENAME');
   console.log(cookie ? ('Current value: ' + cookie.value) : 'Not set');
-};
+}
+
 getOneSimpleOriginCookieAsync().then(
   () => console.log('getOneSimpleOriginCookieAsync succeeded!'),
   reason => console.error('getOneSimpleOriginCookieAsync did not succeed: ', reason));
@@ -272,10 +273,10 @@ In a service worker context you can read a cookie from the point of view of a pa
 
 <div class="example">
 ```js
-let getOneCookieForRequestUrl = async () => {
+async function getOneCookieForRequestUrl() {
   let cookie = await cookieStore.get('__Secure-COOKIENAME', {url: '/cgi-bin/reboot.php'});
   console.log(cookie ? ('Current value in /cgi-bin is ' + cookie.value) : 'Not set in /cgi-bin');
-};
+}
 ```
 </div>
 
@@ -284,11 +285,11 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
 
 <div class="example">
 ```js
-let countCookies = async () => {
+async function countCookies() {
   let cookieList = await cookieStore.getAll();
   console.log('How many cookies? %d', cookieList.length);
   cookieList.forEach(cookie => console.log('Cookie %s has value %o', cookie.name, cookie.value));
-};
+}
 ```
 </div>
 
@@ -296,11 +297,11 @@ Sometimes an expected cookie is known by a prefix rather than by an exact name, 
 
 <div class="example">
 ```js
-let countMatchingSimpleOriginCookies = async () => {
+async function countMatchingSimpleOriginCookies() {
   let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'startsWith'});
   console.log('How many matching cookies? %d', cookieList.length);
   cookieList.forEach(({name, value}) => console.log('Matching cookie %s has value %o', name, value));
-};
+}
 ```
 </div>
 
@@ -314,10 +315,10 @@ You can <dfn>set a cookie</dfn> using these methods.  For example:
 
 <div class="example">
 ```js
-let setOneSimpleOriginSessionCookie = async () => {
+async function setOneSimpleOriginSessionCookie() {
   await cookieStore.set('__Host-COOKIENAME', 'cookie-value');
   console.log('Set!');
-};
+}
 ```
 </div>
 
@@ -325,7 +326,7 @@ That defaults to path "/" and *implicit* domain, and defaults to a Secure-if-htt
 
 <div class="example">
 ```js
-let setOneDaySecureCookieWithDate = async () => {
+async function setOneDaySecureCookieWithDate() {
   // one day ahead, ignoring a possible leap-second
   let inTwentyFourHours = new Date(Date.now() + 24 * 60 * 60 * 1000);
   await cookieStore.set('__Secure-COOKIENAME', 'cookie-value', {
@@ -335,7 +336,7 @@ let setOneDaySecureCookieWithDate = async () => {
       domain: 'example.org'
     });
   console.log('Set!');
-};
+}
 ```
 </div>
 
@@ -344,7 +345,7 @@ Of course the numeric form (milliseconds since the beginning of 1970 UTC) works 
 
 <div class="example">
 ```js
-let setOneDayUnsecuredCookieWithMillisecondsSinceEpoch = async () => {
+async function setOneDayUnsecuredCookieWithMillisecondsSinceEpoch() {
   // one day ahead, ignoring a possible leap-second
   let inTwentyFourHours = Date.now() + 24 * 60 * 60 * 1000;
   await cookieStore.set('LEGACYCOOKIENAME', 'cookie-value', {
@@ -354,7 +355,7 @@ let setOneDayUnsecuredCookieWithMillisecondsSinceEpoch = async () => {
       domain: 'example.org'
     });
   console.log('Set!');
-};
+}
 ```
 </div>
 
@@ -362,7 +363,7 @@ Sometimes an expiration date comes from existing script it's not easy or conveni
 
 <div class="example">
 ```js
-let setSecureCookieWithHttpLikeExpirationString = async () => {
+async function setSecureCookieWithHttpLikeExpirationString() {
   await cookieStore.set('__Secure-COOKIENAME', 'cookie-value', {
       path: '/cgi-bin/',
       expires: 'Mon, 07 Jun 2021 07:07:07 GMT',
@@ -370,7 +371,7 @@ let setSecureCookieWithHttpLikeExpirationString = async () => {
       domain: 'example.org'
     });
   console.log('Set!');
-};
+}
 ```
 </div>
 
@@ -380,7 +381,7 @@ You can set multiple cookies too, but - as with HTTP `Set-Cookie` - the multiple
 
 <div class="example">
 ```js
-let setThreeSimpleOriginSessionCookiesSequentially = async () => {
+async function setThreeSimpleOriginSessionCookiesSequentially() {
   await cookieStore.set('__Host-🍪', '🔵cookie-value1🔴');
   await cookieStore.set('__Host-🌟', '🌠cookie-value2🌠');
   await cookieStore.set('__Host-🌱', '🔶cookie-value3🔷');
@@ -401,7 +402,7 @@ let setThreeSimpleOriginSessionCookiesSequentially = async () => {
       JSON.stringify(actual)].join(''));
   }
   console.log('All verified!');
-};
+}
 ```
 </div>
 
@@ -409,7 +410,7 @@ If the relative order is unimportant the operations can be performed without spe
 
 <div class="example">
 ```js
-let setThreeSimpleOriginSessionCookiesNonsequentially = async () => {
+async function setThreeSimpleOriginSessionCookiesNonsequentially() {
   await Promise.all([
     cookieStore.set('__Host-unordered🍪', '🔵unordered-cookie-value1🔴'),
     cookieStore.set('__Host-unordered🌟', '🌠unordered-cookie-value2🌠'),
@@ -432,7 +433,7 @@ let setThreeSimpleOriginSessionCookiesNonsequentially = async () => {
       JSON.stringify(actual)].join(''));
   }
   console.log('All verified!');
-};
+}
 ```
 </div>
 
@@ -443,7 +444,7 @@ let setThreeSimpleOriginSessionCookiesNonsequentially = async () => {
 an expiration in the past:
 
 ```js
-let setExpiredSecureCookieWithDomainPathAndFallbackValue = async () => {
+async function setExpiredSecureCookieWithDomainPathAndFallbackValue() {
   let theVeryRecentPast = Date.now();
   let expiredCookieSentinelValue = 'EXPIRED';
   await cookieStore.set('__Secure-COOKIENAME', expiredCookieSentinelValue, {
@@ -453,7 +454,7 @@ let setExpiredSecureCookieWithDomainPathAndFallbackValue = async () => {
       domain: 'example.org'
     });
   console.log('Expired! Deleted!! Cleared!!1!');
-};
+}
 ```
 
 In this case the cookie's value is not important unless a clock is somehow re-set incorrectly or otherwise behaves nonmonotonically or incoherently.
@@ -461,23 +462,23 @@ In this case the cookie's value is not important unless a clock is somehow re-se
 A syntactic shorthand is also provided which is equivalent to the above except that the clock's accuracy and monotonicity becomes irrelevant:
 
 ```js
-let deleteSimpleOriginCookie = async () => {
+async function deleteSimpleOriginCookie() {
   await cookieStore.delete('__Host-COOKIENAME');
   console.log('Expired! Deleted!! Cleared!!1!');
-};
+}
 ```
 
 Again, the path and/or domain can be specified explicitly here.
 
 ```js
-let deleteSecureCookieWithDomainAndPath = async () => {
+async function deleteSecureCookieWithDomainAndPath() {
   await cookieStore.delete('__Secure-COOKIENAME', {
       path: '/cgi-bin/',
       domain: 'example.org',
       secure: true
     });
   console.log('Expired! Deleted!! Cleared!!1!');
-};
+}
 ```
 
 This API has semantics aligned with the interpretation of `Max-Age=0` common to most modern browsers.
