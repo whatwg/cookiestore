@@ -1,11 +1,11 @@
 <pre class='metadata'>
-Title: Cookie-Store
+Title: Cookie Store API
 Shortname: cookiestore
 Level: 1
-Status: LD
-Group: cookie-store
+Status: ED
+Group: WICG
+ED: https://wicg.github.io/cookie-store/
 Repository: WICG/cookie-store
-URL: https://github.com/WICG/cookie-store
 Editor: Victor Costan, Google Inc. https://google.com, costan@google.com
 Editor: Raymond Toy, Google Inc. https://google.com, rtoy@google.com
 Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
