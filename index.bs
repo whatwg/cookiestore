@@ -150,7 +150,7 @@ behavior in most modern browsers. When practical the [__Host- cookie name prefix
 Serialization of expiration times for non-session cookies in a special cookie-specific format has proven cumbersome,
 so this API allows JavaScript Date objects and numeric timestamps (milliseconds since the beginning of the Unix epoch) to be used instead. The inconsistently-implemented Max-Age parameter is not exposed, although similar functionality is available for the specific case of expiring a cookie.
 
-Cookies without `=` in their HTTP Cookie header serialization are treated as having an empty name, consistent with the majority of current browsers. Cookies with an empty name cannot be set using values containing `=` as this would result in ambiguous serializations in the majority of current browsers.
+Cookies without U+003D (=) [=code points=] in their HTTP Cookie header serialization are treated as having an empty name, consistent with the majority of current browsers. Cookies with an empty name cannot be set using values containing U+003D (=) [=code points=] as this would result in ambiguous serializations in the majority of current browsers.
 
 Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API mandates UTF-8 interpretation for cookies read or written by this API.
 
@@ -171,7 +171,7 @@ for the current state of this convergence.
 
 Differences across browsers in how bytes outside the printable-ASCII subset are interpreted has led to
 long-lasting user- and developer-visible incompatibilities across browsers making internationalized use of cookies
-needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and uses `USVString` for the script interface,
+needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and uses {{USVString}} for the script interface,
 with the additional side-effects that subsequent uses of `document.cookie` to read a cookie read or written through this interface and subsequent uses of `document.cookie` to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
 will change the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.
@@ -706,7 +706,7 @@ Further complicating this are historical differences in cookie-handling across m
 <h3 id="prefixes">
 Prefixes</h3>
 
-Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and -- in the case of `__Host-` -- disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
+Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [Cookie Prefixes](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00) which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and &mdash; in the case of `__Host-` &mdash; disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
 
 Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.
 
