@@ -17,17 +17,6 @@ The API has a test suite in the
 * [Run the tests in your own browser](https://w3c-test.org/cookie-store/).
 
 
-## Code
-
-This API does not introduce new capabilities to the Web platform. In Document
-contexts, it can be mostly polyfilled.
-
-This repository includes a [proof-of-concept polyfill](cookies.js) with
-[tests](https://wicg.github.io/cookie-store/cookies_test). The polyfill can be
-used on insecure origins, but [some of the tests fail](http://wicg.github.io/cookie-store/cookies_test.html) due to their coverage of
-`Secure` cookies.
-
-
 ## Resources
 
 This API is inspired by and loosely based on the following discussions.
