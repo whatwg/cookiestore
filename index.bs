@@ -183,33 +183,22 @@ with other modern user agents.
 <!-- ============================================================ -->
 
 <xmp class="idl">
-[
-  Exposed=(ServiceWorker,Window),
-] interface CookieStore : EventTarget {
-  [RaisesException] Promise<CookieList?> getAll(
-      USVString name, optional CookieStoreGetOptions options);
-  [RaisesException] Promise<CookieList?> getAll(
-      optional CookieStoreGetOptions options);
-  [RaisesException] Promise<CookieListItem?> get(
-      USVString name, optional CookieStoreGetOptions options);
-  [RaisesException] Promise<CookieListItem?> get(
-      optional CookieStoreGetOptions options);
-  [RaisesException] Promise<boolean> has(
-      USVString name, optional CookieStoreGetOptions options);
-  [RaisesException] Promise<boolean> has(
-      optional CookieStoreGetOptions options);
+[Exposed=(ServiceWorker,Window)]
+interface CookieStore : EventTarget {
+  Promise<CookieList?> getAll(USVString name, optional CookieStoreGetOptions options);
+  Promise<CookieList?> getAll(optional CookieStoreGetOptions options);
 
-  [RaisesException] Promise<void> set(
-      USVString name, USVString value, optional CookieStoreSetOptions options);
-  [RaisesException] Promise<void> set(
-      optional
-      CookieStoreSetOptions options); // TODO: Make non-optional.
+  Promise<CookieListItem?> get(USVString name, optional CookieStoreGetOptions options);
+  Promise<CookieListItem?> get(optional CookieStoreGetOptions options);
 
-  [RaisesException] Promise<void> delete(
-      USVString name, optional CookieStoreSetOptions options);
-  [RaisesException] Promise<void> delete(
-      optional
-      CookieStoreSetOptions options); // TODO: Make non-optional.
+  Promise<boolean> has(USVString name, optional CookieStoreGetOptions options);
+  Promise<boolean> has(optional CookieStoreGetOptions options);
+
+  Promise<void> set(USVString name, USVString value, optional CookieStoreSetOptions options);
+  Promise<void> set(optional CookieStoreSetOptions options); // TODO: Make non-optional.
+
+  Promise<void> delete(USVString name, optional CookieStoreSetOptions options);
+  Promise<void> delete(optional CookieStoreSetOptions options); // TODO: Make non-optional.
 
   attribute EventHandler onchange;
 };
@@ -600,10 +589,9 @@ typedef sequence<CookieListItem> CookieList;
 This is an {{Event}} object which is dispatched to {{CookieStore}}.
 
 <pre class="idl">
-[
-  Exposed=(ServiceWorker,Window),
-  Constructor(DOMString type, optional CookieChangeEventInit eventInitDict)
-] interface CookieChangeEvent : Event {
+[Exposed=(ServiceWorker,Window),
+ Constructor(DOMString type, optional CookieChangeEventInit eventInitDict)]
+interface CookieChangeEvent : Event {
   readonly attribute CookieList changed;
   readonly attribute CookieList deleted;
 };
@@ -643,7 +631,7 @@ dictionary CookieChangeEventInit : EventInit {
 
 <pre class="idl">
 partial interface ServiceWorkerGlobalScope {
-    [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
+  [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
 };
 </pre>
 
@@ -667,7 +655,7 @@ partial interface ServiceWorkerGlobalScope {
 
 <pre class="idl">
 partial interface Window {
-    [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
+  [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
 };
 </pre>
 
