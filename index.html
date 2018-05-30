@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 150b038a54cb926cf8e3d36fd8b108c226cb94b8" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
-  <meta content="719540ccf6cd234f3753c355ecfb935ecf805b85" name="document-revision">
+  <meta content="8eff6845e625fafb02c596867208d859bba92607" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1463,92 +1463,92 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
     <li>
-     <a href="#intro"><span class="secno">1</span> <span class="content"> Introduction</span></a>
+     <a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
      <ol class="toc">
-      <li><a href="#intro-proposed-change"><span class="secno">1.1</span> <span class="content"> A Taste of the Proposed Change </span></a>
+      <li><a href="#intro-proposed-change"><span class="secno">1.1</span> <span class="content">A Taste of the Proposed Change</span></a>
       <li>
-       <a href="#intro-summary"><span class="secno">1.2</span> <span class="content"> Summary </span></a>
+       <a href="#intro-summary"><span class="secno">1.2</span> <span class="content">Summary</span></a>
        <ol class="toc">
-        <li><a href="#script-visibility"><span class="secno">1.2.1</span> <span class="content"> Script visibility </span></a>
-        <li><a href="#intro-motivation"><span class="secno">1.2.2</span> <span class="content"> Motivations </span></a>
-        <li><a href="#intro-opinions"><span class="secno">1.2.3</span> <span class="content"> Opinions </span></a>
-        <li><a href="#intro-compat"><span class="secno">1.2.4</span> <span class="content"> Compatiblity </span></a>
+        <li><a href="#script-visibility"><span class="secno">1.2.1</span> <span class="content">Script visibility</span></a>
+        <li><a href="#intro-motivation"><span class="secno">1.2.2</span> <span class="content">Motivations</span></a>
+        <li><a href="#intro-opinions"><span class="secno">1.2.3</span> <span class="content">Opinions</span></a>
+        <li><a href="#intro-compat"><span class="secno">1.2.4</span> <span class="content">Compatiblity</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#CookieStore"><span class="secno">2</span> <span class="content"> The <code class="idl"><span>CookieStore</span></code> Interface</span></a>
+     <a href="#CookieStore"><span class="secno">2</span> <span class="content">The <code class="idl"><span>CookieStore</span></code> Interface</span></a>
      <ol class="toc">
       <li>
-       <a href="#CookieStore-attributes"><span class="secno">2.1</span> <span class="content"> Attributes</span></a>
+       <a href="#CookieStore-attributes"><span class="secno">2.1</span> <span class="content">Attributes</span></a>
        <ol class="toc">
-        <li><a href="#CookieStore-attributes-onchange"><span class="secno">2.1.1</span> <span class="content"> <code class="idl"><span>onchange</span></code> </span></a>
+        <li><a href="#CookieStore-attributes-onchange"><span class="secno">2.1.1</span> <span class="content"><code class="idl"><span>onchange</span></code></span></a>
        </ol>
       <li>
-       <a href="#CookieStore-methods"><span class="secno">2.2</span> <span class="content"> Methods</span></a>
+       <a href="#CookieStore-methods"><span class="secno">2.2</span> <span class="content">Methods</span></a>
        <ol class="toc">
-        <li><a href="#CookieStore-methods-getAll"><span class="secno">2.2.1</span> <span class="content"> <code class="idl"><span>getAll</span></code></span></a>
-        <li><a href="#CookieStore-methods-get"><span class="secno">2.2.2</span> <span class="content"> <code class="idl"><span>get</span></code></span></a>
-        <li><a href="#CookieStore-methods-has"><span class="secno">2.2.3</span> <span class="content"> <code class="idl"><span>has</span></code></span></a>
-        <li><a href="#CookieStore-methods-set"><span class="secno">2.2.4</span> <span class="content"> <code class="idl"><span>set</span></code></span></a>
-        <li><a href="#CookieStore-methods-delete"><span class="secno">2.2.5</span> <span class="content"> <code class="idl"><span>delete</span></code></span></a>
+        <li><a href="#CookieStore-getAll"><span class="secno">2.2.1</span> <span class="content"><code class="idl"><span>getAll</span></code></span></a>
+        <li><a href="#CookieStore-get"><span class="secno">2.2.2</span> <span class="content"><code class="idl"><span>get</span></code></span></a>
+        <li><a href="#CookieStore-has"><span class="secno">2.2.3</span> <span class="content"><code class="idl"><span>has</span></code></span></a>
+        <li><a href="#CookieStore-set"><span class="secno">2.2.4</span> <span class="content"><code class="idl"><span>set</span></code></span></a>
+        <li><a href="#CookieStore-delete"><span class="secno">2.2.5</span> <span class="content"><code class="idl"><span>delete</span></code></span></a>
        </ol>
       <li>
-       <a href="#CookieStore-dictionaries"><span class="secno">2.3</span> <span class="content"> Dictionaries</span></a>
+       <a href="#CookieStore-dictionaries"><span class="secno">2.3</span> <span class="content">Dictionaries</span></a>
        <ol class="toc">
         <li>
-         <a href="#dictdef-cookiestoregetoptions"><span class="secno">2.3.1</span> <span class="content"> <code class="idl"><span>CookieStoreGetOptions</span></code></span></a>
+         <a href="#CookieStoreGetOptions"><span class="secno">2.3.1</span> <span class="content"><code class="idl"><span>CookieStoreGetOptions</span></code></span></a>
          <ol class="toc">
-          <li><a href="#dictionary-get-options-members"><span class="secno">2.3.1.1</span> <span class="content"> Dictionary <code class="idl"><span>CookieStoreGetOptions</span></code> Members</span></a>
+          <li><a href="#CookieStoreGetOptions-members"><span class="secno">2.3.1.1</span> <span class="content">Dictionary <code class="idl"><span>CookieStoreGetOptions</span></code> Members</span></a>
          </ol>
         <li>
-         <a href="#dictdef-cookiestoresetoptions"><span class="secno">2.3.2</span> <span class="content"> <code class="idl"><span>CookieStoreSetOptions</span></code></span></a>
+         <a href="#CookieStoreSetOptions"><span class="secno">2.3.2</span> <span class="content"><code class="idl"><span>CookieStoreSetOptions</span></code></span></a>
          <ol class="toc">
-          <li><a href="#dictionary-set-options-members"><span class="secno">2.3.2.1</span> <span class="content"> Dictionary <code class="idl"><span>CookieStoreSetOptions</span></code> Members</span></a>
+          <li><a href="#CookieStoreSetOptions-members"><span class="secno">2.3.2.1</span> <span class="content">Dictionary <code class="idl"><span>CookieStoreSetOptions</span></code> Members</span></a>
          </ol>
         <li>
-         <a href="#dictdef-cookieitemlist"><span class="secno">2.3.3</span> <span class="content"> <code class="idl"><span>CookieItemList</span></code></span></a>
+         <a href="#CookieListItem"><span class="secno">2.3.3</span> <span class="content"><code class="idl"><span>CookieListItem</span></code></span></a>
          <ol class="toc">
-          <li><a href="#dictionary-cookie-list-item-members"><span class="secno">2.3.3.1</span> <span class="content"> Dictionary <code class="idl"><span>CookieListItem</span></code> Members</span></a>
+          <li><a href="#CookieItemList-members"><span class="secno">2.3.3.1</span> <span class="content">Dictionary <code class="idl"><span>CookieListItem</span></code> Members</span></a>
          </ol>
         <li>
-         <a href="#CookieChangeEvent"><span class="secno">2.3.4</span> <span class="content"> The <code class="idl"><span>CookieChangeEvent</span></code> Interface</span></a>
+         <a href="#CookieChangeEvent"><span class="secno">2.3.4</span> <span class="content">The <code class="idl"><span>CookieChangeEvent</span></code> Interface</span></a>
          <ol class="toc">
-          <li><a href="#CookieChangeEvent-attributes"><span class="secno">2.3.4.1</span> <span class="content"> Attributes</span></a>
+          <li><a href="#CookieChangeEvent-attributes"><span class="secno">2.3.4.1</span> <span class="content">Attributes</span></a>
           <li>
-           <a href="#CookieChangeEventInit"><span class="secno">2.3.4.2</span> <span class="content"> <code class="idl"><span>CookieChangeEventInit</span></code></span></a>
+           <a href="#CookieChangeEventInit"><span class="secno">2.3.4.2</span> <span class="content"><code class="idl"><span>CookieChangeEventInit</span></code></span></a>
            <ol class="toc">
-            <li><a href="#CookieChangeEventInit-members"><span class="secno">2.3.4.2.1</span> <span class="content"> <code class="idl"><span>CookieChangeEventInit</span></code> Members </span></a>
+            <li><a href="#CookieChangeEventInit-members"><span class="secno">2.3.4.2.1</span> <span class="content"><code class="idl"><span>CookieChangeEventInit</span></code> Members</span></a>
            </ol>
          </ol>
        </ol>
      </ol>
     <li>
-     <a href="#ServiceWorkerGlobalScopeCookieStore"><span class="secno">3</span> <span class="content"> The ServiceWorkerGlobalScopeCookieStore Interface</span></a>
+     <a href="#ServiceWorkerGlobalScope"><span class="secno">3</span> <span class="content">The ServiceWorkerGlobalScope Interface</span></a>
      <ol class="toc">
       <li>
-       <a href="#ServiceWorkerCookieStore-attributes"><span class="secno">3.1</span> <span class="content"> Attributes</span></a>
+       <a href="#ServiceWorkerGlobalScope-attributes"><span class="secno">3.1</span> <span class="content">Attributes</span></a>
        <ol class="toc">
-        <li><a href="#ServiceWorkerCookieStore-attributes-cookiestore"><span class="secno">3.1.1</span> <span class="content"> <code class="idl"><span>cookieStore</span></code></span></a>
+        <li><a href="#ServiceWorkerGlobalScope-cookieStore"><span class="secno">3.1.1</span> <span class="content"><code class="idl"><span>cookieStore</span></code></span></a>
        </ol>
      </ol>
     <li>
-     <a href="#WindowCookieStore"><span class="secno">4</span> <span class="content"> The WindowCookieStore Interface</span></a>
+     <a href="#Window"><span class="secno">4</span> <span class="content">The Window Interface</span></a>
      <ol class="toc">
       <li>
-       <a href="#WindowCookieStore-attributes"><span class="secno">4.1</span> <span class="content"> Attributes</span></a>
+       <a href="#Window-attributes"><span class="secno">4.1</span> <span class="content">Attributes</span></a>
        <ol class="toc">
-        <li><a href="#WindowCookieStore-attributes-cookiestore"><span class="secno">4.1.1</span> <span class="content"> <code class="idl"><span>cookieStore</span></code></span></a>
+        <li><a href="#Window-cookieStore"><span class="secno">4.1.1</span> <span class="content"><code class="idl"><span>cookieStore</span></code></span></a>
        </ol>
      </ol>
     <li>
-     <a href="#Security"><span class="secno">5</span> <span class="content"> Security</span></a>
+     <a href="#Security"><span class="secno">5</span> <span class="content">Security</span></a>
      <ol class="toc">
-      <li><a href="#gotcha"><span class="secno">5.1</span> <span class="content"> Gotcha!</span></a>
-      <li><a href="#restrict"><span class="secno">5.2</span> <span class="content"> Restrict?</span></a>
-      <li><a href="#surprises"><span class="secno">5.3</span> <span class="content"> Surprises</span></a>
-      <li><a href="#prefixes"><span class="secno">5.4</span> <span class="content"> Prefixes</span></a>
-      <li><a href="#url-scoping"><span class="secno">5.5</span> <span class="content"> URL scoping</span></a>
-      <li><a href="#aversion"><span class="secno">5.6</span> <span class="content"> Cookie aversion</span></a>
+      <li><a href="#gotcha"><span class="secno">5.1</span> <span class="content">Gotcha!</span></a>
+      <li><a href="#restrict"><span class="secno">5.2</span> <span class="content">Restrict?</span></a>
+      <li><a href="#surprises"><span class="secno">5.3</span> <span class="content">Surprises</span></a>
+      <li><a href="#prefixes"><span class="secno">5.4</span> <span class="content">Prefixes</span></a>
+      <li><a href="#url-scoping"><span class="secno">5.5</span> <span class="content">URL scoping</span></a>
+      <li><a href="#aversion"><span class="secno">5.6</span> <span class="content">Cookie aversion</span></a>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
@@ -1566,7 +1566,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    </ol>
   </nav>
   <main>
-   <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content"> Introduction</span><a class="self-link" href="#intro"></a></h2>
+   <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p>This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and <a href="https://github.com/slightlyoff/ServiceWorker">service workers</a>.</p>
    <p><a href="https://tools.ietf.org/html/rfc6265">HTTP cookies</a> have, since their origins at Netscape <a href="https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html">(documentation preserved by archive.org)</a>, provided a <a href="http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html">valuable state-management mechanism</a> for the web.</p>
    <p>The synchronous single-threaded script-level <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie">document.cookie</a></code> interface to cookies has been a source of <a href="https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html">complexity and performance woes</a> further exacerbated by the move in many browsers from:</p>
@@ -1597,7 +1597,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <p>the browser as a whole.</p>
    </ul>
    <p>Newer parts of the web built in service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies too</a> but cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie①">document.cookie</a></code> interface at all as they both have no <code>document</code> and also cannot block the event loop as that would interfere with handling of unrelated events.</p>
-   <h3 class="heading settled" data-level="1.1" id="intro-proposed-change"><span class="secno">1.1. </span><span class="content"> A Taste of the Proposed Change </span><a class="self-link" href="#intro-proposed-change"></a></h3>
+   <h3 class="heading settled" data-level="1.1" id="intro-proposed-change"><span class="secno">1.1. </span><span class="content">A Taste of the Proposed Change</span><a class="self-link" href="#intro-proposed-change"></a></h3>
    <p>Although it is tempting to <a href="https://discourse.wicg.io/t/rethinking-cookies/744">rethink cookies</a> entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.</p>
    <p>Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in <code>Set-Cookie</code> format:</p>
    <div class="example" id="example-e33babf4">
@@ -1642,7 +1642,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    </div>
    <p>This also has the advantage of not relying on <code>document</code> and not blocking, which together make it usable from <a href="https://github.com/slightlyoff/ServiceWorker">service workers</a>, which otherwise do not have cookie access from script.</p>
    <p>This proposal also includes a power-efficient monitoring API to replace <code>setTimeout</code>-based polling cookie monitors with cookie change observers.</p>
-   <h3 class="heading settled" data-level="1.2" id="intro-summary"><span class="secno">1.2. </span><span class="content"> Summary </span><a class="self-link" href="#intro-summary"></a></h3>
+   <h3 class="heading settled" data-level="1.2" id="intro-summary"><span class="secno">1.2. </span><span class="content">Summary</span><a class="self-link" href="#intro-summary"></a></h3>
    <p>This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:</p>
    <ul>
     <li data-md="">
@@ -1667,9 +1667,9 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
 in <a href="https://github.com/slightlyoff/ServiceWorker">service worker</a> contexts</p>
      </ul>
    </ul>
-   <h4 class="heading settled" data-level="1.2.1" id="script-visibility"><span class="secno">1.2.1. </span><span class="content"> Script visibility </span><a class="self-link" href="#script-visibility"></a></h4>
+   <h4 class="heading settled" data-level="1.2.1" id="script-visibility"><span class="secno">1.2.1. </span><span class="content">Script visibility</span><a class="self-link" href="#script-visibility"></a></h4>
    <p>A cookie is <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="script-visible">script-visible</dfn> when it is in-scope and does not have the <code>HttpOnly</code> cookie flag.</p>
-   <h4 class="heading settled" data-level="1.2.2" id="intro-motivation"><span class="secno">1.2.2. </span><span class="content"> Motivations </span><a class="self-link" href="#intro-motivation"></a></h4>
+   <h4 class="heading settled" data-level="1.2.2" id="intro-motivation"><span class="secno">1.2.2. </span><span class="content">Motivations</span><a class="self-link" href="#intro-motivation"></a></h4>
    <p>Some service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies</a> but
 cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie②">document.cookie</a></code> interface as they both have no <code>document</code> and
 also cannot block the event loop as that would interfere with handling of unrelated events.</p>
@@ -1680,7 +1680,7 @@ specs and user-agent behavior</a> into closer correspondence.</p>
 scripts, with the potential effect of reducing their accidental misuse. An efficient monitoring API, in particular,
 can be used to replace power-hungry polling cookie scanners.</p>
    <p>The API must interoperate well enough with existing cookie APIs (HTTP-level, HTML-level and script-level) that it can be adopted incrementally by a large or complex website.</p>
-   <h4 class="heading settled" data-level="1.2.3" id="intro-opinions"><span class="secno">1.2.3. </span><span class="content"> Opinions </span><a class="self-link" href="#intro-opinions"></a></h4>
+   <h4 class="heading settled" data-level="1.2.3" id="intro-opinions"><span class="secno">1.2.3. </span><span class="content">Opinions</span><a class="self-link" href="#intro-opinions"></a></h4>
    <p>This API defaults cookie paths to <code>/</code> for cookie write operations, including deletion/expiration. The implicit relative path-scoping of cookies to <code>.</code> has caused a lot of additional complexity for relatively little gain given their security equivalence under the same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain. Cookie paths without a trailing <code>/</code> are treated as if they had a trailing <code>/</code> appended for cookie write operations. Cookie paths must start with <code>/</code> for write operations, and must not contain any <code>..</code> path segments. Query parameters and URL fragments are not allowed in paths for cookie write operations.</p>
    <p>URLs without a trailing <code>/</code> are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.</p>
    <p>This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) <a href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00">creation or modification of Secure-flagged cookies from unsecured web origins</a> and <a href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00">enforces special rules for the __Host- and __Secure- cookie name prefixes</a>.</p>
@@ -1692,7 +1692,7 @@ so this API allows JavaScript Date objects and numeric timestamps (milliseconds 
    <p>Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API mandates UTF-8 interpretation for cookies read or written by this API.</p>
    <p>Use of cookie-change-driven scripts has been hampered by the absence of a power-efficient (non-polling) API for this. This API provides observers for efficient monitoring in document contexts and interest registration for efficient monitoring in service worker contexts.</p>
    <p>Scripts should not have to write and then read "test cookies" to determine whether script-initiated cookie write access is possible, nor should they have to correlate with cooperating server-side versions of the same write-then-read test to determine that script-initiated cookie read access is impossible despite cookies working at the HTTP level.</p>
-   <h4 class="heading settled" data-level="1.2.4" id="intro-compat"><span class="secno">1.2.4. </span><span class="content"> Compatiblity </span><a class="self-link" href="#intro-compat"></a></h4>
+   <h4 class="heading settled" data-level="1.2.4" id="intro-compat"><span class="secno">1.2.4. </span><span class="content">Compatiblity</span><a class="self-link" href="#intro-compat"></a></h4>
    <p>Some user-agents implement non-standard extensions to cookie behavior. The intent of this specification,
 though, is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented
 across modern browsers. As new cookie features are specified and adopted it is expected that this API will be
@@ -1705,7 +1705,7 @@ needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and
 with the additional side-effects that subsequent uses of <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie④">document.cookie</a></code> to read a cookie read or written through this interface and subsequent uses of <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑤">document.cookie</a></code> to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
 will change the behavior of <code>WinINet</code>-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.</p>
-   <h2 class="heading settled" data-level="2" id="CookieStore"><span class="secno">2. </span><span class="content"> The <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore">CookieStore</a></code> Interface</span><a class="self-link" href="#CookieStore"></a></h2>
+   <h2 class="heading settled" data-level="2" id="CookieStore"><span class="secno">2. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore">CookieStore</a></code> Interface</span><a class="self-link" href="#CookieStore"></a></h2>
 <pre class="idl highlight def">[
   <a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed">Exposed</a>=(<span class="n">ServiceWorker</span>,<span class="n">Window</span>),
 ] <span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="cookiestore"><code>CookieStore</code></dfn> : <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#eventtarget" id="ref-for-eventtarget">EventTarget</a> {
@@ -1737,16 +1737,16 @@ with other modern user agents.</p>
   <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler">EventHandler</a> <a class="nv idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange">onchange</a>;
 };
 </pre>
-   <h3 class="heading settled" data-level="2.1" id="CookieStore-attributes"><span class="secno">2.1. </span><span class="content"> Attributes</span><a class="self-link" href="#CookieStore-attributes"></a></h3>
-   <h4 class="heading settled" data-level="2.1.1" id="CookieStore-attributes-onchange"><span class="secno">2.1.1. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange①">onchange</a></code> </span><a class="self-link" href="#CookieStore-attributes-onchange"></a></h4>
+   <h3 class="heading settled" data-level="2.1" id="CookieStore-attributes"><span class="secno">2.1. </span><span class="content">Attributes</span><a class="self-link" href="#CookieStore-attributes"></a></h3>
+   <h4 class="heading settled" data-level="2.1.1" id="CookieStore-attributes-onchange"><span class="secno">2.1.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange①">onchange</a></code></span><a class="self-link" href="#CookieStore-attributes-onchange"></a></h4>
    <dl>
     <dt data-md=""><dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="attribute" data-export="" id="dom-cookiestore-onchange"><code>onchange</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler①">EventHandler</a></span>
     <dd data-md="">
      <p>An <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler②">EventHandler</a></code> of type <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent">CookieChangeEvent</a></code>.</p>
    </dl>
-   <h3 class="heading settled" data-level="2.2" id="CookieStore-methods"><span class="secno">2.2. </span><span class="content"> Methods</span><a class="self-link" href="#CookieStore-methods"></a></h3>
-   <h4 class="heading settled" data-level="2.2.1" id="CookieStore-methods-getAll"><span class="secno">2.2.1. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options">getAll</a></code></span><a class="self-link" href="#CookieStore-methods-getAll"></a></h4>
-   <h4 class="heading settled" data-level="2.2.2" id="CookieStore-methods-get"><span class="secno">2.2.2. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options">get</a></code></span><a class="self-link" href="#CookieStore-methods-get"></a></h4>
+   <h3 class="heading settled" data-level="2.2" id="CookieStore-methods"><span class="secno">2.2. </span><span class="content">Methods</span><a class="self-link" href="#CookieStore-methods"></a></h3>
+   <h4 class="heading settled" data-level="2.2.1" id="CookieStore-getAll"><span class="secno">2.2.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options">getAll</a></code></span><a class="self-link" href="#CookieStore-getAll"></a></h4>
+   <h4 class="heading settled" data-level="2.2.2" id="CookieStore-get"><span class="secno">2.2.2. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options">get</a></code></span><a class="self-link" href="#CookieStore-get"></a></h4>
    <p>You can <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="read">read</dfn> the first in-scope <a data-link-type="dfn" href="#script-visible" id="ref-for-script-visible②">script-visible</a> value for a given cookie name. In a service worker context this defaults to the path
 of the service worker’s registered scope. In a document it defaults to the path of the current document and does not respect
 changes from <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/history.html#dom-history-replacestate" id="ref-for-dom-history-replacestate">replaceState()</a></code> or <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain" id="ref-for-dom-document-domain">document.domain</a></code>.</p>
@@ -1808,8 +1808,8 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
 <span class="p">}</span>
 </pre>
    </div>
-   <h4 class="heading settled" data-level="2.2.3" id="CookieStore-methods-has"><span class="secno">2.2.3. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-has-options" id="ref-for-dom-cookiestore-has-options">has</a></code></span><a class="self-link" href="#CookieStore-methods-has"></a></h4>
-   <h4 class="heading settled" data-level="2.2.4" id="CookieStore-methods-set"><span class="secno">2.2.4. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set">set</a></code></span><a class="self-link" href="#CookieStore-methods-set"></a></h4>
+   <h4 class="heading settled" data-level="2.2.3" id="CookieStore-has"><span class="secno">2.2.3. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-has-options" id="ref-for-dom-cookiestore-has-options">has</a></code></span><a class="self-link" href="#CookieStore-has"></a></h4>
+   <h4 class="heading settled" data-level="2.2.4" id="CookieStore-set"><span class="secno">2.2.4. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set">set</a></code></span><a class="self-link" href="#CookieStore-set"></a></h4>
    <p>You can <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="set-a-cookie">set a cookie</dfn> using these methods.  For example:</p>
    <div class="example" id="example-3dcc29df">
     <a class="self-link" href="#example-3dcc29df"></a> 
@@ -1922,7 +1922,7 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
 <span class="p">}</span>
 </pre>
    </div>
-   <h4 class="heading settled" data-level="2.2.5" id="CookieStore-methods-delete"><span class="secno">2.2.5. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete">delete</a></code></span><a class="self-link" href="#CookieStore-methods-delete"></a></h4>
+   <h4 class="heading settled" data-level="2.2.5" id="CookieStore-delete"><span class="secno">2.2.5. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete">delete</a></code></span><a class="self-link" href="#CookieStore-delete"></a></h4>
    <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="clearing">Clearing</dfn> (deleting) a cookie is accomplished by expiration, that is by replacing it with an equivalent-scope cookie with
 an expiration in the past:</p>
 <pre class="language-js highlight">async <span class="kd">function</span> setExpiredSecureCookieWithDomainPathAndFallbackValue<span class="p">()</span> <span class="p">{</span>
@@ -1955,20 +1955,20 @@ an expiration in the past:</p>
 <span class="p">}</span>
 </pre>
    <p>This API has semantics aligned with the interpretation of <code>Max-Age=0</code> common to most modern browsers.</p>
-   <h3 class="heading settled" data-level="2.3" id="CookieStore-dictionaries"><span class="secno">2.3. </span><span class="content"> Dictionaries</span><a class="self-link" href="#CookieStore-dictionaries"></a></h3>
-   <h4 class="heading settled dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" data-level="2.3.1" data-lt="CookieStoreGetOptions" id="dictdef-cookiestoregetoptions"><span class="secno">2.3.1. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑥">CookieStoreGetOptions</a></code></span></h4>
+   <h3 class="heading settled" data-level="2.3" id="CookieStore-dictionaries"><span class="secno">2.3. </span><span class="content">Dictionaries</span><a class="self-link" href="#CookieStore-dictionaries"></a></h3>
+   <h4 class="heading settled" data-level="2.3.1" id="CookieStoreGetOptions"><span class="secno">2.3.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑥">CookieStoreGetOptions</a></code></span><a class="self-link" href="#CookieStoreGetOptions"></a></h4>
 <pre class="idl highlight def"><span class="kt">enum</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="enum" data-export="" id="enumdef-cookiematchtype"><code>CookieMatchType</code></dfn> {
   <dfn class="s idl-code" data-dfn-for="CookieMatchType" data-dfn-type="enum-value" data-export="" id="dom-cookiematchtype-equals"><code>"equals"</code><a class="self-link" href="#dom-cookiematchtype-equals"></a></dfn>,
   <dfn class="s idl-code" data-dfn-for="CookieMatchType" data-dfn-type="enum-value" data-export="" id="dom-cookiematchtype-startswith"><code>"startsWith"</code><a class="self-link" href="#dom-cookiematchtype-startswith"></a></dfn>
 };
 </pre>
-<pre class="idl highlight def"><span class="kt">dictionary</span> <a class="nv idl-code" data-link-type="dictionary" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑦">CookieStoreGetOptions</a> {
+<pre class="idl highlight def"><span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-cookiestoregetoptions"><code>CookieStoreGetOptions</code></dfn> {
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑦"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name">name</a>;
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑧"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url">url</a>;
   <a class="n" data-link-type="idl-name" href="#enumdef-cookiematchtype" id="ref-for-enumdef-cookiematchtype">CookieMatchType</a> <a class="nv idl-code" data-default="&quot;equals&quot;" data-link-type="dict-member" data-type="CookieMatchType " href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype">matchType</a> = "equals";
 };
 </pre>
-   <h5 class="heading settled" data-level="2.3.1.1" id="dictionary-get-options-members"><span class="secno">2.3.1.1. </span><span class="content"> Dictionary <code class="idl"><a data-link-type="idl" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑧">CookieStoreGetOptions</a></code> Members</span><a class="self-link" href="#dictionary-get-options-members"></a></h5>
+   <h5 class="heading settled" data-level="2.3.1.1" id="CookieStoreGetOptions-members"><span class="secno">2.3.1.1. </span><span class="content">Dictionary <code class="idl"><a data-link-type="idl" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑦">CookieStoreGetOptions</a></code> Members</span><a class="self-link" href="#CookieStoreGetOptions-members"></a></h5>
    <dl>
     <dt data-md=""><dfn class="dfn-paneled idl-code" data-dfn-for="CookieStoreGetOptions" data-dfn-type="dict-member" data-export="" id="dom-cookiestoregetoptions-name"><code>name</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑨">USVString</a></span>
     <dd data-md="">
@@ -1980,8 +1980,8 @@ an expiration in the past:</p>
     <dd data-md="">
      <p>how to match a cookie</p>
    </dl>
-   <h4 class="heading settled dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" data-level="2.3.2" data-lt="CookieStoreSetOptions" id="dictdef-cookiestoresetoptions"><span class="secno">2.3.2. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions④">CookieStoreSetOptions</a></code></span></h4>
-<pre class="idl highlight def"><span class="kt">dictionary</span> <a class="nv idl-code" data-link-type="dictionary" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions⑤">CookieStoreSetOptions</a> {
+   <h4 class="heading settled" data-level="2.3.2" id="CookieStoreSetOptions"><span class="secno">2.3.2. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions④">CookieStoreSetOptions</a></code></span><a class="self-link" href="#CookieStoreSetOptions"></a></h4>
+<pre class="idl highlight def"><span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-cookiestoresetoptions"><code>CookieStoreSetOptions</code></dfn> {
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookiestoresetoptions-name" id="ref-for-dom-cookiestoresetoptions-name">name</a>;
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①②"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookiestoresetoptions-value" id="ref-for-dom-cookiestoresetoptions-value">value</a>;
   <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp">DOMTimeStamp</a>? <a class="nv idl-code" data-default="null" data-link-type="dict-member" data-type="DOMTimeStamp? " href="#dom-cookiestoresetoptions-expires" id="ref-for-dom-cookiestoresetoptions-expires">expires</a> = <span class="kt">null</span>;
@@ -1991,7 +1991,7 @@ an expiration in the past:</p>
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean③"><span class="kt">boolean</span></a> <a class="nv idl-code" data-default="false" data-link-type="dict-member" data-type="boolean " href="#dom-cookiestoresetoptions-httponly" id="ref-for-dom-cookiestoresetoptions-httponly">httpOnly</a> = <span class="kt">false</span>;
 };
 </pre>
-   <h5 class="heading settled" data-level="2.3.2.1" id="dictionary-set-options-members"><span class="secno">2.3.2.1. </span><span class="content"> Dictionary <code class="idl"><a data-link-type="idl" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions⑥">CookieStoreSetOptions</a></code> Members</span><a class="self-link" href="#dictionary-set-options-members"></a></h5>
+   <h5 class="heading settled" data-level="2.3.2.1" id="CookieStoreSetOptions-members"><span class="secno">2.3.2.1. </span><span class="content">Dictionary <code class="idl"><a data-link-type="idl" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions⑤">CookieStoreSetOptions</a></code> Members</span><a class="self-link" href="#CookieStoreSetOptions-members"></a></h5>
    <dl>
     <dt data-md=""><dfn class="dfn-paneled idl-code" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" id="dom-cookiestoresetoptions-name"><code>name</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑤">USVString</a></span>
     <dd data-md="">
@@ -2015,15 +2015,15 @@ an expiration in the past:</p>
     <dd data-md="">
      <p>http only</p>
    </dl>
-   <h4 class="heading settled dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" data-level="2.3.3" data-lt="CookieItemList" id="dictdef-cookieitemlist"><span class="secno">2.3.3. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dictdef-cookieitemlist" id="ref-for-dictdef-cookieitemlist">CookieItemList</a></code></span></h4>
+   <h4 class="heading settled" data-level="2.3.3" id="CookieListItem"><span class="secno">2.3.3. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem②">CookieListItem</a></code></span><a class="self-link" href="#CookieListItem"></a></h4>
 <pre class="idl highlight def"><span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-cookielistitem"><code>CookieListItem</code></dfn> {
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑨"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookielistitem-name" id="ref-for-dom-cookielistitem-name">name</a>;
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②⓪"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value">value</a>;
 };
 
-<span class="kt">typedef</span> <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem②">CookieListItem</a>> <dfn class="nv dfn-paneled idl-code" data-dfn-type="typedef" data-export="" id="typedefdef-cookielist"><code>CookieList</code></dfn>;
+<span class="kt">typedef</span> <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem③">CookieListItem</a>> <dfn class="nv dfn-paneled idl-code" data-dfn-type="typedef" data-export="" id="typedefdef-cookielist"><code>CookieList</code></dfn>;
 </pre>
-   <h5 class="heading settled" data-level="2.3.3.1" id="dictionary-cookie-list-item-members"><span class="secno">2.3.3.1. </span><span class="content"> Dictionary <code class="idl"><a data-link-type="idl" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem③">CookieListItem</a></code> Members</span><a class="self-link" href="#dictionary-cookie-list-item-members"></a></h5>
+   <h5 class="heading settled" data-level="2.3.3.1" id="CookieItemList-members"><span class="secno">2.3.3.1. </span><span class="content">Dictionary <code class="idl"><a data-link-type="idl" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem④">CookieListItem</a></code> Members</span><a class="self-link" href="#CookieItemList-members"></a></h5>
    <dl>
     <dt data-md=""><dfn class="dfn-paneled idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" id="dom-cookielistitem-name"><code>name</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②①">USVString</a></span>
     <dd data-md="">
@@ -2032,7 +2032,7 @@ an expiration in the past:</p>
     <dd data-md="">
      <p>value of cookie</p>
    </dl>
-   <h4 class="heading settled" data-level="2.3.4" id="CookieChangeEvent"><span class="secno">2.3.4. </span><span class="content"> The <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent①">CookieChangeEvent</a></code> Interface</span><a class="self-link" href="#CookieChangeEvent"></a></h4>
+   <h4 class="heading settled" data-level="2.3.4" id="CookieChangeEvent"><span class="secno">2.3.4. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent①">CookieChangeEvent</a></code> Interface</span><a class="self-link" href="#CookieChangeEvent"></a></h4>
    <p>This is an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#event" id="ref-for-event">Event</a></code> object which is dispatched to <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore①">CookieStore</a></code>.</p>
 <pre class="idl highlight def">[
   <a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①">Exposed</a>=(<span class="n">ServiceWorker</span>,<span class="n">Window</span>),
@@ -2042,7 +2042,7 @@ an expiration in the past:</p>
   <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist③">CookieList</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="CookieList" href="#dom-cookiechangeevent-deleted" id="ref-for-dom-cookiechangeevent-deleted">deleted</a>;
 };
 </pre>
-   <h5 class="heading settled" data-level="2.3.4.1" id="CookieChangeEvent-attributes"><span class="secno">2.3.4.1. </span><span class="content"> Attributes</span><a class="self-link" href="#CookieChangeEvent-attributes"></a></h5>
+   <h5 class="heading settled" data-level="2.3.4.1" id="CookieChangeEvent-attributes"><span class="secno">2.3.4.1. </span><span class="content">Attributes</span><a class="self-link" href="#CookieChangeEvent-attributes"></a></h5>
    <dl>
     <dt data-md=""><dfn class="dfn-paneled idl-code" data-dfn-for="CookieChangeEvent" data-dfn-type="attribute" data-export="" id="dom-cookiechangeevent-changed"><code>changed</code></dfn>, <span> of type <a data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist④">CookieList</a>, readonly</span>
     <dd data-md="">
@@ -2051,13 +2051,13 @@ an expiration in the past:</p>
     <dd data-md="">
      <p>deleted cookies</p>
    </dl>
-   <h5 class="heading settled" data-level="2.3.4.2" id="CookieChangeEventInit"><span class="secno">2.3.4.2. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dictdef-cookiechangeeventinit" id="ref-for-dictdef-cookiechangeeventinit①">CookieChangeEventInit</a></code></span><a class="self-link" href="#CookieChangeEventInit"></a></h5>
+   <h5 class="heading settled" data-level="2.3.4.2" id="CookieChangeEventInit"><span class="secno">2.3.4.2. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dictdef-cookiechangeeventinit" id="ref-for-dictdef-cookiechangeeventinit①">CookieChangeEventInit</a></code></span><a class="self-link" href="#CookieChangeEventInit"></a></h5>
 <pre class="idl highlight def"><span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-cookiechangeeventinit"><code>CookieChangeEventInit</code></dfn> : <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#dictdef-eventinit" id="ref-for-dictdef-eventinit">EventInit</a> {
   <a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist⑥">CookieList</a> <a class="nv idl-code" data-link-type="dict-member" data-type="CookieList " href="#dom-cookiechangeeventinit-changed" id="ref-for-dom-cookiechangeeventinit-changed">changed</a>;
   <a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist⑦">CookieList</a> <a class="nv idl-code" data-link-type="dict-member" data-type="CookieList " href="#dom-cookiechangeeventinit-deleted" id="ref-for-dom-cookiechangeeventinit-deleted">deleted</a>;
 };
 </pre>
-   <h6 class="heading settled" data-level="2.3.4.2.1" id="CookieChangeEventInit-members"><span class="secno">2.3.4.2.1. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dictdef-cookiechangeeventinit" id="ref-for-dictdef-cookiechangeeventinit②">CookieChangeEventInit</a></code> Members </span><a class="self-link" href="#CookieChangeEventInit-members"></a></h6>
+   <h6 class="heading settled" data-level="2.3.4.2.1" id="CookieChangeEventInit-members"><span class="secno">2.3.4.2.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dictdef-cookiechangeeventinit" id="ref-for-dictdef-cookiechangeeventinit②">CookieChangeEventInit</a></code> Members</span><a class="self-link" href="#CookieChangeEventInit-members"></a></h6>
    <dl>
     <dt data-md=""><dfn class="dfn-paneled idl-code" data-dfn-for="CookieChangeEventInit" data-dfn-type="dict-member" data-export="" id="dom-cookiechangeeventinit-changed"><code>changed</code></dfn>, <span> of type <a data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist⑧">CookieList</a></span>
     <dd data-md="">
@@ -2066,33 +2066,33 @@ an expiration in the past:</p>
     <dd data-md="">
      <p>deleted cookies</p>
    </dl>
-   <h2 class="heading settled" data-level="3" id="ServiceWorkerGlobalScopeCookieStore"><span class="secno">3. </span><span class="content"> The ServiceWorkerGlobalScopeCookieStore Interface</span><a class="self-link" href="#ServiceWorkerGlobalScopeCookieStore"></a></h2>
+   <h2 class="heading settled" data-level="3" id="ServiceWorkerGlobalScope"><span class="secno">3. </span><span class="content">The ServiceWorkerGlobalScope Interface</span><a class="self-link" href="#ServiceWorkerGlobalScope"></a></h2>
 <pre class="idl highlight def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope">ServiceWorkerGlobalScope</a> {
     [<a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable">Replaceable</a>, <a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject">SameObject</a>] <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore②">CookieStore</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="CookieStore" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore">cookieStore</a>;
 };
 </pre>
-   <h3 class="heading settled" data-level="3.1" id="ServiceWorkerCookieStore-attributes"><span class="secno">3.1. </span><span class="content"> Attributes</span><a class="self-link" href="#ServiceWorkerCookieStore-attributes"></a></h3>
-   <h4 class="heading settled" data-level="3.1.1" id="ServiceWorkerCookieStore-attributes-cookiestore"><span class="secno">3.1.1. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore①">cookieStore</a></code></span><a class="self-link" href="#ServiceWorkerCookieStore-attributes-cookiestore"></a></h4>
+   <h3 class="heading settled" data-level="3.1" id="ServiceWorkerGlobalScope-attributes"><span class="secno">3.1. </span><span class="content">Attributes</span><a class="self-link" href="#ServiceWorkerGlobalScope-attributes"></a></h3>
+   <h4 class="heading settled" data-level="3.1.1" id="ServiceWorkerGlobalScope-cookieStore"><span class="secno">3.1.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore①">cookieStore</a></code></span><a class="self-link" href="#ServiceWorkerGlobalScope-cookieStore"></a></h4>
    <dl>
     <dt data-md=""><dfn class="dfn-paneled idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export="" id="dom-serviceworkerglobalscope-cookiestore"><code>cookieStore</code></dfn>, <span> of type <a data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore③">CookieStore</a>, readonly</span>
     <dd data-md="">
      <p>Cookie store a <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#serviceworker" id="ref-for-serviceworker">ServiceWorker</a></code></p>
    </dl>
-   <h2 class="heading settled" data-level="4" id="WindowCookieStore"><span class="secno">4. </span><span class="content"> The WindowCookieStore Interface</span><a class="self-link" href="#WindowCookieStore"></a></h2>
+   <h2 class="heading settled" data-level="4" id="Window"><span class="secno">4. </span><span class="content">The Window Interface</span><a class="self-link" href="#Window"></a></h2>
 <pre class="idl highlight def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a> {
     [<a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable①">Replaceable</a>, <a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①">SameObject</a>] <span class="kt">readonly</span> <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore④">CookieStore</a> <a class="nv idl-code" data-link-type="attribute" data-readonly="" data-type="CookieStore" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore">cookieStore</a>;
 };
 </pre>
-   <h3 class="heading settled" data-level="4.1" id="WindowCookieStore-attributes"><span class="secno">4.1. </span><span class="content"> Attributes</span><a class="self-link" href="#WindowCookieStore-attributes"></a></h3>
-   <h4 class="heading settled" data-level="4.1.1" id="WindowCookieStore-attributes-cookiestore"><span class="secno">4.1.1. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore①">cookieStore</a></code></span><a class="self-link" href="#WindowCookieStore-attributes-cookiestore"></a></h4>
+   <h3 class="heading settled" data-level="4.1" id="Window-attributes"><span class="secno">4.1. </span><span class="content">Attributes</span><a class="self-link" href="#Window-attributes"></a></h3>
+   <h4 class="heading settled" data-level="4.1.1" id="Window-cookieStore"><span class="secno">4.1.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore①">cookieStore</a></code></span><a class="self-link" href="#Window-cookieStore"></a></h4>
    <dl>
     <dt data-md=""><dfn class="dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export="" id="dom-window-cookiestore"><code>cookieStore</code></dfn>, <span> of type <a data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore⑤">CookieStore</a>, readonly</span>
     <dd data-md="">
      <p>Cookie store a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code></p>
    </dl>
-   <h2 class="heading settled" data-level="5" id="Security"><span class="secno">5. </span><span class="content"> Security</span><a class="self-link" href="#Security"></a></h2>
-    Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web. 
-   <h3 class="heading settled" data-level="5.1" id="gotcha"><span class="secno">5.1. </span><span class="content"> Gotcha!</span><a class="self-link" href="#gotcha"></a></h3>
+   <h2 class="heading settled" data-level="5" id="Security"><span class="secno">5. </span><span class="content">Security</span><a class="self-link" href="#Security"></a></h2>
+   <p>Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.</p>
+   <h3 class="heading settled" data-level="5.1" id="gotcha"><span class="secno">5.1. </span><span class="content">Gotcha!</span><a class="self-link" href="#gotcha"></a></h3>
    <p>Although browser cookie implementations are now evolving in the direction of better security and fewer surprising and error-prone defaults, there are at present few guarantees about cookie data security.</p>
    <ul>
     <li data-md="">
@@ -2115,19 +2115,19 @@ an expiration in the past:</p>
      </ul>
    </ul>
    <p>For these reasons it is best to use caution when interpreting any cookie’s value, and never execute a cookie’s value as script, HTML, CSS, XML, PDF, or any other executable format.</p>
-   <h3 class="heading settled" data-level="5.2" id="restrict"><span class="secno">5.2. </span><span class="content"> Restrict?</span><a class="self-link" href="#restrict"></a></h3>
+   <h3 class="heading settled" data-level="5.2" id="restrict"><span class="secno">5.2. </span><span class="content">Restrict?</span><a class="self-link" href="#restrict"></a></h3>
    <p>This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured <code>http</code> contexts this could result in a web less safe for users. For that reason it may be desirable to restrict its use, or at least the use of the <code>set</code> and <code>delete</code> operations, to secure origins running in secure contexts.</p>
-   <h3 class="heading settled" data-level="5.3" id="surprises"><span class="secno">5.3. </span><span class="content"> Surprises</span><a class="self-link" href="#surprises"></a></h3>
+   <h3 class="heading settled" data-level="5.3" id="surprises"><span class="secno">5.3. </span><span class="content">Surprises</span><a class="self-link" href="#surprises"></a></h3>
    <p>Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.</p>
    <p>Other surprises are documented in <a href="https://tools.ietf.org/html/rfc6265#section-1">Section 1 of HTTP State Management Mechanism (RFC 6265)</a> - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.</p>
    <p>Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.</p>
-   <h3 class="heading settled" data-level="5.4" id="prefixes"><span class="secno">5.4. </span><span class="content"> Prefixes</span><a class="self-link" href="#prefixes"></a></h3>
+   <h3 class="heading settled" data-level="5.4" id="prefixes"><span class="secno">5.4. </span><span class="content">Prefixes</span><a class="self-link" href="#prefixes"></a></h3>
    <p>Where feasible the examples use the <code>__Host-</code> and <code>__Secure-</code> name prefixes from <a href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00">Cookie Prefixes</a> which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no <code>Secure</code> flag, and — in the case of <code>__Host-</code> — disallow overwriting with an explicit <code>Domain</code> or non-'/' <code>Path</code> attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.</p>
    <p>Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.</p>
-   <h3 class="heading settled" data-level="5.5" id="url-scoping"><span class="secno">5.5. </span><span class="content"> URL scoping</span><a class="self-link" href="#url-scoping"></a></h3>
+   <h3 class="heading settled" data-level="5.5" id="url-scoping"><span class="secno">5.5. </span><span class="content">URL scoping</span><a class="self-link" href="#url-scoping"></a></h3>
    <p>Although a service worker script cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the service worker script. This means that cookie access inside the scope of the service worker is technically possible already, it’s just not very convenient.</p>
    <p>When the service worker is scoped more narrowly than <code>/</code> it may still be able to read path-scoped cookies from outside its scope’s path space by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.</p>
-   <h3 class="heading settled" data-level="5.6" id="aversion"><span class="secno">5.6. </span><span class="content"> Cookie aversion</span><a class="self-link" href="#aversion"></a></h3>
+   <h3 class="heading settled" data-level="5.6" id="aversion"><span class="secno">5.6. </span><span class="content">Cookie aversion</span><a class="self-link" href="#aversion"></a></h3>
    <p>To reduce complexity for developers and eliminate the need for ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won’t invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)</p>
    <p>Today writing to <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑥">document.cookie</a></code> in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.</p>
    <p>Likewise, today reading <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑦">document.cookie</a></code> in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.</p>
@@ -2292,7 +2292,6 @@ an expiration in the past:</p>
    <li><a href="#dictdef-cookiechangeeventinit">CookieChangeEventInit</a><span>, in §2.3.4.2</span>
    <li><a href="#dom-cookiechangeevent-cookiechangeevent">CookieChangeEvent(type)</a><span>, in §2.3.4</span>
    <li><a href="#dom-cookiechangeevent-cookiechangeevent">CookieChangeEvent(type, eventInitDict)</a><span>, in §2.3.4</span>
-   <li><a href="#dictdef-cookieitemlist">CookieItemList</a><span>, in §2.3.2.1</span>
    <li><a href="#typedefdef-cookielist">CookieList</a><span>, in §2.3.3</span>
    <li><a href="#dictdef-cookielistitem">CookieListItem</a><span>, in §2.3.3</span>
    <li><a href="#enumdef-cookiematchtype">CookieMatchType</a><span>, in §2.3.1</span>
@@ -2303,8 +2302,8 @@ an expiration in the past:</p>
      <li><a href="#dom-window-cookiestore">attribute for Window</a><span>, in §4.1.1</span>
     </ul>
    <li><a href="#cookiestore">CookieStore</a><span>, in §2</span>
-   <li><a href="#dictdef-cookiestoregetoptions">CookieStoreGetOptions</a><span>, in §2.3</span>
-   <li><a href="#dictdef-cookiestoresetoptions">CookieStoreSetOptions</a><span>, in §2.3.1.1</span>
+   <li><a href="#dictdef-cookiestoregetoptions">CookieStoreGetOptions</a><span>, in §2.3.1</span>
+   <li><a href="#dictdef-cookiestoresetoptions">CookieStoreSetOptions</a><span>, in §2.3.2</span>
    <li><a href="#dom-cookiestore-delete-options">delete()</a><span>, in §2</span>
    <li>
     deleted
@@ -2427,10 +2426,10 @@ an expiration in the past:</p>
   <a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed②">Exposed</a>=(<span class="n">ServiceWorker</span>,<span class="n">Window</span>),
 ] <span class="kt">interface</span> <a class="nv" href="#cookiestore"><code>CookieStore</code></a> : <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#eventtarget" id="ref-for-eventtarget①">EventTarget</a> {
   [<a class="nv idl-code" data-link-type="extended-attribute">RaisesException</a>] <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist①⓪">CookieList</a>?> <a class="nv" href="#dom-cookiestore-getall"><code>getAll</code></a>(
-      <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①⓪"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-getall-name-options-name"><code>name</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑨">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-getall-name-options-options"><code>options</code></a>);
+      <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①⓪"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-getall-name-options-name"><code>name</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑧">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-getall-name-options-options"><code>options</code></a>);
   [<a class="nv idl-code" data-link-type="extended-attribute">RaisesException</a>] <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist①①">CookieList</a>?> <a class="nv" href="#dom-cookiestore-getall-options"><code>getAll</code></a>(
       <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions①①">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-getall-options-options"><code>options</code></a>);
-  [<a class="nv idl-code" data-link-type="extended-attribute">RaisesException</a>] <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem④">CookieListItem</a>?> <a class="nv" href="#dom-cookiestore-get"><code>get</code></a>(
+  [<a class="nv idl-code" data-link-type="extended-attribute">RaisesException</a>] <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem⑤">CookieListItem</a>?> <a class="nv" href="#dom-cookiestore-get"><code>get</code></a>(
       <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②③"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-get-name-options-name"><code>name</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions②①">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-get-name-options-options"><code>options</code></a>);
   [<a class="nv idl-code" data-link-type="extended-attribute">RaisesException</a>] <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem①①">CookieListItem</a>?> <a class="nv" href="#dom-cookiestore-get-options"><code>get</code></a>(
       <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions③①">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-get-options-options"><code>options</code></a>);
@@ -2440,7 +2439,7 @@ an expiration in the past:</p>
       <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑤①">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-has-options-options"><code>options</code></a>);
 
   [<a class="nv idl-code" data-link-type="extended-attribute">RaisesException</a>] <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv" href="#dom-cookiestore-set"><code>set</code></a>(
-      <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString④①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-set-name-value-options-name"><code>name</code></a>, <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑤①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-set-name-value-options-value"><code>value</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions⑦">CookieStoreSetOptions</a> <a class="nv" href="#dom-cookiestore-set-name-value-options-options"><code>options</code></a>);
+      <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString④①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-set-name-value-options-name"><code>name</code></a>, <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑤①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-set-name-value-options-value"><code>value</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions⑥">CookieStoreSetOptions</a> <a class="nv" href="#dom-cookiestore-set-name-value-options-options"><code>options</code></a>);
   [<a class="nv idl-code" data-link-type="extended-attribute">RaisesException</a>] <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv" href="#dom-cookiestore-set-options"><code>set</code></a>(
       <span class="kt">optional</span>
       <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions①①">CookieStoreSetOptions</a> <a class="nv" href="#dom-cookiestore-set-options-options"><code>options</code></a>); // TODO: Make non-optional.
@@ -2459,13 +2458,13 @@ an expiration in the past:</p>
   <a class="s" href="#dom-cookiematchtype-startswith"><code>"startsWith"</code></a>
 };
 
-<span class="kt">dictionary</span> <a class="nv idl-code" data-link-type="dictionary" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑦①">CookieStoreGetOptions</a> {
+<span class="kt">dictionary</span> <a class="nv" href="#dictdef-cookiestoregetoptions"><code>CookieStoreGetOptions</code></a> {
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑦①"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name①">name</a>;
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑧①"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url①">url</a>;
   <a class="n" data-link-type="idl-name" href="#enumdef-cookiematchtype" id="ref-for-enumdef-cookiematchtype②">CookieMatchType</a> <a class="nv idl-code" data-default="&quot;equals&quot;" data-link-type="dict-member" data-type="CookieMatchType " href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype①">matchType</a> = "equals";
 };
 
-<span class="kt">dictionary</span> <a class="nv idl-code" data-link-type="dictionary" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions⑤①">CookieStoreSetOptions</a> {
+<span class="kt">dictionary</span> <a class="nv" href="#dictdef-cookiestoresetoptions"><code>CookieStoreSetOptions</code></a> {
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①①"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookiestoresetoptions-name" id="ref-for-dom-cookiestoresetoptions-name①">name</a>;
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①②①"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookiestoresetoptions-value" id="ref-for-dom-cookiestoresetoptions-value①">value</a>;
   <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp②">DOMTimeStamp</a>? <a class="nv idl-code" data-default="null" data-link-type="dict-member" data-type="DOMTimeStamp? " href="#dom-cookiestoresetoptions-expires" id="ref-for-dom-cookiestoresetoptions-expires①">expires</a> = <span class="kt">null</span>;
@@ -2480,7 +2479,7 @@ an expiration in the past:</p>
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②⓪①"><span class="kt">USVString</span></a> <a class="nv idl-code" data-link-type="dict-member" data-type="USVString " href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value①">value</a>;
 };
 
-<span class="kt">typedef</span> <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem②①">CookieListItem</a>> <a class="nv" href="#typedefdef-cookielist"><code>CookieList</code></a>;
+<span class="kt">typedef</span> <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem③①">CookieListItem</a>> <a class="nv" href="#typedefdef-cookielist"><code>CookieList</code></a>;
 
 [
   <a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①①">Exposed</a>=(<span class="n">ServiceWorker</span>,<span class="n">Window</span>),
@@ -2507,306 +2506,240 @@ an expiration in the past:</p>
   <aside class="dfn-panel" data-for="script-visible">
    <b><a href="#script-visible">#script-visible</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-script-visible">1.2. 
-Summary </a> <a href="#ref-for-script-visible①">(2)</a>
-    <li><a href="#ref-for-script-visible②">2.2.2. 
-get</a> <a href="#ref-for-script-visible③">(2)</a>
+    <li><a href="#ref-for-script-visible">1.2. Summary</a> <a href="#ref-for-script-visible①">(2)</a>
+    <li><a href="#ref-for-script-visible②">2.2.2. get</a> <a href="#ref-for-script-visible③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookiestore">
    <b><a href="#cookiestore">#cookiestore</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookiestore">2. 
-The CookieStore Interface</a>
-    <li><a href="#ref-for-cookiestore①">2.3.4. 
-The CookieChangeEvent Interface</a>
-    <li><a href="#ref-for-cookiestore②">3. 
-The ServiceWorkerGlobalScopeCookieStore Interface</a>
-    <li><a href="#ref-for-cookiestore③">3.1.1. 
-cookieStore</a>
-    <li><a href="#ref-for-cookiestore④">4. 
-The WindowCookieStore Interface</a>
-    <li><a href="#ref-for-cookiestore⑤">4.1.1. 
-cookieStore</a>
+    <li><a href="#ref-for-cookiestore">2. The CookieStore Interface</a>
+    <li><a href="#ref-for-cookiestore①">2.3.4. The CookieChangeEvent Interface</a>
+    <li><a href="#ref-for-cookiestore②">3. The ServiceWorkerGlobalScope Interface</a>
+    <li><a href="#ref-for-cookiestore③">3.1.1. cookieStore</a>
+    <li><a href="#ref-for-cookiestore④">4. The Window Interface</a>
+    <li><a href="#ref-for-cookiestore⑤">4.1.1. cookieStore</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-getall-options">
    <b><a href="#dom-cookiestore-getall-options">#dom-cookiestore-getall-options</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestore-getall-options">2.2.1. 
-getAll</a>
+    <li><a href="#ref-for-dom-cookiestore-getall-options">2.2.1. getAll</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-get-options">
    <b><a href="#dom-cookiestore-get-options">#dom-cookiestore-get-options</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestore-get-options">2.2.2. 
-get</a>
+    <li><a href="#ref-for-dom-cookiestore-get-options">2.2.2. get</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-has-options">
    <b><a href="#dom-cookiestore-has-options">#dom-cookiestore-has-options</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestore-has-options">2.2.3. 
-has</a>
+    <li><a href="#ref-for-dom-cookiestore-has-options">2.2.3. has</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-set">
    <b><a href="#dom-cookiestore-set">#dom-cookiestore-set</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestore-set">2.2.4. 
-set</a>
+    <li><a href="#ref-for-dom-cookiestore-set">2.2.4. set</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-delete">
    <b><a href="#dom-cookiestore-delete">#dom-cookiestore-delete</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestore-delete">2.2.5. 
-delete</a>
+    <li><a href="#ref-for-dom-cookiestore-delete">2.2.5. delete</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-onchange">
    <b><a href="#dom-cookiestore-onchange">#dom-cookiestore-onchange</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestore-onchange">2. 
-The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-onchange①">2.1.1. 
-onchange </a>
+    <li><a href="#ref-for-dom-cookiestore-onchange">2. The CookieStore Interface</a>
+    <li><a href="#ref-for-dom-cookiestore-onchange①">2.1.1. onchange</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="read">
    <b><a href="#read">#read</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-read">1.2. 
-Summary </a>
+    <li><a href="#ref-for-read">1.2. Summary</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="set-a-cookie">
    <b><a href="#set-a-cookie">#set-a-cookie</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-set-a-cookie">1.2. 
-Summary </a>
+    <li><a href="#ref-for-set-a-cookie">1.2. Summary</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="clearing">
    <b><a href="#clearing">#clearing</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-clearing">1.2. 
-Summary </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dictdef-cookiestoregetoptions">
-   <b><a href="#dictdef-cookiestoregetoptions">#dictdef-cookiestoregetoptions</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dictdef-cookiestoregetoptions">2. 
-The CookieStore Interface</a> <a href="#ref-for-dictdef-cookiestoregetoptions①">(2)</a> <a href="#ref-for-dictdef-cookiestoregetoptions②">(3)</a> <a href="#ref-for-dictdef-cookiestoregetoptions③">(4)</a> <a href="#ref-for-dictdef-cookiestoregetoptions④">(5)</a> <a href="#ref-for-dictdef-cookiestoregetoptions⑤">(6)</a>
-    <li><a href="#ref-for-dictdef-cookiestoregetoptions⑥">2.3.1. 
-CookieStoreGetOptions</a> <a href="#ref-for-dictdef-cookiestoregetoptions⑦">(2)</a>
-    <li><a href="#ref-for-dictdef-cookiestoregetoptions⑧">2.3.1.1. 
-Dictionary CookieStoreGetOptions Members</a>
+    <li><a href="#ref-for-clearing">1.2. Summary</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="enumdef-cookiematchtype">
    <b><a href="#enumdef-cookiematchtype">#enumdef-cookiematchtype</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-enumdef-cookiematchtype">2.3.1. 
-CookieStoreGetOptions</a>
-    <li><a href="#ref-for-enumdef-cookiematchtype①">2.3.1.1. 
-Dictionary CookieStoreGetOptions Members</a>
+    <li><a href="#ref-for-enumdef-cookiematchtype">2.3.1. CookieStoreGetOptions</a>
+    <li><a href="#ref-for-enumdef-cookiematchtype①">2.3.1.1. Dictionary CookieStoreGetOptions Members</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dictdef-cookiestoregetoptions">
+   <b><a href="#dictdef-cookiestoregetoptions">#dictdef-cookiestoregetoptions</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dictdef-cookiestoregetoptions">2. The CookieStore Interface</a> <a href="#ref-for-dictdef-cookiestoregetoptions①">(2)</a> <a href="#ref-for-dictdef-cookiestoregetoptions②">(3)</a> <a href="#ref-for-dictdef-cookiestoregetoptions③">(4)</a> <a href="#ref-for-dictdef-cookiestoregetoptions④">(5)</a> <a href="#ref-for-dictdef-cookiestoregetoptions⑤">(6)</a>
+    <li><a href="#ref-for-dictdef-cookiestoregetoptions⑥">2.3.1. CookieStoreGetOptions</a>
+    <li><a href="#ref-for-dictdef-cookiestoregetoptions⑦">2.3.1.1. Dictionary CookieStoreGetOptions Members</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-name">
    <b><a href="#dom-cookiestoregetoptions-name">#dom-cookiestoregetoptions-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-name">2.3.1. 
-CookieStoreGetOptions</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-name">2.3.1. CookieStoreGetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-url">
    <b><a href="#dom-cookiestoregetoptions-url">#dom-cookiestoregetoptions-url</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-url">2.3.1. 
-CookieStoreGetOptions</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-url">2.3.1. CookieStoreGetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-matchtype">
    <b><a href="#dom-cookiestoregetoptions-matchtype">#dom-cookiestoregetoptions-matchtype</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype">2.3.1. 
-CookieStoreGetOptions</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype">2.3.1. CookieStoreGetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiestoresetoptions">
    <b><a href="#dictdef-cookiestoresetoptions">#dictdef-cookiestoresetoptions</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-cookiestoresetoptions">2. 
-The CookieStore Interface</a> <a href="#ref-for-dictdef-cookiestoresetoptions①">(2)</a> <a href="#ref-for-dictdef-cookiestoresetoptions②">(3)</a> <a href="#ref-for-dictdef-cookiestoresetoptions③">(4)</a>
-    <li><a href="#ref-for-dictdef-cookiestoresetoptions④">2.3.2. 
-CookieStoreSetOptions</a> <a href="#ref-for-dictdef-cookiestoresetoptions⑤">(2)</a>
-    <li><a href="#ref-for-dictdef-cookiestoresetoptions⑥">2.3.2.1. 
-Dictionary CookieStoreSetOptions Members</a>
+    <li><a href="#ref-for-dictdef-cookiestoresetoptions">2. The CookieStore Interface</a> <a href="#ref-for-dictdef-cookiestoresetoptions①">(2)</a> <a href="#ref-for-dictdef-cookiestoresetoptions②">(3)</a> <a href="#ref-for-dictdef-cookiestoresetoptions③">(4)</a>
+    <li><a href="#ref-for-dictdef-cookiestoresetoptions④">2.3.2. CookieStoreSetOptions</a>
+    <li><a href="#ref-for-dictdef-cookiestoresetoptions⑤">2.3.2.1. Dictionary CookieStoreSetOptions Members</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-name">
    <b><a href="#dom-cookiestoresetoptions-name">#dom-cookiestoresetoptions-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-name">2.3.2. 
-CookieStoreSetOptions</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-name">2.3.2. CookieStoreSetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-value">
    <b><a href="#dom-cookiestoresetoptions-value">#dom-cookiestoresetoptions-value</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-value">2.3.2. 
-CookieStoreSetOptions</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-value">2.3.2. CookieStoreSetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-expires">
    <b><a href="#dom-cookiestoresetoptions-expires">#dom-cookiestoresetoptions-expires</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-expires">2.3.2. 
-CookieStoreSetOptions</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-expires">2.3.2. CookieStoreSetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-domain">
    <b><a href="#dom-cookiestoresetoptions-domain">#dom-cookiestoresetoptions-domain</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-domain">2.3.2. 
-CookieStoreSetOptions</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-domain">2.3.2. CookieStoreSetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-path">
    <b><a href="#dom-cookiestoresetoptions-path">#dom-cookiestoresetoptions-path</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-path">2.3.2. 
-CookieStoreSetOptions</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-path">2.3.2. CookieStoreSetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-secure">
    <b><a href="#dom-cookiestoresetoptions-secure">#dom-cookiestoresetoptions-secure</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-secure">2.3.2. 
-CookieStoreSetOptions</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-secure">2.3.2. CookieStoreSetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-httponly">
    <b><a href="#dom-cookiestoresetoptions-httponly">#dom-cookiestoresetoptions-httponly</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-httponly">2.3.2. 
-CookieStoreSetOptions</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dictdef-cookieitemlist">
-   <b><a href="#dictdef-cookieitemlist">#dictdef-cookieitemlist</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dictdef-cookieitemlist">2.3.3. 
-CookieItemList</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-httponly">2.3.2. CookieStoreSetOptions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookielistitem">
    <b><a href="#dictdef-cookielistitem">#dictdef-cookielistitem</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-cookielistitem">2. 
-The CookieStore Interface</a> <a href="#ref-for-dictdef-cookielistitem①">(2)</a>
-    <li><a href="#ref-for-dictdef-cookielistitem②">2.3.3. 
-CookieItemList</a>
-    <li><a href="#ref-for-dictdef-cookielistitem③">2.3.3.1. 
-Dictionary CookieListItem Members</a>
+    <li><a href="#ref-for-dictdef-cookielistitem">2. The CookieStore Interface</a> <a href="#ref-for-dictdef-cookielistitem①">(2)</a>
+    <li><a href="#ref-for-dictdef-cookielistitem②">2.3.3. CookieListItem</a> <a href="#ref-for-dictdef-cookielistitem③">(2)</a>
+    <li><a href="#ref-for-dictdef-cookielistitem④">2.3.3.1. Dictionary CookieListItem Members</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedefdef-cookielist">
    <b><a href="#typedefdef-cookielist">#typedefdef-cookielist</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-typedefdef-cookielist">2. 
-The CookieStore Interface</a> <a href="#ref-for-typedefdef-cookielist①">(2)</a>
-    <li><a href="#ref-for-typedefdef-cookielist②">2.3.4. 
-The CookieChangeEvent Interface</a> <a href="#ref-for-typedefdef-cookielist③">(2)</a>
-    <li><a href="#ref-for-typedefdef-cookielist④">2.3.4.1. 
-Attributes</a> <a href="#ref-for-typedefdef-cookielist⑤">(2)</a>
-    <li><a href="#ref-for-typedefdef-cookielist⑥">2.3.4.2. 
-CookieChangeEventInit</a> <a href="#ref-for-typedefdef-cookielist⑦">(2)</a>
-    <li><a href="#ref-for-typedefdef-cookielist⑧">2.3.4.2.1. 
-CookieChangeEventInit Members </a> <a href="#ref-for-typedefdef-cookielist⑨">(2)</a>
+    <li><a href="#ref-for-typedefdef-cookielist">2. The CookieStore Interface</a> <a href="#ref-for-typedefdef-cookielist①">(2)</a>
+    <li><a href="#ref-for-typedefdef-cookielist②">2.3.4. The CookieChangeEvent Interface</a> <a href="#ref-for-typedefdef-cookielist③">(2)</a>
+    <li><a href="#ref-for-typedefdef-cookielist④">2.3.4.1. Attributes</a> <a href="#ref-for-typedefdef-cookielist⑤">(2)</a>
+    <li><a href="#ref-for-typedefdef-cookielist⑥">2.3.4.2. CookieChangeEventInit</a> <a href="#ref-for-typedefdef-cookielist⑦">(2)</a>
+    <li><a href="#ref-for-typedefdef-cookielist⑧">2.3.4.2.1. CookieChangeEventInit Members</a> <a href="#ref-for-typedefdef-cookielist⑨">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-name">
    <b><a href="#dom-cookielistitem-name">#dom-cookielistitem-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookielistitem-name">2.3.3. 
-CookieItemList</a>
+    <li><a href="#ref-for-dom-cookielistitem-name">2.3.3. CookieListItem</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-value">
    <b><a href="#dom-cookielistitem-value">#dom-cookielistitem-value</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookielistitem-value">2.3.3. 
-CookieItemList</a>
+    <li><a href="#ref-for-dom-cookielistitem-value">2.3.3. CookieListItem</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookiechangeevent">
    <b><a href="#cookiechangeevent">#cookiechangeevent</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookiechangeevent">2.1.1. 
-onchange </a>
-    <li><a href="#ref-for-cookiechangeevent①">2.3.4. 
-The CookieChangeEvent Interface</a>
+    <li><a href="#ref-for-cookiechangeevent">2.1.1. onchange</a>
+    <li><a href="#ref-for-cookiechangeevent①">2.3.4. The CookieChangeEvent Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiechangeevent-changed">
    <b><a href="#dom-cookiechangeevent-changed">#dom-cookiechangeevent-changed</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiechangeevent-changed">2.3.4. 
-The CookieChangeEvent Interface</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-changed">2.3.4. The CookieChangeEvent Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiechangeevent-deleted">
    <b><a href="#dom-cookiechangeevent-deleted">#dom-cookiechangeevent-deleted</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiechangeevent-deleted">2.3.4. 
-The CookieChangeEvent Interface</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-deleted">2.3.4. The CookieChangeEvent Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiechangeeventinit">
    <b><a href="#dictdef-cookiechangeeventinit">#dictdef-cookiechangeeventinit</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-cookiechangeeventinit">2.3.4. 
-The CookieChangeEvent Interface</a>
-    <li><a href="#ref-for-dictdef-cookiechangeeventinit①">2.3.4.2. 
-CookieChangeEventInit</a>
-    <li><a href="#ref-for-dictdef-cookiechangeeventinit②">2.3.4.2.1. 
-CookieChangeEventInit Members </a>
+    <li><a href="#ref-for-dictdef-cookiechangeeventinit">2.3.4. The CookieChangeEvent Interface</a>
+    <li><a href="#ref-for-dictdef-cookiechangeeventinit①">2.3.4.2. CookieChangeEventInit</a>
+    <li><a href="#ref-for-dictdef-cookiechangeeventinit②">2.3.4.2.1. CookieChangeEventInit Members</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiechangeeventinit-changed">
    <b><a href="#dom-cookiechangeeventinit-changed">#dom-cookiechangeeventinit-changed</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiechangeeventinit-changed">2.3.4.2. 
-CookieChangeEventInit</a>
+    <li><a href="#ref-for-dom-cookiechangeeventinit-changed">2.3.4.2. CookieChangeEventInit</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiechangeeventinit-deleted">
    <b><a href="#dom-cookiechangeeventinit-deleted">#dom-cookiechangeeventinit-deleted</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiechangeeventinit-deleted">2.3.4.2. 
-CookieChangeEventInit</a>
+    <li><a href="#ref-for-dom-cookiechangeeventinit-deleted">2.3.4.2. CookieChangeEventInit</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-serviceworkerglobalscope-cookiestore">
    <b><a href="#dom-serviceworkerglobalscope-cookiestore">#dom-serviceworkerglobalscope-cookiestore</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-serviceworkerglobalscope-cookiestore">3. 
-The ServiceWorkerGlobalScopeCookieStore Interface</a>
-    <li><a href="#ref-for-dom-serviceworkerglobalscope-cookiestore①">3.1.1. 
-cookieStore</a>
+    <li><a href="#ref-for-dom-serviceworkerglobalscope-cookiestore">3. The ServiceWorkerGlobalScope Interface</a>
+    <li><a href="#ref-for-dom-serviceworkerglobalscope-cookiestore①">3.1.1. cookieStore</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-window-cookiestore">
    <b><a href="#dom-window-cookiestore">#dom-window-cookiestore</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-window-cookiestore">4. 
-The WindowCookieStore Interface</a>
-    <li><a href="#ref-for-dom-window-cookiestore①">4.1.1. 
-cookieStore</a>
+    <li><a href="#ref-for-dom-window-cookiestore">4. The Window Interface</a>
+    <li><a href="#ref-for-dom-window-cookiestore①">4.1.1. cookieStore</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
