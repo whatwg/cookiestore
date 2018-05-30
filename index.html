@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 150b038a54cb926cf8e3d36fd8b108c226cb94b8" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
-  <meta content="e2df05c14f804c77e9b2234ff900f58a65e87932" name="document-revision">
+  <meta content="e41f38d9ad60bfa9f8997f7229445d0b557e603a" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1569,7 +1569,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content"> Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p>This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and <a href="https://github.com/slightlyoff/ServiceWorker">service workers</a>.</p>
    <p><a href="https://tools.ietf.org/html/rfc6265">HTTP cookies</a> have, since their origins at Netscape <a href="https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html">(documentation preserved by archive.org)</a>, provided a <a href="http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html">valuable state-management mechanism</a> for the web.</p>
-   <p>The synchronous single-threaded script-level <code>document.cookie</code> interface to cookies has been a source of <a href="https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html">complexity and performance woes</a> further exacerbated by the move in many browsers from:</p>
+   <p>The synchronous single-threaded script-level <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie">document.cookie</a></code> interface to cookies has been a source of <a href="https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html">complexity and performance woes</a> further exacerbated by the move in many browsers from:</p>
    <ul>
     <li data-md="">
      <p>a single browser process,</p>
@@ -1596,7 +1596,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li data-md="">
      <p>the browser as a whole.</p>
    </ul>
-   <p>Newer parts of the web built in service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies too</a> but cannot use the synchronous, blocking <code>document.cookie</code> interface at all as they both have no <code>document</code> and also cannot block the event loop as that would interfere with handling of unrelated events.</p>
+   <p>Newer parts of the web built in service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies too</a> but cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie①">document.cookie</a></code> interface at all as they both have no <code>document</code> and also cannot block the event loop as that would interfere with handling of unrelated events.</p>
    <h3 class="heading settled" data-level="1.1" id="intro-proposed-change"><span class="secno">1.1. </span><span class="content"> A Taste of the Proposed Change </span><a class="self-link" href="#intro-proposed-change"></a></h3>
    <p>Although it is tempting to <a href="https://discourse.wicg.io/t/rethinking-cookies/744">rethink cookies</a> entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.</p>
    <p>Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in <code>Set-Cookie</code> format:</p>
@@ -1671,7 +1671,7 @@ in <a href="https://github.com/slightlyoff/ServiceWorker">service worker</a> con
    <p>A cookie is <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="script-visible">script-visible</dfn> when it is in-scope and does not have the <code>HttpOnly</code> cookie flag.</p>
    <h4 class="heading settled" data-level="1.2.2" id="intro-motivation"><span class="secno">1.2.2. </span><span class="content"> Motivations </span><a class="self-link" href="#intro-motivation"></a></h4>
    <p>Some service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies</a> but
-cannot use the synchronous, blocking <code>document.cookie</code> interface as they both have no <code>document</code> and
+cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie②">document.cookie</a></code> interface as they both have no <code>document</code> and
 also cannot block the event loop as that would interfere with handling of unrelated events.</p>
    <p>A new API may also provide a rare and valuable chance to address
 some <a href="https://github.com/inikulin/cookie-compat">outstanding cross-browser incompatibilities</a> and bring <a href="https://github.com/whatwg/html/issues/804">divergent
@@ -1696,13 +1696,13 @@ so this API allows JavaScript Date objects and numeric timestamps (milliseconds 
    <p>Some user-agents implement non-standard extensions to cookie behavior. The intent of this specification,
 though, is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented
 across modern browsers. As new cookie features are specified and adopted it is expected that this API will be
-extended to include them. A secondary goal is to converge with <code>document.cookie</code> behavior
+extended to include them. A secondary goal is to converge with <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie③">document.cookie</a></code> behavior
 and the http cookie specification. See https://github.com/whatwg/html/issues/804 and https://inikulin.github.io/cookie-compat/
 for the current state of this convergence.</p>
    <p>Differences across browsers in how bytes outside the printable-ASCII subset are interpreted has led to
 long-lasting user- and developer-visible incompatibilities across browsers making internationalized use of cookies
 needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and uses <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString">USVString</a></code> for the script interface,
-with the additional side-effects that subsequent uses of <code>document.cookie</code> to read a cookie read or written through this interface and subsequent uses of <code>document.cookie</code> to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
+with the additional side-effects that subsequent uses of <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie④">document.cookie</a></code> to read a cookie read or written through this interface and subsequent uses of <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑤">document.cookie</a></code> to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
 will change the behavior of <code>WinINet</code>-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.</p>
    <h2 class="heading settled" data-level="2" id="CookieStore"><span class="secno">2. </span><span class="content"> The <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore">CookieStore</a></code> Interface</span><a class="self-link" href="#CookieStore"></a></h2>
@@ -1749,7 +1749,7 @@ with other modern user agents.</p>
    <h4 class="heading settled" data-level="2.2.2" id="CookieStore-methods-get"><span class="secno">2.2.2. </span><span class="content"> <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options">get</a></code></span><a class="self-link" href="#CookieStore-methods-get"></a></h4>
    <p>You can <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="read">read</dfn> the first in-scope <a data-link-type="dfn" href="#script-visible" id="ref-for-script-visible②">script-visible</a> value for a given cookie name. In a service worker context this defaults to the path
 of the service worker’s registered scope. In a document it defaults to the path of the current document and does not respect
-changes from <code>replaceState</code> or <code>document.domain</code>.</p>
+changes from <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/history.html#dom-history-replacestate" id="ref-for-dom-history-replacestate">replaceState()</a></code> or <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain" id="ref-for-dom-document-domain">document.domain</a></code>.</p>
    <div class="example" id="example-f050fae0">
     <a class="self-link" href="#example-f050fae0"></a> 
 <pre class="language-js highlight"><span class="kd">function</span> getOneSimpleOriginCookie<span class="p">()</span> <span class="p">{</span>
@@ -2128,8 +2128,8 @@ an expiration in the past:</p>
    <p>When the service worker is scoped more narrowly than <code>/</code> it may still be able to read path-scoped cookies from outside its scope’s path space by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.</p>
    <h3 class="heading settled" data-level="5.6" id="aversion"><span class="secno">5.6. </span><span class="content"> Cookie aversion</span><a class="self-link" href="#aversion"></a></h3>
    <p>To reduce complexity for developers and eliminate the need for ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won’t invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)</p>
-   <p>Today writing to <code>document.cookie</code> in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.</p>
-   <p>Likewise, today reading <code>document.cookie</code> in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.</p>
+   <p>Today writing to <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑥">document.cookie</a></code> in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.</p>
+   <p>Likewise, today reading <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑦">document.cookie</a></code> in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.</p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -2376,6 +2376,9 @@ an expiration in the past:</p>
     <ul>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler">EventHandler</a>
      <li><a href="https://html.spec.whatwg.org/multipage/window-object.html#window">Window</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie">cookie</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain">domain</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/history.html#dom-history-replacestate">replaceState(data, title)</a>
     </ul>
    <li>
     <a data-link-type="biblio">[INFRA]</a> defines the following terms:
