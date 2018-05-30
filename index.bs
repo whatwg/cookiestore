@@ -495,7 +495,7 @@ async function deleteSecureCookieWithDomainAndPath() {
 This API has semantics aligned with the interpretation of `Max-Age=0` common to most modern browsers.
 
 <!-- ============================================================ -->
-## Dictionaries ## {#CookieStore-dictionaries}
+## Dictionaries ## {#Dictionaries}
 <!-- ============================================================ -->
 
 <!-- ============================================================ -->
@@ -516,10 +516,6 @@ dictionary CookieStoreGetOptions {
   CookieMatchType matchType = "equals";
 };
 </pre>
-
-<!-- ============================================================ -->
-#### Dictionary {{CookieStoreGetOptions}} Members #### {#CookieStoreGetOptions-members}
-<!-- ============================================================ -->
 
 <dl dfn-type=dict-member dfn-for="CookieStoreGetOptions">
     : <dfn>name</dfn>
@@ -547,10 +543,6 @@ dictionary CookieStoreSetOptions {
   boolean httpOnly = false;
 };
 </pre>
-
-<!-- ============================================================ -->
-#### Dictionary {{CookieStoreSetOptions}} Members #### {#CookieStoreSetOptions-members}
-<!-- ============================================================ -->
 
 <dl dfn-type=dict-member dfn-for="CookieStoreSetOptions">
     : <dfn>name</dfn>
@@ -588,10 +580,6 @@ dictionary CookieListItem {
 typedef sequence<CookieListItem> CookieList;
 </xmp>
 
-<!-- ============================================================ -->
-#### Dictionary {{CookieListItem}} Members #### {#CookieItemList-members}
-<!-- ============================================================ -->
-
 <dl dfn-type=dict-member dfn-for="CookieListItem">
     : <dfn>name</dfn>
     :: name of cookie
@@ -602,7 +590,11 @@ typedef sequence<CookieListItem> CookieList;
 
 
 <!-- ============================================================ -->
-### The {{CookieChangeEvent}} Interface ### {#CookieChangeEvent}
+## Events ## {#Events}
+<!-- ============================================================ -->
+
+<!-- ============================================================ -->
+### {{CookieChangeEvent}} ### {#CookieChangeEvent}
 <!-- ============================================================ -->
 
 This is an {{Event}} object which is dispatched to {{CookieStore}}.
@@ -616,10 +608,6 @@ This is an {{Event}} object which is dispatched to {{CookieStore}}.
   readonly attribute CookieList deleted;
 };
 </pre>
-
-<!-- ============================================================ -->
-#### Attributes #### {#CookieChangeEvent-attributes}
-<!-- ============================================================ -->
 
 <dl dfn-type=attribute dfn-for="CookieChangeEvent">
     : <dfn>changed</dfn>
@@ -639,10 +627,6 @@ dictionary CookieChangeEventInit : EventInit {
   CookieList deleted;
 };
 </pre>
-
-<!-- ============================================================ -->
-##### {{CookieChangeEventInit}} Members ##### {#CookieChangeEventInit-members}
-<!-- ============================================================ -->
 
 <dl dfn-type=dict-member dfn-for="CookieChangeEventInit">
     : <dfn>changed</dfn>
