@@ -13,9 +13,30 @@ Markup Shorthands: markdown yes, css no
 Abstract: An asynchronous Javascript cookies API for documents and workers
 </pre>
 
+<pre class=link-defaults>
+spec:infra; type:dfn; text:list
+</pre>
+
+<style>
+dl.domintro dt {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
+
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+}
+dl.domintro dt a {
+    color: inherit; border-bottom-style: none;
+}
+dl.domintro dt code {
+    font-size: inherit;
+}
+</style>
+
 <!-- ============================================================ -->
 # Introduction # {#intro}
 <!-- ============================================================ -->
+
+*This section is non-normative.*
 
 This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [service workers](https://github.com/slightlyoff/ServiceWorker).
 
@@ -178,6 +199,7 @@ with the additional side-effects that subsequent uses of {{Document/cookie|docum
 will change the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.
 
+
 <!-- ============================================================ -->
 # The {{CookieStore}} Interface # {#CookieStore}
 <!-- ============================================================ -->
@@ -185,11 +207,11 @@ with other modern user agents.
 <xmp class="idl">
 [Exposed=(ServiceWorker,Window)]
 interface CookieStore : EventTarget {
-  Promise<CookieList?> getAll(USVString name, optional CookieStoreGetOptions options);
-  Promise<CookieList?> getAll(optional CookieStoreGetOptions options);
-
   Promise<CookieListItem?> get(USVString name, optional CookieStoreGetOptions options);
   Promise<CookieListItem?> get(optional CookieStoreGetOptions options);
+
+  Promise<CookieList?> getAll(USVString name, optional CookieStoreGetOptions options);
+  Promise<CookieList?> getAll(optional CookieStoreGetOptions options);
 
   Promise<boolean> has(USVString name, optional CookieStoreGetOptions options);
   Promise<boolean> has(optional CookieStoreGetOptions options);
@@ -223,12 +245,18 @@ interface CookieStore : EventTarget {
 <!-- ============================================================ -->
 
 <!-- ============================================================ -->
-### {{CookieStore/getAll}} ### {#CookieStore-getAll}
-<!-- ============================================================ -->
-
-<!-- ============================================================ -->
 ### {{CookieStore/get}} ### {#CookieStore-get}
 <!-- ============================================================ -->
+
+<div class=note>
+
+  <dl class=domintro>
+    <dt><var>cookie</var> = await cookieStore .
+        {{CookieStore/get(name, options)|get}}(<var>name</var>, <var>options</var>)</dt>
+    <dt><var>cookie</var> = await cookieStore .
+        {{CookieStore/get(options)|get}}(<var>options</var>)</dt>
+    <dd>
+
 
 You can <dfn>read</dfn> the first in-scope [=script-visible=] value for a given cookie name. In a service worker context this defaults to the path
 of the service worker's registered scope. In a document it defaults to the path of the current document and does not respect
@@ -276,6 +304,57 @@ async function getOneCookieForRequestUrl() {
 }
 ```
 </div>
+</dd>
+</div>
+
+<div class=algorithm>
+The <dfn method for=CookieStore>get(|name|, |options|)</dfn> method, when invoked, must run these steps:
+
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |list| be the results of running the steps to [=query cookies=] with
+        |name|,
+        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+    1. If |list| is failure, reject |p| with a new {{TypeError}}.
+    1. If |list| [=list/is empty=], resolve |p| with undefined.
+    1. Otherwise, resolve |p| with the first item of |list|.
+1. Return |p|.
+
+</div>
+
+<div class=algorithm>
+The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must run these steps:
+
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |list| be the results of running the steps to [=query cookies=] with
+        |options|' {{CookieStoreGetOptions/name}} member,
+        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+    1. If |list| is failure, reject |p| with a new {{TypeError}}.
+    1. If |list| [=list/is empty=], resolve |p| with undefined.
+    1. Otherwise, resolve |p| with the first item of |list|.
+1. Return |p|.
+
+</div>
+
+<!-- ============================================================ -->
+### {{CookieStore/getAll}} ### {#CookieStore-getAll}
+<!-- ============================================================ -->
+
+<div class=note>
+
+  <dl class=domintro>
+    <dt><var>cookies</var> = await cookieStore .
+        {{CookieStore/getAll(name, options)|getAll}}(<var>name</var>, <var>options</var>)</dt>
+    <dt><var>cookies</var> = await cookieStore .
+        {{CookieStore/getAll(options)|getAll}}(<var>options</var>)</dt>
+    <dd>
 
 Sometimes you need to see the whole [=script-visible=] in-scope subset of the cookie jar, including potential reuse of the same
 cookie name at multiple paths and/or domains (the paths and domains are not exposed to script by this API, though):
@@ -301,14 +380,93 @@ async function countMatchingSimpleOriginCookies() {
 }
 ```
 </div>
+</dd>
+</div>
+
+
+<div class=algorithm>
+The <dfn method for=CookieStore>getAll(|name|, |options|)</dfn> method, when invoked, must run these steps:
+
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |list| be the results of running the steps to [=query cookies=] with
+        |name|,
+        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+    1. If |list| is failure, reject |p| with a new {{TypeError}}.
+    1. Otherwise, resolve |p| with |list|.
+1. Return |p|.
+
+</div>
+
+<div class=algorithm>
+The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, must run these steps:
+
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |list| be the results of running the steps to [=query cookies=] with
+        |options|' {{CookieStoreGetOptions/name}} member,
+        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+    1. If |list| is failure, reject |p| with a new {{TypeError}}.
+    1. Otherwise, resolve |p| with |list|.
+1. Return |p|.
+
+</div>
+
+
 
 <!-- ============================================================ -->
 ### {{CookieStore/has}} ### {#CookieStore-has}
 <!-- ============================================================ -->
 
+<div class=algorithm>
+The <dfn method for=CookieStore>has(|name|, |options|)</dfn> method, when invoked, must run these steps:
+
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |list| be the results of running the steps to [=query cookies=] with
+        |name|,
+        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+    1. If |list| is failure, reject |p| with a new {{TypeError}}.
+    1. If |list| [=list/is empty=], resolve |p| with false.
+    1. Otherwise, resolve |p| with true.
+1. Return |p|.
+
+</div>
+
+<div class=algorithm>
+The <dfn method for=CookieStore>has(|options|)</dfn> method, when invoked, must run these steps:
+
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |list| be the results of running the steps to [=query cookies=]\ with
+        |options|' {{CookieStoreGetOptions/name}} member,
+        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+    1. If |list| is failure, reject |p| with a new {{TypeError}}.
+    1. If |list| [=list/is empty=], resolve |p| with false.
+    1. Otherwise, resolve |p| with true.
+1. Return |p|.
+
+</div>
+
+
+
 <!-- ============================================================ -->
 ### {{CookieStore/set(name, value, options)|set}} ### {#CookieStore-set}
 <!-- ============================================================ -->
+
+<div class=note>
 
 You can <dfn>set a cookie</dfn> using these methods.  For example:
 
@@ -436,9 +594,13 @@ async function setThreeSimpleOriginSessionCookiesNonsequentially() {
 ```
 </div>
 
+</div>
+
 <!-- ============================================================ -->
 ### {{CookieStore/delete(name, options)|delete}} ### {#CookieStore-delete}
 <!-- ============================================================ -->
+
+<div class=note>
 
 <dfn>Clearing</dfn> (deleting) a cookie is accomplished by expiration, that is by replacing it with an equivalent-scope cookie with
 an expiration in the past:
@@ -482,6 +644,8 @@ async function deleteSecureCookieWithDomainAndPath() {
 ```
 
 This API has semantics aligned with the interpretation of `Max-Age=0` common to most modern browsers.
+
+</div>
 
 <!-- ============================================================ -->
 ## Dictionaries ## {#Dictionaries}
@@ -673,7 +837,52 @@ partial interface Window {
 </dl>
 
 <!-- ============================================================ -->
-# Security # {#Security}
+# Algorithms # {#algorithms}
+<!-- ============================================================ -->
+
+<!-- ============================================================ -->
+## Query Cookies ## {#query-cookies-algorithm}
+<!-- ============================================================ -->
+
+<div class=algorithm>
+
+<div class=issue>Specify the [=query cookies=] algorithm.</div>
+
+To <dfn>query cookies</dfn> with |name|, optional |url|, and |matchType|, run the following steps:
+
+1. If ..., return failure.
+1. ...
+1. ... |name| ... |url| ... |matchType| ...
+1. ...
+1. Let |list| be a new [=list=].
+1. ...
+1. ...
+1. ...
+1. ...
+1. Return |list|.
+
+</div>
+
+<!-- ============================================================ -->
+## Set Cookie ## {#set-cookie-algorithm}
+<!-- ============================================================ -->
+
+<div class=algorithm>
+
+<div class=issue>Specify the [=set cookies=] algorithm.</div>
+
+To <dfn>set cookie</dfn> with |name|, ..., run the following steps:
+
+1. If ..., return failure.
+1. ...
+1. ... |name| ...
+1. ...
+
+</div>
+
+
+<!-- ============================================================ -->
+# Security # {#security}
 <!-- ============================================================ -->
 
 Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.
