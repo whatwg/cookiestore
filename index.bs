@@ -1,3 +1,4 @@
+<link rel="icon" href="logo-cookies.png">
 <pre class='metadata'>
 Title: Cookie Store API
 Shortname: cookiestore
@@ -31,6 +32,9 @@ dl.domintro dt code {
     font-size: inherit;
 }
 </style>
+
+<img src="logo-cookies.svg" alt="logo"
+    style="height: 100px; width: 100px; position: absolute; right: 20px; top: 30px;">
 
 <!-- ============================================================ -->
 # Introduction # {#intro}
@@ -468,7 +472,7 @@ The <dfn method for=CookieStore>has(|options|)</dfn> method, when invoked, must 
 
 <div class=note>
 
-You can <dfn>set a cookie</dfn> using these methods.  For example:
+You can set a cookie using these methods.  For example:
 
 <div class="example">
 ```js
@@ -596,6 +600,28 @@ async function setThreeSimpleOriginSessionCookiesNonsequentially() {
 
 </div>
 
+<div class=algorithm>
+The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method, when invoked, must run these steps:
+
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |r| be the result of running the steps to [=set a cookie=] with ... |name| ... |value| ... |options| ...
+    1. If |r| is failure, reject |p| with a new {{TypeError}}.
+    1. Resolve |p| with undefined.
+1. Return |p|.
+
+</div>
+
+<aside class=issue>
+Flesh out call to [=set a cookie=]
+</aside>
+
+<aside class=issue>
+Define other `set` overload.
+</aside>
+
 <!-- ============================================================ -->
 ### {{CookieStore/delete(name, options)|delete}} ### {#CookieStore-delete}
 <!-- ============================================================ -->
@@ -646,6 +672,30 @@ async function deleteSecureCookieWithDomainAndPath() {
 This API has semantics aligned with the interpretation of `Max-Age=0` common to most modern browsers.
 
 </div>
+
+
+<div class=algorithm>
+The <dfn method for=CookieStore>delete(|name|, |options|)</dfn> method, when invoked, must run these steps:
+
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |r| be the result of running the steps to [=delete a cookie=] with ... |name| ... |value| ... |options| ...
+    1. If |r| is failure, reject |p| with a new {{TypeError}}.
+    1. Resolve |p| with undefined.
+1. Return |p|.
+
+</div>
+
+<aside class=issue>
+Flesh out call to [=delete a cookie=]
+</aside>
+
+<aside class=issue>
+Define other `delete` overload.
+</aside>
+
 
 <!-- ============================================================ -->
 ## Dictionaries ## {#Dictionaries}
@@ -864,19 +914,34 @@ To <dfn>query cookies</dfn> with |name|, optional |url|, and |matchType|, run th
 </div>
 
 <!-- ============================================================ -->
-## Set Cookie ## {#set-cookie-algorithm}
+## Set A Cookie ## {#set-cookie-algorithm}
 <!-- ============================================================ -->
 
 <div class=algorithm>
 
-<div class=issue>Specify the [=set cookies=] algorithm.</div>
+<aside class=issue>Specify the [=set a cookie=] algorithm.</aside>
 
-To <dfn>set cookie</dfn> with |name|, ..., run the following steps:
+To <dfn>set a cookie</dfn> with |name| ..., run the following steps:
 
 1. If ..., return failure.
 1. ...
-1. ... |name| ...
+1. ... |name|
+
+</div>
+
+<!-- ============================================================ -->
+## Delete A Cookie ## {#delete-cookie-algorithm}
+<!-- ============================================================ -->
+
+<div class=algorithm>
+
+<aside class=issue>Specify the [=delete a cookie=] algorithm.</aside>
+
+To <dfn>delete a cookie</dfn> with |name| ..., run the following steps:
+
+1. If ..., return failure.
 1. ...
+1. ... |name|
 
 </div>
 
