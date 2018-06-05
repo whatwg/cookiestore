@@ -421,6 +421,10 @@ The synchronous model is
 [navigator.cookieEnabled](https://www.w3.org/TR/html/webappapis.html#cookies)
 aims to predict whether setting a cookie will succeed or not.
 
+[cookie change events](https://github.com/patrickkettner/cookie-change-events)
+is a concurrently developed API proposal that also addresses the synchronous
+nature of `document.cookie`.
+
 [inikulin/cookie-compat](https://github.com/inikulin/cookie-compat) is a test
 suite that highlights differences between RFC 6265bis and the way current
 browsers handle cookies.

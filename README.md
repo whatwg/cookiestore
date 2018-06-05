@@ -24,6 +24,10 @@ This API is inspired by and loosely based on the following discussions.
 * https://github.com/slightlyoff/ServiceWorker/issues/707
 * https://github.com/WICG/async-cookies-api/issues/14
 
+[cookie change events](https://github.com/patrickkettner/cookie-change-events)
+is a concurrently developed API proposal that also addresses the synchronous
+nature of `document.cookie`.
+
 The Cookie Store API has also been discussed in the following places.
 
 * [WICG discourse thread](https://discourse.wicg.io/t/rfc-proposal-for-an-asynchronous-cookies-api/1652)
