@@ -1,5 +1,5 @@
 [Security and Privacy questionnaire](https://www.w3.org/TR/security-privacy-questionnaire/)
-responses for the Async Cookies API
+responses for the Cookie Store API
 
 ### 3.1 Does this specification deal with personally-identifiable information?
 

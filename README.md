@@ -1,4 +1,4 @@
-# Async Cookies API
+# Cookie Store API
 
 This repository documents an API for accessing HTTP cookies asynchronously from
 Document and Service Worker global contexts.
@@ -24,7 +24,7 @@ This API is inspired by and loosely based on the following discussions.
 * https://github.com/slightlyoff/ServiceWorker/issues/707
 * https://github.com/WICG/async-cookies-api/issues/14
 
-The Async Cookies API has also been discussed in the following places.
+The Cookie Store API has also been discussed in the following places.
 
 * [WICG discourse thread](https://discourse.wicg.io/t/rfc-proposal-for-an-asynchronous-cookies-api/1652)
 * [Blink intent-to-implement](https://groups.google.com/a/chromium.org/d/msg/blink-dev/gU-tSdjR4rA/hAYgmxiHCAAJ)
@@ -37,3 +37,5 @@ This API aims to replace
 [document.cookie](https://www.w3.org/TR/html/dom.html#dom-document-cookie)
 and
 [navigator.cookieEnabled](https://www.w3.org/TR/html/webappapis.html#cookies).
+
+This API is also known as the *Async Cookies API*.

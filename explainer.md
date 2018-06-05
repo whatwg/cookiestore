@@ -1,4 +1,4 @@
-# Async Cookies API Explained
+# Cookie Store API Explainer
 
 This proposal has the following main goals.
 
@@ -20,6 +20,8 @@ nice-to-have properties.
 
 The proposal does **not** aim to change the cookie security model, or how
 cookies are handled at the network layer.
+
+The proposal is also known as the *Async Cookies API*.
 
 
 ## The Query API
