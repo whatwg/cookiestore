@@ -228,21 +228,39 @@ interface CookieStore : EventTarget {
 
   attribute EventHandler onchange;
 };
+
+enum CookieMatchType {
+  "equals",
+  "startsWith"
+};
+
+dictionary CookieStoreGetOptions {
+  USVString name;
+  USVString url;
+  CookieMatchType matchType = "equals";
+};
+
+dictionary CookieStoreSetOptions {
+  USVString name;
+  USVString value;
+  DOMTimeStamp? expires = null;
+  USVString domain;
+  USVString path = "/";
+  boolean? secure;
+  boolean httpOnly = false;
+};
+
+dictionary CookieListItem {
+  USVString name;
+  USVString value;
+  USVString? domain;
+  USVString path;
+  DOMTimeStamp? expires;
+  boolean secure;
+};
+
+typedef sequence<CookieListItem> CookieList;
 </xmp>
-
-<!-- ============================================================ -->
-## Attributes ## {#CookieStore-attributes}
-<!-- ============================================================ -->
-
-<!-- ============================================================ -->
-### {{onchange}} ### {#CookieStore-attributes-onchange}
-<!-- ============================================================ -->
-
-<dl dfn-type=attribute dfn-for=CookieStore>
-    : <dfn>onchange</dfn>
-    ::
-        An {{EventHandler}} of type {{CookieChangeEvent}}.
-</dl>
 
 <!-- ============================================================ -->
 ## Methods ## {#CookieStore-methods}
@@ -698,97 +716,17 @@ Define other `delete` overload.
 
 
 <!-- ============================================================ -->
-## Dictionaries ## {#Dictionaries}
+## Attributes ## {#CookieStore-attributes}
 <!-- ============================================================ -->
 
 <!-- ============================================================ -->
-### {{CookieStoreGetOptions}} ### {#CookieStoreGetOptions}
+### {{onchange}} ### {#CookieStore-attributes-onchange}
 <!-- ============================================================ -->
 
-<pre class="idl">
-enum CookieMatchType {
-  "equals",
-  "startsWith"
-};
-</pre>
-
-<pre class="idl">
-dictionary CookieStoreGetOptions {
-  USVString name;
-  USVString url;
-  CookieMatchType matchType = "equals";
-};
-</pre>
-
-<dl dfn-type=dict-member dfn-for="CookieStoreGetOptions">
-    : <dfn>name</dfn>
-    :: name of cookie
-
-    : <dfn>url</dfn>
-    :: some url
-
-    : <dfn>matchType</dfn>
-    :: how to match a cookie
-</dl>
-
-<!-- ============================================================ -->
-### {{CookieStoreSetOptions}} ### {#CookieStoreSetOptions}
-<!-- ============================================================ -->
-
-<pre class="idl">
-dictionary CookieStoreSetOptions {
-  USVString name;
-  USVString value;
-  DOMTimeStamp? expires = null;
-  USVString domain;
-  USVString path = "/";
-  boolean? secure;
-  boolean httpOnly = false;
-};
-</pre>
-
-<dl dfn-type=dict-member dfn-for="CookieStoreSetOptions">
-    : <dfn>name</dfn>
-    :: name of cookie
-
-    : <dfn>value</dfn>
-    :: value for cookie
-
-    : <dfn>expires</dfn>
-    :: expiration
-
-    : <dfn>domain</dfn>
-    :: domain
-
-    : <dfn>path</dfn>
-    :: path
-
-    : <dfn>secure</dfn>
-    :: secure
-
-    : <dfn>httpOnly</dfn>
-    :: http only
-</dl>
-
-<!-- ============================================================ -->
-### {{CookieListItem}} ### {#CookieListItem}
-<!-- ============================================================ -->
-
-<xmp class="idl">
-dictionary CookieListItem {
-  USVString name;
-  USVString value;
-};
-
-typedef sequence<CookieListItem> CookieList;
-</xmp>
-
-<dl dfn-type=dict-member dfn-for="CookieListItem">
-    : <dfn>name</dfn>
-    :: name of cookie
-
-    : <dfn>value</dfn>
-    :: value of cookie
+<dl dfn-type=attribute dfn-for=CookieStore>
+    : <dfn>onchange</dfn>
+    ::
+        An {{EventHandler}} of type {{CookieChangeEvent}}.
 </dl>
 
 
@@ -809,62 +747,19 @@ interface CookieChangeEvent : Event {
   readonly attribute CookieList changed;
   readonly attribute CookieList deleted;
 };
-</pre>
 
-<dl dfn-type=attribute dfn-for="CookieChangeEvent">
-    : <dfn>changed</dfn>
-    :: changed
-
-    : <dfn>deleted</dfn>
-    :: deleted cookies
-</dl>
-
-<!-- ============================================================ -->
-#### {{CookieChangeEventInit}} #### {#CookieChangeEventInit}
-<!-- ============================================================ -->
-
-<pre class="idl">
 dictionary CookieChangeEventInit : EventInit {
   CookieList changed;
   CookieList deleted;
 };
 </pre>
 
-<dl dfn-type=dict-member dfn-for="CookieChangeEventInit">
-    : <dfn>changed</dfn>
-    :: changed
-
-    : <dfn>deleted</dfn>
-    :: deleted cookies
-</dl>
-
-
 <!-- ============================================================ -->
-# The ServiceWorkerGlobalScope Interface # {#ServiceWorkerGlobalScope}
-<!-- ============================================================ -->
-
-<pre class="idl">
-partial interface ServiceWorkerGlobalScope {
-  [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
-};
-</pre>
-
-<!-- ============================================================ -->
-## Attributes ## {#ServiceWorkerGlobalScope-attributes}
+# Global Interfaces # {#globals}
 <!-- ============================================================ -->
 
 <!-- ============================================================ -->
-### {{ServiceWorkerGlobalScope/cookieStore}} ### {#ServiceWorkerGlobalScope-cookieStore}
-<!-- ============================================================ -->
-
-<dl dfn-type=attribute dfn-for=ServiceWorkerGlobalScope>
-    : <dfn>cookieStore</dfn>
-    :: Cookie store a {{ServiceWorker}}
-</dl>
-
-
-<!-- ============================================================ -->
-# The Window Interface # {#Window}
+## The Window Interface ## {#Window}
 <!-- ============================================================ -->
 
 <pre class="idl">
@@ -873,18 +768,20 @@ partial interface Window {
 };
 </pre>
 
-<!-- ============================================================ -->
-## Attributes ## {#Window-attributes}
-<!-- ============================================================ -->
+The {{Window/cookieStore}} attribute’s getter must return [=context object=]’s [=relevant settings object=]’s {{CookieStore}} object.
 
 <!-- ============================================================ -->
-### {{Window/cookieStore}} ### {#Window-cookieStore}
+## The ServiceWorkerGlobalScope Interface ## {#ServiceWorkerGlobalScope}
 <!-- ============================================================ -->
 
-<dl dfn-type=attribute dfn-for=Window>
-    : <dfn>cookieStore</dfn>
-    :: Cookie store a {{Window}}
-</dl>
+<pre class="idl">
+partial interface ServiceWorkerGlobalScope {
+  [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
+};
+</pre>
+
+The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=context object=]’s [=relevant settings object=]’s {{CookieStore}} object.
+
 
 <!-- ============================================================ -->
 # Algorithms # {#algorithms}
