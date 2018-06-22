@@ -433,3 +433,9 @@ The
 [Google+ API](https://developers.google.com/+/web/api/javascript#gapiinteractivepost_interactive_posts)
 is a prominent library that identifies cookies based on a name prefix, and
 therefore needs the `matchType: 'startsWith'` option in the query API.
+
+The [chrome.cookies](https://developers.chrome.com/extensions/cookies)
+API (and the [WebExtensions adaptation of the
+API](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/cookies))
+provides very similar functionality for trusted code added to
+browsers, but is not restricted by the same-origin policy.
