@@ -231,7 +231,7 @@ interface CookieStore : EventTarget {
 
 enum CookieMatchType {
   "equals",
-  "startsWith"
+  "starts-with"
 };
 
 dictionary CookieStoreGetOptions {
@@ -396,7 +396,7 @@ Sometimes an expected cookie is known by a prefix rather than by an exact name, 
 <div class="example">
 ```js
 async function countMatchingSimpleOriginCookies() {
-  let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'startsWith'});
+  let cookieList = await cookieStore.getAll({name: '__Host-COOKIEN', matchType: 'starts-with'});
   console.log('How many matching cookies? %d', cookieList.length);
   cookieList.forEach(({name, value}) => console.log('Matching cookie %s has value %o', name, value));
 }

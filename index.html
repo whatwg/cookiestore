@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 150b038a54cb926cf8e3d36fd8b108c226cb94b8" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
-  <meta content="c888f36d8ce06e54ef4c8d3d2ba038f583f0a0a4" name="document-revision">
+  <meta content="a82a9cb7a083c86948b20e54e3d995f97faf487a" name="document-revision">
   <link href="logo-cookies.png" rel="icon">
 <style>
 dl.domintro dt {
@@ -1440,7 +1440,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-06-22">22 June 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-06-25">25 June 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1718,7 +1718,7 @@ with other modern user agents.</p>
 
 <span class="kt">enum</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="enum" data-export="" id="enumdef-cookiematchtype"><code>CookieMatchType</code></dfn> {
   <dfn class="s idl-code" data-dfn-for="CookieMatchType" data-dfn-type="enum-value" data-export="" id="dom-cookiematchtype-equals"><code>"equals"</code><a class="self-link" href="#dom-cookiematchtype-equals"></a></dfn>,
-  <dfn class="s idl-code" data-dfn-for="CookieMatchType" data-dfn-type="enum-value" data-export="" id="dom-cookiematchtype-startswith"><code>"startsWith"</code><a class="self-link" href="#dom-cookiematchtype-startswith"></a></dfn>
+  <dfn class="s idl-code" data-dfn-for="CookieMatchType" data-dfn-type="enum-value" data-export="" id="dom-cookiematchtype-starts-with"><code>"starts-with"</code><a class="self-link" href="#dom-cookiematchtype-starts-with"></a></dfn>
 };
 
 <span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-cookiestoregetoptions"><code>CookieStoreGetOptions</code></dfn> {
@@ -1865,10 +1865,10 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
 </pre>
       </div>
       <p>Sometimes an expected cookie is known by a prefix rather than by an exact name, for instance when reading all cookies managed by a particular library (e.g. in <a href="https://developers.google.com/+/web/api/javascript#gapiinteractivepost_interactive_posts">this one</a> the name prefix identifies the library) or when reading all cookie names owned by a particular application on a shared web host (a name prefix is often used to identify the owning application):</p>
-      <div class="example" id="example-9c9766ec">
-       <a class="self-link" href="#example-9c9766ec"></a> 
+      <div class="example" id="example-5fd01a9a">
+       <a class="self-link" href="#example-5fd01a9a"></a> 
 <pre class="language-js highlight">async <span class="kd">function</span> countMatchingSimpleOriginCookies<span class="p">()</span> <span class="p">{</span>
-  <span class="kd">let</span> cookieList <span class="o">=</span> await cookieStore<span class="p">.</span>getAll<span class="p">({</span>name<span class="o">:</span> <span class="s1">'__Host-COOKIEN'</span><span class="p">,</span> matchType<span class="o">:</span> <span class="s1">'startsWith'</span><span class="p">});</span>
+  <span class="kd">let</span> cookieList <span class="o">=</span> await cookieStore<span class="p">.</span>getAll<span class="p">({</span>name<span class="o">:</span> <span class="s1">'__Host-COOKIEN'</span><span class="p">,</span> matchType<span class="o">:</span> <span class="s1">'starts-with'</span><span class="p">});</span>
   console<span class="p">.</span>log<span class="p">(</span><span class="s1">'How many matching cookies? %d'</span><span class="p">,</span> cookieList<span class="p">.</span>length<span class="p">);</span>
   cookieList<span class="p">.</span>forEach<span class="p">(({</span>name<span class="p">,</span> value<span class="p">})</span> <span class="p">=></span> console<span class="p">.</span>log<span class="p">(</span><span class="s1">'Matching cookie %s has value %o'</span><span class="p">,</span> name<span class="p">,</span> value<span class="p">));</span>
 <span class="p">}</span>
@@ -2538,7 +2538,7 @@ an expiration in the past:</p>
    <li><a href="#set-a-cookie">set a cookie</a><span>, in §4.2</span>
    <li><a href="#dom-cookiestore-set">set(name, value)</a><span>, in §2.1.4</span>
    <li><a href="#dom-cookiestore-set">set(name, value, options)</a><span>, in §2.1.4</span>
-   <li><a href="#dom-cookiematchtype-startswith">"startsWith"</a><span>, in §2</span>
+   <li><a href="#dom-cookiematchtype-starts-with">"starts-with"</a><span>, in §2</span>
    <li><a href="#dom-cookiestoregetoptions-url">url</a><span>, in §2</span>
    <li>
     value
@@ -2642,7 +2642,7 @@ an expiration in the past:</p>
 
 <span class="kt">enum</span> <a class="nv" href="#enumdef-cookiematchtype"><code>CookieMatchType</code></a> {
   <a class="s" href="#dom-cookiematchtype-equals"><code>"equals"</code></a>,
-  <a class="s" href="#dom-cookiematchtype-startswith"><code>"startsWith"</code></a>
+  <a class="s" href="#dom-cookiematchtype-starts-with"><code>"starts-with"</code></a>
 };
 
 <span class="kt">dictionary</span> <a class="nv" href="#dictdef-cookiestoregetoptions"><code>CookieStoreGetOptions</code></a> {
