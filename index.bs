@@ -212,17 +212,18 @@ with other modern user agents.
 [Exposed=(ServiceWorker,Window),
  SecureContext]
 interface CookieStore : EventTarget {
-  Promise<CookieListItem?> get(USVString name, optional CookieStoreGetOptions options);
+  Promise<CookieListItem?> get(USVString name);
   Promise<CookieListItem?> get(optional CookieStoreGetOptions options);
 
-  Promise<CookieList?> getAll(USVString name, optional CookieStoreGetOptions options);
+  Promise<CookieList?> getAll(USVString name);
   Promise<CookieList?> getAll(optional CookieStoreGetOptions options);
 
-  Promise<void> set(USVString name, USVString value, optional CookieStoreSetOptions options);
-  Promise<void> set(optional CookieStoreSetOptions options); // TODO: Make non-optional.
+  Promise<void> set(USVString name, USVString value,
+                    optional CookieStoreSetOptions options);
+  Promise<void> set(CookieStoreSetExtraOptions options);
 
-  Promise<void> delete(USVString name, optional CookieStoreSetOptions options);
-  Promise<void> delete(optional CookieStoreSetOptions options); // TODO: Make non-optional.
+  Promise<void> delete(USVString name);
+  Promise<void> delete(CookieStoreDeleteOptions options);
 
   attribute EventHandler onchange;
 };
@@ -245,12 +246,24 @@ enum CookieSameSite {
 };
 
 dictionary CookieStoreSetOptions {
-  USVString name;
-  USVString value;
   DOMTimeStamp? expires = null;
-  USVString domain;
+  USVString? domain = null;
   USVString path = "/";
-  boolean? secure;
+  boolean secure = true;
+  boolean httpOnly = false;
+  CookieSameSite sameSite = "strict";
+};
+
+dictionary CookieStoreSetExtraOptions : CookieStoreSetOptions {
+  required USVString name;
+  required USVString value;
+};
+
+dictionary CookieStoreDeleteOptions {
+  required USVString name;
+  USVString? domain = null;
+  USVString path = "/";
+  boolean secure = true;
   boolean httpOnly = false;
   CookieSameSite sameSite = "strict";
 };
@@ -283,7 +296,7 @@ TODO: Specify `subscribeToChanges()` and `getChangeSubscriptions()`
 
   <dl class=domintro>
     <dt><var>cookie</var> = await cookieStore .
-        {{CookieStore/get(name, options)|get}}(<var>name</var>, <var>options</var>)</dt>
+        {{CookieStore/get(name)|get}}(<var>name</var>)</dt>
     <dt><var>cookie</var> = await cookieStore .
         {{CookieStore/get(options)|get}}(<var>options</var>)</dt>
     <dd>
@@ -339,16 +352,14 @@ async function getOneCookieForRequestUrl() {
 </div>
 
 <div class=algorithm>
-The <dfn method for=CookieStore>get(|name|, |options|)</dfn> method, when invoked, must run these steps:
+The <dfn method for=CookieStore>get(|name|)</dfn> method, when invoked, must run these steps:
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |name|,
-        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
-        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+        |name|.
     1. If |list| is failure, reject |p| with a new {{TypeError}}.
     1. If |list| [=list/is empty=], resolve |p| with undefined.
     1. Otherwise, resolve |p| with the first item of |list|.
@@ -364,7 +375,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |options|' {{CookieStoreGetOptions/name}} member,
+        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present),
         |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
         |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
     1. If |list| is failure, reject |p| with a new {{TypeError}}.
@@ -382,7 +393,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
 
   <dl class=domintro>
     <dt><var>cookies</var> = await cookieStore .
-        {{CookieStore/getAll(name, options)|getAll}}(<var>name</var>, <var>options</var>)</dt>
+        {{CookieStore/getAll(name)|getAll}}(<var>name</var>)</dt>
     <dt><var>cookies</var> = await cookieStore .
         {{CookieStore/getAll(options)|getAll}}(<var>options</var>)</dt>
     <dd>
@@ -416,16 +427,14 @@ async function countMatchingSimpleOriginCookies() {
 
 
 <div class=algorithm>
-The <dfn method for=CookieStore>getAll(|name|, |options|)</dfn> method, when invoked, must run these steps:
+The <dfn method for=CookieStore>getAll(|name|)</dfn> method, when invoked, must run these steps:
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |name|,
-        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
-        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+        |name|.
     1. If |list| is failure, reject |p| with a new {{TypeError}}.
     1. Otherwise, resolve |p| with |list|.
 1. Return |p|.
@@ -440,7 +449,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |options|' {{CookieStoreGetOptions/name}} member,
+        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present),
         |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
         |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
     1. If |list| is failure, reject |p| with a new {{TypeError}}.
@@ -592,23 +601,46 @@ The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method, wh
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
-    1. Let |r| be the result of running the steps to [=set a cookie=] with ... |name| ... |value| ... |options| ...
+    1. Let |r| be the result of running the steps to [=set a cookie=] with
+        |name|,
+        |value|,
+        |options|' {{CookieStoreSetOptions/expires}} dictionary member,
+        |options|' {{CookieStoreSetOptions/domain}} dictionary member,
+        |options|' {{CookieStoreSetOptions/path}} dictionary member,
+        |options|' {{CookieStoreSetOptions/secure}} dictionary member,
+        |options|' {{CookieStoreSetOptions/httpOnly}} dictionary member, and
+        |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
     1. If |r| is failure, reject |p| with a new {{TypeError}}.
     1. Resolve |p| with undefined.
 1. Return |p|.
 
 </div>
 
-<aside class=issue>
-Flesh out call to [=set a cookie=]
-</aside>
+<div class=algorithm>
+The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must run these steps:
 
-<aside class=issue>
-Define other `set` overload.
-</aside>
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |r| be the result of running the steps to [=set a cookie=] with
+        |options|' {{CookieStoreSetExtraOptions/name}} dictionary member,
+        |options|' {{CookieStoreSetExtraOptions/value}} dictionary member,
+        |options|' {{CookieStoreSetOptions/expires}} dictionary member,
+        |options|' {{CookieStoreSetOptions/domain}} dictionary member,
+        |options|' {{CookieStoreSetOptions/path}} dictionary member,
+        |options|' {{CookieStoreSetOptions/secure}} dictionary member,
+        |options|' {{CookieStoreSetOptions/httpOnly}} dictionary member, and
+        |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
+    1. If |r| is failure, reject |p| with a new {{TypeError}}.
+    1. Resolve |p| with undefined.
+1. Return |p|.
+
+</div>
+
 
 <!-- ============================================================ -->
-### {{CookieStore/delete(name, options)|delete}} ### {#CookieStore-delete}
+### {{CookieStore/delete(name)|delete}} ### {#CookieStore-delete}
 <!-- ============================================================ -->
 
 <div class=note>
@@ -657,26 +689,39 @@ This API has semantics aligned with the interpretation of `Max-Age=0` common to 
 
 
 <div class=algorithm>
-The <dfn method for=CookieStore>delete(|name|, |options|)</dfn> method, when invoked, must run these steps:
+The <dfn method for=CookieStore>delete(|name|)</dfn> method, when invoked, must run these steps:
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
-    1. Let |r| be the result of running the steps to [=delete a cookie=] with ... |name| ... |value| ... |options| ...
+    1. Let |r| be the result of running the steps to [=delete a cookie=] with |name|.
     1. If |r| is failure, reject |p| with a new {{TypeError}}.
     1. Resolve |p| with undefined.
 1. Return |p|.
 
 </div>
 
-<aside class=issue>
-Flesh out call to [=delete a cookie=]
-</aside>
+<div class=algorithm>
+The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, must run these steps:
 
-<aside class=issue>
-Define other `delete` overload.
-</aside>
+1. Let |origin| be |environment|’s [=/origin=].
+1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |r| be the result of running the steps to [=delete a cookie=] with
+        |options|' {{CookieStoreDeleteOptions/name}} dictionary member,
+        |options|' {{CookieStoreDeleteOptions/domain}} dictionary member,
+        |options|' {{CookieStoreDeleteOptions/path}} dictionary member,
+        |options|' {{CookieStoreDeleteOptions/secure}} dictionary member,
+        |options|' {{CookieStoreDeleteOptions/httpOnly}} dictionary member, and
+        |options|' {{CookieStoreDeleteOptions/sameSite}} dictionary member.
+    1. If |r| is failure, reject |p| with a new {{TypeError}}.
+    1. Resolve |p| with undefined.
+1. Return |p|.
+
+</div>
+
 
 
 <!-- ============================================================ -->
@@ -761,7 +806,11 @@ The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=
 
 <div class=issue>Specify the [=query cookies=] algorithm.</div>
 
-To <dfn>query cookies</dfn> with |name|, optional |url|, and |matchType|, run the following steps:
+To <dfn>query cookies</dfn> with
+optional |name|,
+optional |url|, and
+optional |matchType|,
+run the following steps:
 
 1. If ..., return failure.
 1. ...
@@ -784,11 +833,20 @@ To <dfn>query cookies</dfn> with |name|, optional |url|, and |matchType|, run th
 
 <aside class=issue>Specify the [=set a cookie=] algorithm.</aside>
 
-To <dfn>set a cookie</dfn> with |name| ..., run the following steps:
+To <dfn>set a cookie</dfn> with
+|name|,
+|value|,
+optional |expires|,
+|domain|,
+|path|,
+|secure| flag,
+|httpOnly| flag, and
+|sameSite|,
+run the following steps:
 
 1. If ..., return failure.
 1. ...
-1. ... |name|
+1. ... |name| ... |expires| ...
 
 </div>
 
@@ -800,7 +858,14 @@ To <dfn>set a cookie</dfn> with |name| ..., run the following steps:
 
 <aside class=issue>Specify the [=delete a cookie=] algorithm.</aside>
 
-To <dfn>delete a cookie</dfn> with |name| ..., run the following steps:
+To <dfn>delete a cookie</dfn> with
+|name|,
+|domain|,
+|path|,
+|secure| flag,
+|httpOnly| flag, and
+|sameSite|,
+run the following steps:
 
 1. If ..., return failure.
 1. ...
