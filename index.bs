@@ -238,6 +238,12 @@ dictionary CookieStoreGetOptions {
   CookieMatchType matchType = "equals";
 };
 
+enum CookieSameSite {
+  "strict",
+  "lax",
+  "unrestricted"
+};
+
 dictionary CookieStoreSetOptions {
   USVString name;
   USVString value;
@@ -246,6 +252,7 @@ dictionary CookieStoreSetOptions {
   USVString path = "/";
   boolean? secure;
   boolean httpOnly = false;
+  CookieSameSite sameSite = "strict";
 };
 
 dictionary CookieListItem {
