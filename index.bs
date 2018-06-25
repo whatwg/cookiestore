@@ -267,6 +267,10 @@ dictionary CookieListItem {
 typedef sequence<CookieListItem> CookieList;
 </xmp>
 
+<aside class=issue>
+TODO: Specify `subscribeToChanges()` and `getChangeSubscriptions()`
+</aside>
+
 <!-- ============================================================ -->
 ## Methods ## {#CookieStore-methods}
 <!-- ============================================================ -->
