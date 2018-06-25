@@ -209,7 +209,8 @@ with other modern user agents.
 <!-- ============================================================ -->
 
 <xmp class="idl">
-[Exposed=(ServiceWorker,Window)]
+[Exposed=(ServiceWorker,Window),
+ SecureContext]
 interface CookieStore : EventTarget {
   Promise<CookieListItem?> get(USVString name, optional CookieStoreGetOptions options);
   Promise<CookieListItem?> get(optional CookieStoreGetOptions options);
@@ -697,6 +698,7 @@ This is an {{Event}} object which is dispatched to {{CookieStore}}.
 
 <pre class="idl">
 [Exposed=(ServiceWorker,Window),
+ SecureContext,
  Constructor(DOMString type, optional CookieChangeEventInit eventInitDict)]
 interface CookieChangeEvent : Event {
   readonly attribute CookieList changed;
@@ -718,6 +720,7 @@ dictionary CookieChangeEventInit : EventInit {
 <!-- ============================================================ -->
 
 <pre class="idl">
+[SecureContext]
 partial interface Window {
   [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
 };
