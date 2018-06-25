@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 150b038a54cb926cf8e3d36fd8b108c226cb94b8" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
-  <meta content="48c7f5bfb14e33eec1d41c9dc8388579b211f218" name="document-revision">
+  <meta content="68f0ee4a9c6e4498e2ae5a45cc3d19ff2719a68c" name="document-revision">
   <link href="logo-cookies.png" rel="icon">
 <style>
 dl.domintro dt {
@@ -2074,10 +2074,7 @@ an expiration in the past:</p>
   <span class="kd">let</span> theVeryRecentPast <span class="o">=</span> Date<span class="p">.</span>now<span class="p">();</span>
   <span class="kd">let</span> expiredCookieSentinelValue <span class="o">=</span> <span class="s1">'EXPIRED'</span><span class="p">;</span>
   await cookieStore<span class="p">.</span>set<span class="p">(</span><span class="s1">'__Secure-COOKIENAME'</span><span class="p">,</span> expiredCookieSentinelValue<span class="p">,</span> <span class="p">{</span>
-      path<span class="o">:</span> <span class="s1">'/cgi-bin/'</span><span class="p">,</span>
-      expires<span class="o">:</span> theVeryRecentPast<span class="p">,</span>
-      secure<span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-      domain<span class="o">:</span> <span class="s1">'example.org'</span>
+      expires<span class="o">:</span> theVeryRecentPast
     <span class="p">});</span>
   console<span class="p">.</span>log<span class="p">(</span><span class="s1">'Expired! Deleted!! Cleared!!1!'</span><span class="p">);</span>
 <span class="p">}</span>

@@ -617,10 +617,7 @@ async function setExpiredSecureCookieWithDomainPathAndFallbackValue() {
   let theVeryRecentPast = Date.now();
   let expiredCookieSentinelValue = 'EXPIRED';
   await cookieStore.set('__Secure-COOKIENAME', expiredCookieSentinelValue, {
-      path: '/cgi-bin/',
-      expires: theVeryRecentPast,
-      secure: true,
-      domain: 'example.org'
+      expires: theVeryRecentPast
     });
   console.log('Expired! Deleted!! Cleared!!1!');
 }
