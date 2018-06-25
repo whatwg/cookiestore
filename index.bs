@@ -217,9 +217,6 @@ interface CookieStore : EventTarget {
   Promise<CookieList?> getAll(USVString name, optional CookieStoreGetOptions options);
   Promise<CookieList?> getAll(optional CookieStoreGetOptions options);
 
-  Promise<boolean> has(USVString name, optional CookieStoreGetOptions options);
-  Promise<boolean> has(optional CookieStoreGetOptions options);
-
   Promise<void> set(USVString name, USVString value, optional CookieStoreSetOptions options);
   Promise<void> set(optional CookieStoreSetOptions options); // TODO: Make non-optional.
 
@@ -436,48 +433,6 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
         |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
     1. If |list| is failure, reject |p| with a new {{TypeError}}.
     1. Otherwise, resolve |p| with |list|.
-1. Return |p|.
-
-</div>
-
-
-
-<!-- ============================================================ -->
-### {{CookieStore/has}} ### {#CookieStore-has}
-<!-- ============================================================ -->
-
-<div class=algorithm>
-The <dfn method for=CookieStore>has(|name|, |options|)</dfn> method, when invoked, must run these steps:
-
-1. Let |origin| be |environment|’s [=/origin=].
-1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
-1. Let |p| be a new promise.
-1. Run the following steps in parallel:
-    1. Let |list| be the results of running the steps to [=query cookies=] with
-        |name|,
-        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
-        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
-    1. If |list| is failure, reject |p| with a new {{TypeError}}.
-    1. If |list| [=list/is empty=], resolve |p| with false.
-    1. Otherwise, resolve |p| with true.
-1. Return |p|.
-
-</div>
-
-<div class=algorithm>
-The <dfn method for=CookieStore>has(|options|)</dfn> method, when invoked, must run these steps:
-
-1. Let |origin| be |environment|’s [=/origin=].
-1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
-1. Let |p| be a new promise.
-1. Run the following steps in parallel:
-    1. Let |list| be the results of running the steps to [=query cookies=]\ with
-        |options|' {{CookieStoreGetOptions/name}} member,
-        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
-        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
-    1. If |list| is failure, reject |p| with a new {{TypeError}}.
-    1. If |list| [=list/is empty=], resolve |p| with false.
-    1. Otherwise, resolve |p| with true.
 1. Return |p|.
 
 </div>
@@ -811,7 +766,7 @@ To <dfn>query cookies</dfn> with |name|, optional |url|, and |matchType|, run th
 </div>
 
 <!-- ============================================================ -->
-## Set A Cookie ## {#set-cookie-algorithm}
+## Set a Cookie ## {#set-cookie-algorithm}
 <!-- ============================================================ -->
 
 <div class=algorithm>
@@ -827,7 +782,7 @@ To <dfn>set a cookie</dfn> with |name| ..., run the following steps:
 </div>
 
 <!-- ============================================================ -->
-## Delete A Cookie ## {#delete-cookie-algorithm}
+## Delete a Cookie ## {#delete-cookie-algorithm}
 <!-- ============================================================ -->
 
 <div class=algorithm>

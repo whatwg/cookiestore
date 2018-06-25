@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 150b038a54cb926cf8e3d36fd8b108c226cb94b8" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
-  <meta content="a82a9cb7a083c86948b20e54e3d995f97faf487a" name="document-revision">
+  <meta content="a69f08503412ff0cabead6129df1490da8bf9593" name="document-revision">
   <link href="logo-cookies.png" rel="icon">
 <style>
 dl.domintro dt {
@@ -1499,9 +1499,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
        <ol class="toc">
         <li><a href="#CookieStore-get"><span class="secno">2.1.1</span> <span class="content"><code class="idl"><span>get</span></code></span></a>
         <li><a href="#CookieStore-getAll"><span class="secno">2.1.2</span> <span class="content"><code class="idl"><span>getAll</span></code></span></a>
-        <li><a href="#CookieStore-has"><span class="secno">2.1.3</span> <span class="content"><code class="idl"><span>has</span></code></span></a>
-        <li><a href="#CookieStore-set"><span class="secno">2.1.4</span> <span class="content"><code class="idl"><span>set</span></code></span></a>
-        <li><a href="#CookieStore-delete"><span class="secno">2.1.5</span> <span class="content"><code class="idl"><span>delete</span></code></span></a>
+        <li><a href="#CookieStore-set"><span class="secno">2.1.3</span> <span class="content"><code class="idl"><span>set</span></code></span></a>
+        <li><a href="#CookieStore-delete"><span class="secno">2.1.4</span> <span class="content"><code class="idl"><span>delete</span></code></span></a>
        </ol>
       <li>
        <a href="#CookieStore-attributes"><span class="secno">2.2</span> <span class="content">Attributes</span></a>
@@ -1524,8 +1523,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <a href="#algorithms"><span class="secno">4</span> <span class="content">Algorithms</span></a>
      <ol class="toc">
       <li><a href="#query-cookies-algorithm"><span class="secno">4.1</span> <span class="content">Query Cookies</span></a>
-      <li><a href="#set-cookie-algorithm"><span class="secno">4.2</span> <span class="content">Set A Cookie</span></a>
-      <li><a href="#delete-cookie-algorithm"><span class="secno">4.3</span> <span class="content">Delete A Cookie</span></a>
+      <li><a href="#set-cookie-algorithm"><span class="secno">4.2</span> <span class="content">Set a Cookie</span></a>
+      <li><a href="#delete-cookie-algorithm"><span class="secno">4.3</span> <span class="content">Delete a Cookie</span></a>
      </ol>
     <li>
      <a href="#security"><span class="secno">5</span> <span class="content">Security</span></a>
@@ -1704,13 +1703,10 @@ with other modern user agents.</p>
   <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist">CookieList</a>?> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-getall" id="ref-for-dom-cookiestore-getall">getAll</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStore/getAll(name, options), CookieStore/getAll(name)" data-dfn-type="argument" data-export="" id="dom-cookiestore-getall-name-options-name"><code>name</code><a class="self-link" href="#dom-cookiestore-getall-name-options-name"></a></dfn>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions②">CookieStoreGetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/getAll(name, options), CookieStore/getAll(name)" data-dfn-type="argument" data-export="" id="dom-cookiestore-getall-name-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-getall-name-options-options"></a></dfn>);
   <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist①">CookieList</a>?> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options">getAll</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions③">CookieStoreGetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/getAll(options), CookieStore/getAll()" data-dfn-type="argument" data-export="" id="dom-cookiestore-getall-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-getall-options-options"></a></dfn>);
 
-  <span class="kt">Promise</span>&lt;<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><span class="kt">boolean</span></a>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-has" id="ref-for-dom-cookiestore-has">has</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString③"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStore/has(name, options), CookieStore/has(name)" data-dfn-type="argument" data-export="" id="dom-cookiestore-has-name-options-name"><code>name</code><a class="self-link" href="#dom-cookiestore-has-name-options-name"></a></dfn>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions④">CookieStoreGetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/has(name, options), CookieStore/has(name)" data-dfn-type="argument" data-export="" id="dom-cookiestore-has-name-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-has-name-options-options"></a></dfn>);
-  <span class="kt">Promise</span>&lt;<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><span class="kt">boolean</span></a>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-has-options" id="ref-for-dom-cookiestore-has-options">has</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑤">CookieStoreGetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/has(options), CookieStore/has()" data-dfn-type="argument" data-export="" id="dom-cookiestore-has-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-has-options-options"></a></dfn>);
-
-  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set">set</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString④"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStore/set(name, value, options), CookieStore/set(name, value)" data-dfn-type="argument" data-export="" id="dom-cookiestore-set-name-value-options-name"><code>name</code><a class="self-link" href="#dom-cookiestore-set-name-value-options-name"></a></dfn>, <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑤"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStore/set(name, value, options), CookieStore/set(name, value)" data-dfn-type="argument" data-export="" id="dom-cookiestore-set-name-value-options-value"><code>value</code><a class="self-link" href="#dom-cookiestore-set-name-value-options-value"></a></dfn>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions">CookieStoreSetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/set(name, value, options), CookieStore/set(name, value)" data-dfn-type="argument" data-export="" id="dom-cookiestore-set-name-value-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-set-name-value-options-options"></a></dfn>);
+  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set">set</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString③"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStore/set(name, value, options), CookieStore/set(name, value)" data-dfn-type="argument" data-export="" id="dom-cookiestore-set-name-value-options-name"><code>name</code><a class="self-link" href="#dom-cookiestore-set-name-value-options-name"></a></dfn>, <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString④"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStore/set(name, value, options), CookieStore/set(name, value)" data-dfn-type="argument" data-export="" id="dom-cookiestore-set-name-value-options-value"><code>value</code><a class="self-link" href="#dom-cookiestore-set-name-value-options-value"></a></dfn>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions">CookieStoreSetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/set(name, value, options), CookieStore/set(name, value)" data-dfn-type="argument" data-export="" id="dom-cookiestore-set-name-value-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-set-name-value-options-options"></a></dfn>);
   <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set①">set</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions①">CookieStoreSetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/set(options), CookieStore/set()" data-dfn-type="argument" data-export="" id="dom-cookiestore-set-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-set-options-options"></a></dfn>); // TODO: Make non-optional.
 
-  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete">delete</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑥"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStore/delete(name, options), CookieStore/delete(name)" data-dfn-type="argument" data-export="" id="dom-cookiestore-delete-name-options-name"><code>name</code><a class="self-link" href="#dom-cookiestore-delete-name-options-name"></a></dfn>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions②">CookieStoreSetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/delete(name, options), CookieStore/delete(name)" data-dfn-type="argument" data-export="" id="dom-cookiestore-delete-name-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-delete-name-options-options"></a></dfn>);
+  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete">delete</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑤"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStore/delete(name, options), CookieStore/delete(name)" data-dfn-type="argument" data-export="" id="dom-cookiestore-delete-name-options-name"><code>name</code><a class="self-link" href="#dom-cookiestore-delete-name-options-name"></a></dfn>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions②">CookieStoreSetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/delete(name, options), CookieStore/delete(name)" data-dfn-type="argument" data-export="" id="dom-cookiestore-delete-name-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-delete-name-options-options"></a></dfn>);
   <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete①">delete</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions③">CookieStoreSetOptions</a> <dfn class="nv idl-code" data-dfn-for="CookieStore/delete(options), CookieStore/delete()" data-dfn-type="argument" data-export="" id="dom-cookiestore-delete-options-options"><code>options</code><a class="self-link" href="#dom-cookiestore-delete-options-options"></a></dfn>); // TODO: Make non-optional.
 
   <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler">EventHandler</a> <a class="nv idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange">onchange</a>;
@@ -1722,28 +1718,28 @@ with other modern user agents.</p>
 };
 
 <span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-cookiestoregetoptions"><code>CookieStoreGetOptions</code></dfn> {
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑦"><span class="kt">USVString</span></a> <dfn class="nv dfn-paneled idl-code" data-dfn-for="CookieStoreGetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoregetoptions-name"><code>name</code></dfn>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑧"><span class="kt">USVString</span></a> <dfn class="nv dfn-paneled idl-code" data-dfn-for="CookieStoreGetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoregetoptions-url"><code>url</code></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑥"><span class="kt">USVString</span></a> <dfn class="nv dfn-paneled idl-code" data-dfn-for="CookieStoreGetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoregetoptions-name"><code>name</code></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑦"><span class="kt">USVString</span></a> <dfn class="nv dfn-paneled idl-code" data-dfn-for="CookieStoreGetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoregetoptions-url"><code>url</code></dfn>;
   <a class="n" data-link-type="idl-name" href="#enumdef-cookiematchtype" id="ref-for-enumdef-cookiematchtype">CookieMatchType</a> <dfn class="nv dfn-paneled idl-code" data-default="&quot;equals&quot;" data-dfn-for="CookieStoreGetOptions" data-dfn-type="dict-member" data-export="" data-type="CookieMatchType " id="dom-cookiestoregetoptions-matchtype"><code>matchType</code></dfn> = "equals";
 };
 
 <span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-cookiestoresetoptions"><code>CookieStoreSetOptions</code></dfn> {
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑨"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoresetoptions-name"><code>name</code><a class="self-link" href="#dom-cookiestoresetoptions-name"></a></dfn>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⓪"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoresetoptions-value"><code>value</code><a class="self-link" href="#dom-cookiestoresetoptions-value"></a></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑧"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoresetoptions-name"><code>name</code><a class="self-link" href="#dom-cookiestoresetoptions-name"></a></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑨"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoresetoptions-value"><code>value</code><a class="self-link" href="#dom-cookiestoresetoptions-value"></a></dfn>;
   <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp">DOMTimeStamp</a>? <dfn class="nv idl-code" data-default="null" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="DOMTimeStamp? " id="dom-cookiestoresetoptions-expires"><code>expires</code><a class="self-link" href="#dom-cookiestoresetoptions-expires"></a></dfn> = <span class="kt">null</span>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoresetoptions-domain"><code>domain</code><a class="self-link" href="#dom-cookiestoresetoptions-domain"></a></dfn>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①②"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-default="&quot;/&quot;" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoresetoptions-path"><code>path</code><a class="self-link" href="#dom-cookiestoresetoptions-path"></a></dfn> = "/";
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean②"><span class="kt">boolean</span></a>? <dfn class="nv idl-code" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="boolean? " id="dom-cookiestoresetoptions-secure"><code>secure</code><a class="self-link" href="#dom-cookiestoresetoptions-secure"></a></dfn>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean③"><span class="kt">boolean</span></a> <dfn class="nv idl-code" data-default="false" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="boolean " id="dom-cookiestoresetoptions-httponly"><code>httpOnly</code><a class="self-link" href="#dom-cookiestoresetoptions-httponly"></a></dfn> = <span class="kt">false</span>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⓪"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoresetoptions-domain"><code>domain</code><a class="self-link" href="#dom-cookiestoresetoptions-domain"></a></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-default="&quot;/&quot;" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookiestoresetoptions-path"><code>path</code><a class="self-link" href="#dom-cookiestoresetoptions-path"></a></dfn> = "/";
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><span class="kt">boolean</span></a>? <dfn class="nv idl-code" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="boolean? " id="dom-cookiestoresetoptions-secure"><code>secure</code><a class="self-link" href="#dom-cookiestoresetoptions-secure"></a></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><span class="kt">boolean</span></a> <dfn class="nv idl-code" data-default="false" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export="" data-type="boolean " id="dom-cookiestoresetoptions-httponly"><code>httpOnly</code><a class="self-link" href="#dom-cookiestoresetoptions-httponly"></a></dfn> = <span class="kt">false</span>;
 };
 
 <span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-cookielistitem"><code>CookieListItem</code></dfn> {
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①③"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookielistitem-name"><code>name</code><a class="self-link" href="#dom-cookielistitem-name"></a></dfn>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①④"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookielistitem-value"><code>value</code><a class="self-link" href="#dom-cookielistitem-value"></a></dfn>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑤"><span class="kt">USVString</span></a>? <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="USVString? " id="dom-cookielistitem-domain"><code>domain</code><a class="self-link" href="#dom-cookielistitem-domain"></a></dfn>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑥"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookielistitem-path"><code>path</code><a class="self-link" href="#dom-cookielistitem-path"></a></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①②"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookielistitem-name"><code>name</code><a class="self-link" href="#dom-cookielistitem-name"></a></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①③"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookielistitem-value"><code>value</code><a class="self-link" href="#dom-cookielistitem-value"></a></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①④"><span class="kt">USVString</span></a>? <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="USVString? " id="dom-cookielistitem-domain"><code>domain</code><a class="self-link" href="#dom-cookielistitem-domain"></a></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑤"><span class="kt">USVString</span></a> <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-cookielistitem-path"><code>path</code><a class="self-link" href="#dom-cookielistitem-path"></a></dfn>;
   <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp①">DOMTimeStamp</a>? <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="DOMTimeStamp? " id="dom-cookielistitem-expires"><code>expires</code><a class="self-link" href="#dom-cookielistitem-expires"></a></dfn>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean④"><span class="kt">boolean</span></a> <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="boolean " id="dom-cookielistitem-secure"><code>secure</code><a class="self-link" href="#dom-cookielistitem-secure"></a></dfn>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean②"><span class="kt">boolean</span></a> <dfn class="nv idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export="" data-type="boolean " id="dom-cookielistitem-secure"><code>secure</code><a class="self-link" href="#dom-cookielistitem-secure"></a></dfn>;
 };
 
 <span class="kt">typedef</span> <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem②">CookieListItem</a>> <dfn class="nv dfn-paneled idl-code" data-dfn-type="typedef" data-export="" id="typedefdef-cookielist"><code>CookieList</code></dfn>;
@@ -1922,58 +1918,7 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
       <p>Return <var>p</var>.</p>
     </ol>
    </div>
-   <h4 class="heading settled" data-level="2.1.3" id="CookieStore-has"><span class="secno">2.1.3. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-has-options" id="ref-for-dom-cookiestore-has-options①">has</a></code></span><a class="self-link" href="#CookieStore-has"></a></h4>
-   <div class="algorithm">
-     The <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="method" data-export="" data-lt="has(name, options)|has(name)" id="dom-cookiestore-has"><code>has(<var>name</var>, <var>options</var>)</code></dfn> method, when invoked, must run these steps: 
-    <ol>
-     <li data-md="">
-      <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin④">origin</a>.</p>
-     <li data-md="">
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque④">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror④">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
-     <li data-md="">
-      <p>Let <var>p</var> be a new promise.</p>
-     <li data-md="">
-      <p>Run the following steps in parallel:</p>
-      <ol>
-       <li data-md="">
-        <p>Let <var>list</var> be the results of running the steps to <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies④">query cookies</a> with <var>name</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url④">url</a></code> dictionary member (if present), and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype④">matchType</a></code> dictionary member.</p>
-       <li data-md="">
-        <p>If <var>list</var> is failure, reject <var>p</var> with a new <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror④">TypeError</a></code>.</p>
-       <li data-md="">
-        <p>If <var>list</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-is-empty" id="ref-for-list-is-empty②">is empty</a>, resolve <var>p</var> with false.</p>
-       <li data-md="">
-        <p>Otherwise, resolve <var>p</var> with true.</p>
-      </ol>
-     <li data-md="">
-      <p>Return <var>p</var>.</p>
-    </ol>
-   </div>
-   <div class="algorithm">
-     The <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="method" data-export="" data-lt="has(options)|has()" id="dom-cookiestore-has-options"><code>has(<var>options</var>)</code></dfn> method, when invoked, must run these steps: 
-    <ol>
-     <li data-md="">
-      <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin⑤">origin</a>.</p>
-     <li data-md="">
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑤">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑤">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
-     <li data-md="">
-      <p>Let <var>p</var> be a new promise.</p>
-     <li data-md="">
-      <p>Run the following steps in parallel:</p>
-      <ol>
-       <li data-md="">
-        <p>Let <var>list</var> be the results of running the steps to <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies⑤">query cookies</a>\ with <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name②">name</a></code> member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑤">url</a></code> dictionary member (if present), and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype⑤">matchType</a></code> dictionary member.</p>
-       <li data-md="">
-        <p>If <var>list</var> is failure, reject <var>p</var> with a new <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑤">TypeError</a></code>.</p>
-       <li data-md="">
-        <p>If <var>list</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-is-empty" id="ref-for-list-is-empty③">is empty</a>, resolve <var>p</var> with false.</p>
-       <li data-md="">
-        <p>Otherwise, resolve <var>p</var> with true.</p>
-      </ol>
-     <li data-md="">
-      <p>Return <var>p</var>.</p>
-    </ol>
-   </div>
-   <h4 class="heading settled" data-level="2.1.4" id="CookieStore-set"><span class="secno">2.1.4. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set②">set</a></code></span><a class="self-link" href="#CookieStore-set"></a></h4>
+   <h4 class="heading settled" data-level="2.1.3" id="CookieStore-set"><span class="secno">2.1.3. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set②">set</a></code></span><a class="self-link" href="#CookieStore-set"></a></h4>
    <div class="note" role="note">
     <p>You can set a cookie using these methods.  For example:</p>
     <div class="example" id="example-3dcc29df">
@@ -2092,9 +2037,9 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
      The <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="method" data-export="" data-lt="set(name, value, options)|set(name, value)" id="dom-cookiestore-set"><code>set(<var>name</var>, <var>value</var>, <var>options</var>)</code></dfn> method, when invoked, must run these steps: 
     <ol>
      <li data-md="">
-      <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin⑥">origin</a>.</p>
+      <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin④">origin</a>.</p>
      <li data-md="">
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑥">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑥">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque④">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror④">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
      <li data-md="">
       <p>Let <var>p</var> be a new promise.</p>
      <li data-md="">
@@ -2103,7 +2048,7 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
        <li data-md="">
         <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie①">set a cookie</a> with ... <var>name</var> ... <var>value</var> ... <var>options</var> ...</p>
        <li data-md="">
-        <p>If <var>r</var> is failure, reject <var>p</var> with a new <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑥">TypeError</a></code>.</p>
+        <p>If <var>r</var> is failure, reject <var>p</var> with a new <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror④">TypeError</a></code>.</p>
        <li data-md="">
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2113,7 +2058,7 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
    </div>
    <aside class="issue" id="issue-94c85386"><a class="self-link" href="#issue-94c85386"></a> Flesh out call to <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie②">set a cookie</a> </aside>
    <aside class="issue" id="issue-0f3fc363"><a class="self-link" href="#issue-0f3fc363"></a> Define other <code>set</code> overload. </aside>
-   <h4 class="heading settled" data-level="2.1.5" id="CookieStore-delete"><span class="secno">2.1.5. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete②">delete</a></code></span><a class="self-link" href="#CookieStore-delete"></a></h4>
+   <h4 class="heading settled" data-level="2.1.4" id="CookieStore-delete"><span class="secno">2.1.4. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete②">delete</a></code></span><a class="self-link" href="#CookieStore-delete"></a></h4>
    <div class="note" role="note">
     <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="clearing">Clearing</dfn> (deleting) a cookie is accomplished by expiration, that is by replacing it with an equivalent-scope cookie with
 an expiration in the past:</p>
@@ -2152,9 +2097,9 @@ an expiration in the past:</p>
      The <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="method" data-export="" data-lt="delete(name, options)|delete(name)" id="dom-cookiestore-delete"><code>delete(<var>name</var>, <var>options</var>)</code></dfn> method, when invoked, must run these steps: 
     <ol>
      <li data-md="">
-      <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin⑦">origin</a>.</p>
+      <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin⑤">origin</a>.</p>
      <li data-md="">
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑦">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑦">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑦">DOMException</a></code>.</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑤">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑤">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
      <li data-md="">
       <p>Let <var>p</var> be a new promise.</p>
      <li data-md="">
@@ -2163,7 +2108,7 @@ an expiration in the past:</p>
        <li data-md="">
         <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#delete-a-cookie" id="ref-for-delete-a-cookie">delete a cookie</a> with ... <var>name</var> ... <var>value</var> ... <var>options</var> ...</p>
        <li data-md="">
-        <p>If <var>r</var> is failure, reject <var>p</var> with a new <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑦">TypeError</a></code>.</p>
+        <p>If <var>r</var> is failure, reject <var>p</var> with a new <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑤">TypeError</a></code>.</p>
        <li data-md="">
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2211,7 +2156,7 @@ an expiration in the past:</p>
    <h2 class="heading settled" data-level="4" id="algorithms"><span class="secno">4. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="query-cookies-algorithm"><span class="secno">4.1. </span><span class="content">Query Cookies</span><a class="self-link" href="#query-cookies-algorithm"></a></h3>
    <div class="algorithm">
-    <div class="issue" id="issue-07dd0bec"><a class="self-link" href="#issue-07dd0bec"></a>Specify the <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies⑥">query cookies</a> algorithm.</div>
+    <div class="issue" id="issue-07dd0bec"><a class="self-link" href="#issue-07dd0bec"></a>Specify the <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies④">query cookies</a> algorithm.</div>
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="query-cookies">query cookies</dfn> with <var>name</var>, optional <var>url</var>, and <var>matchType</var>, run the following steps:</p>
     <ol>
      <li data-md="">
@@ -2236,7 +2181,7 @@ an expiration in the past:</p>
       <p>Return <var>list</var>.</p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="4.2" id="set-cookie-algorithm"><span class="secno">4.2. </span><span class="content">Set A Cookie</span><a class="self-link" href="#set-cookie-algorithm"></a></h3>
+   <h3 class="heading settled" data-level="4.2" id="set-cookie-algorithm"><span class="secno">4.2. </span><span class="content">Set a Cookie</span><a class="self-link" href="#set-cookie-algorithm"></a></h3>
    <div class="algorithm">
     <aside class="issue" id="issue-c16e2b5d"><a class="self-link" href="#issue-c16e2b5d"></a>Specify the <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie③">set a cookie</a> algorithm.</aside>
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="set-a-cookie">set a cookie</dfn> with <var>name</var> ..., run the following steps:</p>
@@ -2249,7 +2194,7 @@ an expiration in the past:</p>
       <p>... <var>name</var></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="4.3" id="delete-cookie-algorithm"><span class="secno">4.3. </span><span class="content">Delete A Cookie</span><a class="self-link" href="#delete-cookie-algorithm"></a></h3>
+   <h3 class="heading settled" data-level="4.3" id="delete-cookie-algorithm"><span class="secno">4.3. </span><span class="content">Delete a Cookie</span><a class="self-link" href="#delete-cookie-algorithm"></a></h3>
    <div class="algorithm">
     <aside class="issue" id="issue-08bd888c"><a class="self-link" href="#issue-08bd888c"></a>Specify the <a data-link-type="dfn" href="#delete-a-cookie" id="ref-for-delete-a-cookie②">delete a cookie</a> algorithm.</aside>
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="delete-a-cookie">delete a cookie</dfn> with <var>name</var> ..., run the following steps:</p>
@@ -2459,7 +2404,7 @@ an expiration in the past:</p>
      <li><a href="#dom-cookiechangeevent-changed">attribute for CookieChangeEvent</a><span>, in §2.3.1</span>
      <li><a href="#dom-cookiechangeeventinit-changed">dict-member for CookieChangeEventInit</a><span>, in §2.3.1</span>
     </ul>
-   <li><a href="#clearing">Clearing</a><span>, in §2.1.5</span>
+   <li><a href="#clearing">Clearing</a><span>, in §2.1.4</span>
    <li><a href="#cookiechangeevent">CookieChangeEvent</a><span>, in §2.3.1</span>
    <li><a href="#dictdef-cookiechangeeventinit">CookieChangeEventInit</a><span>, in §2.3.1</span>
    <li><a href="#dom-cookiechangeevent-cookiechangeevent">CookieChangeEvent(type)</a><span>, in §2.3.1</span>
@@ -2483,8 +2428,8 @@ an expiration in the past:</p>
      <li><a href="#dom-cookiechangeevent-deleted">attribute for CookieChangeEvent</a><span>, in §2.3.1</span>
      <li><a href="#dom-cookiechangeeventinit-deleted">dict-member for CookieChangeEventInit</a><span>, in §2.3.1</span>
     </ul>
-   <li><a href="#dom-cookiestore-delete">delete(name)</a><span>, in §2.1.5</span>
-   <li><a href="#dom-cookiestore-delete">delete(name, options)</a><span>, in §2.1.5</span>
+   <li><a href="#dom-cookiestore-delete">delete(name)</a><span>, in §2.1.4</span>
+   <li><a href="#dom-cookiestore-delete">delete(name, options)</a><span>, in §2.1.4</span>
    <li>
     domain
     <ul>
@@ -2506,10 +2451,6 @@ an expiration in the past:</p>
    <li><a href="#dom-cookiestore-get">get(name)</a><span>, in §2.1.1</span>
    <li><a href="#dom-cookiestore-get">get(name, options)</a><span>, in §2.1.1</span>
    <li><a href="#dom-cookiestore-get-options">get(options)</a><span>, in §2.1.1</span>
-   <li><a href="#dom-cookiestore-has-options">has()</a><span>, in §2.1.3</span>
-   <li><a href="#dom-cookiestore-has">has(name)</a><span>, in §2.1.3</span>
-   <li><a href="#dom-cookiestore-has">has(name, options)</a><span>, in §2.1.3</span>
-   <li><a href="#dom-cookiestore-has-options">has(options)</a><span>, in §2.1.3</span>
    <li><a href="#dom-cookiestoresetoptions-httponly">httpOnly</a><span>, in §2</span>
    <li><a href="#dom-cookiestoregetoptions-matchtype">matchType</a><span>, in §2</span>
    <li>
@@ -2536,8 +2477,8 @@ an expiration in the past:</p>
      <li><a href="#dom-cookiestoresetoptions-secure">dict-member for CookieStoreSetOptions</a><span>, in §2</span>
     </ul>
    <li><a href="#set-a-cookie">set a cookie</a><span>, in §4.2</span>
-   <li><a href="#dom-cookiestore-set">set(name, value)</a><span>, in §2.1.4</span>
-   <li><a href="#dom-cookiestore-set">set(name, value, options)</a><span>, in §2.1.4</span>
+   <li><a href="#dom-cookiestore-set">set(name, value)</a><span>, in §2.1.3</span>
+   <li><a href="#dom-cookiestore-set">set(name, value, options)</a><span>, in §2.1.3</span>
    <li><a href="#dom-cookiematchtype-starts-with">"starts-with"</a><span>, in §2</span>
    <li><a href="#dom-cookiestoregetoptions-url">url</a><span>, in §2</span>
    <li>
@@ -2622,19 +2563,16 @@ an expiration in the past:</p>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def">[<a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed②">Exposed</a>=(<span class="n">ServiceWorker</span>,<span class="n">Window</span>)]
 <span class="kt">interface</span> <a class="nv" href="#cookiestore"><code>CookieStore</code></a> : <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#eventtarget" id="ref-for-eventtarget①">EventTarget</a> {
-  <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem③">CookieListItem</a>?> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get②">get</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑦"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-get-name-options-name"><code>name</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑥">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-get-name-options-options"><code>options</code></a>);
+  <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem③">CookieListItem</a>?> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get②">get</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑥"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-get-name-options-name"><code>name</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions④">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-get-name-options-options"><code>options</code></a>);
   <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem①①">CookieListItem</a>?> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options③">get</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions①①">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-get-options-options"><code>options</code></a>);
 
   <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist⑥">CookieList</a>?> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-getall" id="ref-for-dom-cookiestore-getall②">getAll</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-getall-name-options-name"><code>name</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions②①">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-getall-name-options-options"><code>options</code></a>);
   <span class="kt">Promise</span>&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist①①">CookieList</a>?> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options③">getAll</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions③①">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-getall-options-options"><code>options</code></a>);
 
-  <span class="kt">Promise</span>&lt;<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean⑤"><span class="kt">boolean</span></a>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-has" id="ref-for-dom-cookiestore-has①">has</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString③①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-has-name-options-name"><code>name</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions④①">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-has-name-options-options"><code>options</code></a>);
-  <span class="kt">Promise</span>&lt;<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①①"><span class="kt">boolean</span></a>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-has-options" id="ref-for-dom-cookiestore-has-options②">has</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions⑤①">CookieStoreGetOptions</a> <a class="nv" href="#dom-cookiestore-has-options-options"><code>options</code></a>);
-
-  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set③">set</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString④①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-set-name-value-options-name"><code>name</code></a>, <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑤①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-set-name-value-options-value"><code>value</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions④">CookieStoreSetOptions</a> <a class="nv" href="#dom-cookiestore-set-name-value-options-options"><code>options</code></a>);
+  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set③">set</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString③①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-set-name-value-options-name"><code>name</code></a>, <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString④①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-set-name-value-options-value"><code>value</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions④">CookieStoreSetOptions</a> <a class="nv" href="#dom-cookiestore-set-name-value-options-options"><code>options</code></a>);
   <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set①①">set</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions①①">CookieStoreSetOptions</a> <a class="nv" href="#dom-cookiestore-set-options-options"><code>options</code></a>); // TODO: Make non-optional.
 
-  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete③">delete</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑥①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-delete-name-options-name"><code>name</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions②①">CookieStoreSetOptions</a> <a class="nv" href="#dom-cookiestore-delete-name-options-options"><code>options</code></a>);
+  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete③">delete</a>(<a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑤①"><span class="kt">USVString</span></a> <a class="nv" href="#dom-cookiestore-delete-name-options-name"><code>name</code></a>, <span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions②①">CookieStoreSetOptions</a> <a class="nv" href="#dom-cookiestore-delete-name-options-options"><code>options</code></a>);
   <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete①①">delete</a>(<span class="kt">optional</span> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions③①">CookieStoreSetOptions</a> <a class="nv" href="#dom-cookiestore-delete-options-options"><code>options</code></a>); // TODO: Make non-optional.
 
   <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler③">EventHandler</a> <a class="nv idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange②">onchange</a>;
@@ -2646,28 +2584,28 @@ an expiration in the past:</p>
 };
 
 <span class="kt">dictionary</span> <a class="nv" href="#dictdef-cookiestoregetoptions"><code>CookieStoreGetOptions</code></a> {
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑦①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoregetoptions-name"><code>name</code></a>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑧①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoregetoptions-url"><code>url</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑥①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoregetoptions-name"><code>name</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑦①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoregetoptions-url"><code>url</code></a>;
   <a class="n" data-link-type="idl-name" href="#enumdef-cookiematchtype" id="ref-for-enumdef-cookiematchtype①">CookieMatchType</a> <a class="nv" data-default="&quot;equals&quot;" data-type="CookieMatchType " href="#dom-cookiestoregetoptions-matchtype"><code>matchType</code></a> = "equals";
 };
 
 <span class="kt">dictionary</span> <a class="nv" href="#dictdef-cookiestoresetoptions"><code>CookieStoreSetOptions</code></a> {
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑨①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoresetoptions-name"><code>name</code></a>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⓪①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoresetoptions-value"><code>value</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑧①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoresetoptions-name"><code>name</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑨①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoresetoptions-value"><code>value</code></a>;
   <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp②">DOMTimeStamp</a>? <a class="nv" data-default="null" data-type="DOMTimeStamp? " href="#dom-cookiestoresetoptions-expires"><code>expires</code></a> = <span class="kt">null</span>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoresetoptions-domain"><code>domain</code></a>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①②①"><span class="kt">USVString</span></a> <a class="nv" data-default="&quot;/&quot;" data-type="USVString " href="#dom-cookiestoresetoptions-path"><code>path</code></a> = "/";
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean②①"><span class="kt">boolean</span></a>? <a class="nv" data-type="boolean? " href="#dom-cookiestoresetoptions-secure"><code>secure</code></a>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean③①"><span class="kt">boolean</span></a> <a class="nv" data-default="false" data-type="boolean " href="#dom-cookiestoresetoptions-httponly"><code>httpOnly</code></a> = <span class="kt">false</span>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⓪①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookiestoresetoptions-domain"><code>domain</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①①"><span class="kt">USVString</span></a> <a class="nv" data-default="&quot;/&quot;" data-type="USVString " href="#dom-cookiestoresetoptions-path"><code>path</code></a> = "/";
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean③"><span class="kt">boolean</span></a>? <a class="nv" data-type="boolean? " href="#dom-cookiestoresetoptions-secure"><code>secure</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①①"><span class="kt">boolean</span></a> <a class="nv" data-default="false" data-type="boolean " href="#dom-cookiestoresetoptions-httponly"><code>httpOnly</code></a> = <span class="kt">false</span>;
 };
 
 <span class="kt">dictionary</span> <a class="nv" href="#dictdef-cookielistitem"><code>CookieListItem</code></a> {
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①③①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookielistitem-name"><code>name</code></a>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①④①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookielistitem-value"><code>value</code></a>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑤①"><span class="kt">USVString</span></a>? <a class="nv" data-type="USVString? " href="#dom-cookielistitem-domain"><code>domain</code></a>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑥①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookielistitem-path"><code>path</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①②①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookielistitem-name"><code>name</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①③①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookielistitem-value"><code>value</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①④①"><span class="kt">USVString</span></a>? <a class="nv" data-type="USVString? " href="#dom-cookielistitem-domain"><code>domain</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑤①"><span class="kt">USVString</span></a> <a class="nv" data-type="USVString " href="#dom-cookielistitem-path"><code>path</code></a>;
   <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp①①">DOMTimeStamp</a>? <a class="nv" data-type="DOMTimeStamp? " href="#dom-cookielistitem-expires"><code>expires</code></a>;
-  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean④①"><span class="kt">boolean</span></a> <a class="nv" data-type="boolean " href="#dom-cookielistitem-secure"><code>secure</code></a>;
+  <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean②①"><span class="kt">boolean</span></a> <a class="nv" data-type="boolean " href="#dom-cookielistitem-secure"><code>secure</code></a>;
 };
 
 <span class="kt">typedef</span> <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem②①">CookieListItem</a>> <a class="nv" href="#typedefdef-cookielist"><code>CookieList</code></a>;
@@ -2729,7 +2667,7 @@ an expiration in the past:</p>
   <aside class="dfn-panel" data-for="dictdef-cookiestoregetoptions">
    <b><a href="#dictdef-cookiestoregetoptions">#dictdef-cookiestoregetoptions</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-cookiestoregetoptions">2. The CookieStore Interface</a> <a href="#ref-for-dictdef-cookiestoregetoptions①">(2)</a> <a href="#ref-for-dictdef-cookiestoregetoptions②">(3)</a> <a href="#ref-for-dictdef-cookiestoregetoptions③">(4)</a> <a href="#ref-for-dictdef-cookiestoregetoptions④">(5)</a> <a href="#ref-for-dictdef-cookiestoregetoptions⑤">(6)</a>
+    <li><a href="#ref-for-dictdef-cookiestoregetoptions">2. The CookieStore Interface</a> <a href="#ref-for-dictdef-cookiestoregetoptions①">(2)</a> <a href="#ref-for-dictdef-cookiestoregetoptions②">(3)</a> <a href="#ref-for-dictdef-cookiestoregetoptions③">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-name">
@@ -2737,7 +2675,6 @@ an expiration in the past:</p>
    <ul>
     <li><a href="#ref-for-dom-cookiestoregetoptions-name">2.1.1. get</a>
     <li><a href="#ref-for-dom-cookiestoregetoptions-name①">2.1.2. getAll</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-name②">2.1.3. has</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-url">
@@ -2745,7 +2682,6 @@ an expiration in the past:</p>
    <ul>
     <li><a href="#ref-for-dom-cookiestoregetoptions-url">2.1.1. get</a> <a href="#ref-for-dom-cookiestoregetoptions-url①">(2)</a>
     <li><a href="#ref-for-dom-cookiestoregetoptions-url②">2.1.2. getAll</a> <a href="#ref-for-dom-cookiestoregetoptions-url③">(2)</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-url④">2.1.3. has</a> <a href="#ref-for-dom-cookiestoregetoptions-url⑤">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-matchtype">
@@ -2753,7 +2689,6 @@ an expiration in the past:</p>
    <ul>
     <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype">2.1.1. get</a> <a href="#ref-for-dom-cookiestoregetoptions-matchtype①">(2)</a>
     <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype②">2.1.2. getAll</a> <a href="#ref-for-dom-cookiestoregetoptions-matchtype③">(2)</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype④">2.1.3. has</a> <a href="#ref-for-dom-cookiestoregetoptions-matchtype⑤">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiestoresetoptions">
@@ -2809,24 +2744,11 @@ an expiration in the past:</p>
     <li><a href="#ref-for-dom-cookiestore-getall-options①">2.1.2. getAll</a> <a href="#ref-for-dom-cookiestore-getall-options②">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestore-has">
-   <b><a href="#dom-cookiestore-has">#dom-cookiestore-has</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cookiestore-has">2. The CookieStore Interface</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestore-has-options">
-   <b><a href="#dom-cookiestore-has-options">#dom-cookiestore-has-options</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cookiestore-has-options">2. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-has-options①">2.1.3. has</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-set">
    <b><a href="#dom-cookiestore-set">#dom-cookiestore-set</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-set">2. The CookieStore Interface</a> <a href="#ref-for-dom-cookiestore-set①">(2)</a>
-    <li><a href="#ref-for-dom-cookiestore-set②">2.1.4. set</a>
+    <li><a href="#ref-for-dom-cookiestore-set②">2.1.3. set</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="clearing">
@@ -2839,7 +2761,7 @@ an expiration in the past:</p>
    <b><a href="#dom-cookiestore-delete">#dom-cookiestore-delete</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-delete">2. The CookieStore Interface</a> <a href="#ref-for-dom-cookiestore-delete①">(2)</a>
-    <li><a href="#ref-for-dom-cookiestore-delete②">2.1.5. delete</a>
+    <li><a href="#ref-for-dom-cookiestore-delete②">2.1.4. delete</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-onchange">
@@ -2879,23 +2801,22 @@ an expiration in the past:</p>
    <ul>
     <li><a href="#ref-for-query-cookies">2.1.1. get</a> <a href="#ref-for-query-cookies①">(2)</a>
     <li><a href="#ref-for-query-cookies②">2.1.2. getAll</a> <a href="#ref-for-query-cookies③">(2)</a>
-    <li><a href="#ref-for-query-cookies④">2.1.3. has</a> <a href="#ref-for-query-cookies⑤">(2)</a>
-    <li><a href="#ref-for-query-cookies⑥">4.1. Query Cookies</a>
+    <li><a href="#ref-for-query-cookies④">4.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="set-a-cookie">
    <b><a href="#set-a-cookie">#set-a-cookie</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-set-a-cookie">1.2. Summary</a>
-    <li><a href="#ref-for-set-a-cookie①">2.1.4. set</a> <a href="#ref-for-set-a-cookie②">(2)</a>
-    <li><a href="#ref-for-set-a-cookie③">4.2. Set A Cookie</a>
+    <li><a href="#ref-for-set-a-cookie①">2.1.3. set</a> <a href="#ref-for-set-a-cookie②">(2)</a>
+    <li><a href="#ref-for-set-a-cookie③">4.2. Set a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="delete-a-cookie">
    <b><a href="#delete-a-cookie">#delete-a-cookie</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-delete-a-cookie">2.1.5. delete</a> <a href="#ref-for-delete-a-cookie①">(2)</a>
-    <li><a href="#ref-for-delete-a-cookie②">4.3. Delete A Cookie</a>
+    <li><a href="#ref-for-delete-a-cookie">2.1.4. delete</a> <a href="#ref-for-delete-a-cookie①">(2)</a>
+    <li><a href="#ref-for-delete-a-cookie②">4.3. Delete a Cookie</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
