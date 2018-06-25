@@ -54,7 +54,7 @@ try {
 try {
   const cookies = await cookieStore.getAll({
     name: 'session_',
-    matchType: 'startsWith',
+    matchType: 'starts-with',
   });
   for (const cookie of cookies)
     console.log(`Result: ${cookie.name} = ${cookie.value}`);
@@ -197,7 +197,7 @@ self.addEventListener('install', (event) => {
   event.waitFor(async () => {
     await cookieStore.subscribeToChanges([{
       name: 'session',  // Get change events for session-related cookies.
-      matchType: 'startsWith',  // Matches session_id, session-id, etc.
+      matchType: 'starts-with',  // Matches session_id, session-id, etc.
     }]);
   });
 });
@@ -432,7 +432,7 @@ browsers handle cookies.
 The
 [Google+ API](https://developers.google.com/+/web/api/javascript#gapiinteractivepost_interactive_posts)
 is a prominent library that identifies cookies based on a name prefix, and
-therefore needs the `matchType: 'startsWith'` option in the query API.
+therefore needs the `matchType: 'starts-with'` option in the query API.
 
 The [chrome.cookies](https://developers.chrome.com/extensions/cookies)
 API (and the [WebExtensions adaptation of the
