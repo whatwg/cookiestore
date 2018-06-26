@@ -16,6 +16,7 @@ Abstract: An asynchronous Javascript cookies API for documents and workers
 
 <pre class=link-defaults>
 spec:infra; type:dfn; text:list
+spec:html; type:dfn; for:environment settings object; text:global object
 </pre>
 
 <style>
@@ -224,6 +225,12 @@ interface CookieStore : EventTarget {
 
   Promise<void> delete(USVString name);
   Promise<void> delete(CookieStoreDeleteOptions options);
+
+  [Exposed=ServiceWorker]
+  Promise<void> subscribeToChanges(sequence<CookieStoreGetOptions> subscriptions);
+
+  [Exposed=ServiceWorker]
+  Promise<sequence<CookieStoreGetOptions>> getChangeSubscriptions();
 
   attribute EventHandler onchange;
 };
@@ -723,6 +730,51 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, mu
 </div>
 
 
+<!-- ============================================================ -->
+### {{CookieStore/subscribeToChanges()|subscribeToChanges}} ### {#CookieStore-subscribeToChanges}
+<!-- ============================================================ -->
+
+<div class=note>
+
+  <dl class=domintro>
+    <dt>await cookieStore .
+        {{CookieStore/subscribeToChanges()|subscribeToChanges}}(<var>subscriptions</var>)</dt>
+    <dd>
+      This method can only be called during a [=Service Worker=] install phase.
+  </dl>
+
+
+</div>
+
+
+<div class=algorithm>
+The <dfn method for=CookieStore>subscribeToChanges(|subscriptions|)</dfn> method, when invoked, must run these steps:
+
+
+1. Let |serviceWorker| be the [=context object=]'s [=global object=]'s [=service worker=].
+1. If |serviceWorker|'s [=service worker/state=] is not *installing*,
+    then return a new promise rejected with a {{TypeError}}.
+1. ...
+1. ... |subscriptions| ...
+1. ...
+
+<aside class=issue>Specify {{CookieStore/subscribeToChanges()}}</aside>
+
+</div>
+
+<!-- ============================================================ -->
+### {{CookieStore/getChangeSubscriptions()|getChangeSubscriptions}} ### {#CookieStore-getChangeSubscriptions}
+<!-- ============================================================ -->
+
+<div class=algorithm>
+The <dfn method for=CookieStore>getChangeSubscriptions()</dfn> method, when invoked, must run these steps:
+
+1. ...
+1. ...
+1. ...
+
+<aside class=issue>Specify {{CookieStore/getChangeSubscriptions()}}</aside>
+</div>
 
 <!-- ============================================================ -->
 ## Attributes ## {#CookieStore-attributes}
