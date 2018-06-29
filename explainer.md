@@ -23,6 +23,84 @@ cookies are handled at the network layer.
 
 The proposal is also known as the *Async Cookies API*.
 
+## Use Cases
+
+At a minimum, the API aims to address the following use cases.
+
+* Replace synchronous `document.cookie` polling
+* Replace synchronous `document.cookie` writes
+* React to session cookie changes in a service worker (i.e., detect logout)
+
+### Replacing synchronous polling
+
+At a minimum, async polling reduces jank on the the main thread.
+
+```javascript
+function delayedPromise(int duration_ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, duration_ms);
+  });
+}
+
+let oldValue = null;
+async function poll(cookie_name, handle_cookie_change) {
+  while (true) {
+    const cookie = await cookieStore.get(cookie_name);
+    const newValue = cookie ? cookie.value : null;
+    if (newValue !== oldValue) {
+      handle_cookie_change(cookie_name, newValue);
+    }
+  }
+}
+```
+
+Cookie change events can offer a more natural API for the same problem.
+
+```javascript
+function poll(cookie_name, handle_cookie_change) {
+  cookieStore.addEventListener('change', (event) => {
+    for (const cookie of event.changed) {
+      if (cookie.name === cookie_name)
+        handle_cookie_change(cookie.value);
+    }
+    for (const cookie of event.deleted) {
+      if (cookie.name === cookie_name)
+        handle_cookie_change(null);
+    }
+  });
+}
+```
+
+### Replacing synchronous writes to document.cookie
+
+```javascript
+const maxDate = new Date(8640000000000000);
+await cookieStore.set({ name: 'opt_out', value: '1', expires: maxDate });
+```
+
+### Reacting to session cookie changes in a service worker
+
+```javascript
+self.addEventListener('install', (event) => {
+  event.waitFor(async () => {
+    await cookieStore.subscribeToChanges([{
+      name: 'session',  // Get change events for session-related cookies.
+      matchType: 'starts-with',  // Matches session_id, session-id, etc.
+    }]);
+  });
+});
+
+self.addEventListener('cookiechange', (event) => {
+  for (const cookie of event.changed) {
+    if (cookie.name === cookie_name)
+      handle_session_change(cookie.name, cookie.value);
+  }
+  for (const cookie of event.deleted) {
+    if (cookie.name === cookie_name)
+      handle_session_change(cookie.name, null);
+  }
+});
+```
 
 ## The Query API
 
