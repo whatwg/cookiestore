@@ -25,36 +25,81 @@ The proposal is also known as the *Async Cookies API*.
 
 ## Use Cases
 
-At a minimum, the API aims to address the following use cases.
+Cookies are used most often for authentication. In this case, the relevant
+cookies are generally called session cookies, and the state embedded in them
+tends to be called session state. Documents generally update the current page UI
+in response to changes in the session state. Service workers also need to react
+to session state changes, to clean up private cached data.
 
-* Replace synchronous `document.cookie` polling
-* Replace synchronous `document.cookie` writes
-* React to session cookie changes in a service worker (i.e., detect logout)
+Cookies have also found a niche in storing user decisions to opt out of tracking
+by ad networks, and receive less personalized ads.
 
-### Replacing synchronous polling
+Separetly, from a conceptual angle, a service worker is intended to be an
+HTTP proxy for the pages under its scope. By this principle, service workers
+must be able to read and modify the cookies accessible to pages under their
+scopes.
 
-At a minimum, async polling reduces jank on the the main thread.
+### Reacting to session state changes
+
+While the previous samples are mostly aimed at updating a
+page's UI to reflect
+
+
+The following code illustrates synchronous polling via `document.cookie`. The
+code periodically induces jank, as `document.cookie` is a synchronous call
+that blocks the main thread on disk I/O, if the cookie value isn't cached in
+memory, and/or on IPC, if the cookie cache does not reside in the same
+process as the Document execution context.
 
 ```javascript
-function delayedPromise(int duration_ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, duration_ms);
-  });
+function decode_document_cookie(value) {
+  // Simplified version of the code at https://github.com/js-cookie/js-cookie.
+  const cookie_strings = value.split('; ');
+  const cookies = {};
+  for (const cookie_string of cookie_strings) {
+    const index = cookie_string.indexOf('=');
+    const name = cookie_string.substring(0, index);
+    const encoded_value = cookie_string.substring(index + 1);
+    cookies[name] = decodeURIComponent(encoded_value);
+  }
+  return cookies;
 }
 
-let oldValue = null;
-async function poll(cookie_name, handle_cookie_change) {
+let old_value = null;
+function poll(duration_ms, cookie_name, handle_cookie_change) {
+  const cookies = decode_document_cookie(document.cookie);
+  const newValue = (cookie_name in cookies) ? cookies[cookie_name] : null;
+  if (old_value !== new_value) {
+    handle_cookie_change(new_value);
+    old_value = new_value;
+  }
+  setTimeout(() => {
+    poll(duration_ms, cookie_name, handle_cookie_change);
+  }, duration_ms);
+}
+```
+
+The following code snippet uses the Cookie Store API instead of
+`document.cookie`. The Cookie Store API doesn't block the main thread, so this
+version does not introduce jank.
+
+```javascript
+let old_value = null;
+async function poll(duration_ms, cookie_name, handle_cookie_change) {
   while (true) {
     const cookie = await cookieStore.get(cookie_name);
-    const newValue = cookie ? cookie.value : null;
-    if (newValue !== oldValue) {
-      handle_cookie_change(cookie_name, newValue);
+    const new_value = cookie ? cookie.value : null;
+    if (new_value !== old_value) {
+      handle_cookie_change(cookie_name, new_value);
+      old_value = new_value;
     }
+    await delayedPromise(duration_ms);
   }
 }
 ```
 
-Cookie change events can offer a more natural API for the same problem.
+The following code snippet uses change events in the Cookie Store API. This has
+less overhead than asynchronous polling when the session cookies change rarely.
 
 ```javascript
 function poll(cookie_name, handle_cookie_change) {
@@ -71,34 +116,59 @@ function poll(cookie_name, handle_cookie_change) {
 }
 ```
 
-### Replacing synchronous writes to document.cookie
+Last, the following code snippet uses the service worker change events in the
+Cookie Store API. The change handler will be executed even if the site isn't
+currently opened in a browser tab / window.
 
 ```javascript
-const maxDate = new Date(8640000000000000);
-await cookieStore.set({ name: 'opt_out', value: '1', expires: maxDate });
-```
+const kCookieName = 'session';
 
-### Reacting to session cookie changes in a service worker
-
-```javascript
 self.addEventListener('install', (event) => {
   event.waitFor(async () => {
-    await cookieStore.subscribeToChanges([{
-      name: 'session',  // Get change events for session-related cookies.
-      matchType: 'starts-with',  // Matches session_id, session-id, etc.
-    }]);
+    await cookieStore.subscribeToChanges([{ name: kCookieName }]);
   });
 });
 
 self.addEventListener('cookiechange', (event) => {
   for (const cookie of event.changed) {
-    if (cookie.name === cookie_name)
+    if (cookie.name === kCookieName)
       handle_session_change(cookie.name, cookie.value);
   }
   for (const cookie of event.deleted) {
-    if (cookie.name === cookie_name)
+    if (cookie.name === kCookieName)
       handle_session_change(cookie.name, null);
   }
+});
+```
+
+### Opting out of tracking
+
+The following code snippet illustrates a solution based on the synchronous
+`document.cookie` settter. This induces jank, as the setter must block the
+main thread until the cookie change is propagated to the network stack,
+because Web developers expect that the cookie change would be reflected in a
+`fetch` API call following the assignment to `document.cookie`.
+
+```javascript
+document.getElementById('opt-out-button').addEventListener('click', () => {
+  document.cookie = 'opt_out=1; Expires=Wed, 1 Jan 2025 00:00:00 GMT; Secure';
+});
+document.getElementById('opt-in-button').addEventListener('click', () => {
+  // Cookies are deleted by setting their expiration dates in the past.
+  document.cookie = 'opt_out=0; Expires=Thu, 1 Jan 1970 00:00:00 GMT; Secure';
+});
+```
+
+The following code snippet uses the Cookie Store API instead, and does not jank
+the main thread.
+
+```javascript
+document.getElementById('opt-out-button').addEventListener('click', () => {
+  await cookieStore.set({ name: 'opt_out', value: '1',
+                          expires: new Date('Wed, 1 Jan 2025 00:00:00 GMT') });
+});
+document.getElementById('opt-in-button').addEventListener('click', () => {
+  await cookieStore.delete({ name: 'opt_out' });
 });
 ```
 
