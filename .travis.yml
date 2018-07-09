@@ -8,3 +8,11 @@ install:
   - git clone https://github.com/tabatkins/bikeshed.git
   - pip install --editable $PWD/bikeshed
   - bikeshed update
+ 
+script:
+  - bash ./deploy.sh
+
+env:
+  global:
+  - ENCRYPTION_LABEL: "04bc118c371a"
+  - COMMIT_AUTHOR_EMAIL: "cookie-store@github.com"
