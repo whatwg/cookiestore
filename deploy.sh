@@ -43,10 +43,6 @@ echo PWD = $PWD
 # Run our compile script; quit if it fails.
 doCompile || exit 1
 
-# Copy the things we need to the out directory (creating out/images if
-# needed).
-cp index.html out
-
 # Now let's go have some fun with the cloned repo
 cd out
 git config user.name "Travis CI"
