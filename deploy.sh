@@ -46,10 +46,6 @@ doCompile || exit 1
 # Copy the things we need to the out directory (creating out/images if
 # needed).
 cp index.html out
-if [ ! -d out/images ]; then
-  mkdir out/images
-fi
-cp images/*.png out/images
 
 # Now let's go have some fun with the cloned repo
 cd out
