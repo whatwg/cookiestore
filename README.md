@@ -1,5 +1,7 @@
 # Cookie Store API
 
+[![Build Status](https://travis-ci.org/WICG/cookie-store.svg?branch=gh-pages)](https://travis-ci.org/WICG/cookie-store)
+
 This repository documents an API for accessing HTTP cookies asynchronously from
 Document and Service Worker global contexts.
 
