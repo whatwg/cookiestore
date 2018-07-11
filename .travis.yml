@@ -16,3 +16,8 @@ env:
   global:
   - ENCRYPTION_LABEL: "04bc118c371a"
   - COMMIT_AUTHOR_EMAIL: "storage-dev@chromium.org"
+
+branches:
+  # Don't do this on the gh-pages branch.
+  except:
+  - gh-pages
