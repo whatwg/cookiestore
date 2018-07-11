@@ -1,5 +1,18 @@
-# Build all branches, *including* gh-pages:
-branches:
-  only:
-  - gh-pages
-  - /.*/
+language: python
+sudo: false
+python:
+  - "2.7"
+
+install:
+  # Setup bikeshed. See https://tabatkins.github.io/bikeshed/#install-linux
+  - git clone https://github.com/tabatkins/bikeshed.git
+  - pip install --editable $PWD/bikeshed
+  - bikeshed update
+ 
+script:
+  - bash ./deploy.sh
+
+env:
+  global:
+  - ENCRYPTION_LABEL: "04bc118c371a"
+  - COMMIT_AUTHOR_EMAIL: "storage-dev@chromium.org"
