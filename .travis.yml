@@ -15,4 +15,4 @@ script:
 env:
   global:
   - ENCRYPTION_LABEL: "04bc118c371a"
-  - COMMIT_AUTHOR_EMAIL: "cookie-store@github.com"
+  - COMMIT_AUTHOR_EMAIL: "storage-dev@chromium.org"
