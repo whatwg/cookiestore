@@ -16,3 +16,10 @@ env:
   global:
   - ENCRYPTION_LABEL: "04bc118c371a"
   - COMMIT_AUTHOR_EMAIL: "storage-dev@chromium.org"
+
+# Build all branches, *including* gh-pages:
+branches:
+  only:
+  - gh-pages
+  - /.*/
+
