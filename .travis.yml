@@ -1,3 +1,9 @@
+# This is a simplified travis.yml for the gh-pages branch.  In
+# particular, it can be very different from the version on the master
+# branch.  We don't really need to do anything here except be sure
+# that we ask Travis CI to run on the gh-pages branch.  Without it,
+# the build will appear to fail.
+
 language: python
 sudo: false
 python:
@@ -10,11 +16,6 @@ install:
 script:
   # Do nothing
   - true
-
-env:
-  global:
-  - ENCRYPTION_LABEL: "04bc118c371a"
-  - COMMIT_AUTHOR_EMAIL: "storage-dev@chromium.org"
 
 branches:
   only:
