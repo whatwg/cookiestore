@@ -1,4 +1,3 @@
-<link rel="icon" href="logo-cookies.png">
 <pre class='metadata'>
 Title: Cookie Store API
 Shortname: cookiestore
@@ -10,6 +9,7 @@ Repository: WICG/cookie-store
 Editor: Victor Costan, Google Inc. https://google.com, costan@google.com
 Editor: Raymond Toy, Google Inc. https://google.com, rtoy@google.com
 Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
+Favicon: logo-cookies.png
 Markup Shorthands: markdown yes, css no
 Abstract: An asynchronous Javascript cookies API for documents and workers
 </pre>
