@@ -415,10 +415,11 @@ The <dfn method for=CookieStore>get(|name|)</dfn> method, when invoked, must run
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |name|.
+        |url| and |name|.
     1. If |list| is failure, reject |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], resolve |p| with undefined.
     1. Otherwise, resolve |p| with the first item of |list|.
@@ -431,15 +432,19 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
-1. If the [=current global object=] is a {{Window}} object, then run these steps:
-    1. Let |url| be the [=current settings object=]'s [=creation URL=].
-    1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present and not equal to |url|,
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
+1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
+    1. Let |parsed| be the result of running the [=basic URL parser=] on |options|' {{CookieStoreGetOptions/url}} dictionary member with |url|.
+    1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
         then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+    1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
+        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+    1. Set |url| to |parsed|.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present),
-        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |url|,
+        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present), and
         |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
     1. If |list| is failure, reject |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], resolve |p| with undefined.
@@ -492,10 +497,11 @@ The <dfn method for=CookieStore>getAll(|name|)</dfn> method, when invoked, must 
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |name|.
+        |url| and |name|.
     1. If |list| is failure, reject |p| with a {{TypeError}}.
     1. Otherwise, resolve |p| with |list|.
 1. Return |p|.
@@ -507,15 +513,19 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
-1. If the [=current global object=] is a {{Window}} object, then run these steps:
-    1. Let |url| be the [=current settings object=]'s [=creation URL=].
-    1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present and not equal to |url|,
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
+1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
+    1. Let |parsed| be the result of running the [=basic URL parser=] on |options|' {{CookieStoreGetOptions/url}} dictionary member with |url|.
+    1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
         then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+    1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
+        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+    1. Set |url| to |parsed|.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present),
-        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |url|,
+        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present), and
         |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
     1. If |list| is failure, reject |p| with a {{TypeError}}.
     1. Otherwise, resolve |p| with |list|.
@@ -986,8 +996,8 @@ The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=
 Issue(69): Specify the [=query cookies=] algorithm.
 
 To <dfn>query cookies</dfn> with
-optional |name|,
-optional |url|, and
+|url|,
+optional |name|, and
 optional |matchType|,
 run the following steps:
 
