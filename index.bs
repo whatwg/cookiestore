@@ -287,10 +287,6 @@ dictionary CookieListItem {
 typedef sequence<CookieListItem> CookieList;
 </xmp>
 
-<aside class=issue>
-TODO: Specify `subscribeToChanges()` and `getChangeSubscriptions()`
-</aside>
-
 <!-- ============================================================ -->
 ## Methods ## {#CookieStore-methods}
 <!-- ============================================================ -->
@@ -758,7 +754,7 @@ The <dfn method for=CookieStore>subscribeToChanges(|subscriptions|)</dfn> method
 1. ... |subscriptions| ...
 1. ...
 
-<aside class=issue>Specify {{CookieStore/subscribeToChanges()}}</aside>
+Issue: Specify {{CookieStore/subscribeToChanges()}}
 
 </div>
 
@@ -773,7 +769,8 @@ The <dfn method for=CookieStore>getChangeSubscriptions()</dfn> method, when invo
 1. ...
 1. ...
 
-<aside class=issue>Specify {{CookieStore/getChangeSubscriptions()}}</aside>
+Issue: Specify {{CookieStore/getChangeSubscriptions()}}
+
 </div>
 
 <!-- ============================================================ -->
@@ -856,7 +853,7 @@ The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=
 
 <div class=algorithm>
 
-<div class=issue>Specify the [=query cookies=] algorithm.</div>
+Issue(69): Specify the [=query cookies=] algorithm.
 
 To <dfn>query cookies</dfn> with
 optional |name|,
@@ -883,7 +880,7 @@ run the following steps:
 
 <div class=algorithm>
 
-<aside class=issue>Specify the [=set a cookie=] algorithm.</aside>
+Issue: Specify the [=set a cookie=] algorithm.
 
 To <dfn>set a cookie</dfn> with
 |name|,
@@ -908,7 +905,7 @@ run the following steps:
 
 <div class=algorithm>
 
-<aside class=issue>Specify the [=delete a cookie=] algorithm.</aside>
+Issue: Specify the [=delete a cookie=] algorithm.
 
 To <dfn>delete a cookie</dfn> with
 |name|,

@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version f168e9e768df676e3c9c49525fc1d754533d7501" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="1d4dd3e853af963af74088e4a241f507a7a41a32" name="document-revision">
+  <meta content="fd5e388733c31f4fae34b41223e9ab610007ed83" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -1476,7 +1476,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-07-10">10 July 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-07-12">12 July 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1809,7 +1809,6 @@ with other modern user agents.</p>
 
 <span class="kt">typedef</span> <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem②">CookieListItem</a>> <dfn class="nv dfn-paneled idl-code" data-dfn-type="typedef" data-export="" id="typedefdef-cookielist"><code>CookieList</code></dfn>;
 </pre>
-   <aside class="issue" id="issue-fbf5345f"><a class="self-link" href="#issue-fbf5345f"></a> TODO: Specify <code>subscribeToChanges()</code> and <code>getChangeSubscriptions()</code> </aside>
    <h3 class="heading settled" data-level="2.1" id="CookieStore-methods"><span class="secno">2.1. </span><span class="content">Methods</span><a class="self-link" href="#CookieStore-methods"></a></h3>
    <h4 class="heading settled" data-level="2.1.1" id="CookieStore-get"><span class="secno">2.1.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options①">get</a></code></span><a class="self-link" href="#CookieStore-get"></a></h4>
    <div class="note" role="note">
@@ -2245,7 +2244,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
      <li data-md="">
       <p>...</p>
     </ol>
-    <aside class="issue" id="issue-d5d0cba6"><a class="self-link" href="#issue-d5d0cba6"></a>Specify <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-subscribetochanges" id="ref-for-dom-cookiestore-subscribetochanges③">subscribeToChanges()</a></code></aside>
+    <p class="issue" id="issue-d5d0cba6"><a class="self-link" href="#issue-d5d0cba6"></a> Specify <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-subscribetochanges" id="ref-for-dom-cookiestore-subscribetochanges③">subscribeToChanges()</a></code></p>
    </div>
    <h4 class="heading settled" data-level="2.1.6" id="CookieStore-getChangeSubscriptions"><span class="secno">2.1.6. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getchangesubscriptions" id="ref-for-dom-cookiestore-getchangesubscriptions①">getChangeSubscriptions</a></code></span><a class="self-link" href="#CookieStore-getChangeSubscriptions"></a></h4>
    <div class="algorithm">
@@ -2258,7 +2257,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
      <li data-md="">
       <p>...</p>
     </ol>
-    <aside class="issue" id="issue-8041f27b"><a class="self-link" href="#issue-8041f27b"></a>Specify <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getchangesubscriptions" id="ref-for-dom-cookiestore-getchangesubscriptions②">getChangeSubscriptions()</a></code></aside>
+    <p class="issue" id="issue-8041f27b"><a class="self-link" href="#issue-8041f27b"></a> Specify <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getchangesubscriptions" id="ref-for-dom-cookiestore-getchangesubscriptions②">getChangeSubscriptions()</a></code></p>
    </div>
    <h3 class="heading settled" data-level="2.2" id="CookieStore-attributes"><span class="secno">2.2. </span><span class="content">Attributes</span><a class="self-link" href="#CookieStore-attributes"></a></h3>
    <h4 class="heading settled" data-level="2.2.1" id="CookieStore-attributes-onchange"><span class="secno">2.2.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange①">onchange</a></code></span><a class="self-link" href="#CookieStore-attributes-onchange"></a></h4>
@@ -2300,7 +2299,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
    <h2 class="heading settled" data-level="4" id="algorithms"><span class="secno">4. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="query-cookies-algorithm"><span class="secno">4.1. </span><span class="content">Query Cookies</span><a class="self-link" href="#query-cookies-algorithm"></a></h3>
    <div class="algorithm">
-    <div class="issue" id="issue-07dd0bec"><a class="self-link" href="#issue-07dd0bec"></a>Specify the <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies④">query cookies</a> algorithm.</div>
+    <p class="issue" id="issue-07dd0bec"><a class="self-link" href="#issue-07dd0bec"></a> Specify the <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies④">query cookies</a> algorithm. <a href="https://github.com/WICG/cookie-store/issues/69">&lt;https://github.com/WICG/cookie-store/issues/69></a></p>
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="query-cookies">query cookies</dfn> with
 optional <var>name</var>,
 optional <var>url</var>, and
@@ -2331,7 +2330,7 @@ run the following steps:</p>
    </div>
    <h3 class="heading settled" data-level="4.2" id="set-cookie-algorithm"><span class="secno">4.2. </span><span class="content">Set a Cookie</span><a class="self-link" href="#set-cookie-algorithm"></a></h3>
    <div class="algorithm">
-    <aside class="issue" id="issue-c16e2b5d"><a class="self-link" href="#issue-c16e2b5d"></a>Specify the <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie③">set a cookie</a> algorithm.</aside>
+    <p class="issue" id="issue-c16e2b5d"><a class="self-link" href="#issue-c16e2b5d"></a> Specify the <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie③">set a cookie</a> algorithm.</p>
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="set-a-cookie">set a cookie</dfn> with <var>name</var>, <var>value</var>,
 optional <var>expires</var>, <var>domain</var>, <var>path</var>, <var>secure</var> flag, <var>httpOnly</var> flag, and <var>sameSite</var>,
 run the following steps:</p>
@@ -2346,7 +2345,7 @@ run the following steps:</p>
    </div>
    <h3 class="heading settled" data-level="4.3" id="delete-cookie-algorithm"><span class="secno">4.3. </span><span class="content">Delete a Cookie</span><a class="self-link" href="#delete-cookie-algorithm"></a></h3>
    <div class="algorithm">
-    <aside class="issue" id="issue-08bd888c"><a class="self-link" href="#issue-08bd888c"></a>Specify the <a data-link-type="dfn" href="#delete-a-cookie" id="ref-for-delete-a-cookie②">delete a cookie</a> algorithm.</aside>
+    <p class="issue" id="issue-08bd888c"><a class="self-link" href="#issue-08bd888c"></a> Specify the <a data-link-type="dfn" href="#delete-a-cookie" id="ref-for-delete-a-cookie②">delete a cookie</a> algorithm.</p>
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="delete-a-cookie">delete a cookie</dfn> with <var>name</var>, <var>domain</var>, <var>path</var>, <var>secure</var> flag, and <var>sameSite</var>,
 run the following steps:</p>
     <ol>
@@ -3050,12 +3049,11 @@ run the following steps:</p>
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> TODO: Specify <code>subscribeToChanges()</code> and <code>getChangeSubscriptions()</code> <a href="#issue-fbf5345f"> ↵ </a></div>
-   <div class="issue">Specify <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-subscribetochanges">subscribeToChanges()</a></code><a href="#issue-d5d0cba6"> ↵ </a></div>
-   <div class="issue">Specify <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getchangesubscriptions">getChangeSubscriptions()</a></code><a href="#issue-8041f27b"> ↵ </a></div>
-   <div class="issue">Specify the <a data-link-type="dfn" href="#query-cookies">query cookies</a> algorithm.<a href="#issue-07dd0bec"> ↵ </a></div>
-   <div class="issue">Specify the <a data-link-type="dfn" href="#set-a-cookie">set a cookie</a> algorithm.<a href="#issue-c16e2b5d"> ↵ </a></div>
-   <div class="issue">Specify the <a data-link-type="dfn" href="#delete-a-cookie">delete a cookie</a> algorithm.<a href="#issue-08bd888c"> ↵ </a></div>
+   <div class="issue"> Specify <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-subscribetochanges">subscribeToChanges()</a></code><a href="#issue-d5d0cba6"> ↵ </a></div>
+   <div class="issue"> Specify <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getchangesubscriptions">getChangeSubscriptions()</a></code><a href="#issue-8041f27b"> ↵ </a></div>
+   <div class="issue"> Specify the <a data-link-type="dfn" href="#query-cookies">query cookies</a> algorithm. <a href="https://github.com/WICG/cookie-store/issues/69">&lt;https://github.com/WICG/cookie-store/issues/69></a><a href="#issue-07dd0bec"> ↵ </a></div>
+   <div class="issue"> Specify the <a data-link-type="dfn" href="#set-a-cookie">set a cookie</a> algorithm.<a href="#issue-c16e2b5d"> ↵ </a></div>
+   <div class="issue"> Specify the <a data-link-type="dfn" href="#delete-a-cookie">delete a cookie</a> algorithm.<a href="#issue-08bd888c"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="script-visible">
    <b><a href="#script-visible">#script-visible</a></b><b>Referenced in:</b>
