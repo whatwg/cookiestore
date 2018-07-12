@@ -431,6 +431,10 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. If the [=current global object=] is a {{Window}} object, then run these steps:
+    1. Let |url| be the [=current settings object=]'s [=creation URL=].
+    1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present and not equal to |url|,
+        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
@@ -503,6 +507,10 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. If the [=current global object=] is a {{Window}} object, then run these steps:
+    1. Let |url| be the [=current settings object=]'s [=creation URL=].
+    1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present and not equal to |url|,
+        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
