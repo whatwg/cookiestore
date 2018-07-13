@@ -14,11 +14,23 @@ Markup Shorthands: markdown yes, css no
 Abstract: An asynchronous Javascript cookies API for documents and workers
 </pre>
 
-<pre class=anchors>
-urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00; type: dfn; spec: Cookie Prefixes
-    text: cookie prefixes; url:
-urlPrefix: https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00; type: dfn; spec: Leave Secure Cookies Alone
-    text: leave secure cookies alone; url:
+<pre class=biblio>
+{
+  "cookie-prefixes": {
+    "authors": [ "Mike West" ],
+    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00",
+    "title": "Cookie Prefixes",
+    "publisher": "IETF",
+    "status": "UD"
+  },
+  "cookie-alone": {
+    "authors": [ "Mike West" ],
+    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00",
+    "title": "Deprecate modification of 'secure' cookies from non-secure origins",
+    "publisher": "IETF",
+    "status": "UD"
+  }
+}
 </pre>
 
 <pre class=link-defaults>
@@ -177,10 +189,10 @@ This API defaults cookie paths to `/` for cookie write operations, including del
 
 URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
 
-This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) [=leave secure cookies alone|creation or modification of Secure-flagged cookies from unsecured web origins=] and [=cookie prefixes|enforces special rules for the __Host- and __Secure- cookie name prefixes=].
+This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure-`flagged cookies from unsecured web origins [[cookie-alone]] and enforces special rules for the `__Host-` and `__Secure-` cookie name prefixes [[cookie-prefixes]].
 
 This API defaults cookies to "Domain"-less, which in conjunction with "Secure" provides origin-scoped cookie
-behavior in most modern browsers. When practical the [=cookie prefixes|__Host- cookie name prefix=] should be used with these cookies so that cooperating browsers origin-scope them.
+behavior in most modern browsers. When practical the `__Host-` cookie name prefix ([[cookie-prefixes]]) should be used with these cookies so that cooperating browsers origin-scope them.
 
 Serialization of expiration times for non-session cookies in a special cookie-specific format has proven cumbersome,
 so this API allows JavaScript Date objects and numeric timestamps (milliseconds since the beginning of the Unix epoch) to be used instead. The inconsistently-implemented Max-Age parameter is not exposed, although similar functionality is available for the specific case of expiring a cookie.
@@ -972,7 +984,7 @@ Further complicating this are historical differences in cookie-handling across m
 ## Prefixes ## {#prefixes}
 <!-- ============================================================ -->
 
-Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [=Cookie Prefixes=] which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and &mdash; in the case of `__Host-` &mdash; disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
+Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [[cookie-prefixes]] which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and &mdash; in the case of `__Host-` &mdash; disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
 
 Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.
 
