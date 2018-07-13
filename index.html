@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version f168e9e768df676e3c9c49525fc1d754533d7501" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="02d1175c81eb34bf8ff8c81a712ab2f7038c3064" name="document-revision">
+  <meta content="4d26448fe719a9d171c012e4b0668135ad5e609f" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -1585,6 +1585,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
     <li><a href="#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
     <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
@@ -1594,8 +1595,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <p><img alt="logo" src="logo-cookies.svg" style="height: 100px; width: 100px; position: absolute; right: 20px; top: 30px;"></p>
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p><em>This section is non-normative.</em></p>
-   <p>This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and <a href="https://github.com/slightlyoff/ServiceWorker">service workers</a>.</p>
-   <p><a href="https://tools.ietf.org/html/rfc6265">HTTP cookies</a> have, since their origins at Netscape <a href="https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html">(documentation preserved by archive.org)</a>, provided a <a href="http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html">valuable state-management mechanism</a> for the web.</p>
+   <p>This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and <a data-link-type="biblio" href="#biblio-service-workers">service workers</a>.</p>
+   <p><a data-link-type="biblio" href="#biblio-rfc6265">HTTP cookies</a> have, since their origins at Netscape <a href="https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html">(documentation preserved by archive.org)</a>, provided a <a href="http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html">valuable state-management mechanism</a> for the web.</p>
    <p>The synchronous single-threaded script-level <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie">document.cookie</a></code> interface to cookies has been a source of <a href="https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html">complexity and performance woes</a> further exacerbated by the move in many browsers from:</p>
    <ul>
     <li data-md="">
@@ -1667,7 +1668,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
 <span class="c1">// the cookie store to process the write...</span>
 </pre>
    </div>
-   <p>This also has the advantage of not relying on <code>document</code> and not blocking, which together make it usable from <a href="https://github.com/slightlyoff/ServiceWorker">service workers</a>, which otherwise do not have cookie access from script.</p>
+   <p>This also has the advantage of not relying on <code>document</code> and not blocking, which together make it usable from <a data-link-type="biblio" href="#biblio-service-workers">Service Workers</a>, which otherwise do not have cookie access from script.</p>
    <p>This proposal also includes a power-efficient monitoring API to replace <code>setTimeout</code>-based polling cookie monitors with cookie change observers.</p>
    <h3 class="heading settled" data-level="1.2" id="intro-summary"><span class="secno">1.2. </span><span class="content">Summary</span><a class="self-link" href="#intro-summary"></a></h3>
    <p>This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:</p>
@@ -1680,7 +1681,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <p><a data-link-type="dfn" href="#read" id="ref-for-read">read</a> (or "get") <a data-link-type="dfn" href="#script-visible" id="ref-for-script-visible">script-visible</a> cookies</p>
      <ul>
       <li data-md="">
-       <p>... including for specified in-scope request paths in <a href="https://github.com/slightlyoff/ServiceWorker">service worker</a> contexts</p>
+       <p>... including for specified in-scope request paths in <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> contexts</p>
      </ul>
     <li data-md="">
      <p><a data-link-type="dfn" href="https://w3c.github.io/webappsec-csp/#monitored" id="ref-for-monitored">monitor</a> <a data-link-type="dfn" href="#script-visible" id="ref-for-script-visible①">script-visible</a> cookies for changes using <code>CookieChangeEvent</code></p>
@@ -1688,10 +1689,10 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li data-md="">
        <p>... in long-running script contexts (e.g. <code>document</code>)</p>
       <li data-md="">
-       <p>... after registration during the <code>InstallEvent</code> in ephemeral <a href="https://github.com/slightlyoff/ServiceWorker">service worker</a> contexts</p>
+       <p>... after registration during the <code>InstallEvent</code> in ephemeral <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> contexts</p>
       <li data-md="">
        <p>... again including for script-supplied in-scope request paths
-in <a href="https://github.com/slightlyoff/ServiceWorker">service worker</a> contexts</p>
+in <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> contexts</p>
      </ul>
    </ul>
    <h4 class="heading settled" data-level="1.2.1" id="script-visibility"><span class="secno">1.2.1. </span><span class="content">Script visibility</span><a class="self-link" href="#script-visibility"></a></h4>
@@ -1710,9 +1711,9 @@ can be used to replace power-hungry polling cookie scanners.</p>
    <h4 class="heading settled" data-level="1.2.3" id="intro-opinions"><span class="secno">1.2.3. </span><span class="content">Opinions</span><a class="self-link" href="#intro-opinions"></a></h4>
    <p>This API defaults cookie paths to <code>/</code> for cookie write operations, including deletion/expiration. The implicit relative path-scoping of cookies to <code>.</code> has caused a lot of additional complexity for relatively little gain given their security equivalence under the same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain. Cookie paths without a trailing <code>/</code> are treated as if they had a trailing <code>/</code> appended for cookie write operations. Cookie paths must start with <code>/</code> for write operations, and must not contain any <code>..</code> path segments. Query parameters and URL fragments are not allowed in paths for cookie write operations.</p>
    <p>URLs without a trailing <code>/</code> are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.</p>
-   <p>This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) <a href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00">creation or modification of Secure-flagged cookies from unsecured web origins</a> and <a href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00">enforces special rules for the __Host- and __Secure- cookie name prefixes</a>.</p>
+   <p>This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00#" id="termref-for-">creation or modification of Secure-flagged cookies from unsecured web origins</a> and <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00#" id="termref-for-①">enforces special rules for the __Host- and __Secure- cookie name prefixes</a>.</p>
    <p>This API defaults cookies to "Domain"-less, which in conjunction with "Secure" provides origin-scoped cookie
-behavior in most modern browsers. When practical the <a href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00">__Host- cookie name prefix</a> should be used with these cookies so that cooperating browsers origin-scope them.</p>
+behavior in most modern browsers. When practical the <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00#" id="termref-for-②">__Host- cookie name prefix</a> should be used with these cookies so that cooperating browsers origin-scope them.</p>
    <p>Serialization of expiration times for non-session cookies in a special cookie-specific format has proven cumbersome,
 so this API allows JavaScript Date objects and numeric timestamps (milliseconds since the beginning of the Unix epoch) to be used instead. The inconsistently-implemented Max-Age parameter is not exposed, although similar functionality is available for the specific case of expiring a cookie.</p>
    <p>Cookies without U+003D (=) <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#code-point" id="ref-for-code-point">code points</a> in their HTTP Cookie header serialization are treated as having an empty name, consistent with the majority of current browsers. Cookies with an empty name cannot be set using values containing U+003D (=) <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#code-point" id="ref-for-code-point①">code points</a> as this would result in ambiguous serializations in the majority of current browsers.</p>
@@ -2389,7 +2390,7 @@ run the following steps:</p>
    <p>Other surprises are documented in <a href="https://tools.ietf.org/html/rfc6265#section-1">Section 1 of HTTP State Management Mechanism (RFC 6265)</a> - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.</p>
    <p>Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.</p>
    <h3 class="heading settled" data-level="5.4" id="prefixes"><span class="secno">5.4. </span><span class="content">Prefixes</span><a class="self-link" href="#prefixes"></a></h3>
-   <p>Where feasible the examples use the <code>__Host-</code> and <code>__Secure-</code> name prefixes from <a href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00">Cookie Prefixes</a> which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no <code>Secure</code> flag, and — in the case of <code>__Host-</code> — disallow overwriting with an explicit <code>Domain</code> or non-'/' <code>Path</code> attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.</p>
+   <p>Where feasible the examples use the <code>__Host-</code> and <code>__Secure-</code> name prefixes from <a data-link-type="dfn" href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00#" id="termref-for-③">Cookie Prefixes</a> which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no <code>Secure</code> flag, and — in the case of <code>__Host-</code> — disallow overwriting with an explicit <code>Domain</code> or non-'/' <code>Path</code> attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.</p>
    <p>Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.</p>
    <h3 class="heading settled" data-level="5.5" id="url-scoping"><span class="secno">5.5. </span><span class="content">URL scoping</span><a class="self-link" href="#url-scoping"></a></h3>
    <p>Although a service worker script cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the service worker script. This means that cookie access inside the scope of the service worker is technically possible already, it’s just not very convenient.</p>
@@ -2656,6 +2657,13 @@ run the following steps:</p>
      <li><a href="#dom-cookiestoresetextraoptions-value">dict-member for CookieStoreSetExtraOptions</a><span>, in §2</span>
     </ul>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-">
+   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00#">https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00#</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#termref-for-">1.2.3. Opinions</a> <a href="#termref-for-">(2)</a>
+    <li><a href="#termref-for-">5.4. Prefixes</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-monitored">
    <a href="https://w3c.github.io/webappsec-csp/#monitored">https://w3c.github.io/webappsec-csp/#monitored</a><b>Referenced in:</b>
    <ul>
@@ -2771,6 +2779,12 @@ run the following steps:</p>
     <li><a href="#ref-for-list">4.1. Query Cookies</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-">
+   <a href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00#">https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00#</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#termref-for-">1.2.3. Opinions</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-serviceworkerglobalscope">
    <a href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope">https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope</a><b>Referenced in:</b>
    <ul>
@@ -2874,6 +2888,11 @@ run the following steps:</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
+    <a data-link-type="biblio">[cookie prefixes]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-" style="color:initial">cookie prefixes</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[csp-3]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-monitored" style="color:initial">monitored</span>
@@ -2905,6 +2924,11 @@ run the following steps:</p>
      <li><span class="dfn-paneled" id="term-for-code-point" style="color:initial">code point</span>
      <li><span class="dfn-paneled" id="term-for-list-is-empty" style="color:initial">is empty</span>
      <li><span class="dfn-paneled" id="term-for-list" style="color:initial">list</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[leave secure cookies alone]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-①" style="color:initial">leave secure cookies alone</span>
     </ul>
    <li>
     <a data-link-type="biblio">[service-workers-2]</a> defines the following terms:
@@ -2946,6 +2970,13 @@ run the following steps:</p>
    <dd>Service Workers URL: <a href="https://w3c.github.io/ServiceWorker/">https://w3c.github.io/ServiceWorker/</a>
    <dt id="biblio-webidl">[WebIDL]
    <dd>Cameron McCormack; Boris Zbarsky; Tobie Langel. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+  </dl>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <dl>
+   <dt id="biblio-rfc6265">[RFC6265]
+   <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6265">https://tools.ietf.org/html/rfc6265</a>
+   <dt id="biblio-service-workers">[Service-Workers]
+   <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/">Service Workers 1</a>. 2 November 2017. WD. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def">[<a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed④">Exposed</a>=(<span class="n">ServiceWorker</span>,<span class="n">Window</span>),
