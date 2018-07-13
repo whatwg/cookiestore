@@ -680,9 +680,11 @@ The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method, wh
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |r| be the result of running the steps to [=set a cookie=] with
+        |url|,
         |name|,
         |value|,
         |options|' {{CookieStoreSetOptions/expires}} dictionary member,
@@ -702,9 +704,11 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |r| be the result of running the steps to [=set a cookie=] with
+        |url|,
         |options|' {{CookieStoreSetExtraOptions/name}} dictionary member,
         |options|' {{CookieStoreSetExtraOptions/value}} dictionary member,
         |options|' {{CookieStoreSetOptions/expires}} dictionary member,
@@ -782,10 +786,16 @@ The <dfn method for=CookieStore>delete(|name|)</dfn> method, when invoked, must 
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |r| be the result of running the steps to [=delete a cookie=] with
-        |name|, null, "`/`", true, and "{{CookieSameSite/strict}}".
+        |url|,
+        |name|,
+        null,
+        "`/`",
+        true, and
+        "{{CookieSameSite/strict}}".
     1. If |r| is failure, reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
 1. Return |p|.
@@ -797,9 +807,11 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, mu
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |r| be the result of running the steps to [=delete a cookie=] with
+        |url|,
         |options|' {{CookieStoreDeleteOptions/name}} dictionary member,
         |options|' {{CookieStoreDeleteOptions/domain}} dictionary member,
         |options|' {{CookieStoreDeleteOptions/path}} dictionary member,
@@ -1065,6 +1077,7 @@ attributes are not exposed to script.
 Issue(72): Specify the [=set a cookie=] algorithm.
 
 To <dfn>set a cookie</dfn> with
+|url|,
 |name|,
 |value|,
 optional |expires|,
@@ -1090,6 +1103,7 @@ run the following steps:
 Issue(73): Specify the [=delete a cookie=] algorithm.
 
 To <dfn>delete a cookie</dfn> with
+|url|,
 |name|,
 |domain|,
 |path|,
