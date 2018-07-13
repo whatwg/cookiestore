@@ -29,8 +29,21 @@ Abstract: An asynchronous Javascript cookies API for documents and workers
     "title": "Deprecate modification of 'secure' cookies from non-secure origins",
     "publisher": "IETF",
     "status": "Internet-Draft"
+  },
+  "same-site-cookies": {
+    "authors": [ "M. West", "M. Goodwin" ],
+    "href": "https://tools.ietf.org/html/draft-west-first-party-cookies-07",
+    "title": "Same-site Cookies",
+    "publisher": "IETF",
+    "status": "Internet-Draft"
   }
 }
+</pre>
+
+<pre class=anchors>
+spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
+    type: dfn
+        text: time values; url: sec-time-values-and-time-range
 </pre>
 
 <pre class=link-defaults>
@@ -223,6 +236,33 @@ with the additional side-effects that subsequent uses of {{Document/cookie|docum
 will change the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.
 
+
+<!-- ============================================================ -->
+# Concepts # {#concepts}
+<!-- ============================================================ -->
+
+<!-- ============================================================ -->
+## Cookie ## {#cookie-concept}
+<!-- ============================================================ -->
+
+A <dfn>cookie</dfn> is normatively defined for user agents by [[RFC6265#section-5|HTTP State Management Mechanism &mdash; User Agent Requirements]].
+
+<div dfn-for=cookie>
+Per [[RFC6265]], a [=cookie=] has the following fields:
+<dfn>name</dfn>,
+<dfn>value</dfn>,
+<dfn>expiry-time</dfn>,
+<dfn>domain</dfn>,
+<dfn>path</dfn>,
+<dfn>creation-time</dfn>,
+<dfn>last-access-time</dfn>,
+<dfn>persistent-flag</dfn>,
+<dfn>host-only-flag</dfn>,
+<dfn>secure-only-flag</dfn>,
+<dfn>http-only-flag</dfn>.
+
+Per [[!same-site-cookies!]], a [=cookie=] also has a <dfn>samesite-flag</dfn> field.
+</div>
 
 <!-- ============================================================ -->
 # The {{CookieStore}} Interface # {#CookieStore}
@@ -953,14 +993,56 @@ run the following steps:
 
 1. If ..., return failure.
 1. ...
-1. ... |name| ... |url| ... |matchType| ...
+1. ... |name| ... |url|
 1. ...
+1. ... being generated for a "non-HTTP" API ...
+1. ...
+1. ... |cookie-list| ...
 1. Let |list| be a new [=list=].
-1. ...
-1. ...
-1. ...
-1. ...
+1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
+    1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
+    1.  ... |matchType| ... [=continue=] ...
+    1. Let |item| be the result of running the steps to [=create a CookieListItem=] from |cookie|.
+    1. [=list/Append=] |item| to |list|.
 1. Return |list|.
+
+</div>
+
+<div class=algorithm>
+
+To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps.
+
+1. Let |item| be a new {{CookieListItem}}.
+1. Set |item|'s {{CookieListItem/name}} to |cookie|'s [=cookie/name=].
+1. Set |item|'s {{CookieListItem/value}} to |cookie|'s [=cookie/value=].
+1. Set |item|'s {{CookieListItem/domain}} to |cookie|'s [=cookie/domain=].
+1. Set |item|'s {{CookieListItem/path}} to |cookie|'s [=cookie/path=].
+1. Set |item|'s {{CookieListItem/expires}} to |cookie|'s [=cookie/expiry-time=],
+    as the number of milliseconds since 00:00:00 UTC, 1 January 1970,
+    assuming that there are exactly 86,400,000 milliseconds per day.
+
+    Note: This is the same representation used for [=time values=] in [[ECMAScript]].
+
+1. Set |item|'s {{CookieListItem/secure}} to |cookie|'s [=cookie/secure-only-flag=].
+1. Switch on |cookie|'s [=cookie/samesite-flag=]:
+    <dl class=switch>
+    : "None"
+    :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/unrestricted}}".
+    : "Strict"
+    :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/strict}}".
+    : "Lax"
+    :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/lax}}".
+
+    </dl>
+1. Return |item|.
+
+Note: The |cookie|'s
+[=cookie/creation-time=],
+[=cookie/last-access-time=],
+[=cookie/persistent-flag=],
+[=cookie/host-only-flag=], and
+[=cookie/http-only-flag=]
+attributes are not exposed to script.
 
 </div>
 
