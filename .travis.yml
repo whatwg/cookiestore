@@ -4,18 +4,7 @@
 # that we ask Travis CI to run on the gh-pages branch.  Without it,
 # the build will appear to fail.
 
-language: python
-sudo: false
-python:
-  - "2.7"
-
-install:
-  # Do nothing
-  - true
- 
-script:
-  # Do nothing
-  - true
+language: generic
 
 branches:
   only:
