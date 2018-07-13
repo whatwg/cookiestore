@@ -245,10 +245,10 @@ with other modern user agents.
 ## Cookie ## {#cookie-concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie</dfn> is normatively defined for user agents by [[RFC6265#section-5|HTTP State Management Mechanism &mdash; User Agent Requirements]].
+A <dfn>cookie</dfn> is normatively defined for user agents by [[!RFC6265]] and modified by additional proposals.
 
 <div dfn-for=cookie>
-Per [[RFC6265]], a [=cookie=] has the following fields:
+Per [[!RFC6265]], a [=cookie=] has the following fields:
 <dfn>name</dfn>,
 <dfn>value</dfn>,
 <dfn>expiry-time</dfn>,
@@ -261,7 +261,9 @@ Per [[RFC6265]], a [=cookie=] has the following fields:
 <dfn>secure-only-flag</dfn>,
 <dfn>http-only-flag</dfn>.
 
-Per [[!same-site-cookies!]], a [=cookie=] also has a <dfn>samesite-flag</dfn> field.
+Per [[!same-site-cookies]], a [=cookie=] also has a <dfn>samesite-flag</dfn> field.
+
+Issue: Make this a normative link.
 </div>
 
 <!-- ============================================================ -->
