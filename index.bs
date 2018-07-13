@@ -17,18 +17,18 @@ Abstract: An asynchronous Javascript cookies API for documents and workers
 <pre class=biblio>
 {
   "cookie-prefixes": {
-    "authors": [ "Mike West" ],
+    "authors": [ "M. West" ],
     "href": "https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00",
     "title": "Cookie Prefixes",
     "publisher": "IETF",
-    "status": "UD"
+    "status": "Internet-Draft"
   },
   "cookie-alone": {
-    "authors": [ "Mike West" ],
+    "authors": [ "M. West" ],
     "href": "https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00",
     "title": "Deprecate modification of 'secure' cookies from non-secure origins",
     "publisher": "IETF",
-    "status": "UD"
+    "status": "Internet-Draft"
   }
 }
 </pre>
