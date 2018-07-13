@@ -880,7 +880,7 @@ run the following steps:
 
 <div class=algorithm>
 
-Issue: Specify the [=set a cookie=] algorithm.
+Issue(72): Specify the [=set a cookie=] algorithm.
 
 To <dfn>set a cookie</dfn> with
 |name|,
@@ -905,7 +905,7 @@ run the following steps:
 
 <div class=algorithm>
 
-Issue: Specify the [=delete a cookie=] algorithm.
+Issue(73): Specify the [=delete a cookie=] algorithm.
 
 To <dfn>delete a cookie</dfn> with
 |name|,
