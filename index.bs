@@ -317,10 +317,8 @@ typedef sequence<CookieListItem> CookieList;
 <div class=note>
 
   <dl class=domintro>
-    <dt><var>cookie</var> = await cookieStore .
-        {{CookieStore/get(name)|get}}(<var>name</var>)</dt>
-    <dt><var>cookie</var> = await cookieStore .
-        {{CookieStore/get(options)|get}}(<var>options</var>)</dt>
+    <dt>|cookie| = await cookieStore . {{CookieStore/get(name)|get}}(|name|)
+    <dt>|cookie| = await cookieStore . {{CookieStore/get(options)|get}}(|options|)
     <dd>
 
 
@@ -370,7 +368,7 @@ async function getOneCookieForRequestUrl() {
 }
 ```
 </div>
-</dd>
+  </dl>
 </div>
 
 <div class=algorithm>
@@ -414,10 +412,8 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
 <div class=note>
 
   <dl class=domintro>
-    <dt><var>cookies</var> = await cookieStore .
-        {{CookieStore/getAll(name)|getAll}}(<var>name</var>)</dt>
-    <dt><var>cookies</var> = await cookieStore .
-        {{CookieStore/getAll(options)|getAll}}(<var>options</var>)</dt>
+    <dt>|cookies| = await cookieStore . {{CookieStore/getAll(name)|getAll}}(|name|)
+    <dt>|cookies| = await cookieStore . {{CookieStore/getAll(options)|getAll}}(|options|)
     <dd>
 
 Sometimes you need to see the whole [=script-visible=] in-scope subset of the cookie jar, including potential reuse of the same
@@ -444,7 +440,7 @@ async function countMatchingSimpleOriginCookies() {
 }
 ```
 </div>
-</dd>
+  </dl>
 </div>
 
 
@@ -488,7 +484,13 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 
 <div class=note>
 
-<dfn>Writing</dfn> (setting) a cookie is done using these methods. For example:
+  <dl class=domintro>
+    <dt>await cookieStore . {{CookieStore/set(name, value)|set}}(|name|, |value|)
+    <dt>await cookieStore . {{CookieStore/set(options)|set}}(|options|)
+    <dd>
+        <dfn>Writing</dfn> (setting) a cookie is done using these methods.
+  </dl>
+
 
 <div class="example">
 ```js
@@ -667,7 +669,15 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
 
 <div class=note>
 
-<dfn>Deleting</dfn> (or clearing) a cookie is accomplished by expiration, that is by replacing it with an equivalent-scope cookie with
+  <dl class=domintro>
+    <dt>await cookieStore . {{CookieStore/delete(name)|set}}(|name|)
+    <dt>await cookieStore . {{CookieStore/set(options)|set}}(|options|)
+    <dd>
+        <dfn>Deleting</dfn> (or clearing) a cookie is done using these methods.
+  </dl>
+
+
+Deleting a cookie is accomplished by expiration, that is by replacing it with an equivalent-scope cookie with
 an expiration in the past:
 
 ```js
@@ -751,15 +761,50 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, mu
 
 <div class=note>
 
-  <dfn>Monitoring</dfn> cookies is done by subscribing to change events.
+  <dfn>Monitoring</dfn> cookies in a [=Service Worker=] requires by subscribing to change events.
 
   <dl class=domintro>
     <dt>await cookieStore .
-        {{CookieStore/subscribeToChanges()|subscribeToChanges}}(<var>subscriptions</var>)</dt>
+        {{CookieStore/subscribeToChanges()|subscribeToChanges}}(|subscriptions|)
     <dd>
       This method can only be called during a [=Service Worker=] install phase.
-  </dl>
 
+```js
+self.addEventListener('install', event => {
+  event.waitFor(async () => {
+    await cookieStore.subscribeToChanges([{
+      name: 'session',  // Get change events for session-related cookies.
+      matchType: 'starts-with',  // Matches session_id, session-id, etc.
+    }]);
+  });
+});
+```
+
+      Once subscribed, notifications are delivered as "`cookiechange`" events
+      fired against the [=Service Worker=]'s global scope:
+
+```js
+self.addEventListener('cookiechange', event => {
+  // The event has |changed| and |deleted| properties with
+  // the same semantics as the Document events.
+  console.log('changed cookies: ' + event.changed.length);
+  console.log('deleted cookies: ' + event.deleted.length);
+});
+```
+
+    <dt>|subscriptions| = await cookieStore .
+        {{CookieStore/getChangeSubscriptions()}}
+    <dd>
+      This method returns a promise which resolves to a list of the cookie change subscriptions
+      made for this Service Worker registration.
+
+```js
+   const subscriptions = await cookieStore.getChangeSubscriptions();
+   for (const sub of subscriptions) {
+     console.log(sub.name, sub.url, sub.matchType);
+   }
+```
+  </dl>
 
 </div>
 
@@ -771,11 +816,15 @@ The <dfn method for=CookieStore>subscribeToChanges(|subscriptions|)</dfn> method
 1. Let |serviceWorker| be the [=context object=]'s [=global object=]'s [=service worker=].
 1. If |serviceWorker|'s [=service worker/state=] is not *installing*,
     then return a new promise rejected with a {{TypeError}}.
-1. ...
-1. ... |subscriptions| ...
-1. ...
-
-Issue: Specify {{CookieStore/subscribeToChanges()}}
+1. Let |registration| be |serviceWorker|'s associated [=containing service worker registration=].
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. [=list/For each=] |subscription| in |subscriptions|, run these steps:
+        1. Let |name| be |subscription|'s {{CookieStoreGetOptions/name}} member.
+        1. Let |url| be |subscription|'s {{CookieStoreGetOptions/url}} member.
+        1. Let |matchType| be |subscription|'s {{CookieStoreGetOptions/matchType}} member.
+        1. Append a tuple of (|name|, |url|, |matchType|) to |registration|'s associated [=cookie change subscription list=].
+1. Return |p|.
 
 </div>
 
@@ -786,11 +835,19 @@ Issue: Specify {{CookieStore/subscribeToChanges()}}
 <div class=algorithm>
 The <dfn method for=CookieStore>getChangeSubscriptions()</dfn> method, when invoked, must run these steps:
 
-1. ...
-1. ...
-1. ...
-
-Issue: Specify {{CookieStore/getChangeSubscriptions()}}
+1. Let |serviceWorker| be the [=context object=]'s [=global object=]'s [=service worker=].
+1. Let |registration| be |serviceWorker|'s associated [=containing service worker registration=].
+1. Let |p| be a new promise.
+1. Run the following steps in parallel:
+    1. Let |subscriptions| be |registration|'s associated [=cookie change subscription list=].
+    1. Let |result| be a new [=list=].
+    1. [=list/For each=] |subscription| in |subscriptions|, run these steps:
+        1. Let |options| be a new {{CookieStoreGetOptions}} dictionary.
+        1. Set |options|'s {{CookieStoreGetOptions/name}} member to |subscription|'s [=cookie change subscription/name=].
+        1. Set |options|'s {{CookieStoreGetOptions/url}} member to |subscription|'s [=cookie change subscription/url=].
+        1. Set |options|'s {{CookieStoreGetOptions/matchType}} member to |subscription|'s [=cookie change subscription/matchType=].
+    1. Resolve |p| with |result|.
+1. Return |p|.
 
 </div>
 
@@ -817,7 +874,10 @@ Issue: Specify {{CookieStore/getChangeSubscriptions()}}
 ### {{CookieChangeEvent}} ### {#CookieChangeEvent}
 <!-- ============================================================ -->
 
-This is an {{Event}} object which is dispatched to {{CookieStore}}.
+A {{CookieChangeEvent}} is [=dispatched=] against {{CookieStore}} objects
+in [=window=] contexts when any [=script-visible=] cookie changes have occurred,
+and against {{ServiceWorkerGlobalScope}} objects when any [=script-visible=]
+cookie changes have occurred which match the [=Service Worker=]'s [=cookie change subscription list=].
 
 <pre class="idl">
 [Exposed=(ServiceWorker,Window),
@@ -858,11 +918,20 @@ The {{Window/cookieStore}} attribute’s getter must return [=context object=]�
 <pre class="idl">
 partial interface ServiceWorkerGlobalScope {
   [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
+
+  attribute EventHandler oncookiechange;
 };
 </pre>
 
 The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=context object=]’s [=relevant settings object=]’s {{CookieStore}} object.
 
+A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=list=];
+each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
+<span dfn-for="cookie change subscription">
+a tuple of (<dfn>name</dfn>, <dfn>url</dfn>, <dfn>matchType</dfn>).
+</span>.
+
+Issue: Move the above to a Concepts section.
 
 <!-- ============================================================ -->
 # Algorithms # {#algorithms}
