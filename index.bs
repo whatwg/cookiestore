@@ -16,24 +16,10 @@ Abstract: An asynchronous Javascript cookies API for documents and workers
 
 <pre class=biblio>
 {
-  "cookie-prefixes": {
-    "authors": [ "M. West" ],
-    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00",
-    "title": "Cookie Prefixes",
-    "publisher": "IETF",
-    "status": "Internet-Draft"
-  },
-  "cookie-alone": {
-    "authors": [ "M. West" ],
-    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00",
-    "title": "Deprecate modification of 'secure' cookies from non-secure origins",
-    "publisher": "IETF",
-    "status": "Internet-Draft"
-  },
-  "same-site-cookies": {
-    "authors": [ "M. West", "M. Goodwin" ],
-    "href": "https://tools.ietf.org/html/draft-west-first-party-cookies-07",
-    "title": "Same-site Cookies",
+  "RFC6265bis": {
+    "authors": [ "A. Barth", "M. West" ],
+    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02",
+    "title": "Cookies: HTTP State Management Mechanism",
     "publisher": "IETF",
     "status": "Internet-Draft"
   }
@@ -77,7 +63,7 @@ dl.domintro dt code {
 
 This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [[Service-Workers|service workers]].
 
-[[RFC6265|HTTP cookies]] have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html) for the web.
+[[RFC6265bis|HTTP cookies]] have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html) for the web.
 
 The synchronous single-threaded script-level {{Document/cookie|document.cookie}} interface to cookies has been a source of [complexity and performance woes](https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html) further exacerbated by the move in many browsers from:
   - a single browser process,
@@ -202,10 +188,10 @@ This API defaults cookie paths to `/` for cookie write operations, including del
 
 URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
 
-This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure-`flagged cookies from unsecured web origins [[cookie-alone]] and enforces special rules for the `__Host-` and `__Secure-` cookie name prefixes [[cookie-prefixes]].
+This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure-`flagged cookies from unsecured web origins and enforces special rules for the `__Host-` and `__Secure-` cookie name prefixes [[RFC6265bis]].
 
 This API defaults cookies to "Domain"-less, which in conjunction with "Secure" provides origin-scoped cookie
-behavior in most modern browsers. When practical the `__Host-` cookie name prefix ([[cookie-prefixes]]) should be used with these cookies so that cooperating browsers origin-scope them.
+behavior in most modern browsers. When practical the `__Host-` cookie name prefix should be used with these cookies so that cooperating browsers origin-scope them.
 
 Serialization of expiration times for non-session cookies in a special cookie-specific format has proven cumbersome,
 so this API allows JavaScript Date objects and numeric timestamps (milliseconds since the beginning of the Unix epoch) to be used instead. The inconsistently-implemented Max-Age parameter is not exposed, although similar functionality is available for the specific case of expiring a cookie.
@@ -245,10 +231,10 @@ with other modern user agents.
 ## Cookie ## {#cookie-concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie</dfn> is normatively defined for user agents by [[!RFC6265]] and modified by additional proposals.
+A <dfn>cookie</dfn> is normatively defined for user agents by [[!RFC6265bis]].
 
 <div dfn-for=cookie>
-Per [[!RFC6265]], a [=cookie=] has the following fields:
+A [=cookie=] has the following fields:
 <dfn>name</dfn>,
 <dfn>value</dfn>,
 <dfn>expiry-time</dfn>,
@@ -259,11 +245,9 @@ Per [[!RFC6265]], a [=cookie=] has the following fields:
 <dfn>persistent-flag</dfn>,
 <dfn>host-only-flag</dfn>,
 <dfn>secure-only-flag</dfn>,
-<dfn>http-only-flag</dfn>.
+<dfn>http-only-flag</dfn>,
+<dfn>same-site-flag</dfn>.
 
-Per [[!same-site-cookies]], a [=cookie=] also has a <dfn>samesite-flag</dfn> field.
-
-Issue: Make this a normative link.
 </div>
 
 <!-- ============================================================ -->
@@ -1026,7 +1010,7 @@ To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps
     Note: This is the same representation used for [=time values=] in [[ECMAScript]].
 
 1. Set |item|'s {{CookieListItem/secure}} to |cookie|'s [=cookie/secure-only-flag=].
-1. Switch on |cookie|'s [=cookie/samesite-flag=]:
+1. Switch on |cookie|'s [=cookie/same-site-flag=]:
     <dl class=switch>
     : "None"
     :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/unrestricted}}".
@@ -1131,7 +1115,7 @@ This API may have the unintended side-effect of making cookies easier to use and
 
 Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.
 
-Other surprises are documented in [[RFC6265#section-1|Section 1 of HTTP State Management Mechanism (RFC 6265)]] - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
+Other surprises are documented in [[RFC6265bis#section-1|Section 1 of Cookies: HTTP State Management Mechanism (RFC 6265bis)]] - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
 
 Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.
 
@@ -1139,7 +1123,7 @@ Further complicating this are historical differences in cookie-handling across m
 ## Prefixes ## {#prefixes}
 <!-- ============================================================ -->
 
-Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [[cookie-prefixes]] which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and &mdash; in the case of `__Host-` &mdash; disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
+Where feasible the examples use the `__Host-` and `__Secure-` name prefixes which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and &mdash; in the case of `__Host-` &mdash; disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
 
 Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.
 
