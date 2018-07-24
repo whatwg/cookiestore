@@ -145,8 +145,8 @@ This proposal also includes a power-efficient monitoring API to replace `setTime
 
 This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:
 
-    * [=set a cookie|write=] (or "set") cookies
-    * [=clearing|delete=] (or "expire") cookies
+    * [=write=] (or "set") cookies
+    * [=delete=] (or "expire") cookies
     * [=read=] (or "get") [=script-visible=] cookies
         * ... including for specified in-scope request paths in
             [[Service-Workers|service worker]] contexts
@@ -488,7 +488,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 
 <div class=note>
 
-You can set a cookie using these methods.  For example:
+<dfn>Writing</dfn> (setting) a cookie is done using these methods. For example:
 
 <div class="example">
 ```js
@@ -667,7 +667,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
 
 <div class=note>
 
-<dfn>Clearing</dfn> (deleting) a cookie is accomplished by expiration, that is by replacing it with an equivalent-scope cookie with
+<dfn>Deleting</dfn> (or clearing) a cookie is accomplished by expiration, that is by replacing it with an equivalent-scope cookie with
 an expiration in the past:
 
 ```js
@@ -750,6 +750,8 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, mu
 <!-- ============================================================ -->
 
 <div class=note>
+
+  <dfn>Monitoring</dfn> cookies is done by subscribing to change events.
 
   <dl class=domintro>
     <dt>await cookieStore .
