@@ -1074,8 +1074,6 @@ attributes are not exposed to script.
 
 <div class=algorithm>
 
-Issue(72): Specify the [=set a cookie=] algorithm.
-
 To <dfn>set a cookie</dfn> with
 |url|,
 |name|,
@@ -1088,10 +1086,34 @@ optional |expires|,
 |sameSite|,
 run the following steps:
 
-1. If ..., return failure.
-1. ...
-1. ... |name| ... |expires| ... |httpOnly| ...
+1. Let |attributes| be a [=list=].
+1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
+1. If |domain| is not null, then [=list/append=] \``Domain`\`/|domain| to |attributes|.
+1. [=list/Append=] \``Path`\`/|path| ([=UTF-8 encoded=]) to |attributes|.
+1. If |secure| is set, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
+1. If |httpOnly| is set, then [=list/append=] \``HttpOnly`\`/\`\` to |attributes|.
+1. Switch on |sameSite|:
+    <dl class=switch>
+      <dt> "`None`"
+      <dd> Do nothing.
+      <dt> "`Strict`"
+      <dd> [=list/Append=] \``SameSite`\`/\``Strict`\` to |attributes|.
+      <dt> "`Lax`"
+      <dd> [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
+    </dl>
+1. Perform the steps defined in [[!RFC6265bis]] for when the user agent "receives a cookie" with
+    |url| as `request-uri`,
+    |name| ([=UTF-8 encoded=]) as `cookie-name`,
+    |value| ([=UTF-8 encoded=]) as `cookie-value`,
+    and |attributes| as `cookie-attribute-list`.
 
+</div>
+
+<div class=algorithm>
+To <dfn>date serialize</dfn> a {{DOMTimeStamp}} |millis|,
+let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
+(assuming that there are exactly 86,400,000 milliseconds per day),
+and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[!RFC6265bis]].
 </div>
 
 <!-- ============================================================ -->
@@ -1099,8 +1121,6 @@ run the following steps:
 <!-- ============================================================ -->
 
 <div class=algorithm>
-
-Issue(73): Specify the [=delete a cookie=] algorithm.
 
 To <dfn>delete a cookie</dfn> with
 |url|,
@@ -1111,9 +1131,17 @@ To <dfn>delete a cookie</dfn> with
 |sameSite|,
 run the following steps:
 
-1. If ..., return failure.
-1. ...
-1. ... |name|
+1. Let |value| be the empty string.
+1. Let |expires| be 0.
+1. Run the steps to [=set a cookie=] with
+    |url|,
+    |name|,
+    |value|,
+    |expires|,
+    |domain|,
+    |path|,
+    |secure|, and
+    |sameSite|.
 
 </div>
 
