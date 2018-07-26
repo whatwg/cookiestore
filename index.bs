@@ -1134,9 +1134,10 @@ run the following steps:
 
 1. Let |value| be the empty string.
 1. Let |secure| be true.
+1. Let |httpOnly| be false.
 1. Let |sameSite| be "{{CookieSameSite/strict}}".
 
-    Note: The values for |value|, |secure|, and |sameSite| will not be persisted
+    Note: The values for |value|, |secure|, |httpOnly|, and |sameSite| will not be persisted
     by this algorithm.
 
 1. Return the results of running the steps to [=set a cookie=] with
@@ -1146,7 +1147,8 @@ run the following steps:
     |expires|,
     |domain|,
     |path|,
-    |secure|, and
+    |secure|,
+    |httpOnly|, and
     |sameSite|.
 
 </div>
