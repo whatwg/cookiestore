@@ -251,6 +251,19 @@ A [=cookie=] has the following fields:
 </div>
 
 <!-- ============================================================ -->
+## Extensions to Service Worker ## {#service-worker-extensions}
+<!-- ============================================================ -->
+
+[[Service-Workers]] defines [=service worker registration=], which this specification extends.
+
+A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=list=];
+each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
+<span dfn-for="cookie change subscription">
+a [=tuple=] of <dfn>name</dfn>, <dfn>url</dfn>, and <dfn>matchType</dfn>.
+</span>.
+
+
+<!-- ============================================================ -->
 # The {{CookieStore}} Interface # {#CookieStore}
 <!-- ============================================================ -->
 
@@ -845,11 +858,12 @@ The <dfn method for=CookieStore>subscribeToChanges(|subscriptions|)</dfn> method
 1. Let |registration| be |serviceWorker|'s associated [=containing service worker registration=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
-    1. [=list/For each=] |subscription| in |subscriptions|, run these steps:
-        1. Let |name| be |subscription|'s {{CookieStoreGetOptions/name}} member.
-        1. Let |url| be |subscription|'s {{CookieStoreGetOptions/url}} member.
-        1. Let |matchType| be |subscription|'s {{CookieStoreGetOptions/matchType}} member.
-        1. Append a tuple of (|name|, |url|, |matchType|) to |registration|'s associated [=cookie change subscription list=].
+    1. [=list/For each=] |entry| in |subscriptions|, run these steps:
+        1. Let |name| be |entry|'s {{CookieStoreGetOptions/name}} member.
+        1. Let |url| be |entry|'s {{CookieStoreGetOptions/url}} member.
+        1. Let |matchType| be |entry|'s {{CookieStoreGetOptions/matchType}} member.
+        1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|, |matchType|).
+        1. Append |subscription| to |registration|'s associated [=cookie change subscription list=].
 1. Return |p|.
 
 </div>
@@ -950,14 +964,6 @@ partial interface ServiceWorkerGlobalScope {
 </pre>
 
 The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=context object=]’s [=relevant settings object=]’s {{CookieStore}} object.
-
-A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=list=];
-each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
-<span dfn-for="cookie change subscription">
-a tuple of (<dfn>name</dfn>, <dfn>url</dfn>, <dfn>matchType</dfn>).
-</span>.
-
-Issue: Move the above to a Concepts section.
 
 <!-- ============================================================ -->
 # Algorithms # {#algorithms}
