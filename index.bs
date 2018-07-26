@@ -1009,19 +1009,20 @@ run the following steps:
 
 1. Perform the steps defined in [[!RFC6265bis]] to
     "compute the cookie-string from a cookie store*
-    with |url| as `request-uri`, resulting in `cookie-list`.
+    with |url| as `request-uri`.
     For the purposes of the steps, the `cookie-string` is being generated for a "non-HTTP" API.
-    The `cookie-string` itself is ignored.
+    The `cookie-string` itself is ignored, but the intermediate `cookie-list` value is used in subsequent steps.
 1. Let |list| be a new [=list=].
 1. [=list/For each=] |cookie| in `cookie-list`, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
+    1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
     1. Switch on |matchType|:
         <dl class=switch>
             : "{{CookieMatchType/equals}}"
-            :: If |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]) does not equal |name|,
+            :: If |cookieName| does not equal |name|,
                 then [=continue=].
             : "{{CookieMatchType/starts-with}}"
-            :: If |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]) does not start with |name|,
+            :: If |cookieName| does not start with |name|,
                 then [=continue=].
 
                 Note: If |name| is the empty string and |matchType| is "{{CookieMatchType/starts-with}}",
@@ -1032,8 +1033,6 @@ run the following steps:
 1. Return |list|.
 
 Issue: Define failure cases, if any.
-
-Issue: UTF-8 decode where necessary.
 
 </div>
 
