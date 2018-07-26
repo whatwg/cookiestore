@@ -1048,7 +1048,7 @@ To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps
 1. Set |item|'s {{CookieListItem/value}} to |cookie|'s [=cookie/value=] ([=UTF-8 decoded=]).
 1. Set |item|'s {{CookieListItem/domain}} to |cookie|'s [=cookie/domain=].
 1. Set |item|'s {{CookieListItem/path}} to |cookie|'s [=cookie/path=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/expires}} to |cookie|'s [=cookie/expiry-time=] ([=date parsed=]).
+1. Set |item|'s {{CookieListItem/expires}} to |cookie|'s [=cookie/expiry-time=] ([=as a timestamp=]).
 1. Set |item|'s {{CookieListItem/secure}} to |cookie|'s [=cookie/secure-only-flag=].
 1. Switch on |cookie|'s [=cookie/same-site-flag=]:
     <dl class=switch>
@@ -1072,7 +1072,7 @@ attributes are not exposed to script.
 </div>
 
 <div class=algorithm>
-To <dfn>date parse</dfn> a `cookie-date` |dateTime| as described by [[!RFC6265bis]],
+To represent a date and time |dateTime| <dfn>as a timestamp</dfn>,
 return the number of milliseconds from 00:00:00 UTC, 1 January 1970 to |dateTime|,
 (assuming that there are exactly 86,400,000 milliseconds per day).
 
@@ -1145,7 +1145,7 @@ To <dfn>delete a cookie</dfn> with
 |path|,
 run the following steps:
 
-1. Let |expires| be a {{DOMTimeStamp}} corresponding to the earliest representable date.
+1. Let |expires| be the earliest representable date represented [=as a timestamp=].
 
     Note: The exact value of |expires| is not important for the purposes of this algorithm,
     as long as it is in the past.
