@@ -1007,11 +1007,12 @@ optional |name|, and
 optional |matchType|,
 run the following steps:
 
-1. Perform the steps defined in [[!RFC6265bis]] to
-    "compute the cookie-string from a cookie store"
+1. Perform the steps defined in [[!RFC6265bis]] to "compute the cookie-string from a cookie store"
     with |url| as <var ignore>request-uri</var>.
+    The |cookie-string| itself is ignored, but the intermediate |cookie-list| is used in subsequent steps.
+
     For the purposes of the steps, the |cookie-string| is being generated for a "non-HTTP" API.
-    The |cookie-string| itself is ignored, but the intermediate |cookie-list| value is used in subsequent steps.
+
 1. Let |list| be a new [=list=].
 1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
