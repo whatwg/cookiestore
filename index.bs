@@ -1008,8 +1008,8 @@ optional |matchType|,
 run the following steps:
 
 1. Perform the steps defined in [[!RFC6265bis]] to
-    "compute the cookie-string from a cookie store*
-    with |url| as |request-uri|.
+    "compute the cookie-string from a cookie store"
+    with |url| as <var ignore>request-uri</var>.
     For the purposes of the steps, the |cookie-string| is being generated for a "non-HTTP" API.
     The |cookie-string| itself is ignored, but the intermediate |cookie-list| value is used in subsequent steps.
 1. Let |list| be a new [=list=].
@@ -1045,12 +1045,7 @@ To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps
 1. Set |item|'s {{CookieListItem/value}} to |cookie|'s [=cookie/value=] ([=UTF-8 decoded=]).
 1. Set |item|'s {{CookieListItem/domain}} to |cookie|'s [=cookie/domain=].
 1. Set |item|'s {{CookieListItem/path}} to |cookie|'s [=cookie/path=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/expires}} to |cookie|'s [=cookie/expiry-time=],
-    as the number of milliseconds since 00:00:00 UTC, 1 January 1970,
-    assuming that there are exactly 86,400,000 milliseconds per day.
-
-    Note: This is the same representation used for [=time values=] in [[ECMAScript]].
-
+1. Set |item|'s {{CookieListItem/expires}} to |cookie|'s [=cookie/expiry-time=] ([=date parsed=]).
 1. Set |item|'s {{CookieListItem/secure}} to |cookie|'s [=cookie/secure-only-flag=].
 1. Switch on |cookie|'s [=cookie/same-site-flag=]:
     <dl class=switch>
@@ -1072,6 +1067,15 @@ Note: The |cookie|'s
 attributes are not exposed to script.
 
 </div>
+
+<div class=algorithm>
+To <dfn>date parse</dfn> a `cookie-date` |dateTime| as described by [[!RFC6265bis]],
+return the number of milliseconds from 00:00:00 UTC, 1 January 1970 to |dateTime|,
+(assuming that there are exactly 86,400,000 milliseconds per day).
+
+Note: This is the same representation used for [=time values=] in [[ECMAScript]].
+</div>
+
 
 <!-- ============================================================ -->
 ## Set a Cookie ## {#set-cookie-algorithm}
@@ -1107,10 +1111,10 @@ run the following steps:
         :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
     </dl>
 1. Perform the steps defined in [[!RFC6265bis]] for when the user agent "receives a cookie" with
-    |url| as |request-uri|,
-    |name| ([=UTF-8 encoded=]) as |cookie-name|,
-    |value| ([=UTF-8 encoded=]) as |cookie-value|, and
-    |attributes| as |cookie-attribute-list|.
+    |url| as <var ignore>request-uri</var>,
+    |name| ([=UTF-8 encoded=]) as <var ignore>cookie-name</var>,
+    |value| ([=UTF-8 encoded=]) as <var ignore>cookie-value</var>, and
+    |attributes| as <var ignore>cookie-attribute-list</var>.
 
     For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
 
