@@ -1001,28 +1001,39 @@ The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=
 
 <div class=algorithm>
 
-Issue(69): Specify the [=query cookies=] algorithm.
-
 To <dfn>query cookies</dfn> with
 |url|,
 optional |name|, and
 optional |matchType|,
 run the following steps:
 
-1. If ..., return failure.
-1. ...
-1. ... |name| ... |url|
-1. ...
-1. ... being generated for a "non-HTTP" API ...
-1. ...
-1. ... |cookie-list| ...
+1. Perform the steps defined in [[!RFC6265bis]] to
+    "compute the cookie-string from a cookie store*
+    with |url| as `request-uri`, resulting in `cookie-list`.
+    For the purposes of the steps, the `cookie-string` is being generated for a "non-HTTP" API.
+    The `cookie-string` itself is ignored.
 1. Let |list| be a new [=list=].
-1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
+1. [=list/For each=] |cookie| in `cookie-list`, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
-    1.  ... |matchType| ... [=continue=] ...
+    1. Switch on |matchType|:
+        <dl class=switch>
+            : "{{CookieMatchType/equals}}"
+            :: If |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]) does not equal |name|,
+                then [=continue=].
+            : "{{CookieMatchType/starts-with}}"
+            :: If |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]) does not start with |name|,
+                then [=continue=].
+
+                Note: If |name| is the empty string and |matchType| is "{{CookieMatchType/starts-with}}",
+                then all cookies are matched.
+        </dl>
     1. Let |item| be the result of running the steps to [=create a CookieListItem=] from |cookie|.
     1. [=list/Append=] |item| to |list|.
 1. Return |list|.
+
+Issue: Define failure cases, if any.
+
+Issue: UTF-8 decode where necessary.
 
 </div>
 
@@ -1031,10 +1042,10 @@ run the following steps:
 To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps.
 
 1. Let |item| be a new {{CookieListItem}}.
-1. Set |item|'s {{CookieListItem/name}} to |cookie|'s [=cookie/name=].
-1. Set |item|'s {{CookieListItem/value}} to |cookie|'s [=cookie/value=].
+1. Set |item|'s {{CookieListItem/name}} to |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
+1. Set |item|'s {{CookieListItem/value}} to |cookie|'s [=cookie/value=] ([=UTF-8 decoded=]).
 1. Set |item|'s {{CookieListItem/domain}} to |cookie|'s [=cookie/domain=].
-1. Set |item|'s {{CookieListItem/path}} to |cookie|'s [=cookie/path=].
+1. Set |item|'s {{CookieListItem/path}} to |cookie|'s [=cookie/path=] ([=UTF-8 decoded=]).
 1. Set |item|'s {{CookieListItem/expires}} to |cookie|'s [=cookie/expiry-time=],
     as the number of milliseconds since 00:00:00 UTC, 1 January 1970,
     assuming that there are exactly 86,400,000 milliseconds per day.
@@ -1044,13 +1055,12 @@ To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps
 1. Set |item|'s {{CookieListItem/secure}} to |cookie|'s [=cookie/secure-only-flag=].
 1. Switch on |cookie|'s [=cookie/same-site-flag=]:
     <dl class=switch>
-    : "None"
-    :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/unrestricted}}".
-    : "Strict"
-    :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/strict}}".
-    : "Lax"
-    :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/lax}}".
-
+        : \``None`\`
+        :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/unrestricted}}".
+        : \``Strict`\`
+        :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/strict}}".
+        : \``Lax`\`
+        :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/lax}}".
     </dl>
 1. Return |item|.
 
