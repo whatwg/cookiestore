@@ -1086,16 +1086,16 @@ run the following steps:
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. If |domain| is not null, then [=list/append=] \``Domain`\`/|domain| to |attributes|.
 1. [=list/Append=] \``Path`\`/|path| ([=UTF-8 encoded=]) to |attributes|.
-1. If |secure| is set, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
-1. If |httpOnly| is set, then [=list/append=] \``HttpOnly`\`/\`\` to |attributes|.
+1. If |secure| is true, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
+1. If |httpOnly| is true, then [=list/append=] \``HttpOnly`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
     <dl class=switch>
-      <dt> "`None`"
-      <dd> Do nothing.
-      <dt> "`Strict`"
-      <dd> [=list/Append=] \``SameSite`\`/\``Strict`\` to |attributes|.
-      <dt> "`Lax`"
-      <dd> [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
+        : "{{CookieSameSite/unrestricted}}"
+        :: Do nothing.
+        : "{{CookieSameSite/strict}}"
+        :: [=list/Append=] \``SameSite`\`/\``Strict`\` to |attributes|.
+        : "{{CookieSameSite/lax}}"
+        :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
     </dl>
 1. Perform the steps defined in [[!RFC6265bis]] for when the user agent "receives a cookie" with
     |url| as `request-uri`,
