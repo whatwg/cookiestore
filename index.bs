@@ -16,21 +16,20 @@ Abstract: An asynchronous Javascript cookies API for documents and workers
 
 <pre class=biblio>
 {
-  "cookie-prefixes": {
-    "authors": [ "M. West" ],
-    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-cookie-prefixes-00",
-    "title": "Cookie Prefixes",
-    "publisher": "IETF",
-    "status": "Internet-Draft"
-  },
-  "cookie-alone": {
-    "authors": [ "M. West" ],
-    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-00",
-    "title": "Deprecate modification of 'secure' cookies from non-secure origins",
+  "RFC6265bis": {
+    "authors": [ "A. Barth", "M. West" ],
+    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02",
+    "title": "Cookies: HTTP State Management Mechanism",
     "publisher": "IETF",
     "status": "Internet-Draft"
   }
 }
+</pre>
+
+<pre class=anchors>
+spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
+    type: dfn
+        text: time values; url: sec-time-values-and-time-range
 </pre>
 
 <pre class=link-defaults>
@@ -64,7 +63,7 @@ dl.domintro dt code {
 
 This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [[Service-Workers|service workers]].
 
-[[RFC6265|HTTP cookies]] have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html) for the web.
+[[RFC6265bis|HTTP cookies]] have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html) for the web.
 
 The synchronous single-threaded script-level {{Document/cookie|document.cookie}} interface to cookies has been a source of [complexity and performance woes](https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html) further exacerbated by the move in many browsers from:
   - a single browser process,
@@ -189,10 +188,10 @@ This API defaults cookie paths to `/` for cookie write operations, including del
 
 URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
 
-This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure-`flagged cookies from unsecured web origins [[cookie-alone]] and enforces special rules for the `__Host-` and `__Secure-` cookie name prefixes [[cookie-prefixes]].
+This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure-`flagged cookies from unsecured web origins and enforces special rules for the `__Host-` and `__Secure-` cookie name prefixes [[RFC6265bis]].
 
 This API defaults cookies to "Domain"-less, which in conjunction with "Secure" provides origin-scoped cookie
-behavior in most modern browsers. When practical the `__Host-` cookie name prefix ([[cookie-prefixes]]) should be used with these cookies so that cooperating browsers origin-scope them.
+behavior in most modern browsers. When practical the `__Host-` cookie name prefix should be used with these cookies so that cooperating browsers origin-scope them.
 
 Serialization of expiration times for non-session cookies in a special cookie-specific format has proven cumbersome,
 so this API allows JavaScript Date objects and numeric timestamps (milliseconds since the beginning of the Unix epoch) to be used instead. The inconsistently-implemented Max-Age parameter is not exposed, although similar functionality is available for the specific case of expiring a cookie.
@@ -222,6 +221,46 @@ needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and
 with the additional side-effects that subsequent uses of {{Document/cookie|document.cookie}} to read a cookie read or written through this interface and subsequent uses of {{Document/cookie|document.cookie}} to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
 will change the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.
+
+
+<!-- ============================================================ -->
+# Concepts # {#concepts}
+<!-- ============================================================ -->
+
+<!-- ============================================================ -->
+## Cookie ## {#cookie-concept}
+<!-- ============================================================ -->
+
+A <dfn>cookie</dfn> is normatively defined for user agents by [[!RFC6265bis]].
+
+<div dfn-for=cookie>
+A [=cookie=] has the following fields:
+<dfn>name</dfn>,
+<dfn>value</dfn>,
+<dfn>expiry-time</dfn>,
+<dfn>domain</dfn>,
+<dfn>path</dfn>,
+<dfn>creation-time</dfn>,
+<dfn>last-access-time</dfn>,
+<dfn>persistent-flag</dfn>,
+<dfn>host-only-flag</dfn>,
+<dfn>secure-only-flag</dfn>,
+<dfn>http-only-flag</dfn>,
+<dfn>same-site-flag</dfn>.
+
+</div>
+
+<!-- ============================================================ -->
+## Extensions to Service Worker ## {#service-worker-extensions}
+<!-- ============================================================ -->
+
+[[Service-Workers]] defines [=service worker registration=], which this specification extends.
+
+A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=list=];
+each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
+<span dfn-for="cookie change subscription">
+a [=tuple=] of <dfn>name</dfn>, <dfn>url</dfn>, and <dfn>matchType</dfn>.
+</span>.
 
 
 <!-- ============================================================ -->
@@ -289,8 +328,6 @@ dictionary CookieStoreDeleteOptions {
   required USVString name;
   USVString? domain = null;
   USVString path = "/";
-  boolean secure = true;
-  CookieSameSite sameSite = "strict";
 };
 
 dictionary CookieListItem {
@@ -376,10 +413,11 @@ The <dfn method for=CookieStore>get(|name|)</dfn> method, when invoked, must run
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |name|.
+        |url| and |name|.
     1. If |list| is failure, reject |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], resolve |p| with undefined.
     1. Otherwise, resolve |p| with the first item of |list|.
@@ -392,11 +430,19 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
+1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
+    1. Let |parsed| be the result of running the [=basic URL parser=] on |options|' {{CookieStoreGetOptions/url}} dictionary member with |url|.
+    1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
+        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+    1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
+        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+    1. Set |url| to |parsed|.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present),
-        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |url|,
+        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present), and
         |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
     1. If |list| is failure, reject |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], resolve |p| with undefined.
@@ -449,10 +495,11 @@ The <dfn method for=CookieStore>getAll(|name|)</dfn> method, when invoked, must 
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |name|.
+        |url| and |name|.
     1. If |list| is failure, reject |p| with a {{TypeError}}.
     1. Otherwise, resolve |p| with |list|.
 1. Return |p|.
@@ -464,11 +511,19 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
+1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
+    1. Let |parsed| be the result of running the [=basic URL parser=] on |options|' {{CookieStoreGetOptions/url}} dictionary member with |url|.
+    1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
+        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+    1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
+        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+    1. Set |url| to |parsed|.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
-        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present),
-        |options|' {{CookieStoreGetOptions/url}} dictionary member (if present), and
+        |url|,
+        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present), and
         |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
     1. If |list| is failure, reject |p| with a {{TypeError}}.
     1. Otherwise, resolve |p| with |list|.
@@ -623,9 +678,11 @@ The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method, wh
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |r| be the result of running the steps to [=set a cookie=] with
+        |url|,
         |name|,
         |value|,
         |options|' {{CookieStoreSetOptions/expires}} dictionary member,
@@ -645,9 +702,11 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |r| be the result of running the steps to [=set a cookie=] with
+        |url|,
         |options|' {{CookieStoreSetExtraOptions/name}} dictionary member,
         |options|' {{CookieStoreSetExtraOptions/value}} dictionary member,
         |options|' {{CookieStoreSetOptions/expires}} dictionary member,
@@ -725,10 +784,16 @@ The <dfn method for=CookieStore>delete(|name|)</dfn> method, when invoked, must 
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |r| be the result of running the steps to [=delete a cookie=] with
-        |name|, null, "`/`", true, and "{{CookieSameSite/strict}}".
+        |url|,
+        |name|,
+        null,
+        "`/`",
+        true, and
+        "{{CookieSameSite/strict}}".
     1. If |r| is failure, reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
 1. Return |p|.
@@ -740,14 +805,14 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, mu
 
 1. Let |origin| be |environment|’s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return a new promise rejected with a "{{SecurityError}}" {{DOMException}}.
+1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
     1. Let |r| be the result of running the steps to [=delete a cookie=] with
+        |url|,
         |options|' {{CookieStoreDeleteOptions/name}} dictionary member,
-        |options|' {{CookieStoreDeleteOptions/domain}} dictionary member,
-        |options|' {{CookieStoreDeleteOptions/path}} dictionary member,
-        |options|' {{CookieStoreDeleteOptions/secure}} dictionary member, and
-        |options|' {{CookieStoreDeleteOptions/sameSite}} dictionary member.
+        |options|' {{CookieStoreDeleteOptions/domain}} dictionary member, and
+        |options|' {{CookieStoreDeleteOptions/path}} dictionary member.
     1. If |r| is failure, reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
 1. Return |p|.
@@ -819,11 +884,12 @@ The <dfn method for=CookieStore>subscribeToChanges(|subscriptions|)</dfn> method
 1. Let |registration| be |serviceWorker|'s associated [=containing service worker registration=].
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
-    1. [=list/For each=] |subscription| in |subscriptions|, run these steps:
-        1. Let |name| be |subscription|'s {{CookieStoreGetOptions/name}} member.
-        1. Let |url| be |subscription|'s {{CookieStoreGetOptions/url}} member.
-        1. Let |matchType| be |subscription|'s {{CookieStoreGetOptions/matchType}} member.
-        1. Append a tuple of (|name|, |url|, |matchType|) to |registration|'s associated [=cookie change subscription list=].
+    1. [=list/For each=] |entry| in |subscriptions|, run these steps:
+        1. Let |name| be |entry|'s {{CookieStoreGetOptions/name}} member.
+        1. Let |url| be |entry|'s {{CookieStoreGetOptions/url}} member.
+        1. Let |matchType| be |entry|'s {{CookieStoreGetOptions/matchType}} member.
+        1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|, |matchType|).
+        1. Append |subscription| to |registration|'s associated [=cookie change subscription list=].
 1. Return |p|.
 
 </div>
@@ -925,14 +991,6 @@ partial interface ServiceWorkerGlobalScope {
 
 The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=context object=]’s [=relevant settings object=]’s {{CookieStore}} object.
 
-A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=list=];
-each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
-<span dfn-for="cookie change subscription">
-a tuple of (<dfn>name</dfn>, <dfn>url</dfn>, <dfn>matchType</dfn>).
-</span>.
-
-Issue: Move the above to a Concepts section.
-
 <!-- ============================================================ -->
 # Algorithms # {#algorithms}
 <!-- ============================================================ -->
@@ -943,26 +1001,84 @@ Issue: Move the above to a Concepts section.
 
 <div class=algorithm>
 
-Issue(69): Specify the [=query cookies=] algorithm.
-
 To <dfn>query cookies</dfn> with
-optional |name|,
-optional |url|, and
+|url|,
+optional |name|, and
 optional |matchType|,
 run the following steps:
 
-1. If ..., return failure.
-1. ...
-1. ... |name| ... |url| ... |matchType| ...
-1. ...
+1. Perform the steps defined in [[!RFC6265bis]] to "compute the cookie-string from a cookie store"
+    with |url| as <var ignore>request-uri</var>.
+    The |cookie-string| itself is ignored, but the intermediate |cookie-list| is used in subsequent steps.
+
+    For the purposes of the steps, the |cookie-string| is being generated for a "non-HTTP" API.
+
 1. Let |list| be a new [=list=].
-1. ...
-1. ...
-1. ...
-1. ...
+1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
+    1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
+    1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
+    1. Switch on |matchType|:
+        <dl class=switch>
+            : unspecified
+            :: Do nothing.
+            : "{{CookieMatchType/equals}}"
+            :: If |cookieName| does not equal |name|,
+                then [=continue=].
+            : "{{CookieMatchType/starts-with}}"
+            :: If |cookieName| does not start with |name|,
+                then [=continue=].
+
+                Note: If |name| is the empty string and |matchType| is "{{CookieMatchType/starts-with}}",
+                then all cookies are matched.
+        </dl>
+    1. Let |item| be the result of running the steps to [=create a CookieListItem=] from |cookie|.
+    1. [=list/Append=] |item| to |list|.
 1. Return |list|.
 
+Issue: Define failure cases, if any.
+
 </div>
+
+<div class=algorithm>
+
+To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps.
+
+1. Let |item| be a new {{CookieListItem}}.
+1. Set |item|'s {{CookieListItem/name}} to |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
+1. Set |item|'s {{CookieListItem/value}} to |cookie|'s [=cookie/value=] ([=UTF-8 decoded=]).
+1. Set |item|'s {{CookieListItem/domain}} to |cookie|'s [=cookie/domain=].
+1. Set |item|'s {{CookieListItem/path}} to |cookie|'s [=cookie/path=] ([=UTF-8 decoded=]).
+1. Set |item|'s {{CookieListItem/expires}} to |cookie|'s [=cookie/expiry-time=] ([=as a timestamp=]).
+1. Set |item|'s {{CookieListItem/secure}} to |cookie|'s [=cookie/secure-only-flag=].
+1. Switch on |cookie|'s [=cookie/same-site-flag=]:
+    <dl class=switch>
+        : \``None`\`
+        :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/unrestricted}}".
+        : \``Strict`\`
+        :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/strict}}".
+        : \``Lax`\`
+        :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/lax}}".
+    </dl>
+1. Return |item|.
+
+Note: The |cookie|'s
+[=cookie/creation-time=],
+[=cookie/last-access-time=],
+[=cookie/persistent-flag=],
+[=cookie/host-only-flag=], and
+[=cookie/http-only-flag=]
+attributes are not exposed to script.
+
+</div>
+
+<div class=algorithm>
+To represent a date and time |dateTime| <dfn>as a timestamp</dfn>,
+return the number of milliseconds from 00:00:00 UTC, 1 January 1970 to |dateTime|,
+(assuming that there are exactly 86,400,000 milliseconds per day).
+
+Note: This is the same representation used for [=time values=] in [[ECMAScript]].
+</div>
+
 
 <!-- ============================================================ -->
 ## Set a Cookie ## {#set-cookie-algorithm}
@@ -970,9 +1086,8 @@ run the following steps:
 
 <div class=algorithm>
 
-Issue(72): Specify the [=set a cookie=] algorithm.
-
 To <dfn>set a cookie</dfn> with
+|url|,
 |name|,
 |value|,
 optional |expires|,
@@ -983,10 +1098,38 @@ optional |expires|,
 |sameSite|,
 run the following steps:
 
-1. If ..., return failure.
-1. ...
-1. ... |name| ... |expires| ... |httpOnly| ...
+1. Let |attributes| be a [=list=].
+1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
+1. If |domain| is not null, then [=list/append=] \``Domain`\`/|domain| to |attributes|.
+1. [=list/Append=] \``Path`\`/|path| ([=UTF-8 encoded=]) to |attributes|.
+1. If |secure| is true, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
+1. If |httpOnly| is true, then [=list/append=] \``HttpOnly`\`/\`\` to |attributes|.
+1. Switch on |sameSite|:
+    <dl class=switch>
+        : "{{CookieSameSite/unrestricted}}"
+        :: Do nothing.
+        : "{{CookieSameSite/strict}}"
+        :: [=list/Append=] \``SameSite`\`/\``Strict`\` to |attributes|.
+        : "{{CookieSameSite/lax}}"
+        :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
+    </dl>
+1. Perform the steps defined in [[!RFC6265bis]] for when the user agent "receives a cookie" with
+    |url| as <var ignore>request-uri</var>,
+    |name| ([=UTF-8 encoded=]) as <var ignore>cookie-name</var>,
+    |value| ([=UTF-8 encoded=]) as <var ignore>cookie-value</var>, and
+    |attributes| as <var ignore>cookie-attribute-list</var>.
 
+    For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
+
+</div>
+
+Issue: Define failure cases, if any.
+
+<div class=algorithm>
+To <dfn>date serialize</dfn> a {{DOMTimeStamp}} |millis|,
+let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
+(assuming that there are exactly 86,400,000 milliseconds per day),
+and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[!RFC6265bis]].
 </div>
 
 <!-- ============================================================ -->
@@ -995,22 +1138,40 @@ run the following steps:
 
 <div class=algorithm>
 
-Issue(73): Specify the [=delete a cookie=] algorithm.
-
 To <dfn>delete a cookie</dfn> with
+|url|,
 |name|,
-|domain|,
+|domain| and
 |path|,
-|secure| flag, and
-|sameSite|,
 run the following steps:
 
-1. If ..., return failure.
-1. ...
-1. ... |name|
+1. Let |expires| be the earliest representable date represented [=as a timestamp=].
+
+    Note: The exact value of |expires| is not important for the purposes of this algorithm,
+    as long as it is in the past.
+
+1. Let |value| be the empty string.
+1. Let |secure| be true.
+1. Let |httpOnly| be false.
+1. Let |sameSite| be "{{CookieSameSite/strict}}".
+
+    Note: The values for |value|, |secure|, |httpOnly|, and |sameSite| will not be persisted
+    by this algorithm.
+
+1. Return the results of running the steps to [=set a cookie=] with
+    |url|,
+    |name|,
+    |value|,
+    |expires|,
+    |domain|,
+    |path|,
+    |secure|,
+    |httpOnly|, and
+    |sameSite|.
 
 </div>
 
+Issue: Define failure cases, if any.
 
 <!-- ============================================================ -->
 # Security # {#security}
@@ -1047,7 +1208,7 @@ This API may have the unintended side-effect of making cookies easier to use and
 
 Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.
 
-Other surprises are documented in [[RFC6265#section-1|Section 1 of HTTP State Management Mechanism (RFC 6265)]] - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
+Other surprises are documented in [[RFC6265bis#section-1|Section 1 of Cookies: HTTP State Management Mechanism (RFC 6265bis)]] - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
 
 Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.
 
@@ -1055,7 +1216,7 @@ Further complicating this are historical differences in cookie-handling across m
 ## Prefixes ## {#prefixes}
 <!-- ============================================================ -->
 
-Where feasible the examples use the `__Host-` and `__Secure-` name prefixes from [[cookie-prefixes]] which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and &mdash; in the case of `__Host-` &mdash; disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
+Where feasible the examples use the `__Host-` and `__Secure-` name prefixes which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and &mdash; in the case of `__Host-` &mdash; disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
 
 Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.
 
