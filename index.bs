@@ -1019,6 +1019,8 @@ run the following steps:
     1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
     1. Switch on |matchType|:
         <dl class=switch>
+            : unspecified
+            :: Do nothing.
             : "{{CookieMatchType/equals}}"
             :: If |cookieName| does not equal |name|,
                 then [=continue=].
