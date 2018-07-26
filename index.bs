@@ -1103,6 +1103,8 @@ run the following steps:
     |value| ([=UTF-8 encoded=]) as `cookie-value`,
     and |attributes| as `cookie-attribute-list`.
 
+    For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
+
 </div>
 
 Issue: Define failure cases, if any.
