@@ -1009,11 +1009,11 @@ run the following steps:
 
 1. Perform the steps defined in [[!RFC6265bis]] to
     "compute the cookie-string from a cookie store*
-    with |url| as `request-uri`.
-    For the purposes of the steps, the `cookie-string` is being generated for a "non-HTTP" API.
-    The `cookie-string` itself is ignored, but the intermediate `cookie-list` value is used in subsequent steps.
+    with |url| as |request-uri|.
+    For the purposes of the steps, the |cookie-string| is being generated for a "non-HTTP" API.
+    The |cookie-string| itself is ignored, but the intermediate |cookie-list| value is used in subsequent steps.
 1. Let |list| be a new [=list=].
-1. [=list/For each=] |cookie| in `cookie-list`, run these steps:
+1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
     1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
     1. Switch on |matchType|:
@@ -1107,10 +1107,10 @@ run the following steps:
         :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
     </dl>
 1. Perform the steps defined in [[!RFC6265bis]] for when the user agent "receives a cookie" with
-    |url| as `request-uri`,
-    |name| ([=UTF-8 encoded=]) as `cookie-name`,
-    |value| ([=UTF-8 encoded=]) as `cookie-value`,
-    and |attributes| as `cookie-attribute-list`.
+    |url| as |request-uri|,
+    |name| ([=UTF-8 encoded=]) as |cookie-name|,
+    |value| ([=UTF-8 encoded=]) as |cookie-value|, and
+    |attributes| as |cookie-attribute-list|.
 
     For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
 
