@@ -188,7 +188,7 @@ This API defaults cookie paths to `/` for cookie write operations, including del
 
 URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
 
-This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure-`flagged cookies from unsecured web origins and enforces special rules for the `__Host-` and `__Secure-` cookie name prefixes [[RFC6265bis]].
+This API defaults cookies to "Secure" when they are written from a secure web origin. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure-`flagged cookies from unsecured web origins and enforces special rules for the [[RFC6265bis#section-4.1.3.2|__Host-]] and [[RFC6265bis#section-4.1.3.1|__Secure-]] cookie name prefixes.
 
 This API defaults cookies to "Domain"-less, which in conjunction with "Secure" provides origin-scoped cookie
 behavior in most modern browsers. When practical the `__Host-` cookie name prefix should be used with these cookies so that cooperating browsers origin-scope them.
@@ -231,10 +231,10 @@ with other modern user agents.
 ## Cookie ## {#cookie-concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie</dfn> is normatively defined for [=user agents=] by [[!RFC6265bis]].
+A <dfn>cookie</dfn> is normatively defined for [=user agents=] by [[RFC6265bis#section-5|Cookies: HTTP State Management Mechanism §User Agent Requirements]].
 
 <div dfn-for=cookie>
-A [=cookie=] has the following fields:
+Per [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage Model]], a [=cookie=] has the following fields:
 <dfn>name</dfn>,
 <dfn>value</dfn>,
 <dfn>expiry-time</dfn>,
@@ -254,7 +254,7 @@ A [=cookie=] has the following fields:
 ## Cookie Store ## {#cookie-store--concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie store</dfn> is normatively defined for [=user agents=] by [[!RFC6265bis]].
+A <dfn>cookie store</dfn> is normatively defined for [=user agents=] by [[!RFC6265bis|Cookies: HTTP State Management Mechanism §User Agent Requirements]].
 
 When any of the following conditions occur for a [=cookie store=], perform the steps to [=process cookie changes=].
 
@@ -1024,7 +1024,7 @@ optional |name|, and
 optional |matchType|,
 run the following steps:
 
-1. Perform the steps defined in [[!RFC6265bis]] to "compute the cookie-string from a cookie store"
+1. Perform the steps defined in [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §The Cookie Header]] to "compute the cookie-string from a cookie store"
     with |url| as <var ignore>request-uri</var>.
     The |cookie-string| itself is ignored, but the intermediate |cookie-list| is used in subsequent steps.
 
@@ -1130,7 +1130,7 @@ run the following steps:
         : "{{CookieSameSite/lax}}"
         :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
     </dl>
-1. Perform the steps defined in [[!RFC6265bis]] for when the user agent "receives a cookie" with
+1. Perform the steps defined in [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage Model]] for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
     |name| ([=UTF-8 encoded=]) as <var ignore>cookie-name</var>,
     |value| ([=UTF-8 encoded=]) as <var ignore>cookie-value</var>, and
@@ -1146,7 +1146,7 @@ Issue: Define failure cases, if any.
 To <dfn>date serialize</dfn> a {{DOMTimeStamp}} |millis|,
 let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
 (assuming that there are exactly 86,400,000 milliseconds per day),
-and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[!RFC6265bis]].
+and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[RFC6265bis#section-5.1.1|Cookies: HTTP State Management Mechanism §Dates]].
 </div>
 
 <!-- ============================================================ -->
@@ -1213,7 +1213,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
 <div class=algorithm>
 
 The <dfn>observable changes</dfn> for |url| are the [=/set=] of [=cookie changes=] to [=cookies=] in a [=cookie store=]
-which meet the requirements in step 1 of [[RFC6265bis]]'s steps to "compute the cookie-string from a cookie store"
+which meet the requirements in step 1 of [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §The Cookie Header]]'s steps to "compute the cookie-string from a cookie store"
 with |url| as <var ignore>request-uri</var>, for a "non-HTTP" API.
 
 A <dfn>cookie change</dfn> is a [=cookie=] and a type (either *changed* or *deleted*):
