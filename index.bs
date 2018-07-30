@@ -328,8 +328,6 @@ dictionary CookieStoreDeleteOptions {
   required USVString name;
   USVString? domain = null;
   USVString path = "/";
-  boolean secure = true;
-  CookieSameSite sameSite = "strict";
 };
 
 dictionary CookieListItem {
@@ -813,10 +811,8 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, mu
     1. Let |r| be the result of running the steps to [=delete a cookie=] with
         |url|,
         |options|' {{CookieStoreDeleteOptions/name}} dictionary member,
-        |options|' {{CookieStoreDeleteOptions/domain}} dictionary member,
-        |options|' {{CookieStoreDeleteOptions/path}} dictionary member,
-        |options|' {{CookieStoreDeleteOptions/secure}} dictionary member, and
-        |options|' {{CookieStoreDeleteOptions/sameSite}} dictionary member.
+        |options|' {{CookieStoreDeleteOptions/domain}} dictionary member, and
+        |options|' {{CookieStoreDeleteOptions/path}} dictionary member.
     1. If |r| is failure, reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
 1. Return |p|.
@@ -1074,8 +1070,6 @@ attributes are not exposed to script.
 
 <div class=algorithm>
 
-Issue(72): Specify the [=set a cookie=] algorithm.
-
 To <dfn>set a cookie</dfn> with
 |url|,
 |name|,
@@ -1088,10 +1082,38 @@ optional |expires|,
 |sameSite|,
 run the following steps:
 
-1. If ..., return failure.
-1. ...
-1. ... |name| ... |expires| ... |httpOnly| ...
+1. Let |attributes| be a [=list=].
+1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
+1. If |domain| is not null, then [=list/append=] \``Domain`\`/|domain| to |attributes|.
+1. [=list/Append=] \``Path`\`/|path| ([=UTF-8 encoded=]) to |attributes|.
+1. If |secure| is true, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
+1. If |httpOnly| is true, then [=list/append=] \``HttpOnly`\`/\`\` to |attributes|.
+1. Switch on |sameSite|:
+    <dl class=switch>
+        : "{{CookieSameSite/unrestricted}}"
+        :: Do nothing.
+        : "{{CookieSameSite/strict}}"
+        :: [=list/Append=] \``SameSite`\`/\``Strict`\` to |attributes|.
+        : "{{CookieSameSite/lax}}"
+        :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
+    </dl>
+1. Perform the steps defined in [[!RFC6265bis]] for when the user agent "receives a cookie" with
+    |url| as `request-uri`,
+    |name| ([=UTF-8 encoded=]) as `cookie-name`,
+    |value| ([=UTF-8 encoded=]) as `cookie-value`,
+    and |attributes| as `cookie-attribute-list`.
 
+    For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
+
+</div>
+
+Issue: Define failure cases, if any.
+
+<div class=algorithm>
+To <dfn>date serialize</dfn> a {{DOMTimeStamp}} |millis|,
+let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
+(assuming that there are exactly 86,400,000 milliseconds per day),
+and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[!RFC6265bis]].
 </div>
 
 <!-- ============================================================ -->
@@ -1100,23 +1122,40 @@ run the following steps:
 
 <div class=algorithm>
 
-Issue(73): Specify the [=delete a cookie=] algorithm.
-
 To <dfn>delete a cookie</dfn> with
 |url|,
 |name|,
-|domain|,
+|domain| and
 |path|,
-|secure| flag, and
-|sameSite|,
 run the following steps:
 
-1. If ..., return failure.
-1. ...
-1. ... |name|
+1. Let |expires| be a {{DOMTimeStamp}} corresponding to the earliest representable date.
+
+    Note: The exact value of |expires| is not important for the purposes of this algorithm,
+    as long as it is in the past.
+
+1. Let |value| be the empty string.
+1. Let |secure| be true.
+1. Let |httpOnly| be false.
+1. Let |sameSite| be "{{CookieSameSite/strict}}".
+
+    Note: The values for |value|, |secure|, |httpOnly|, and |sameSite| will not be persisted
+    by this algorithm.
+
+1. Return the results of running the steps to [=set a cookie=] with
+    |url|,
+    |name|,
+    |value|,
+    |expires|,
+    |domain|,
+    |path|,
+    |secure|,
+    |httpOnly|, and
+    |sameSite|.
 
 </div>
 
+Issue: Define failure cases, if any.
 
 <!-- ============================================================ -->
 # Security # {#security}
