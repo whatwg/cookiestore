@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version 9c7b3c1bf4afcf8eca4fd3a1529a298ee35be006" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="0e618f85abcfdfee6f47dc04df7ffb54fdc4c84a" name="document-revision">
+  <meta content="b432ed58e1c438b27cfd1eedbf54a0102fe922ab" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -2512,9 +2512,9 @@ then all cookies are matched.</p>
      <li data-md>
       <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value">value</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-value" id="ref-for-cookie-value">value</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode②">UTF-8 decoded</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-domain" id="ref-for-dom-cookielistitem-domain">domain</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-domain" id="ref-for-cookie-domain">domain</a>.</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-domain" id="ref-for-dom-cookielistitem-domain">domain</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-domain" id="ref-for-cookie-domain">domain</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode③">UTF-8 decoded</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-path" id="ref-for-dom-cookielistitem-path">path</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-path" id="ref-for-cookie-path">path</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode③">UTF-8 decoded</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-path" id="ref-for-dom-cookielistitem-path">path</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-path" id="ref-for-cookie-path">path</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode④">UTF-8 decoded</a>).</p>
      <li data-md>
       <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-expires" id="ref-for-dom-cookielistitem-expires">expires</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-expiry-time" id="ref-for-cookie-expiry-time">expiry-time</a> (<a data-link-type="dfn" href="#as-a-timestamp" id="ref-for-as-a-timestamp">as a timestamp</a>).</p>
      <li data-md>
@@ -2554,9 +2554,9 @@ run the following steps:</p>
      <li data-md>
       <p>If <var>expires</var> is given, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append①">append</a> `<code>Expires</code>`/<var>expires</var> (<a data-link-type="dfn" href="#date-serialize" id="ref-for-date-serialize">date serialized</a>) to <var>attributes</var>.</p>
      <li data-md>
-      <p>If <var>domain</var> is not null, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append②">append</a> `<code>Domain</code>`/<var>domain</var> to <var>attributes</var>.</p>
+      <p>If <var>domain</var> is not null, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append②">append</a> `<code>Domain</code>`/<var>domain</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode">UTF-8 encoded</a>) to <var>attributes</var>.</p>
      <li data-md>
-      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append③">Append</a> `<code>Path</code>`/<var>path</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode">UTF-8 encoded</a>) to <var>attributes</var>.</p>
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append③">Append</a> `<code>Path</code>`/<var>path</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode①">UTF-8 encoded</a>) to <var>attributes</var>.</p>
      <li data-md>
       <p>If <var>secure</var> is true, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append④">append</a> `<code>Secure</code>`/`` to <var>attributes</var>.</p>
      <li data-md>
@@ -2575,7 +2575,7 @@ run the following steps:</p>
         <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑦">Append</a> `<code>SameSite</code>`/`<code>Lax</code>` to <var>attributes</var>.</p>
       </dl>
      <li data-md>
-      <p>Perform the steps defined in <a data-link-type="biblio" href="#biblio-rfc6265bis">[RFC6265bis]</a> for when the user agent "receives a cookie" with <var>url</var> as <var>request-uri</var>, <var>name</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode①">UTF-8 encoded</a>) as <var>cookie-name</var>, <var>value</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode②">UTF-8 encoded</a>) as <var>cookie-value</var>, and <var>attributes</var> as <var>cookie-attribute-list</var>.</p>
+      <p>Perform the steps defined in <a data-link-type="biblio" href="#biblio-rfc6265bis">[RFC6265bis]</a> for when the user agent "receives a cookie" with <var>url</var> as <var>request-uri</var>, <var>name</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode②">UTF-8 encoded</a>) as <var>cookie-name</var>, <var>value</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode③">UTF-8 encoded</a>) as <var>cookie-value</var>, and <var>attributes</var> as <var>cookie-attribute-list</var>.</p>
       <p>For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.</p>
     </ol>
    </div>
@@ -3081,13 +3081,13 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="term-for-utf-8-decode">
    <a href="https://encoding.spec.whatwg.org/#utf-8-decode">https://encoding.spec.whatwg.org/#utf-8-decode</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-utf-8-decode">5.1. Query Cookies</a> <a href="#ref-for-utf-8-decode①">(2)</a> <a href="#ref-for-utf-8-decode②">(3)</a> <a href="#ref-for-utf-8-decode③">(4)</a>
+    <li><a href="#ref-for-utf-8-decode">5.1. Query Cookies</a> <a href="#ref-for-utf-8-decode①">(2)</a> <a href="#ref-for-utf-8-decode②">(3)</a> <a href="#ref-for-utf-8-decode③">(4)</a> <a href="#ref-for-utf-8-decode④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-utf-8-encode">
    <a href="https://encoding.spec.whatwg.org/#utf-8-encode">https://encoding.spec.whatwg.org/#utf-8-encode</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-utf-8-encode">5.2. Set a Cookie</a> <a href="#ref-for-utf-8-encode①">(2)</a> <a href="#ref-for-utf-8-encode②">(3)</a>
+    <li><a href="#ref-for-utf-8-encode">5.2. Set a Cookie</a> <a href="#ref-for-utf-8-encode①">(2)</a> <a href="#ref-for-utf-8-encode②">(3)</a> <a href="#ref-for-utf-8-encode③">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-window">
