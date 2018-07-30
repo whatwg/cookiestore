@@ -231,7 +231,7 @@ with other modern user agents.
 ## Cookie ## {#cookie-concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie</dfn> is normatively defined for user agents by [[!RFC6265bis]].
+A <dfn>cookie</dfn> is normatively defined for [=user agents=] by [[!RFC6265bis]].
 
 <div dfn-for=cookie>
 A [=cookie=] has the following fields:
@@ -249,6 +249,21 @@ A [=cookie=] has the following fields:
 <dfn>same-site-flag</dfn>.
 
 </div>
+
+<!-- ============================================================ -->
+## Cookie Store ## {#cookie-store--concept}
+<!-- ============================================================ -->
+
+A <dfn>cookie store</dfn> is normatively defined for [=user agents=] by [[!RFC6265bis]].
+
+When any of the following conditions occur for a [=cookie store=], perform the steps to [=process cookie changes=].
+
+* A newly-created [=cookie=] is inserted into the [=cookie store=].
+* A user agent evicts expired [=cookies=] from the [=cookie store=].
+* A user agent removes excess [=cookies=] from the [=cookie store=].
+
+Issue: How about when "the current session is over" for non-persistent cookies?
+
 
 <!-- ============================================================ -->
 ## Extensions to Service Worker ## {#service-worker-extensions}
@@ -1172,6 +1187,61 @@ run the following steps:
 </div>
 
 Issue: Define failure cases, if any.
+
+
+<!-- ============================================================ -->
+## Process Changes ## {#process-changes}
+<!-- ============================================================ -->
+
+<div class=algorithm>
+
+To <dfn>process cookie changes</dfn>, run the following steps:
+
+1. For every {{Window}} |window|, run the following steps:
+    1. Let |url| be |window|'s [=creation URL=].
+    1. Let |changes| be the [=observable changes=] for |url|.
+    1. If |changes| is not empty, [=fire a change event=] named "`change`" with |changes| at |window|'s {{CookieStore}}.
+1. For every {{ServiceWorkerGlobalScope}} |worker|, run the following steps:
+    1. Let |url| be |worker|'s [=creation URL=].
+    1. Let |changes| be the [=observable changes=] for |url|.
+    1. If |changes| is not empty, [=fire a change event=] named "`cookiechange`" with |changes| at |worker|.
+
+</div>
+
+<div class=algorithm>
+
+The <dfn>observable changes</dfn> for |url| are the [=/set=] of [=cookie changes=] to [=cookies=] in a [=cookie store=]
+which meet the requirements in step 1 of [[RFC6265bis]]'s steps to "compute the cookie-string from a cookie store"
+with |url| as <var ignore>request-uri</var>, for a "non-HTTP" API.
+
+A <dfn>cookie change</dfn> is a [=cookie=] and a type (either *changed* or *deleted*):
+
+* A [=cookie=] which is removed due to an insertion of another [=cookie=] with the same [=cookie/name=], [=cookie/domain=], and [=cookie/path=] is ignored.
+* A newly-created [=cookie=] which is not immediately evicted is considered *changed*.
+* A newly-created [=cookie=] which is immediately evicted is considered *deleted*.
+* A [=cookie=] which is otherwise evicted or removed is considered *deleted*
+
+</div>
+
+<div class=algorithm>
+
+To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run the following steps:
+
+1. Let |event| be the result of [=creating an Event=] using {{CookieChangeEvent}}.
+1. Set |event|'s {{Event/type}} attribute to |type|.
+1. Set |event|'s {{Event/bubbles}} and {{Event/cancelable}} attributes to false.
+1. Let |changedList| be a new [=list=].
+1. Let |deletedList| be a new [=list=].
+1. [=set/For each=] |change| in |changes|, run these steps:
+    1. Let |item| be the result of running the steps to [=create a CookieListItem=] from |change|'s cookie.
+    1. If |change|'s type is *changed*, then [=list/append=] |item| to |changedList|.
+    1. Otherwise, [=list/append=] |item| to |deletedList|.
+1. Set |event|'s {{CookieChangeEvent/changed}} attribute to |changedList|.
+1. Set |event|'s {{CookieChangeEvent/deleted}} attribute to |deletedList|.
+1. [=Dispatch=] |event| at |target|.
+
+</div>
+
 
 <!-- ============================================================ -->
 # Security # {#security}
