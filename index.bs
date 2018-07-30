@@ -975,6 +975,8 @@ dictionary CookieChangeEventInit : EventInit {
 };
 </pre>
 
+The {{CookieChangeEvent/changed}} and {{CookieChangeEvent/deleted}} attributes must return the value they were initialized to.
+
 <!-- ============================================================ -->
 # Global Interfaces # {#globals}
 <!-- ============================================================ -->
@@ -1235,7 +1237,9 @@ To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run t
 1. [=set/For each=] |change| in |changes|, run these steps:
     1. Let |item| be the result of running the steps to [=create a CookieListItem=] from |change|'s cookie.
     1. If |change|'s type is *changed*, then [=list/append=] |item| to |changedList|.
-    1. Otherwise, [=list/append=] |item| to |deletedList|.
+    1. Otherwise, run these steps:
+        1. Set |item|'s {{CookieListItem/value}} to undefined.
+        1. [=list/Append=] |item| to |deletedList|.
 1. Set |event|'s {{CookieChangeEvent/changed}} attribute to |changedList|.
 1. Set |event|'s {{CookieChangeEvent/deleted}} attribute to |deletedList|.
 1. [=Dispatch=] |event| at |target|.
