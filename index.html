@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version 9c7b3c1bf4afcf8eca4fd3a1529a298ee35be006" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="b432ed58e1c438b27cfd1eedbf54a0102fe922ab" name="document-revision">
+  <meta content="9c94b50b9730aeb3e8749ff420c872356aa32b2a" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -2437,6 +2437,7 @@ and against <code class="idl"><a data-link-type="idl" href="https://w3c.github.i
   <a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist⑤"><c- n>CookieList</c-></a> <dfn class="idl-code" data-dfn-for="CookieChangeEventInit" data-dfn-type="dict-member" data-export data-type="CookieList " id="dom-cookiechangeeventinit-deleted"><code><c- g>deleted</c-></code><a class="self-link" href="#dom-cookiechangeeventinit-deleted"></a></dfn>;
 };
 </pre>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiechangeevent-changed" id="ref-for-dom-cookiechangeevent-changed">changed</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiechangeevent-deleted" id="ref-for-dom-cookiechangeevent-deleted">deleted</a></code> attributes must return the value they were initialized to.</p>
    <h2 class="heading settled" data-level="4" id="globals"><span class="secno">4. </span><span class="content">Global Interfaces</span><a class="self-link" href="#globals"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="Window"><span class="secno">4.1. </span><span class="content">The Window Interface</span><a class="self-link" href="#Window"></a></h3>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext②"><c- g>SecureContext</c-></a>]
@@ -2670,12 +2671,18 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
        <li data-md>
         <p>If <var>change</var>’s type is <em>changed</em>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑧">append</a> <var>item</var> to <var>changedList</var>.</p>
        <li data-md>
-        <p>Otherwise, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑨">append</a> <var>item</var> to <var>deletedList</var>.</p>
+        <p>Otherwise, run these steps:</p>
+        <ol>
+         <li data-md>
+          <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value①">value</a></code> to undefined.</p>
+         <li data-md>
+          <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑨">Append</a> <var>item</var> to <var>deletedList</var>.</p>
+        </ol>
       </ol>
      <li data-md>
-      <p>Set <var>event</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiechangeevent-changed" id="ref-for-dom-cookiechangeevent-changed">changed</a></code> attribute to <var>changedList</var>.</p>
+      <p>Set <var>event</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiechangeevent-changed" id="ref-for-dom-cookiechangeevent-changed①">changed</a></code> attribute to <var>changedList</var>.</p>
      <li data-md>
-      <p>Set <var>event</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiechangeevent-deleted" id="ref-for-dom-cookiechangeevent-deleted">deleted</a></code> attribute to <var>deletedList</var>.</p>
+      <p>Set <var>event</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiechangeevent-deleted" id="ref-for-dom-cookiechangeevent-deleted①">deleted</a></code> attribute to <var>deletedList</var>.</p>
      <li data-md>
       <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-dispatch" id="ref-for-concept-event-dispatch①">Dispatch</a> <var>event</var> at <var>target</var>.</p>
     </ol>
@@ -3937,6 +3944,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <b><a href="#dom-cookielistitem-value">#dom-cookielistitem-value</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookielistitem-value">5.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookielistitem-value①">5.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-domain">
@@ -4089,13 +4097,15 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="dom-cookiechangeevent-changed">
    <b><a href="#dom-cookiechangeevent-changed">#dom-cookiechangeevent-changed</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiechangeevent-changed">5.4. Process Changes</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-changed">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-changed①">5.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiechangeevent-deleted">
    <b><a href="#dom-cookiechangeevent-deleted">#dom-cookiechangeevent-deleted</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiechangeevent-deleted">5.4. Process Changes</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-deleted">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-deleted①">5.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiechangeeventinit">
