@@ -449,9 +449,9 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
 1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
     1. Let |parsed| be the result of running the [=basic URL parser=] on |options|' {{CookieStoreGetOptions/url}} dictionary member with |url|.
     1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
-        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+        then return a new promise rejected with a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
-        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+        then return a new promise rejected with a {{TypeError}}.
     1. Set |url| to |parsed|.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
@@ -530,9 +530,9 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
     1. Let |parsed| be the result of running the [=basic URL parser=] on |options|' {{CookieStoreGetOptions/url}} dictionary member with |url|.
     1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
-        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+        then return a new promise rejected with a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
-        then return a new promise rejected with an "{{InvalidStateError}}" {{DOMException}}.
+        then return a new promise rejected with a {{TypeError}}.
     1. Set |url| to |parsed|.
 1. Let |p| be a new promise.
 1. Run the following steps in parallel:
