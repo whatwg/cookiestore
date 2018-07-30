@@ -1061,7 +1061,7 @@ To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps
 1. Let |item| be a new {{CookieListItem}}.
 1. Set |item|'s {{CookieListItem/name}} to |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
 1. Set |item|'s {{CookieListItem/value}} to |cookie|'s [=cookie/value=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/domain}} to |cookie|'s [=cookie/domain=].
+1. Set |item|'s {{CookieListItem/domain}} to |cookie|'s [=cookie/domain=] ([=UTF-8 decoded=]).
 1. Set |item|'s {{CookieListItem/path}} to |cookie|'s [=cookie/path=] ([=UTF-8 decoded=]).
 1. Set |item|'s {{CookieListItem/expires}} to |cookie|'s [=cookie/expiry-time=] ([=as a timestamp=]).
 1. Set |item|'s {{CookieListItem/secure}} to |cookie|'s [=cookie/secure-only-flag=].
@@ -1115,7 +1115,7 @@ run the following steps:
 
 1. Let |attributes| be a [=list=].
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
-1. If |domain| is not null, then [=list/append=] \``Domain`\`/|domain| to |attributes|.
+1. If |domain| is not null, then [=list/append=] \``Domain`\`/|domain| ([=UTF-8 encoded=]) to |attributes|.
 1. [=list/Append=] \``Path`\`/|path| ([=UTF-8 encoded=]) to |attributes|.
 1. If |secure| is true, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
 1. If |httpOnly| is true, then [=list/append=] \``HttpOnly`\`/\`\` to |attributes|.
