@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version 9c7b3c1bf4afcf8eca4fd3a1529a298ee35be006" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="639db011a43bde7908684457885b60fbd388da6e" name="document-revision">
+  <meta content="0e618f85abcfdfee6f47dc04df7ffb54fdc4c84a" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -1928,10 +1928,10 @@ getOneSimpleOriginCookieAsync<c- p>().</c->then<c- p>(</c->
         <p>Let <var>parsed</var> be the result of running the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser">basic URL parser</a> on <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url①">url</a></code> dictionary member with <var>url</var>.</p>
        <li data-md>
         <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object" id="ref-for-current-global-object">current global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> object and <var>parsed</var> does not <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-equals" id="ref-for-concept-url-equals">equal</a> <var>url</var>,
-then return a new promise rejected with an "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#invalidstateerror" id="ref-for-invalidstateerror">InvalidStateError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code>.</p>
+then return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①">TypeError</a></code>.</p>
        <li data-md>
         <p>If <var>parsed</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a> and <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin①">origin</a> are not the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a>,
-then return a new promise rejected with an "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#invalidstateerror" id="ref-for-invalidstateerror①">InvalidStateError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException③">DOMException</a></code>.</p>
+then return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror②">TypeError</a></code>.</p>
        <li data-md>
         <p>Set <var>url</var> to <var>parsed</var>.</p>
       </ol>
@@ -1943,7 +1943,7 @@ then return a new promise rejected with an "<code class="idl"><a data-link-type=
        <li data-md>
         <p>Let <var>list</var> be the results of running the steps to <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies①">query cookies</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name">name</a></code> dictionary member (if present), and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype">matchType</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror③">TypeError</a></code> and abort these steps.</p>
        <li data-md>
         <p>If <var>list</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-is-empty" id="ref-for-list-is-empty①">is empty</a>, resolve <var>p</var> with undefined.</p>
        <li data-md>
@@ -1988,7 +1988,7 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
      <li data-md>
       <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin②">origin</a>.</p>
      <li data-md>
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque②">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror②">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque②">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror②">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code>.</p>
      <li data-md>
       <p>Let <var>url</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object②">current settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url②">creation URL</a>.</p>
      <li data-md>
@@ -1999,7 +1999,7 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
        <li data-md>
         <p>Let <var>list</var> be the results of running the steps to <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies②">query cookies</a> with <var>url</var> and <var>name</var>.</p>
        <li data-md>
-        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror②">TypeError</a></code>.</p>
+        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror④">TypeError</a></code>.</p>
        <li data-md>
         <p>Otherwise, resolve <var>p</var> with <var>list</var>.</p>
       </ol>
@@ -2013,7 +2013,7 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
      <li data-md>
       <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin③">origin</a>.</p>
      <li data-md>
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque③">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror③">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque③">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror③">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException③">DOMException</a></code>.</p>
      <li data-md>
       <p>Let <var>url</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object③">current settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url③">creation URL</a>.</p>
      <li data-md>
@@ -2023,10 +2023,10 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
         <p>Let <var>parsed</var> be the result of running the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser①">basic URL parser</a> on <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url③">url</a></code> dictionary member with <var>url</var>.</p>
        <li data-md>
         <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object" id="ref-for-current-global-object①">current global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object and <var>parsed</var> does not <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-equals" id="ref-for-concept-url-equals①">equal</a> <var>url</var>,
-then return a new promise rejected with an "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#invalidstateerror" id="ref-for-invalidstateerror②">InvalidStateError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
+then return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑤">TypeError</a></code>.</p>
        <li data-md>
         <p>If <var>parsed</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin②">origin</a> and <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin③">origin</a> are not the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin①">same origin</a>,
-then return a new promise rejected with an "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#invalidstateerror" id="ref-for-invalidstateerror③">InvalidStateError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑦">DOMException</a></code>.</p>
+then return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑥">TypeError</a></code>.</p>
        <li data-md>
         <p>Set <var>url</var> to <var>parsed</var>.</p>
       </ol>
@@ -2038,7 +2038,7 @@ then return a new promise rejected with an "<code class="idl"><a data-link-type=
        <li data-md>
         <p>Let <var>list</var> be the results of running the steps to <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies③">query cookies</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name①">name</a></code> dictionary member (if present), and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype①">matchType</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror③">TypeError</a></code>.</p>
+        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑦">TypeError</a></code>.</p>
        <li data-md>
         <p>Otherwise, resolve <var>p</var> with <var>list</var>.</p>
       </ol>
@@ -2171,7 +2171,7 @@ then return a new promise rejected with an "<code class="idl"><a data-link-type=
      <li data-md>
       <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin④">origin</a>.</p>
      <li data-md>
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque④">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror④">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑧">DOMException</a></code>.</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque④">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror④">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
      <li data-md>
       <p>Let <var>url</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object④">current settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url④">creation URL</a>.</p>
      <li data-md>
@@ -2182,7 +2182,7 @@ then return a new promise rejected with an "<code class="idl"><a data-link-type=
        <li data-md>
         <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie">set a cookie</a> with <var>url</var>, <var>name</var>, <var>value</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-expires" id="ref-for-dom-cookiestoresetoptions-expires">expires</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-domain" id="ref-for-dom-cookiestoresetoptions-domain">domain</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-path" id="ref-for-dom-cookiestoresetoptions-path">path</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-secure" id="ref-for-dom-cookiestoresetoptions-secure">secure</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-httponly" id="ref-for-dom-cookiestoresetoptions-httponly">httpOnly</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-samesite" id="ref-for-dom-cookiestoresetoptions-samesite">sameSite</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror④">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code> and abort these steps.</p>
        <li data-md>
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2196,7 +2196,7 @@ then return a new promise rejected with an "<code class="idl"><a data-link-type=
      <li data-md>
       <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin⑤">origin</a>.</p>
      <li data-md>
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑤">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑤">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑨">DOMException</a></code>.</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑤">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑤">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
      <li data-md>
       <p>Let <var>url</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object⑤">current settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url⑤">creation URL</a>.</p>
      <li data-md>
@@ -2207,7 +2207,7 @@ then return a new promise rejected with an "<code class="idl"><a data-link-type=
        <li data-md>
         <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie①">set a cookie</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetextraoptions-name" id="ref-for-dom-cookiestoresetextraoptions-name">name</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetextraoptions-value" id="ref-for-dom-cookiestoresetextraoptions-value">value</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-expires" id="ref-for-dom-cookiestoresetoptions-expires①">expires</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-domain" id="ref-for-dom-cookiestoresetoptions-domain①">domain</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-path" id="ref-for-dom-cookiestoresetoptions-path①">path</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-secure" id="ref-for-dom-cookiestoresetoptions-secure①">secure</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-httponly" id="ref-for-dom-cookiestoresetoptions-httponly①">httpOnly</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-samesite" id="ref-for-dom-cookiestoresetoptions-samesite①">sameSite</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑤">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑨">TypeError</a></code> and abort these steps.</p>
        <li data-md>
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2258,7 +2258,7 @@ an expiration in the past:</p>
      <li data-md>
       <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin⑥">origin</a>.</p>
      <li data-md>
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑥">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑥">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①⓪">DOMException</a></code>.</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑥">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑥">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
      <li data-md>
       <p>Let <var>url</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object⑥">current settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url⑥">creation URL</a>.</p>
      <li data-md>
@@ -2273,7 +2273,7 @@ null,
 true, and
 "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-strict" id="ref-for-dom-cookiesamesite-strict">strict</a></code>".</p>
        <li data-md>
-        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑥">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①⓪">TypeError</a></code> and abort these steps.</p>
        <li data-md>
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2287,7 +2287,7 @@ true, and
      <li data-md>
       <p>Let <var>origin</var> be <var>environment</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin⑦">origin</a>.</p>
      <li data-md>
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑦">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑦">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①①">DOMException</a></code>.</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque⑦">opaque origin</a>, then return a new promise rejected with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror⑦">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑦">DOMException</a></code>.</p>
      <li data-md>
       <p>Let <var>url</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object⑦">current settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url⑦">creation URL</a>.</p>
      <li data-md>
@@ -2298,7 +2298,7 @@ true, and
        <li data-md>
         <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#delete-a-cookie" id="ref-for-delete-a-cookie①">delete a cookie</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-name" id="ref-for-dom-cookiestoredeleteoptions-name">name</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-domain" id="ref-for-dom-cookiestoredeleteoptions-domain">domain</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-path" id="ref-for-dom-cookiestoredeleteoptions-path">path</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑦">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①①">TypeError</a></code> and abort these steps.</p>
        <li data-md>
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2349,7 +2349,7 @@ true, and
       <p>Let <var>serviceWorker</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object">context object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>'s <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker③">service worker</a>.</p>
      <li data-md>
       <p>If <var>serviceWorker</var>’s <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-state" id="ref-for-dfn-state">state</a> is not <em>installing</em>,
-then return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code>.</p>
+then return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①②">TypeError</a></code>.</p>
      <li data-md>
       <p>Let <var>registration</var> be <var>serviceWorker</var>’s associated <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-containing-service-worker-registration" id="ref-for-dfn-containing-service-worker-registration">containing service worker registration</a>.</p>
      <li data-md>
@@ -3299,10 +3299,10 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="term-for-idl-DOMException">
    <a href="https://heycam.github.io/webidl/#idl-DOMException">https://heycam.github.io/webidl/#idl-DOMException</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-DOMException">3.1.1. get</a> <a href="#ref-for-idl-DOMException①">(2)</a> <a href="#ref-for-idl-DOMException②">(3)</a> <a href="#ref-for-idl-DOMException③">(4)</a>
-    <li><a href="#ref-for-idl-DOMException④">3.1.2. getAll</a> <a href="#ref-for-idl-DOMException⑤">(2)</a> <a href="#ref-for-idl-DOMException⑥">(3)</a> <a href="#ref-for-idl-DOMException⑦">(4)</a>
-    <li><a href="#ref-for-idl-DOMException⑧">3.1.3. set</a> <a href="#ref-for-idl-DOMException⑨">(2)</a>
-    <li><a href="#ref-for-idl-DOMException①⓪">3.1.4. delete</a> <a href="#ref-for-idl-DOMException①①">(2)</a>
+    <li><a href="#ref-for-idl-DOMException">3.1.1. get</a> <a href="#ref-for-idl-DOMException①">(2)</a>
+    <li><a href="#ref-for-idl-DOMException②">3.1.2. getAll</a> <a href="#ref-for-idl-DOMException③">(2)</a>
+    <li><a href="#ref-for-idl-DOMException④">3.1.3. set</a> <a href="#ref-for-idl-DOMException⑤">(2)</a>
+    <li><a href="#ref-for-idl-DOMException⑥">3.1.4. delete</a> <a href="#ref-for-idl-DOMException⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
@@ -3323,13 +3323,6 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <ul>
     <li><a href="#ref-for-Exposed">3. The CookieStore Interface</a> <a href="#ref-for-Exposed①">(2)</a> <a href="#ref-for-Exposed②">(3)</a>
     <li><a href="#ref-for-Exposed③">3.3.1. CookieChangeEvent</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-invalidstateerror">
-   <a href="https://heycam.github.io/webidl/#invalidstateerror">https://heycam.github.io/webidl/#invalidstateerror</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-invalidstateerror">3.1.1. get</a> <a href="#ref-for-invalidstateerror①">(2)</a>
-    <li><a href="#ref-for-invalidstateerror②">3.1.2. getAll</a> <a href="#ref-for-invalidstateerror③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-Replaceable">
@@ -3366,11 +3359,11 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="term-for-exceptiondef-typeerror">
    <a href="https://heycam.github.io/webidl/#exceptiondef-typeerror">https://heycam.github.io/webidl/#exceptiondef-typeerror</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-exceptiondef-typeerror">3.1.1. get</a> <a href="#ref-for-exceptiondef-typeerror①">(2)</a>
-    <li><a href="#ref-for-exceptiondef-typeerror②">3.1.2. getAll</a> <a href="#ref-for-exceptiondef-typeerror③">(2)</a>
-    <li><a href="#ref-for-exceptiondef-typeerror④">3.1.3. set</a> <a href="#ref-for-exceptiondef-typeerror⑤">(2)</a>
-    <li><a href="#ref-for-exceptiondef-typeerror⑥">3.1.4. delete</a> <a href="#ref-for-exceptiondef-typeerror⑦">(2)</a>
-    <li><a href="#ref-for-exceptiondef-typeerror⑧">3.1.5. subscribeToChanges</a>
+    <li><a href="#ref-for-exceptiondef-typeerror">3.1.1. get</a> <a href="#ref-for-exceptiondef-typeerror①">(2)</a> <a href="#ref-for-exceptiondef-typeerror②">(3)</a> <a href="#ref-for-exceptiondef-typeerror③">(4)</a>
+    <li><a href="#ref-for-exceptiondef-typeerror④">3.1.2. getAll</a> <a href="#ref-for-exceptiondef-typeerror⑤">(2)</a> <a href="#ref-for-exceptiondef-typeerror⑥">(3)</a> <a href="#ref-for-exceptiondef-typeerror⑦">(4)</a>
+    <li><a href="#ref-for-exceptiondef-typeerror⑧">3.1.3. set</a> <a href="#ref-for-exceptiondef-typeerror⑨">(2)</a>
+    <li><a href="#ref-for-exceptiondef-typeerror①⓪">3.1.4. delete</a> <a href="#ref-for-exceptiondef-typeerror①①">(2)</a>
+    <li><a href="#ref-for-exceptiondef-typeerror①②">3.1.5. subscribeToChanges</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-USVString">
@@ -3471,7 +3464,6 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      <li><span class="dfn-paneled" id="term-for-idl-DOMString" style="color:initial">DOMString</span>
      <li><span class="dfn-paneled" id="term-for-DOMTimeStamp" style="color:initial">DOMTimeStamp</span>
      <li><span class="dfn-paneled" id="term-for-Exposed" style="color:initial">Exposed</span>
-     <li><span class="dfn-paneled" id="term-for-invalidstateerror" style="color:initial">InvalidStateError</span>
      <li><span class="dfn-paneled" id="term-for-Replaceable" style="color:initial">Replaceable</span>
      <li><span class="dfn-paneled" id="term-for-SameObject" style="color:initial">SameObject</span>
      <li><span class="dfn-paneled" id="term-for-SecureContext" style="color:initial">SecureContext</span>
