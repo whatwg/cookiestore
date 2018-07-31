@@ -935,7 +935,7 @@ The <dfn method for=CookieStore>getChangeSubscriptions()</dfn> method, when invo
 <!-- ============================================================ -->
 
 A {{CookieChangeEvent}} is [=dispatched=] against {{CookieStore}} objects
-in [=window=] contexts when any [=script-visible=] cookie changes have occurred,
+in {{Window}} contexts when any [=script-visible=] cookie changes have occurred,
 and against {{ServiceWorkerGlobalScope}} objects when any [=script-visible=]
 cookie changes have occurred which match the [=Service Worker=]'s [=cookie change subscription list=].
 
