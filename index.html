@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version 9c7b3c1bf4afcf8eca4fd3a1529a298ee35be006" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="9a8c15d10abd3a9ffbae6bd74c38cb10762e4360" name="document-revision">
+  <meta content="0987ce8e1ddee80a86c2e85847703db56f90cfcb" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -1537,50 +1537,37 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li>
      <a href="#CookieStore"><span class="secno">3</span> <span class="content">The <code class="idl"><span>CookieStore</span></code> Interface</span></a>
      <ol class="toc">
-      <li>
-       <a href="#CookieStore-methods"><span class="secno">3.1</span> <span class="content">Methods</span></a>
-       <ol class="toc">
-        <li><a href="#CookieStore-get"><span class="secno">3.1.1</span> <span class="content"><code class="idl"><span>get</span></code></span></a>
-        <li><a href="#CookieStore-getAll"><span class="secno">3.1.2</span> <span class="content"><code class="idl"><span>getAll</span></code></span></a>
-        <li><a href="#CookieStore-set"><span class="secno">3.1.3</span> <span class="content"><code class="idl"><span>set</span></code></span></a>
-        <li><a href="#CookieStore-delete"><span class="secno">3.1.4</span> <span class="content"><code class="idl"><span>delete</span></code></span></a>
-        <li><a href="#CookieStore-subscribeToChanges"><span class="secno">3.1.5</span> <span class="content"><code class="idl"><span>subscribeToChanges</span></code></span></a>
-        <li><a href="#CookieStore-getChangeSubscriptions"><span class="secno">3.1.6</span> <span class="content"><code class="idl"><span>getChangeSubscriptions</span></code></span></a>
-       </ol>
-      <li>
-       <a href="#CookieStore-attributes"><span class="secno">3.2</span> <span class="content">Attributes</span></a>
-       <ol class="toc">
-        <li><a href="#CookieStore-attributes-onchange"><span class="secno">3.2.1</span> <span class="content"><code class="idl"><span>onchange</span></code></span></a>
-       </ol>
-      <li>
-       <a href="#Events"><span class="secno">3.3</span> <span class="content">Events</span></a>
-       <ol class="toc">
-        <li><a href="#CookieChangeEvent"><span class="secno">3.3.1</span> <span class="content"><code class="idl"><span>CookieChangeEvent</span></code></span></a>
-       </ol>
+      <li><a href="#CookieStore-get"><span class="secno">3.1</span> <span class="content">The <code class="idl"><span>get()</span></code> method</span></a>
+      <li><a href="#CookieStore-getAll"><span class="secno">3.2</span> <span class="content">The <code class="idl"><span>getAll()</span></code> method</span></a>
+      <li><a href="#CookieStore-set"><span class="secno">3.3</span> <span class="content">The <code class="idl"><span>set()</span></code> method</span></a>
+      <li><a href="#CookieStore-delete"><span class="secno">3.4</span> <span class="content">The <code class="idl"><span>delete()</span></code> method</span></a>
+      <li><a href="#CookieStore-subscribeToChanges"><span class="secno">3.5</span> <span class="content">The <code class="idl"><span>subscribeToChanges()</span></code> method</span></a>
+      <li><a href="#CookieStore-getChangeSubscriptions"><span class="secno">3.6</span> <span class="content">The <code class="idl"><span>getChangeSubscriptions()</span></code> method</span></a>
+     </ol>
+    <li><a href="#CookieChangeEvent"><span class="secno">4</span> <span class="content">The <code class="idl"><span>CookieChangeEvent</span></code> interface</span></a>
+    <li>
+     <a href="#globals"><span class="secno">5</span> <span class="content">Global Interfaces</span></a>
+     <ol class="toc">
+      <li><a href="#Window"><span class="secno">5.1</span> <span class="content">The Window Interface</span></a>
+      <li><a href="#ServiceWorkerGlobalScope"><span class="secno">5.2</span> <span class="content">The ServiceWorkerGlobalScope Interface</span></a>
      </ol>
     <li>
-     <a href="#globals"><span class="secno">4</span> <span class="content">Global Interfaces</span></a>
+     <a href="#algorithms"><span class="secno">6</span> <span class="content">Algorithms</span></a>
      <ol class="toc">
-      <li><a href="#Window"><span class="secno">4.1</span> <span class="content">The Window Interface</span></a>
-      <li><a href="#ServiceWorkerGlobalScope"><span class="secno">4.2</span> <span class="content">The ServiceWorkerGlobalScope Interface</span></a>
+      <li><a href="#query-cookies-algorithm"><span class="secno">6.1</span> <span class="content">Query Cookies</span></a>
+      <li><a href="#set-cookie-algorithm"><span class="secno">6.2</span> <span class="content">Set a Cookie</span></a>
+      <li><a href="#delete-cookie-algorithm"><span class="secno">6.3</span> <span class="content">Delete a Cookie</span></a>
+      <li><a href="#process-changes"><span class="secno">6.4</span> <span class="content">Process Changes</span></a>
      </ol>
     <li>
-     <a href="#algorithms"><span class="secno">5</span> <span class="content">Algorithms</span></a>
+     <a href="#security"><span class="secno">7</span> <span class="content">Security</span></a>
      <ol class="toc">
-      <li><a href="#query-cookies-algorithm"><span class="secno">5.1</span> <span class="content">Query Cookies</span></a>
-      <li><a href="#set-cookie-algorithm"><span class="secno">5.2</span> <span class="content">Set a Cookie</span></a>
-      <li><a href="#delete-cookie-algorithm"><span class="secno">5.3</span> <span class="content">Delete a Cookie</span></a>
-      <li><a href="#process-changes"><span class="secno">5.4</span> <span class="content">Process Changes</span></a>
-     </ol>
-    <li>
-     <a href="#security"><span class="secno">6</span> <span class="content">Security</span></a>
-     <ol class="toc">
-      <li><a href="#gotcha"><span class="secno">6.1</span> <span class="content">Gotcha!</span></a>
-      <li><a href="#restrict"><span class="secno">6.2</span> <span class="content">Restrict?</span></a>
-      <li><a href="#surprises"><span class="secno">6.3</span> <span class="content">Surprises</span></a>
-      <li><a href="#prefixes"><span class="secno">6.4</span> <span class="content">Prefixes</span></a>
-      <li><a href="#url-scoping"><span class="secno">6.5</span> <span class="content">URL scoping</span></a>
-      <li><a href="#aversion"><span class="secno">6.6</span> <span class="content">Cookie aversion</span></a>
+      <li><a href="#gotcha"><span class="secno">7.1</span> <span class="content">Gotcha!</span></a>
+      <li><a href="#restrict"><span class="secno">7.2</span> <span class="content">Restrict?</span></a>
+      <li><a href="#surprises"><span class="secno">7.3</span> <span class="content">Surprises</span></a>
+      <li><a href="#prefixes"><span class="secno">7.4</span> <span class="content">Prefixes</span></a>
+      <li><a href="#url-scoping"><span class="secno">7.5</span> <span class="content">URL scoping</span></a>
+      <li><a href="#aversion"><span class="secno">7.6</span> <span class="content">Cookie aversion</span></a>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
@@ -1743,10 +1730,10 @@ will change the behavior of <code>WinINet</code>-based user agents and Safari bu
 with other modern user agents.</p>
    <h2 class="heading settled" data-level="2" id="concepts"><span class="secno">2. </span><span class="content">Concepts</span><a class="self-link" href="#concepts"></a></h2>
    <h3 class="heading settled" data-level="2.1" id="cookie-concept"><span class="secno">2.1. </span><span class="content">Cookie</span><a class="self-link" href="#cookie-concept"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie">cookie</dfn> is normatively defined for <a data-link-type="dfn" href="https://w3c.github.io/reporting/#report-user-agent" id="ref-for-report-user-agent">user agents</a> by <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5">Cookies: HTTP State Management Mechanism §User Agent Requirements</a>.</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie">cookie</dfn> is normatively defined for user agents by <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5">Cookies: HTTP State Management Mechanism §User Agent Requirements</a>.</p>
    <div> Per <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.4">Cookies: HTTP State Management Mechanism §Storage Model</a>, a <a data-link-type="dfn" href="#cookie" id="ref-for-cookie">cookie</a> has the following fields: <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-name">name</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-value">value</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-expiry-time">expiry-time</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-domain">domain</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-path">path</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-creation-time">creation-time</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-last-access-time">last-access-time</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-persistent-flag">persistent-flag</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-host-only-flag">host-only-flag</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-secure-only-flag">secure-only-flag</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-http-only-flag">http-only-flag</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-same-site-flag">same-site-flag</dfn>. </div>
    <h3 class="heading settled" data-level="2.2" id="cookie-store--concept"><span class="secno">2.2. </span><span class="content">Cookie Store</span><a class="self-link" href="#cookie-store--concept"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-store">cookie store</dfn> is normatively defined for <a data-link-type="dfn" href="https://w3c.github.io/reporting/#report-user-agent" id="ref-for-report-user-agent①">user agents</a> by <a data-link-type="biblio" href="#biblio-rfc6265bis">Cookies: HTTP State Management Mechanism §User Agent Requirements</a>.</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-store">cookie store</dfn> is normatively defined for user agents by <a data-link-type="biblio" href="#biblio-rfc6265bis">Cookies: HTTP State Management Mechanism §User Agent Requirements</a>.</p>
    <p>When any of the following conditions occur for a <a data-link-type="dfn" href="#cookie-store" id="ref-for-cookie-store">cookie store</a>, perform the steps to <a data-link-type="dfn" href="#process-cookie-changes" id="ref-for-process-cookie-changes">process cookie changes</a>.</p>
    <ul>
     <li data-md>
@@ -1784,7 +1771,7 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed②"><c- g>Exposed</c-></a>=<c- n>ServiceWorker</c->]
   <c- b>Promise</c->&lt;<c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions③"><c- n>CookieStoreGetOptions</c-></a>>> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-getchangesubscriptions" id="ref-for-dom-cookiestore-getchangesubscriptions"><c- g>getChangeSubscriptions</c-></a>();
 
-  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler"><c- n>EventHandler</c-></a> <a class="idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange"><c- g>onchange</c-></a>;
+  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler"><c- n>EventHandler</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-cookiestore-onchange"><code><c- g>onchange</c-></code><a class="self-link" href="#dom-cookiestore-onchange"></a></dfn>;
 };
 
 <c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-cookiematchtype"><code><c- g>CookieMatchType</c-></code></dfn> {
@@ -1836,8 +1823,7 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
 
 <c- b>typedef</c-> <c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem②"><c- n>CookieListItem</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-type="typedef" data-export id="typedefdef-cookielist"><code><c- g>CookieList</c-></code></dfn>;
 </pre>
-   <h3 class="heading settled" data-level="3.1" id="CookieStore-methods"><span class="secno">3.1. </span><span class="content">Methods</span><a class="self-link" href="#CookieStore-methods"></a></h3>
-   <h4 class="heading settled" data-level="3.1.1" id="CookieStore-get"><span class="secno">3.1.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options①">get</a></code></span><a class="self-link" href="#CookieStore-get"></a></h4>
+   <h3 class="heading settled" data-level="3.1" id="CookieStore-get"><span class="secno">3.1. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options①">get()</a></code> method</span><a class="self-link" href="#CookieStore-get"></a></h3>
    <div class="note" role="note">
     <dl class="domintro">
      <dt><var>cookie</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get①">get</a></code>(<var>name</var>) 
@@ -1902,9 +1888,9 @@ getOneSimpleOriginCookieAsync<c- p>().</c->then<c- p>(</c->
        <li data-md>
         <p>Let <var>list</var> be the results of running the steps to <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies">query cookies</a> with <var>url</var> and <var>name</var>.</p>
        <li data-md>
-        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>list</var> is failure, then reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror">TypeError</a></code> and abort these steps.</p>
        <li data-md>
-        <p>If <var>list</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-is-empty" id="ref-for-list-is-empty">is empty</a>, resolve <var>p</var> with undefined.</p>
+        <p>If <var>list</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-is-empty" id="ref-for-list-is-empty">is empty</a>, then resolve <var>p</var> with undefined.</p>
        <li data-md>
         <p>Otherwise, resolve <var>p</var> with the first item of <var>list</var>.</p>
       </ol>
@@ -1943,9 +1929,9 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
        <li data-md>
         <p>Let <var>list</var> be the results of running the steps to <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies①">query cookies</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name">name</a></code> dictionary member (if present), and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype">matchType</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror③">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>list</var> is failure, then reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror③">TypeError</a></code> and abort these steps.</p>
        <li data-md>
-        <p>If <var>list</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-is-empty" id="ref-for-list-is-empty①">is empty</a>, resolve <var>p</var> with undefined.</p>
+        <p>If <var>list</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-is-empty" id="ref-for-list-is-empty①">is empty</a>, then resolve <var>p</var> with undefined.</p>
        <li data-md>
         <p>Otherwise, resolve <var>p</var> with the first item of <var>list</var>.</p>
       </ol>
@@ -1953,7 +1939,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
       <p>Return <var>p</var>.</p>
     </ol>
    </div>
-   <h4 class="heading settled" data-level="3.1.2" id="CookieStore-getAll"><span class="secno">3.1.2. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options①">getAll</a></code></span><a class="self-link" href="#CookieStore-getAll"></a></h4>
+   <h3 class="heading settled" data-level="3.2" id="CookieStore-getAll"><span class="secno">3.2. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options①">getAll()</a></code> method</span><a class="self-link" href="#CookieStore-getAll"></a></h3>
    <div class="note" role="note">
     <dl class="domintro">
      <dt><var>cookies</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall" id="ref-for-dom-cookiestore-getall①">getAll</a></code>(<var>name</var>) 
@@ -1999,7 +1985,7 @@ cookie name at multiple paths and/or domains (the paths and domains are not expo
        <li data-md>
         <p>Let <var>list</var> be the results of running the steps to <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies②">query cookies</a> with <var>url</var> and <var>name</var>.</p>
        <li data-md>
-        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror④">TypeError</a></code>.</p>
+        <p>If <var>list</var> is failure, then reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror④">TypeError</a></code>.</p>
        <li data-md>
         <p>Otherwise, resolve <var>p</var> with <var>list</var>.</p>
       </ol>
@@ -2038,7 +2024,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
        <li data-md>
         <p>Let <var>list</var> be the results of running the steps to <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies③">query cookies</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name①">name</a></code> dictionary member (if present), and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype①">matchType</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>list</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑦">TypeError</a></code>.</p>
+        <p>If <var>list</var> is failure, then reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑦">TypeError</a></code>.</p>
        <li data-md>
         <p>Otherwise, resolve <var>p</var> with <var>list</var>.</p>
       </ol>
@@ -2046,7 +2032,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
       <p>Return <var>p</var>.</p>
     </ol>
    </div>
-   <h4 class="heading settled" data-level="3.1.3" id="CookieStore-set"><span class="secno">3.1.3. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set①">set</a></code></span><a class="self-link" href="#CookieStore-set"></a></h4>
+   <h3 class="heading settled" data-level="3.3" id="CookieStore-set"><span class="secno">3.3. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set①">set()</a></code> method</span><a class="self-link" href="#CookieStore-set"></a></h3>
    <div class="note" role="note">
     <dl class="domintro">
      <dt>await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set②">set</a></code>(<var>name</var>, <var>value</var>) 
@@ -2182,7 +2168,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
        <li data-md>
         <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie">set a cookie</a> with <var>url</var>, <var>name</var>, <var>value</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-expires" id="ref-for-dom-cookiestoresetoptions-expires">expires</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-domain" id="ref-for-dom-cookiestoresetoptions-domain">domain</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-path" id="ref-for-dom-cookiestoresetoptions-path">path</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-secure" id="ref-for-dom-cookiestoresetoptions-secure">secure</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-httponly" id="ref-for-dom-cookiestoresetoptions-httponly">httpOnly</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-samesite" id="ref-for-dom-cookiestoresetoptions-samesite">sameSite</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>r</var> is failure, then reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code> and abort these steps.</p>
        <li data-md>
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2207,7 +2193,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
        <li data-md>
         <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie①">set a cookie</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetextraoptions-name" id="ref-for-dom-cookiestoresetextraoptions-name">name</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetextraoptions-value" id="ref-for-dom-cookiestoresetextraoptions-value">value</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-expires" id="ref-for-dom-cookiestoresetoptions-expires①">expires</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-domain" id="ref-for-dom-cookiestoresetoptions-domain①">domain</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-path" id="ref-for-dom-cookiestoresetoptions-path①">path</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-secure" id="ref-for-dom-cookiestoresetoptions-secure①">secure</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-httponly" id="ref-for-dom-cookiestoresetoptions-httponly①">httpOnly</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-samesite" id="ref-for-dom-cookiestoresetoptions-samesite①">sameSite</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑨">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>r</var> is failure, then reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑨">TypeError</a></code> and abort these steps.</p>
        <li data-md>
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2215,7 +2201,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
       <p>Return <var>p</var>.</p>
     </ol>
    </div>
-   <h4 class="heading settled" data-level="3.1.4" id="CookieStore-delete"><span class="secno">3.1.4. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete①">delete</a></code></span><a class="self-link" href="#CookieStore-delete"></a></h4>
+   <h3 class="heading settled" data-level="3.4" id="CookieStore-delete"><span class="secno">3.4. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete①">delete()</a></code> method</span><a class="self-link" href="#CookieStore-delete"></a></h3>
    <div class="note" role="note">
     <dl class="domintro">
      <dt>await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete②">set</a></code>(<var>name</var>) 
@@ -2273,7 +2259,7 @@ null,
 true, and
 "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-strict" id="ref-for-dom-cookiesamesite-strict">strict</a></code>".</p>
        <li data-md>
-        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①⓪">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>r</var> is failure, then reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①⓪">TypeError</a></code> and abort these steps.</p>
        <li data-md>
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2298,7 +2284,7 @@ true, and
        <li data-md>
         <p>Let <var>r</var> be the result of running the steps to <a data-link-type="dfn" href="#delete-a-cookie" id="ref-for-delete-a-cookie①">delete a cookie</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-name" id="ref-for-dom-cookiestoredeleteoptions-name">name</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-domain" id="ref-for-dom-cookiestoredeleteoptions-domain">domain</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-path" id="ref-for-dom-cookiestoredeleteoptions-path">path</a></code> dictionary member.</p>
        <li data-md>
-        <p>If <var>r</var> is failure, reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①①">TypeError</a></code> and abort these steps.</p>
+        <p>If <var>r</var> is failure, then reject <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①①">TypeError</a></code> and abort these steps.</p>
        <li data-md>
         <p>Resolve <var>p</var> with undefined.</p>
       </ol>
@@ -2306,7 +2292,7 @@ true, and
       <p>Return <var>p</var>.</p>
     </ol>
    </div>
-   <h4 class="heading settled" data-level="3.1.5" id="CookieStore-subscribeToChanges"><span class="secno">3.1.5. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-subscribetochanges" id="ref-for-dom-cookiestore-subscribetochanges①">subscribeToChanges</a></code></span><a class="self-link" href="#CookieStore-subscribeToChanges"></a></h4>
+   <h3 class="heading settled" data-level="3.5" id="CookieStore-subscribeToChanges"><span class="secno">3.5. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-subscribetochanges" id="ref-for-dom-cookiestore-subscribetochanges①">subscribeToChanges()</a></code> method</span><a class="self-link" href="#CookieStore-subscribeToChanges"></a></h3>
    <div class="note" role="note">
     <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="monitoring">Monitoring</dfn> cookies in a <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker">Service Worker</a> requires by subscribing to change events.</p>
     <dl class="domintro">
@@ -2376,7 +2362,7 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
       <p>Return <var>p</var>.</p>
     </ol>
    </div>
-   <h4 class="heading settled" data-level="3.1.6" id="CookieStore-getChangeSubscriptions"><span class="secno">3.1.6. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getchangesubscriptions" id="ref-for-dom-cookiestore-getchangesubscriptions②">getChangeSubscriptions</a></code></span><a class="self-link" href="#CookieStore-getChangeSubscriptions"></a></h4>
+   <h3 class="heading settled" data-level="3.6" id="CookieStore-getChangeSubscriptions"><span class="secno">3.6. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getchangesubscriptions" id="ref-for-dom-cookiestore-getchangesubscriptions②">getChangeSubscriptions()</a></code> method</span><a class="self-link" href="#CookieStore-getChangeSubscriptions"></a></h3>
    <div class="algorithm">
      The <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="method" data-export id="dom-cookiestore-getchangesubscriptions"><code>getChangeSubscriptions()</code></dfn> method, when invoked, must run these steps: 
     <ol>
@@ -2412,16 +2398,8 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
       <p>Return <var>p</var>.</p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="3.2" id="CookieStore-attributes"><span class="secno">3.2. </span><span class="content">Attributes</span><a class="self-link" href="#CookieStore-attributes"></a></h3>
-   <h4 class="heading settled" data-level="3.2.1" id="CookieStore-attributes-onchange"><span class="secno">3.2.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange①">onchange</a></code></span><a class="self-link" href="#CookieStore-attributes-onchange"></a></h4>
-   <dl>
-    <dt data-md><dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="attribute" data-export id="dom-cookiestore-onchange"><code>onchange</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler①">EventHandler</a></span>
-    <dd data-md>
-     <p>An <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler②">EventHandler</a></code> of type <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent">CookieChangeEvent</a></code>.</p>
-   </dl>
-   <h3 class="heading settled" data-level="3.3" id="Events"><span class="secno">3.3. </span><span class="content">Events</span><a class="self-link" href="#Events"></a></h3>
-   <h4 class="heading settled" data-level="3.3.1" id="CookieChangeEvent"><span class="secno">3.3.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent①">CookieChangeEvent</a></code></span><a class="self-link" href="#CookieChangeEvent"></a></h4>
-   <p>A <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent②">CookieChangeEvent</a></code> is <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-dispatch" id="ref-for-concept-event-dispatch">dispatched</a> against <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore①">CookieStore</a></code> objects
+   <h2 class="heading settled" data-level="4" id="CookieChangeEvent"><span class="secno">4. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent">CookieChangeEvent</a></code> interface</span><a class="self-link" href="#CookieChangeEvent"></a></h2>
+   <p>A <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent①">CookieChangeEvent</a></code> is <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-dispatch" id="ref-for-concept-event-dispatch">dispatched</a> against <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore①">CookieStore</a></code> objects
 in <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-window" id="ref-for-concept-request-window">window</a> contexts when any <a data-link-type="dfn" href="#script-visible" id="ref-for-script-visible④">script-visible</a> cookie changes have occurred,
 and against <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope">ServiceWorkerGlobalScope</a></code> objects when any <a data-link-type="dfn" href="#script-visible" id="ref-for-script-visible⑤">script-visible</a> cookie changes have occurred which match the <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker⑤">Service Worker</a>'s <a data-link-type="dfn" href="#cookie-change-subscription-list" id="ref-for-cookie-change-subscription-list②">cookie change subscription list</a>.</p>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed③"><c- g>Exposed</c-></a>=(<c- n>ServiceWorker</c->,<c- n>Window</c->),
@@ -2438,24 +2416,26 @@ and against <code class="idl"><a data-link-type="idl" href="https://w3c.github.i
 };
 </pre>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiechangeevent-changed" id="ref-for-dom-cookiechangeevent-changed">changed</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiechangeevent-deleted" id="ref-for-dom-cookiechangeevent-deleted">deleted</a></code> attributes must return the value they were initialized to.</p>
-   <h2 class="heading settled" data-level="4" id="globals"><span class="secno">4. </span><span class="content">Global Interfaces</span><a class="self-link" href="#globals"></a></h2>
-   <h3 class="heading settled" data-level="4.1" id="Window"><span class="secno">4.1. </span><span class="content">The Window Interface</span><a class="self-link" href="#Window"></a></h3>
+   <h2 class="heading settled" data-level="5" id="globals"><span class="secno">5. </span><span class="content">Global Interfaces</span><a class="self-link" href="#globals"></a></h2>
+   <p>A <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore②">CookieStore</a></code> is accessed by script using an attribute in the global
+scope in a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window②">Window</a></code> or <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope①">ServiceWorkerGlobalScope</a></code> context.</p>
+   <h3 class="heading settled" data-level="5.1" id="Window"><span class="secno">5.1. </span><span class="content">The Window Interface</span><a class="self-link" href="#Window"></a></h3>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext②"><c- g>SecureContext</c-></a>]
-<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window②"><c- g>Window</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore②"><c- n>CookieStore</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export data-readonly data-type="CookieStore" id="dom-window-cookiestore"><code><c- g>cookieStore</c-></code></dfn>;
+<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window③"><c- g>Window</c-></a> {
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore③"><c- n>CookieStore</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export data-readonly data-type="CookieStore" id="dom-window-cookiestore"><code><c- g>cookieStore</c-></code></dfn>;
 };
 </pre>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore">cookieStore</a></code> attribute’s getter must return <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object②">context object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore③">CookieStore</a></code> object.</p>
-   <h3 class="heading settled" data-level="4.2" id="ServiceWorkerGlobalScope"><span class="secno">4.2. </span><span class="content">The ServiceWorkerGlobalScope Interface</span><a class="self-link" href="#ServiceWorkerGlobalScope"></a></h3>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope①"><c- g>ServiceWorkerGlobalScope</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable①"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore④"><c- n>CookieStore</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export data-readonly data-type="CookieStore" id="dom-serviceworkerglobalscope-cookiestore"><code><c- g>cookieStore</c-></code></dfn>;
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore">cookieStore</a></code> attribute’s getter must return <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object②">context object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore④">CookieStore</a></code> object.</p>
+   <h3 class="heading settled" data-level="5.2" id="ServiceWorkerGlobalScope"><span class="secno">5.2. </span><span class="content">The ServiceWorkerGlobalScope Interface</span><a class="self-link" href="#ServiceWorkerGlobalScope"></a></h3>
+<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope②"><c- g>ServiceWorkerGlobalScope</c-></a> {
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable①"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore⑤"><c- n>CookieStore</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export data-readonly data-type="CookieStore" id="dom-serviceworkerglobalscope-cookiestore"><code><c- g>cookieStore</c-></code></dfn>;
 
-  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler③"><c- n>EventHandler</c-></a> <dfn class="idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code><a class="self-link" href="#dom-serviceworkerglobalscope-oncookiechange"></a></dfn>;
+  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler①"><c- n>EventHandler</c-></a> <dfn class="idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code><a class="self-link" href="#dom-serviceworkerglobalscope-oncookiechange"></a></dfn>;
 };
 </pre>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore">cookieStore</a></code> attribute’s getter must return <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑤">CookieStore</a></code> object.</p>
-   <h2 class="heading settled" data-level="5" id="algorithms"><span class="secno">5. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
-   <h3 class="heading settled" data-level="5.1" id="query-cookies-algorithm"><span class="secno">5.1. </span><span class="content">Query Cookies</span><a class="self-link" href="#query-cookies-algorithm"></a></h3>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore">cookieStore</a></code> attribute’s getter must return <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑥">CookieStore</a></code> object.</p>
+   <h2 class="heading settled" data-level="6" id="algorithms"><span class="secno">6. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
+   <h3 class="heading settled" data-level="6.1" id="query-cookies-algorithm"><span class="secno">6.1. </span><span class="content">Query Cookies</span><a class="self-link" href="#query-cookies-algorithm"></a></h3>
    <div class="algorithm">
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="query-cookies">query cookies</dfn> with <var>url</var>,
 optional <var>name</var>, and
@@ -2501,7 +2481,6 @@ then all cookies are matched.</p>
      <li data-md>
       <p>Return <var>list</var>.</p>
     </ol>
-    <p class="issue" id="issue-fe338c02"><a class="self-link" href="#issue-fe338c02"></a> Define failure cases, if any.</p>
    </div>
    <div class="algorithm">
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="create-a-cookielistitem">create a <code class="idl"><a data-link-type="idl" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem③">CookieListItem</a></code></dfn> from <var>cookie</var>, run the following steps.</p>
@@ -2509,29 +2488,29 @@ then all cookies are matched.</p>
      <li data-md>
       <p>Let <var>item</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem④">CookieListItem</a></code>.</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-name" id="ref-for-dom-cookielistitem-name">name</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name①">name</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode①">UTF-8 decoded</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-name" id="ref-for-dom-cookielistitem-name">name</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name①">name</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode①">UTF-8 decoded</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value">value</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-value" id="ref-for-cookie-value">value</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode②">UTF-8 decoded</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value">value</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-value" id="ref-for-cookie-value">value</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode②">UTF-8 decoded</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-domain" id="ref-for-dom-cookielistitem-domain">domain</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-domain" id="ref-for-cookie-domain">domain</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode③">UTF-8 decoded</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-domain" id="ref-for-dom-cookielistitem-domain">domain</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-domain" id="ref-for-cookie-domain">domain</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode③">UTF-8 decoded</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-path" id="ref-for-dom-cookielistitem-path">path</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-path" id="ref-for-cookie-path">path</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode④">UTF-8 decoded</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-path" id="ref-for-dom-cookielistitem-path">path</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-path" id="ref-for-cookie-path">path</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode④">UTF-8 decoded</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-expires" id="ref-for-dom-cookielistitem-expires">expires</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-expiry-time" id="ref-for-cookie-expiry-time">expiry-time</a> (<a data-link-type="dfn" href="#as-a-timestamp" id="ref-for-as-a-timestamp">as a timestamp</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-expires" id="ref-for-dom-cookielistitem-expires">expires</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-expiry-time" id="ref-for-cookie-expiry-time">expiry-time</a> (<a data-link-type="dfn" href="#as-a-timestamp" id="ref-for-as-a-timestamp">as a timestamp</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-secure" id="ref-for-dom-cookielistitem-secure">secure</a></code> to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-secure-only-flag" id="ref-for-cookie-secure-only-flag">secure-only-flag</a>.</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-secure" id="ref-for-dom-cookielistitem-secure">secure</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-secure-only-flag" id="ref-for-cookie-secure-only-flag">secure-only-flag</a>.</p>
      <li data-md>
       <p>Switch on <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-same-site-flag" id="ref-for-cookie-same-site-flag">same-site-flag</a>:</p>
       <dl class="switch">
        <dt data-md>`<code>None</code>`
        <dd data-md>
-        <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-samesite" id="ref-for-dom-cookielistitem-samesite">sameSite</a></code> to "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-unrestricted" id="ref-for-dom-cookiesamesite-unrestricted">unrestricted</a></code>".</p>
+        <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-samesite" id="ref-for-dom-cookielistitem-samesite">sameSite</a></code> dictionary member to "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-unrestricted" id="ref-for-dom-cookiesamesite-unrestricted">unrestricted</a></code>".</p>
        <dt data-md>`<code>Strict</code>`
        <dd data-md>
-        <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-samesite" id="ref-for-dom-cookielistitem-samesite①">sameSite</a></code> to "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-strict" id="ref-for-dom-cookiesamesite-strict①">strict</a></code>".</p>
+        <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-samesite" id="ref-for-dom-cookielistitem-samesite①">sameSite</a></code> dictionary member to "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-strict" id="ref-for-dom-cookiesamesite-strict①">strict</a></code>".</p>
        <dt data-md>`<code>Lax</code>`
        <dd data-md>
-        <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-samesite" id="ref-for-dom-cookielistitem-samesite②">sameSite</a></code> to "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-lax" id="ref-for-dom-cookiesamesite-lax">lax</a></code>".</p>
+        <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-samesite" id="ref-for-dom-cookielistitem-samesite②">sameSite</a></code> dictionary member to "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-lax" id="ref-for-dom-cookiesamesite-lax">lax</a></code>".</p>
       </dl>
      <li data-md>
       <p>Return <var>item</var>.</p>
@@ -2544,18 +2523,36 @@ return the number of milliseconds from 00:00:00 UTC, 1 January 1970 to <var>date
 (assuming that there are exactly 86,400,000 milliseconds per day). 
     <p class="note" role="note"><span>Note:</span> This is the same representation used for <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-time-values-and-time-range" id="ref-for-sec-time-values-and-time-range">time values</a> in <a data-link-type="biblio" href="#biblio-ecmascript">[ECMAScript]</a>.</p>
    </div>
-   <h3 class="heading settled" data-level="5.2" id="set-cookie-algorithm"><span class="secno">5.2. </span><span class="content">Set a Cookie</span><a class="self-link" href="#set-cookie-algorithm"></a></h3>
+   <h3 class="heading settled" data-level="6.2" id="set-cookie-algorithm"><span class="secno">6.2. </span><span class="content">Set a Cookie</span><a class="self-link" href="#set-cookie-algorithm"></a></h3>
    <div class="algorithm">
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="set-a-cookie">set a cookie</dfn> with <var>url</var>, <var>name</var>, <var>value</var>,
 optional <var>expires</var>, <var>domain</var>, <var>path</var>, <var>secure</var> flag, <var>httpOnly</var> flag, and <var>sameSite</var>,
 run the following steps:</p>
     <ol>
      <li data-md>
+      <p>If <var>name</var> is empty and <var>value</var> contains U+003D (<code>=</code>), then return failure.</p>
+     <li data-md>
+      <p>Let <var>host</var> be <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host" id="ref-for-concept-url-host">host</a></p>
+     <li data-md>
+      <p>If <var>domain</var> is not null, then run these steps:</p>
+      <ol>
+       <li data-md>
+        <p>If <var>domain</var> starts with U+002D (<code>.</code>), then return failure.</p>
+       <li data-md>
+        <p>If <var>host</var> does not equal <var>domain</var> and <var>host</var> does not end with U+002D (<code>.</code>) followed by <var>domain</var>,
+then return failure.</p>
+      </ol>
+     <li data-md>
+      <p>Otherwise, if <var>domain</var> is null, then set <var>domain</var> to <var>host</var>.</p>
+     <li data-md>
+      <p>If <var>secure</var> is false and <var>name</var> starts with either "<code>__Secure-</code>" or "<code>__Host-</code>",
+then return failure.</p>
+     <li data-md>
       <p>Let <var>attributes</var> be a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list③">list</a>.</p>
      <li data-md>
       <p>If <var>expires</var> is given, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append①">append</a> `<code>Expires</code>`/<var>expires</var> (<a data-link-type="dfn" href="#date-serialize" id="ref-for-date-serialize">date serialized</a>) to <var>attributes</var>.</p>
      <li data-md>
-      <p>If <var>domain</var> is not null, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append②">append</a> `<code>Domain</code>`/<var>domain</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode">UTF-8 encoded</a>) to <var>attributes</var>.</p>
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append②">Append</a> `<code>Domain</code>`/<var>domain</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode">UTF-8 encoded</a>) to <var>attributes</var>.</p>
      <li data-md>
       <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append③">Append</a> `<code>Path</code>`/<var>path</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode①">UTF-8 encoded</a>) to <var>attributes</var>.</p>
      <li data-md>
@@ -2578,14 +2575,16 @@ run the following steps:</p>
      <li data-md>
       <p>Perform the steps defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.4">Cookies: HTTP State Management Mechanism §Storage Model</a> for when the user agent "receives a cookie" with <var>url</var> as <var>request-uri</var>, <var>name</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode②">UTF-8 encoded</a>) as <var>cookie-name</var>, <var>value</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode③">UTF-8 encoded</a>) as <var>cookie-value</var>, and <var>attributes</var> as <var>cookie-attribute-list</var>.</p>
       <p>For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.</p>
+     <li data-md>
+      <p>Return success.</p>
+      <p class="note" role="note"><span>Note:</span> Storing the cookie may still fail due to requirements in <a data-link-type="biblio" href="#biblio-rfc6265bis">[RFC6265bis]</a> but these steps will be considered successful.</p>
     </ol>
    </div>
-   <p class="issue" id="issue-fe338c02①"><a class="self-link" href="#issue-fe338c02①"></a> Define failure cases, if any.</p>
    <div class="algorithm"> To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="date-serialize">date serialize</dfn> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp②">DOMTimeStamp</a></code> <var>millis</var>,
 let <var>dateTime</var> be the date and time <var>millis</var> milliseconds after 00:00:00 UTC, 1 January 1970
 (assuming that there are exactly 86,400,000 milliseconds per day),
 and return a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-sequence" id="ref-for-byte-sequence">byte sequence</a> corresponding to the closest <code>cookie-date</code> representation of <var>dateTime</var> according to <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.1.1">Cookies: HTTP State Management Mechanism §Dates</a>. </div>
-   <h3 class="heading settled" data-level="5.3" id="delete-cookie-algorithm"><span class="secno">5.3. </span><span class="content">Delete a Cookie</span><a class="self-link" href="#delete-cookie-algorithm"></a></h3>
+   <h3 class="heading settled" data-level="6.3" id="delete-cookie-algorithm"><span class="secno">6.3. </span><span class="content">Delete a Cookie</span><a class="self-link" href="#delete-cookie-algorithm"></a></h3>
    <div class="algorithm">
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="delete-a-cookie">delete a cookie</dfn> with <var>url</var>, <var>name</var>, <var>domain</var> and <var>path</var>,
 run the following steps:</p>
@@ -2608,30 +2607,29 @@ by this algorithm.</p>
       <p>Return the results of running the steps to <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie②">set a cookie</a> with <var>url</var>, <var>name</var>, <var>value</var>, <var>expires</var>, <var>domain</var>, <var>path</var>, <var>secure</var>, <var>httpOnly</var>, and <var>sameSite</var>.</p>
     </ol>
    </div>
-   <p class="issue" id="issue-fe338c02②"><a class="self-link" href="#issue-fe338c02②"></a> Define failure cases, if any.</p>
-   <h3 class="heading settled" data-level="5.4" id="process-changes"><span class="secno">5.4. </span><span class="content">Process Changes</span><a class="self-link" href="#process-changes"></a></h3>
+   <h3 class="heading settled" data-level="6.4" id="process-changes"><span class="secno">6.4. </span><span class="content">Process Changes</span><a class="self-link" href="#process-changes"></a></h3>
    <div class="algorithm">
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="process-cookie-changes">process cookie changes</dfn>, run the following steps:</p>
     <ol>
      <li data-md>
-      <p>For every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window③">Window</a></code> <var>window</var>, run the following steps:</p>
+      <p>For every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window④">Window</a></code> <var>window</var>, run the following steps:</p>
       <ol>
        <li data-md>
         <p>Let <var>url</var> be <var>window</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url⑧">creation URL</a>.</p>
        <li data-md>
         <p>Let <var>changes</var> be the <a data-link-type="dfn" href="#observable-changes" id="ref-for-observable-changes">observable changes</a> for <var>url</var>.</p>
        <li data-md>
-        <p>If <var>changes</var> is not empty, <a data-link-type="dfn" href="#fire-a-change-event" id="ref-for-fire-a-change-event">fire a change event</a> named "<code>change</code>" with <var>changes</var> at <var>window</var>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑥">CookieStore</a></code>.</p>
+        <p>If <var>changes</var> is not empty, then <a data-link-type="dfn" href="#fire-a-change-event" id="ref-for-fire-a-change-event">fire a change event</a> named "<code>change</code>" with <var>changes</var> at <var>window</var>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑦">CookieStore</a></code>.</p>
       </ol>
      <li data-md>
-      <p>For every <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope②">ServiceWorkerGlobalScope</a></code> <var>worker</var>, run the following steps:</p>
+      <p>For every <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope③">ServiceWorkerGlobalScope</a></code> <var>worker</var>, run the following steps:</p>
       <ol>
        <li data-md>
         <p>Let <var>url</var> be <var>worker</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url⑨">creation URL</a>.</p>
        <li data-md>
         <p>Let <var>changes</var> be the <a data-link-type="dfn" href="#observable-changes" id="ref-for-observable-changes①">observable changes</a> for <var>url</var>.</p>
        <li data-md>
-        <p>If <var>changes</var> is not empty, <a data-link-type="dfn" href="#fire-a-change-event" id="ref-for-fire-a-change-event①">fire a change event</a> named "<code>cookiechange</code>" with <var>changes</var> at <var>worker</var>.</p>
+        <p>If <var>changes</var> is not empty, then <a data-link-type="dfn" href="#fire-a-change-event" id="ref-for-fire-a-change-event①">fire a change event</a> named "<code>cookiechange</code>" with <var>changes</var> at <var>worker</var>.</p>
       </ol>
     </ol>
    </div>
@@ -2654,7 +2652,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="fire-a-change-event">fire a change event</dfn> named <var>type</var> with <var>changes</var> at <var>target</var>, run the following steps:</p>
     <ol>
      <li data-md>
-      <p>Let <var>event</var> be the result of <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-create" id="ref-for-concept-event-create">creating an Event</a> using <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent③">CookieChangeEvent</a></code>.</p>
+      <p>Let <var>event</var> be the result of <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-create" id="ref-for-concept-event-create">creating an Event</a> using <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent②">CookieChangeEvent</a></code>.</p>
      <li data-md>
       <p>Set <var>event</var>’s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-type" id="ref-for-dom-event-type">type</a></code> attribute to <var>type</var>.</p>
      <li data-md>
@@ -2674,7 +2672,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
         <p>Otherwise, run these steps:</p>
         <ol>
          <li data-md>
-          <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value①">value</a></code> to undefined.</p>
+          <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value①">value</a></code> dictionary member to undefined.</p>
          <li data-md>
           <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑨">Append</a> <var>item</var> to <var>deletedList</var>.</p>
         </ol>
@@ -2687,9 +2685,9 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
       <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-dispatch" id="ref-for-concept-event-dispatch①">Dispatch</a> <var>event</var> at <var>target</var>.</p>
     </ol>
    </div>
-   <h2 class="heading settled" data-level="6" id="security"><span class="secno">6. </span><span class="content">Security</span><a class="self-link" href="#security"></a></h2>
+   <h2 class="heading settled" data-level="7" id="security"><span class="secno">7. </span><span class="content">Security</span><a class="self-link" href="#security"></a></h2>
    <p>Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.</p>
-   <h3 class="heading settled" data-level="6.1" id="gotcha"><span class="secno">6.1. </span><span class="content">Gotcha!</span><a class="self-link" href="#gotcha"></a></h3>
+   <h3 class="heading settled" data-level="7.1" id="gotcha"><span class="secno">7.1. </span><span class="content">Gotcha!</span><a class="self-link" href="#gotcha"></a></h3>
    <p>Although browser cookie implementations are now evolving in the direction of better security and fewer surprising and error-prone defaults, there are at present few guarantees about cookie data security.</p>
    <ul>
     <li data-md>
@@ -2712,19 +2710,19 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      </ul>
    </ul>
    <p>For these reasons it is best to use caution when interpreting any cookie’s value, and never execute a cookie’s value as script, HTML, CSS, XML, PDF, or any other executable format.</p>
-   <h3 class="heading settled" data-level="6.2" id="restrict"><span class="secno">6.2. </span><span class="content">Restrict?</span><a class="self-link" href="#restrict"></a></h3>
+   <h3 class="heading settled" data-level="7.2" id="restrict"><span class="secno">7.2. </span><span class="content">Restrict?</span><a class="self-link" href="#restrict"></a></h3>
    <p>This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured <code>http</code> contexts this could result in a web less safe for users. For that reason it may be desirable to restrict its use, or at least the use of the <code>set</code> and <code>delete</code> operations, to secure origins running in secure contexts.</p>
-   <h3 class="heading settled" data-level="6.3" id="surprises"><span class="secno">6.3. </span><span class="content">Surprises</span><a class="self-link" href="#surprises"></a></h3>
+   <h3 class="heading settled" data-level="7.3" id="surprises"><span class="secno">7.3. </span><span class="content">Surprises</span><a class="self-link" href="#surprises"></a></h3>
    <p>Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.</p>
    <p>Other surprises are documented in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-1">Section 1 of Cookies: HTTP State Management Mechanism (RFC 6265bis)</a> - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.</p>
    <p>Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.</p>
-   <h3 class="heading settled" data-level="6.4" id="prefixes"><span class="secno">6.4. </span><span class="content">Prefixes</span><a class="self-link" href="#prefixes"></a></h3>
+   <h3 class="heading settled" data-level="7.4" id="prefixes"><span class="secno">7.4. </span><span class="content">Prefixes</span><a class="self-link" href="#prefixes"></a></h3>
    <p>Where feasible the examples use the <code>__Host-</code> and <code>__Secure-</code> name prefixes which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no <code>Secure</code> flag, and — in the case of <code>__Host-</code> — disallow overwriting with an explicit <code>Domain</code> or non-'/' <code>Path</code> attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.</p>
    <p>Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.</p>
-   <h3 class="heading settled" data-level="6.5" id="url-scoping"><span class="secno">6.5. </span><span class="content">URL scoping</span><a class="self-link" href="#url-scoping"></a></h3>
+   <h3 class="heading settled" data-level="7.5" id="url-scoping"><span class="secno">7.5. </span><span class="content">URL scoping</span><a class="self-link" href="#url-scoping"></a></h3>
    <p>Although a service worker script cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the service worker script. This means that cookie access inside the scope of the service worker is technically possible already, it’s just not very convenient.</p>
    <p>When the service worker is scoped more narrowly than <code>/</code> it may still be able to read path-scoped cookies from outside its scope’s path space by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.</p>
-   <h3 class="heading settled" data-level="6.6" id="aversion"><span class="secno">6.6. </span><span class="content">Cookie aversion</span><a class="self-link" href="#aversion"></a></h3>
+   <h3 class="heading settled" data-level="7.6" id="aversion"><span class="secno">7.6. </span><span class="content">Cookie aversion</span><a class="self-link" href="#aversion"></a></h3>
    <p>To reduce complexity for developers and eliminate the need for ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won’t invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)</p>
    <p>Today writing to <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑥">document.cookie</a></code> in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.</p>
    <p>Likewise, today reading <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑦">document.cookie</a></code> in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.</p>
@@ -2878,19 +2876,19 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#as-a-timestamp">as a timestamp</a><span>, in §5.1</span>
+   <li><a href="#as-a-timestamp">as a timestamp</a><span>, in §6.1</span>
    <li>
     changed
     <ul>
-     <li><a href="#dom-cookiechangeevent-changed">attribute for CookieChangeEvent</a><span>, in §3.3.1</span>
-     <li><a href="#dom-cookiechangeeventinit-changed">dict-member for CookieChangeEventInit</a><span>, in §3.3.1</span>
+     <li><a href="#dom-cookiechangeevent-changed">attribute for CookieChangeEvent</a><span>, in §4</span>
+     <li><a href="#dom-cookiechangeeventinit-changed">dict-member for CookieChangeEventInit</a><span>, in §4</span>
     </ul>
    <li><a href="#cookie">cookie</a><span>, in §2.1</span>
-   <li><a href="#cookie-change">cookie change</a><span>, in §5.4</span>
-   <li><a href="#cookiechangeevent">CookieChangeEvent</a><span>, in §3.3.1</span>
-   <li><a href="#dictdef-cookiechangeeventinit">CookieChangeEventInit</a><span>, in §3.3.1</span>
-   <li><a href="#dom-cookiechangeevent-cookiechangeevent">CookieChangeEvent(type)</a><span>, in §3.3.1</span>
-   <li><a href="#dom-cookiechangeevent-cookiechangeevent">CookieChangeEvent(type, eventInitDict)</a><span>, in §3.3.1</span>
+   <li><a href="#cookie-change">cookie change</a><span>, in §6.4</span>
+   <li><a href="#cookiechangeevent">CookieChangeEvent</a><span>, in §4</span>
+   <li><a href="#dictdef-cookiechangeeventinit">CookieChangeEventInit</a><span>, in §4</span>
+   <li><a href="#dom-cookiechangeevent-cookiechangeevent">CookieChangeEvent(type)</a><span>, in §4</span>
+   <li><a href="#dom-cookiechangeevent-cookiechangeevent">CookieChangeEvent(type, eventInitDict)</a><span>, in §4</span>
    <li><a href="#cookie-change-subscription">cookie change subscription</a><span>, in §2.3</span>
    <li><a href="#cookie-change-subscription-list">cookie change subscription list</a><span>, in §2.3</span>
    <li><a href="#typedefdef-cookielist">CookieList</a><span>, in §3</span>
@@ -2900,8 +2898,8 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <li>
     cookieStore
     <ul>
-     <li><a href="#dom-serviceworkerglobalscope-cookiestore">attribute for ServiceWorkerGlobalScope</a><span>, in §4.2</span>
-     <li><a href="#dom-window-cookiestore">attribute for Window</a><span>, in §4.1</span>
+     <li><a href="#dom-serviceworkerglobalscope-cookiestore">attribute for ServiceWorkerGlobalScope</a><span>, in §5.2</span>
+     <li><a href="#dom-window-cookiestore">attribute for Window</a><span>, in §5.1</span>
     </ul>
    <li><a href="#cookiestore">CookieStore</a><span>, in §3</span>
    <li><a href="#cookie-store">cookie store</a><span>, in §2.2</span>
@@ -2909,19 +2907,19 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <li><a href="#dictdef-cookiestoregetoptions">CookieStoreGetOptions</a><span>, in §3</span>
    <li><a href="#dictdef-cookiestoresetextraoptions">CookieStoreSetExtraOptions</a><span>, in §3</span>
    <li><a href="#dictdef-cookiestoresetoptions">CookieStoreSetOptions</a><span>, in §3</span>
-   <li><a href="#create-a-cookielistitem">create a CookieListItem</a><span>, in §5.1</span>
+   <li><a href="#create-a-cookielistitem">create a CookieListItem</a><span>, in §6.1</span>
    <li><a href="#cookie-creation-time">creation-time</a><span>, in §2.1</span>
-   <li><a href="#date-serialize">date serialize</a><span>, in §5.2</span>
-   <li><a href="#delete-a-cookie">delete a cookie</a><span>, in §5.3</span>
+   <li><a href="#date-serialize">date serialize</a><span>, in §6.2</span>
+   <li><a href="#delete-a-cookie">delete a cookie</a><span>, in §6.3</span>
    <li>
     deleted
     <ul>
-     <li><a href="#dom-cookiechangeevent-deleted">attribute for CookieChangeEvent</a><span>, in §3.3.1</span>
-     <li><a href="#dom-cookiechangeeventinit-deleted">dict-member for CookieChangeEventInit</a><span>, in §3.3.1</span>
+     <li><a href="#dom-cookiechangeevent-deleted">attribute for CookieChangeEvent</a><span>, in §4</span>
+     <li><a href="#dom-cookiechangeeventinit-deleted">dict-member for CookieChangeEventInit</a><span>, in §4</span>
     </ul>
-   <li><a href="#dom-cookiestore-delete">delete(name)</a><span>, in §3.1.4</span>
-   <li><a href="#dom-cookiestore-delete-options">delete(options)</a><span>, in §3.1.4</span>
-   <li><a href="#deleting">Deleting</a><span>, in §3.1.4</span>
+   <li><a href="#dom-cookiestore-delete">delete(name)</a><span>, in §3.4</span>
+   <li><a href="#dom-cookiestore-delete-options">delete(options)</a><span>, in §3.4</span>
+   <li><a href="#deleting">Deleting</a><span>, in §3.4</span>
    <li>
     domain
     <ul>
@@ -2938,14 +2936,14 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      <li><a href="#dom-cookiestoresetoptions-expires">dict-member for CookieStoreSetOptions</a><span>, in §3</span>
     </ul>
    <li><a href="#cookie-expiry-time">expiry-time</a><span>, in §2.1</span>
-   <li><a href="#fire-a-change-event">fire a change event</a><span>, in §5.4</span>
-   <li><a href="#dom-cookiestore-get-options">get()</a><span>, in §3.1.1</span>
-   <li><a href="#dom-cookiestore-getall-options">getAll()</a><span>, in §3.1.2</span>
-   <li><a href="#dom-cookiestore-getall">getAll(name)</a><span>, in §3.1.2</span>
-   <li><a href="#dom-cookiestore-getall-options">getAll(options)</a><span>, in §3.1.2</span>
-   <li><a href="#dom-cookiestore-getchangesubscriptions">getChangeSubscriptions()</a><span>, in §3.1.6</span>
-   <li><a href="#dom-cookiestore-get">get(name)</a><span>, in §3.1.1</span>
-   <li><a href="#dom-cookiestore-get-options">get(options)</a><span>, in §3.1.1</span>
+   <li><a href="#fire-a-change-event">fire a change event</a><span>, in §6.4</span>
+   <li><a href="#dom-cookiestore-get-options">get()</a><span>, in §3.1</span>
+   <li><a href="#dom-cookiestore-getall-options">getAll()</a><span>, in §3.2</span>
+   <li><a href="#dom-cookiestore-getall">getAll(name)</a><span>, in §3.2</span>
+   <li><a href="#dom-cookiestore-getall-options">getAll(options)</a><span>, in §3.2</span>
+   <li><a href="#dom-cookiestore-getchangesubscriptions">getChangeSubscriptions()</a><span>, in §3.6</span>
+   <li><a href="#dom-cookiestore-get">get(name)</a><span>, in §3.1</span>
+   <li><a href="#dom-cookiestore-get-options">get(options)</a><span>, in §3.1</span>
    <li><a href="#cookie-host-only-flag">host-only-flag</a><span>, in §2.1</span>
    <li><a href="#dom-cookiestoresetoptions-httponly">httpOnly</a><span>, in §3</span>
    <li><a href="#cookie-http-only-flag">http-only-flag</a><span>, in §2.1</span>
@@ -2957,7 +2955,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      <li><a href="#cookie-change-subscription-matchtype">dfn for cookie change subscription</a><span>, in §2.3</span>
      <li><a href="#dom-cookiestoregetoptions-matchtype">dict-member for CookieStoreGetOptions</a><span>, in §3</span>
     </ul>
-   <li><a href="#monitoring">Monitoring</a><span>, in §3.1.5</span>
+   <li><a href="#monitoring">Monitoring</a><span>, in §3.5</span>
    <li>
     name
     <ul>
@@ -2968,9 +2966,9 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      <li><a href="#dom-cookiestoregetoptions-name">dict-member for CookieStoreGetOptions</a><span>, in §3</span>
      <li><a href="#dom-cookiestoresetextraoptions-name">dict-member for CookieStoreSetExtraOptions</a><span>, in §3</span>
     </ul>
-   <li><a href="#observable-changes">observable changes</a><span>, in §5.4</span>
-   <li><a href="#dom-cookiestore-onchange">onchange</a><span>, in §3.2.1</span>
-   <li><a href="#dom-serviceworkerglobalscope-oncookiechange">oncookiechange</a><span>, in §4.2</span>
+   <li><a href="#observable-changes">observable changes</a><span>, in §6.4</span>
+   <li><a href="#dom-cookiestore-onchange">onchange</a><span>, in §3</span>
+   <li><a href="#dom-serviceworkerglobalscope-oncookiechange">oncookiechange</a><span>, in §5.2</span>
    <li>
     path
     <ul>
@@ -2980,9 +2978,9 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      <li><a href="#dom-cookiestoresetoptions-path">dict-member for CookieStoreSetOptions</a><span>, in §3</span>
     </ul>
    <li><a href="#cookie-persistent-flag">persistent-flag</a><span>, in §2.1</span>
-   <li><a href="#process-cookie-changes">process cookie changes</a><span>, in §5.4</span>
-   <li><a href="#query-cookies">query cookies</a><span>, in §5.1</span>
-   <li><a href="#read">read</a><span>, in §3.1.1</span>
+   <li><a href="#process-cookie-changes">process cookie changes</a><span>, in §6.4</span>
+   <li><a href="#query-cookies">query cookies</a><span>, in §6.1</span>
+   <li><a href="#read">read</a><span>, in §3.1</span>
    <li>
     sameSite
     <ul>
@@ -2998,13 +2996,13 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      <li><a href="#dom-cookiestoresetoptions-secure">dict-member for CookieStoreSetOptions</a><span>, in §3</span>
     </ul>
    <li><a href="#cookie-secure-only-flag">secure-only-flag</a><span>, in §2.1</span>
-   <li><a href="#set-a-cookie">set a cookie</a><span>, in §5.2</span>
-   <li><a href="#dom-cookiestore-set">set(name, value)</a><span>, in §3.1.3</span>
-   <li><a href="#dom-cookiestore-set">set(name, value, options)</a><span>, in §3.1.3</span>
-   <li><a href="#dom-cookiestore-set-options">set(options)</a><span>, in §3.1.3</span>
+   <li><a href="#set-a-cookie">set a cookie</a><span>, in §6.2</span>
+   <li><a href="#dom-cookiestore-set">set(name, value)</a><span>, in §3.3</span>
+   <li><a href="#dom-cookiestore-set">set(name, value, options)</a><span>, in §3.3</span>
+   <li><a href="#dom-cookiestore-set-options">set(options)</a><span>, in §3.3</span>
    <li><a href="#dom-cookiematchtype-starts-with">"starts-with"</a><span>, in §3</span>
    <li><a href="#dom-cookiesamesite-strict">"strict"</a><span>, in §3</span>
-   <li><a href="#dom-cookiestore-subscribetochanges">subscribeToChanges(subscriptions)</a><span>, in §3.1.5</span>
+   <li><a href="#dom-cookiestore-subscribetochanges">subscribeToChanges(subscriptions)</a><span>, in §3.5</span>
    <li><a href="#dom-cookiesamesite-unrestricted">"unrestricted"</a><span>, in §3</span>
    <li>
     url
@@ -3019,18 +3017,18 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      <li><a href="#dom-cookielistitem-value">dict-member for CookieListItem</a><span>, in §3</span>
      <li><a href="#dom-cookiestoresetextraoptions-value">dict-member for CookieStoreSetExtraOptions</a><span>, in §3</span>
     </ul>
-   <li><a href="#writing">Writing</a><span>, in §3.1.3</span>
+   <li><a href="#writing">Writing</a><span>, in §3.3</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-event">
    <a href="https://dom.spec.whatwg.org/#event">https://dom.spec.whatwg.org/#event</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-event">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-event">4. The CookieChangeEvent interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dictdef-eventinit">
    <a href="https://dom.spec.whatwg.org/#dictdef-eventinit">https://dom.spec.whatwg.org/#dictdef-eventinit</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-eventinit">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-dictdef-eventinit">4. The CookieChangeEvent interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-eventtarget">
@@ -3042,82 +3040,82 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="term-for-dom-event-bubbles">
    <a href="https://dom.spec.whatwg.org/#dom-event-bubbles">https://dom.spec.whatwg.org/#dom-event-bubbles</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-event-bubbles">5.4. Process Changes</a>
+    <li><a href="#ref-for-dom-event-bubbles">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-event-cancelable">
    <a href="https://dom.spec.whatwg.org/#dom-event-cancelable">https://dom.spec.whatwg.org/#dom-event-cancelable</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-event-cancelable">5.4. Process Changes</a>
+    <li><a href="#ref-for-dom-event-cancelable">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-context-object">
    <a href="https://dom.spec.whatwg.org/#context-object">https://dom.spec.whatwg.org/#context-object</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-context-object">3.1.5. subscribeToChanges</a>
-    <li><a href="#ref-for-context-object①">3.1.6. getChangeSubscriptions</a>
-    <li><a href="#ref-for-context-object②">4.1. The Window Interface</a>
-    <li><a href="#ref-for-context-object③">4.2. The ServiceWorkerGlobalScope Interface</a>
+    <li><a href="#ref-for-context-object">3.5. The subscribeToChanges() method</a>
+    <li><a href="#ref-for-context-object①">3.6. The getChangeSubscriptions() method</a>
+    <li><a href="#ref-for-context-object②">5.1. The Window Interface</a>
+    <li><a href="#ref-for-context-object③">5.2. The ServiceWorkerGlobalScope Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-event-create">
    <a href="https://dom.spec.whatwg.org/#concept-event-create">https://dom.spec.whatwg.org/#concept-event-create</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-event-create">5.4. Process Changes</a>
+    <li><a href="#ref-for-concept-event-create">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-event-dispatch">
    <a href="https://dom.spec.whatwg.org/#concept-event-dispatch">https://dom.spec.whatwg.org/#concept-event-dispatch</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-event-dispatch">3.3.1. CookieChangeEvent</a>
-    <li><a href="#ref-for-concept-event-dispatch①">5.4. Process Changes</a>
+    <li><a href="#ref-for-concept-event-dispatch">4. The CookieChangeEvent interface</a>
+    <li><a href="#ref-for-concept-event-dispatch①">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-event-type">
    <a href="https://dom.spec.whatwg.org/#dom-event-type">https://dom.spec.whatwg.org/#dom-event-type</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-event-type">5.4. Process Changes</a>
+    <li><a href="#ref-for-dom-event-type">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-sec-time-values-and-time-range">
    <a href="https://tc39.github.io/ecma262/#sec-time-values-and-time-range">https://tc39.github.io/ecma262/#sec-time-values-and-time-range</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-sec-time-values-and-time-range">5.1. Query Cookies</a>
+    <li><a href="#ref-for-sec-time-values-and-time-range">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-utf-8-decode">
    <a href="https://encoding.spec.whatwg.org/#utf-8-decode">https://encoding.spec.whatwg.org/#utf-8-decode</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-utf-8-decode">5.1. Query Cookies</a> <a href="#ref-for-utf-8-decode①">(2)</a> <a href="#ref-for-utf-8-decode②">(3)</a> <a href="#ref-for-utf-8-decode③">(4)</a> <a href="#ref-for-utf-8-decode④">(5)</a>
+    <li><a href="#ref-for-utf-8-decode">6.1. Query Cookies</a> <a href="#ref-for-utf-8-decode①">(2)</a> <a href="#ref-for-utf-8-decode②">(3)</a> <a href="#ref-for-utf-8-decode③">(4)</a> <a href="#ref-for-utf-8-decode④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-utf-8-encode">
    <a href="https://encoding.spec.whatwg.org/#utf-8-encode">https://encoding.spec.whatwg.org/#utf-8-encode</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-utf-8-encode">5.2. Set a Cookie</a> <a href="#ref-for-utf-8-encode①">(2)</a> <a href="#ref-for-utf-8-encode②">(3)</a> <a href="#ref-for-utf-8-encode③">(4)</a>
+    <li><a href="#ref-for-utf-8-encode">6.2. Set a Cookie</a> <a href="#ref-for-utf-8-encode①">(2)</a> <a href="#ref-for-utf-8-encode②">(3)</a> <a href="#ref-for-utf-8-encode③">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-window">
    <a href="https://fetch.spec.whatwg.org/#concept-request-window">https://fetch.spec.whatwg.org/#concept-request-window</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-request-window">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-concept-request-window">4. The CookieChangeEvent interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-eventhandler">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler">https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-eventhandler">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-eventhandler①">3.2.1. onchange</a> <a href="#ref-for-eventhandler②">(2)</a>
-    <li><a href="#ref-for-eventhandler③">4.2. The ServiceWorkerGlobalScope Interface</a>
+    <li><a href="#ref-for-eventhandler①">5.2. The ServiceWorkerGlobalScope Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-window">
    <a href="https://html.spec.whatwg.org/multipage/window-object.html#window">https://html.spec.whatwg.org/multipage/window-object.html#window</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-window">3.1.1. get</a>
-    <li><a href="#ref-for-window①">3.1.2. getAll</a>
-    <li><a href="#ref-for-window②">4.1. The Window Interface</a>
-    <li><a href="#ref-for-window③">5.4. Process Changes</a>
+    <li><a href="#ref-for-window">3.1. The get() method</a>
+    <li><a href="#ref-for-window①">3.2. The getAll() method</a>
+    <li><a href="#ref-for-window②">5. Global Interfaces</a>
+    <li><a href="#ref-for-window③">5.1. The Window Interface</a>
+    <li><a href="#ref-for-window④">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-document-cookie">
@@ -3126,98 +3124,98 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
     <li><a href="#ref-for-dom-document-cookie">1. Introduction</a> <a href="#ref-for-dom-document-cookie①">(2)</a>
     <li><a href="#ref-for-dom-document-cookie②">1.2.2. Motivations</a>
     <li><a href="#ref-for-dom-document-cookie③">1.2.4. Compatiblity</a> <a href="#ref-for-dom-document-cookie④">(2)</a> <a href="#ref-for-dom-document-cookie⑤">(3)</a>
-    <li><a href="#ref-for-dom-document-cookie⑥">6.6. Cookie aversion</a> <a href="#ref-for-dom-document-cookie⑦">(2)</a>
+    <li><a href="#ref-for-dom-document-cookie⑥">7.6. Cookie aversion</a> <a href="#ref-for-dom-document-cookie⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-environment-creation-url">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url">https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-environment-creation-url">3.1.1. get</a> <a href="#ref-for-concept-environment-creation-url①">(2)</a>
-    <li><a href="#ref-for-concept-environment-creation-url②">3.1.2. getAll</a> <a href="#ref-for-concept-environment-creation-url③">(2)</a>
-    <li><a href="#ref-for-concept-environment-creation-url④">3.1.3. set</a> <a href="#ref-for-concept-environment-creation-url⑤">(2)</a>
-    <li><a href="#ref-for-concept-environment-creation-url⑥">3.1.4. delete</a> <a href="#ref-for-concept-environment-creation-url⑦">(2)</a>
-    <li><a href="#ref-for-concept-environment-creation-url⑧">5.4. Process Changes</a> <a href="#ref-for-concept-environment-creation-url⑨">(2)</a>
+    <li><a href="#ref-for-concept-environment-creation-url">3.1. The get() method</a> <a href="#ref-for-concept-environment-creation-url①">(2)</a>
+    <li><a href="#ref-for-concept-environment-creation-url②">3.2. The getAll() method</a> <a href="#ref-for-concept-environment-creation-url③">(2)</a>
+    <li><a href="#ref-for-concept-environment-creation-url④">3.3. The set() method</a> <a href="#ref-for-concept-environment-creation-url⑤">(2)</a>
+    <li><a href="#ref-for-concept-environment-creation-url⑥">3.4. The delete() method</a> <a href="#ref-for-concept-environment-creation-url⑦">(2)</a>
+    <li><a href="#ref-for-concept-environment-creation-url⑧">6.4. Process Changes</a> <a href="#ref-for-concept-environment-creation-url⑨">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-current-global-object">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object">https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-current-global-object">3.1.1. get</a>
-    <li><a href="#ref-for-current-global-object①">3.1.2. getAll</a>
+    <li><a href="#ref-for-current-global-object">3.1. The get() method</a>
+    <li><a href="#ref-for-current-global-object①">3.2. The getAll() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-current-settings-object">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-current-settings-object">3.1.1. get</a> <a href="#ref-for-current-settings-object①">(2)</a>
-    <li><a href="#ref-for-current-settings-object②">3.1.2. getAll</a> <a href="#ref-for-current-settings-object③">(2)</a>
-    <li><a href="#ref-for-current-settings-object④">3.1.3. set</a> <a href="#ref-for-current-settings-object⑤">(2)</a>
-    <li><a href="#ref-for-current-settings-object⑥">3.1.4. delete</a> <a href="#ref-for-current-settings-object⑦">(2)</a>
+    <li><a href="#ref-for-current-settings-object">3.1. The get() method</a> <a href="#ref-for-current-settings-object①">(2)</a>
+    <li><a href="#ref-for-current-settings-object②">3.2. The getAll() method</a> <a href="#ref-for-current-settings-object③">(2)</a>
+    <li><a href="#ref-for-current-settings-object④">3.3. The set() method</a> <a href="#ref-for-current-settings-object⑤">(2)</a>
+    <li><a href="#ref-for-current-settings-object⑥">3.4. The delete() method</a> <a href="#ref-for-current-settings-object⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-document-domain">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain">https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-document-domain">3.1.1. get</a>
+    <li><a href="#ref-for-dom-document-domain">3.1. The get() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-settings-object-global">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-settings-object-global">3.1.5. subscribeToChanges</a>
-    <li><a href="#ref-for-concept-settings-object-global①">3.1.6. getChangeSubscriptions</a>
+    <li><a href="#ref-for-concept-settings-object-global">3.5. The subscribeToChanges() method</a>
+    <li><a href="#ref-for-concept-settings-object-global①">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-origin-opaque">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-origin-opaque">3.1.1. get</a> <a href="#ref-for-concept-origin-opaque①">(2)</a>
-    <li><a href="#ref-for-concept-origin-opaque②">3.1.2. getAll</a> <a href="#ref-for-concept-origin-opaque③">(2)</a>
-    <li><a href="#ref-for-concept-origin-opaque④">3.1.3. set</a> <a href="#ref-for-concept-origin-opaque⑤">(2)</a>
-    <li><a href="#ref-for-concept-origin-opaque⑥">3.1.4. delete</a> <a href="#ref-for-concept-origin-opaque⑦">(2)</a>
+    <li><a href="#ref-for-concept-origin-opaque">3.1. The get() method</a> <a href="#ref-for-concept-origin-opaque①">(2)</a>
+    <li><a href="#ref-for-concept-origin-opaque②">3.2. The getAll() method</a> <a href="#ref-for-concept-origin-opaque③">(2)</a>
+    <li><a href="#ref-for-concept-origin-opaque④">3.3. The set() method</a> <a href="#ref-for-concept-origin-opaque⑤">(2)</a>
+    <li><a href="#ref-for-concept-origin-opaque⑥">3.4. The delete() method</a> <a href="#ref-for-concept-origin-opaque⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-origin">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin">https://html.spec.whatwg.org/multipage/origin.html#concept-origin</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-origin">3.1.1. get</a> <a href="#ref-for-concept-origin①">(2)</a>
-    <li><a href="#ref-for-concept-origin②">3.1.2. getAll</a> <a href="#ref-for-concept-origin③">(2)</a>
-    <li><a href="#ref-for-concept-origin④">3.1.3. set</a> <a href="#ref-for-concept-origin⑤">(2)</a>
-    <li><a href="#ref-for-concept-origin⑥">3.1.4. delete</a> <a href="#ref-for-concept-origin⑦">(2)</a>
+    <li><a href="#ref-for-concept-origin">3.1. The get() method</a> <a href="#ref-for-concept-origin①">(2)</a>
+    <li><a href="#ref-for-concept-origin②">3.2. The getAll() method</a> <a href="#ref-for-concept-origin③">(2)</a>
+    <li><a href="#ref-for-concept-origin④">3.3. The set() method</a> <a href="#ref-for-concept-origin⑤">(2)</a>
+    <li><a href="#ref-for-concept-origin⑥">3.4. The delete() method</a> <a href="#ref-for-concept-origin⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-relevant-settings-object">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-relevant-settings-object">4.1. The Window Interface</a>
-    <li><a href="#ref-for-relevant-settings-object①">4.2. The ServiceWorkerGlobalScope Interface</a>
+    <li><a href="#ref-for-relevant-settings-object">5.1. The Window Interface</a>
+    <li><a href="#ref-for-relevant-settings-object①">5.2. The ServiceWorkerGlobalScope Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-history-replacestate">
    <a href="https://html.spec.whatwg.org/multipage/history.html#dom-history-replacestate">https://html.spec.whatwg.org/multipage/history.html#dom-history-replacestate</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-history-replacestate">3.1.1. get</a>
+    <li><a href="#ref-for-dom-history-replacestate">3.1. The get() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-same-origin">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#same-origin">https://html.spec.whatwg.org/multipage/origin.html#same-origin</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-same-origin">3.1.1. get</a>
-    <li><a href="#ref-for-same-origin①">3.1.2. getAll</a>
+    <li><a href="#ref-for-same-origin">3.1. The get() method</a>
+    <li><a href="#ref-for-same-origin①">3.2. The getAll() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list-append">
    <a href="https://infra.spec.whatwg.org/#list-append">https://infra.spec.whatwg.org/#list-append</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-list-append">5.1. Query Cookies</a>
-    <li><a href="#ref-for-list-append①">5.2. Set a Cookie</a> <a href="#ref-for-list-append②">(2)</a> <a href="#ref-for-list-append③">(3)</a> <a href="#ref-for-list-append④">(4)</a> <a href="#ref-for-list-append⑤">(5)</a> <a href="#ref-for-list-append⑥">(6)</a> <a href="#ref-for-list-append⑦">(7)</a>
-    <li><a href="#ref-for-list-append⑧">5.4. Process Changes</a> <a href="#ref-for-list-append⑨">(2)</a>
+    <li><a href="#ref-for-list-append">6.1. Query Cookies</a>
+    <li><a href="#ref-for-list-append①">6.2. Set a Cookie</a> <a href="#ref-for-list-append②">(2)</a> <a href="#ref-for-list-append③">(3)</a> <a href="#ref-for-list-append④">(4)</a> <a href="#ref-for-list-append⑤">(5)</a> <a href="#ref-for-list-append⑥">(6)</a> <a href="#ref-for-list-append⑦">(7)</a>
+    <li><a href="#ref-for-list-append⑧">6.4. Process Changes</a> <a href="#ref-for-list-append⑨">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-byte-sequence">
    <a href="https://infra.spec.whatwg.org/#byte-sequence">https://infra.spec.whatwg.org/#byte-sequence</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-byte-sequence">5.2. Set a Cookie</a>
+    <li><a href="#ref-for-byte-sequence">6.2. Set a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-code-point">
@@ -3229,38 +3227,38 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="term-for-iteration-continue">
    <a href="https://infra.spec.whatwg.org/#iteration-continue">https://infra.spec.whatwg.org/#iteration-continue</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-iteration-continue">5.1. Query Cookies</a> <a href="#ref-for-iteration-continue①">(2)</a>
+    <li><a href="#ref-for-iteration-continue">6.1. Query Cookies</a> <a href="#ref-for-iteration-continue①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list-iterate">
    <a href="https://infra.spec.whatwg.org/#list-iterate">https://infra.spec.whatwg.org/#list-iterate</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-list-iterate">3.1.5. subscribeToChanges</a>
-    <li><a href="#ref-for-list-iterate①">3.1.6. getChangeSubscriptions</a>
-    <li><a href="#ref-for-list-iterate②">5.1. Query Cookies</a>
-    <li><a href="#ref-for-list-iterate③">5.4. Process Changes</a>
+    <li><a href="#ref-for-list-iterate">3.5. The subscribeToChanges() method</a>
+    <li><a href="#ref-for-list-iterate①">3.6. The getChangeSubscriptions() method</a>
+    <li><a href="#ref-for-list-iterate②">6.1. Query Cookies</a>
+    <li><a href="#ref-for-list-iterate③">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list-is-empty">
    <a href="https://infra.spec.whatwg.org/#list-is-empty">https://infra.spec.whatwg.org/#list-is-empty</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-list-is-empty">3.1.1. get</a> <a href="#ref-for-list-is-empty①">(2)</a>
+    <li><a href="#ref-for-list-is-empty">3.1. The get() method</a> <a href="#ref-for-list-is-empty①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list">
    <a href="https://infra.spec.whatwg.org/#list">https://infra.spec.whatwg.org/#list</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-list">2.3. Extensions to Service Worker</a>
-    <li><a href="#ref-for-list①">3.1.6. getChangeSubscriptions</a>
-    <li><a href="#ref-for-list②">5.1. Query Cookies</a>
-    <li><a href="#ref-for-list③">5.2. Set a Cookie</a>
-    <li><a href="#ref-for-list④">5.4. Process Changes</a> <a href="#ref-for-list⑤">(2)</a>
+    <li><a href="#ref-for-list①">3.6. The getChangeSubscriptions() method</a>
+    <li><a href="#ref-for-list②">6.1. Query Cookies</a>
+    <li><a href="#ref-for-list③">6.2. Set a Cookie</a>
+    <li><a href="#ref-for-list④">6.4. Process Changes</a> <a href="#ref-for-list⑤">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-ordered-set">
    <a href="https://infra.spec.whatwg.org/#ordered-set">https://infra.spec.whatwg.org/#ordered-set</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-ordered-set">5.4. Process Changes</a>
+    <li><a href="#ref-for-ordered-set">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-tuple">
@@ -3269,34 +3267,28 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
     <li><a href="#ref-for-tuple">2.3. Extensions to Service Worker</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-report-user-agent">
-   <a href="https://w3c.github.io/reporting/#report-user-agent">https://w3c.github.io/reporting/#report-user-agent</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-report-user-agent">2.1. Cookie</a>
-    <li><a href="#ref-for-report-user-agent①">2.2. Cookie Store</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-serviceworkerglobalscope">
    <a href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope">https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-serviceworkerglobalscope">3.3.1. CookieChangeEvent</a>
-    <li><a href="#ref-for-serviceworkerglobalscope①">4.2. The ServiceWorkerGlobalScope Interface</a>
-    <li><a href="#ref-for-serviceworkerglobalscope②">5.4. Process Changes</a>
+    <li><a href="#ref-for-serviceworkerglobalscope">4. The CookieChangeEvent interface</a>
+    <li><a href="#ref-for-serviceworkerglobalscope①">5. Global Interfaces</a>
+    <li><a href="#ref-for-serviceworkerglobalscope②">5.2. The ServiceWorkerGlobalScope Interface</a>
+    <li><a href="#ref-for-serviceworkerglobalscope③">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-containing-service-worker-registration">
    <a href="https://w3c.github.io/ServiceWorker/#dfn-containing-service-worker-registration">https://w3c.github.io/ServiceWorker/#dfn-containing-service-worker-registration</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-containing-service-worker-registration">3.1.5. subscribeToChanges</a>
-    <li><a href="#ref-for-dfn-containing-service-worker-registration①">3.1.6. getChangeSubscriptions</a>
+    <li><a href="#ref-for-dfn-containing-service-worker-registration">3.5. The subscribeToChanges() method</a>
+    <li><a href="#ref-for-dfn-containing-service-worker-registration①">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-service-worker">
    <a href="https://w3c.github.io/ServiceWorker/#dfn-service-worker">https://w3c.github.io/ServiceWorker/#dfn-service-worker</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-service-worker">3.1.5. subscribeToChanges</a> <a href="#ref-for-dfn-service-worker①">(2)</a> <a href="#ref-for-dfn-service-worker②">(3)</a> <a href="#ref-for-dfn-service-worker③">(4)</a>
-    <li><a href="#ref-for-dfn-service-worker④">3.1.6. getChangeSubscriptions</a>
-    <li><a href="#ref-for-dfn-service-worker⑤">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-dfn-service-worker">3.5. The subscribeToChanges() method</a> <a href="#ref-for-dfn-service-worker①">(2)</a> <a href="#ref-for-dfn-service-worker②">(3)</a> <a href="#ref-for-dfn-service-worker③">(4)</a>
+    <li><a href="#ref-for-dfn-service-worker④">3.6. The getChangeSubscriptions() method</a>
+    <li><a href="#ref-for-dfn-service-worker⑤">4. The CookieChangeEvent interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-service-worker-registration">
@@ -3308,98 +3300,104 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="term-for-dfn-state">
    <a href="https://w3c.github.io/ServiceWorker/#dfn-state">https://w3c.github.io/ServiceWorker/#dfn-state</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-state">3.1.5. subscribeToChanges</a>
+    <li><a href="#ref-for-dfn-state">3.5. The subscribeToChanges() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-basic-url-parser">
    <a href="https://url.spec.whatwg.org/#concept-basic-url-parser">https://url.spec.whatwg.org/#concept-basic-url-parser</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-basic-url-parser">3.1.1. get</a>
-    <li><a href="#ref-for-concept-basic-url-parser①">3.1.2. getAll</a>
+    <li><a href="#ref-for-concept-basic-url-parser">3.1. The get() method</a>
+    <li><a href="#ref-for-concept-basic-url-parser①">3.2. The getAll() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-equals">
    <a href="https://url.spec.whatwg.org/#concept-url-equals">https://url.spec.whatwg.org/#concept-url-equals</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-url-equals">3.1.1. get</a>
-    <li><a href="#ref-for-concept-url-equals①">3.1.2. getAll</a>
+    <li><a href="#ref-for-concept-url-equals">3.1. The get() method</a>
+    <li><a href="#ref-for-concept-url-equals①">3.2. The getAll() method</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-url-host">
+   <a href="https://url.spec.whatwg.org/#concept-url-host">https://url.spec.whatwg.org/#concept-url-host</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-url-host">6.2. Set a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-origin">
    <a href="https://url.spec.whatwg.org/#concept-url-origin">https://url.spec.whatwg.org/#concept-url-origin</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-url-origin">3.1.1. get</a> <a href="#ref-for-concept-url-origin①">(2)</a>
-    <li><a href="#ref-for-concept-url-origin②">3.1.2. getAll</a> <a href="#ref-for-concept-url-origin③">(2)</a>
+    <li><a href="#ref-for-concept-url-origin">3.1. The get() method</a> <a href="#ref-for-concept-url-origin①">(2)</a>
+    <li><a href="#ref-for-concept-url-origin②">3.2. The getAll() method</a> <a href="#ref-for-concept-url-origin③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMException">
    <a href="https://heycam.github.io/webidl/#idl-DOMException">https://heycam.github.io/webidl/#idl-DOMException</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-DOMException">3.1.1. get</a> <a href="#ref-for-idl-DOMException①">(2)</a>
-    <li><a href="#ref-for-idl-DOMException②">3.1.2. getAll</a> <a href="#ref-for-idl-DOMException③">(2)</a>
-    <li><a href="#ref-for-idl-DOMException④">3.1.3. set</a> <a href="#ref-for-idl-DOMException⑤">(2)</a>
-    <li><a href="#ref-for-idl-DOMException⑥">3.1.4. delete</a> <a href="#ref-for-idl-DOMException⑦">(2)</a>
+    <li><a href="#ref-for-idl-DOMException">3.1. The get() method</a> <a href="#ref-for-idl-DOMException①">(2)</a>
+    <li><a href="#ref-for-idl-DOMException②">3.2. The getAll() method</a> <a href="#ref-for-idl-DOMException③">(2)</a>
+    <li><a href="#ref-for-idl-DOMException④">3.3. The set() method</a> <a href="#ref-for-idl-DOMException⑤">(2)</a>
+    <li><a href="#ref-for-idl-DOMException⑥">3.4. The delete() method</a> <a href="#ref-for-idl-DOMException⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
    <a href="https://heycam.github.io/webidl/#idl-DOMString">https://heycam.github.io/webidl/#idl-DOMString</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-DOMString">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-idl-DOMString">4. The CookieChangeEvent interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-DOMTimeStamp">
    <a href="https://heycam.github.io/webidl/#DOMTimeStamp">https://heycam.github.io/webidl/#DOMTimeStamp</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-DOMTimeStamp">3. The CookieStore Interface</a> <a href="#ref-for-DOMTimeStamp①">(2)</a>
-    <li><a href="#ref-for-DOMTimeStamp②">5.2. Set a Cookie</a>
+    <li><a href="#ref-for-DOMTimeStamp②">6.2. Set a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-Exposed">
    <a href="https://heycam.github.io/webidl/#Exposed">https://heycam.github.io/webidl/#Exposed</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-Exposed">3. The CookieStore Interface</a> <a href="#ref-for-Exposed①">(2)</a> <a href="#ref-for-Exposed②">(3)</a>
-    <li><a href="#ref-for-Exposed③">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-Exposed③">4. The CookieChangeEvent interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-Replaceable">
    <a href="https://heycam.github.io/webidl/#Replaceable">https://heycam.github.io/webidl/#Replaceable</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-Replaceable">4.1. The Window Interface</a>
-    <li><a href="#ref-for-Replaceable①">4.2. The ServiceWorkerGlobalScope Interface</a>
+    <li><a href="#ref-for-Replaceable">5.1. The Window Interface</a>
+    <li><a href="#ref-for-Replaceable①">5.2. The ServiceWorkerGlobalScope Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-SameObject">
    <a href="https://heycam.github.io/webidl/#SameObject">https://heycam.github.io/webidl/#SameObject</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-SameObject">4.1. The Window Interface</a>
-    <li><a href="#ref-for-SameObject①">4.2. The ServiceWorkerGlobalScope Interface</a>
+    <li><a href="#ref-for-SameObject">5.1. The Window Interface</a>
+    <li><a href="#ref-for-SameObject①">5.2. The ServiceWorkerGlobalScope Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-SecureContext">
    <a href="https://heycam.github.io/webidl/#SecureContext">https://heycam.github.io/webidl/#SecureContext</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-SecureContext">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-SecureContext①">3.3.1. CookieChangeEvent</a>
-    <li><a href="#ref-for-SecureContext②">4.1. The Window Interface</a>
+    <li><a href="#ref-for-SecureContext①">4. The CookieChangeEvent interface</a>
+    <li><a href="#ref-for-SecureContext②">5.1. The Window Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-securityerror">
    <a href="https://heycam.github.io/webidl/#securityerror">https://heycam.github.io/webidl/#securityerror</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-securityerror">3.1.1. get</a> <a href="#ref-for-securityerror①">(2)</a>
-    <li><a href="#ref-for-securityerror②">3.1.2. getAll</a> <a href="#ref-for-securityerror③">(2)</a>
-    <li><a href="#ref-for-securityerror④">3.1.3. set</a> <a href="#ref-for-securityerror⑤">(2)</a>
-    <li><a href="#ref-for-securityerror⑥">3.1.4. delete</a> <a href="#ref-for-securityerror⑦">(2)</a>
+    <li><a href="#ref-for-securityerror">3.1. The get() method</a> <a href="#ref-for-securityerror①">(2)</a>
+    <li><a href="#ref-for-securityerror②">3.2. The getAll() method</a> <a href="#ref-for-securityerror③">(2)</a>
+    <li><a href="#ref-for-securityerror④">3.3. The set() method</a> <a href="#ref-for-securityerror⑤">(2)</a>
+    <li><a href="#ref-for-securityerror⑥">3.4. The delete() method</a> <a href="#ref-for-securityerror⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-exceptiondef-typeerror">
    <a href="https://heycam.github.io/webidl/#exceptiondef-typeerror">https://heycam.github.io/webidl/#exceptiondef-typeerror</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-exceptiondef-typeerror">3.1.1. get</a> <a href="#ref-for-exceptiondef-typeerror①">(2)</a> <a href="#ref-for-exceptiondef-typeerror②">(3)</a> <a href="#ref-for-exceptiondef-typeerror③">(4)</a>
-    <li><a href="#ref-for-exceptiondef-typeerror④">3.1.2. getAll</a> <a href="#ref-for-exceptiondef-typeerror⑤">(2)</a> <a href="#ref-for-exceptiondef-typeerror⑥">(3)</a> <a href="#ref-for-exceptiondef-typeerror⑦">(4)</a>
-    <li><a href="#ref-for-exceptiondef-typeerror⑧">3.1.3. set</a> <a href="#ref-for-exceptiondef-typeerror⑨">(2)</a>
-    <li><a href="#ref-for-exceptiondef-typeerror①⓪">3.1.4. delete</a> <a href="#ref-for-exceptiondef-typeerror①①">(2)</a>
-    <li><a href="#ref-for-exceptiondef-typeerror①②">3.1.5. subscribeToChanges</a>
+    <li><a href="#ref-for-exceptiondef-typeerror">3.1. The get() method</a> <a href="#ref-for-exceptiondef-typeerror①">(2)</a> <a href="#ref-for-exceptiondef-typeerror②">(3)</a> <a href="#ref-for-exceptiondef-typeerror③">(4)</a>
+    <li><a href="#ref-for-exceptiondef-typeerror④">3.2. The getAll() method</a> <a href="#ref-for-exceptiondef-typeerror⑤">(2)</a> <a href="#ref-for-exceptiondef-typeerror⑥">(3)</a> <a href="#ref-for-exceptiondef-typeerror⑦">(4)</a>
+    <li><a href="#ref-for-exceptiondef-typeerror⑧">3.3. The set() method</a> <a href="#ref-for-exceptiondef-typeerror⑨">(2)</a>
+    <li><a href="#ref-for-exceptiondef-typeerror①⓪">3.4. The delete() method</a> <a href="#ref-for-exceptiondef-typeerror①①">(2)</a>
+    <li><a href="#ref-for-exceptiondef-typeerror①②">3.5. The subscribeToChanges() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-USVString">
@@ -3477,11 +3475,6 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      <li><span class="dfn-paneled" id="term-for-tuple" style="color:initial">tuple</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[reporting-1]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="term-for-report-user-agent" style="color:initial">user agent</span>
-    </ul>
-   <li>
     <a data-link-type="biblio">[service-workers-2]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-serviceworkerglobalscope" style="color:initial">ServiceWorkerGlobalScope</span>
@@ -3495,6 +3488,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
     <ul>
      <li><span class="dfn-paneled" id="term-for-concept-basic-url-parser" style="color:initial">basic url parser</span>
      <li><span class="dfn-paneled" id="term-for-concept-url-equals" style="color:initial">equal</span>
+     <li><span class="dfn-paneled" id="term-for-concept-url-host" style="color:initial">host</span>
      <li><span class="dfn-paneled" id="term-for-concept-url-origin" style="color:initial">origin</span>
     </ul>
    <li>
@@ -3526,8 +3520,6 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
-   <dt id="biblio-reporting-1">[REPORTING-1]
-   <dd>Ilya Grigorik; Mike West. <a href="https://www.w3.org/TR/reporting-1/">Reporting API 1</a>. 7 June 2016. NOTE. URL: <a href="https://www.w3.org/TR/reporting-1/">https://www.w3.org/TR/reporting-1/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc6265bis">[RFC6265bis]
@@ -3569,7 +3561,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed②①"><c- g>Exposed</c-></a>=<c- n>ServiceWorker</c->]
   <c- b>Promise</c->&lt;<c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions③①"><c- n>CookieStoreGetOptions</c-></a>>> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-getchangesubscriptions" id="ref-for-dom-cookiestore-getchangesubscriptions③"><c- g>getChangeSubscriptions</c-></a>();
 
-  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler④"><c- n>EventHandler</c-></a> <a class="idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange②"><c- g>onchange</c-></a>;
+  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler②"><c- n>EventHandler</c-></a> <a data-type="EventHandler" href="#dom-cookiestore-onchange"><code><c- g>onchange</c-></code></a>;
 };
 
 <c- b>enum</c-> <a href="#enumdef-cookiematchtype"><code><c- g>CookieMatchType</c-></code></a> {
@@ -3635,31 +3627,28 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
 };
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext②①"><c- g>SecureContext</c-></a>]
-<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window②①"><c- g>Window</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable②"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject②"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore②①"><c- n>CookieStore</c-></a> <a data-readonly data-type="CookieStore" href="#dom-window-cookiestore"><code><c- g>cookieStore</c-></code></a>;
+<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window③①"><c- g>Window</c-></a> {
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable②"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject②"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore③①"><c- n>CookieStore</c-></a> <a data-readonly data-type="CookieStore" href="#dom-window-cookiestore"><code><c- g>cookieStore</c-></code></a>;
 };
 
-<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope①①"><c- g>ServiceWorkerGlobalScope</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable①①"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①①"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore④①"><c- n>CookieStore</c-></a> <a data-readonly data-type="CookieStore" href="#dom-serviceworkerglobalscope-cookiestore"><code><c- g>cookieStore</c-></code></a>;
+<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope②①"><c- g>ServiceWorkerGlobalScope</c-></a> {
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable①①"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①①"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore⑤①"><c- n>CookieStore</c-></a> <a data-readonly data-type="CookieStore" href="#dom-serviceworkerglobalscope-cookiestore"><code><c- g>cookieStore</c-></code></a>;
 
-  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler③①"><c- n>EventHandler</c-></a> <a data-type="EventHandler" href="#dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code></a>;
+  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler①①"><c- n>EventHandler</c-></a> <a data-type="EventHandler" href="#dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code></a>;
 };
 
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> How about when "the current session is over" for non-persistent cookies?<a href="#issue-30ac9b7d"> ↵ </a></div>
-   <div class="issue"> Define failure cases, if any.<a href="#issue-fe338c02"> ↵ </a></div>
-   <div class="issue"> Define failure cases, if any.<a href="#issue-fe338c02①"> ↵ </a></div>
-   <div class="issue"> Define failure cases, if any.<a href="#issue-fe338c02②"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="script-visible">
    <b><a href="#script-visible">#script-visible</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-script-visible">1.2. Summary</a> <a href="#ref-for-script-visible①">(2)</a>
-    <li><a href="#ref-for-script-visible②">3.1.1. get</a>
-    <li><a href="#ref-for-script-visible③">3.1.2. getAll</a>
-    <li><a href="#ref-for-script-visible④">3.3.1. CookieChangeEvent</a> <a href="#ref-for-script-visible⑤">(2)</a>
+    <li><a href="#ref-for-script-visible②">3.1. The get() method</a>
+    <li><a href="#ref-for-script-visible③">3.2. The getAll() method</a>
+    <li><a href="#ref-for-script-visible④">4. The CookieChangeEvent interface</a> <a href="#ref-for-script-visible⑤">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie">
@@ -3667,132 +3656,133 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <ul>
     <li><a href="#ref-for-cookie">2.1. Cookie</a>
     <li><a href="#ref-for-cookie①">2.2. Cookie Store</a> <a href="#ref-for-cookie②">(2)</a> <a href="#ref-for-cookie③">(3)</a>
-    <li><a href="#ref-for-cookie④">5.4. Process Changes</a> <a href="#ref-for-cookie⑤">(2)</a> <a href="#ref-for-cookie⑥">(3)</a> <a href="#ref-for-cookie⑦">(4)</a> <a href="#ref-for-cookie⑧">(5)</a> <a href="#ref-for-cookie⑨">(6)</a> <a href="#ref-for-cookie①⓪">(7)</a>
+    <li><a href="#ref-for-cookie④">6.4. Process Changes</a> <a href="#ref-for-cookie⑤">(2)</a> <a href="#ref-for-cookie⑥">(3)</a> <a href="#ref-for-cookie⑦">(4)</a> <a href="#ref-for-cookie⑧">(5)</a> <a href="#ref-for-cookie⑨">(6)</a> <a href="#ref-for-cookie①⓪">(7)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-name">
    <b><a href="#cookie-name">#cookie-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-name">5.1. Query Cookies</a> <a href="#ref-for-cookie-name①">(2)</a>
-    <li><a href="#ref-for-cookie-name②">5.4. Process Changes</a>
+    <li><a href="#ref-for-cookie-name">6.1. Query Cookies</a> <a href="#ref-for-cookie-name①">(2)</a>
+    <li><a href="#ref-for-cookie-name②">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-value">
    <b><a href="#cookie-value">#cookie-value</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-value">5.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-value">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-expiry-time">
    <b><a href="#cookie-expiry-time">#cookie-expiry-time</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-expiry-time">5.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-expiry-time">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-domain">
    <b><a href="#cookie-domain">#cookie-domain</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-domain">5.1. Query Cookies</a>
-    <li><a href="#ref-for-cookie-domain①">5.4. Process Changes</a>
+    <li><a href="#ref-for-cookie-domain">6.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-domain①">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-path">
    <b><a href="#cookie-path">#cookie-path</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-path">5.1. Query Cookies</a>
-    <li><a href="#ref-for-cookie-path①">5.4. Process Changes</a>
+    <li><a href="#ref-for-cookie-path">6.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-path①">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-creation-time">
    <b><a href="#cookie-creation-time">#cookie-creation-time</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-creation-time">5.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-creation-time">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-last-access-time">
    <b><a href="#cookie-last-access-time">#cookie-last-access-time</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-last-access-time">5.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-last-access-time">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-persistent-flag">
    <b><a href="#cookie-persistent-flag">#cookie-persistent-flag</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-persistent-flag">5.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-persistent-flag">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-host-only-flag">
    <b><a href="#cookie-host-only-flag">#cookie-host-only-flag</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-host-only-flag">5.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-host-only-flag">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-secure-only-flag">
    <b><a href="#cookie-secure-only-flag">#cookie-secure-only-flag</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-secure-only-flag">5.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-secure-only-flag">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-http-only-flag">
    <b><a href="#cookie-http-only-flag">#cookie-http-only-flag</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-http-only-flag">5.1. Query Cookies</a> <a href="#ref-for-cookie-http-only-flag①">(2)</a>
+    <li><a href="#ref-for-cookie-http-only-flag">6.1. Query Cookies</a> <a href="#ref-for-cookie-http-only-flag①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-same-site-flag">
    <b><a href="#cookie-same-site-flag">#cookie-same-site-flag</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-same-site-flag">5.1. Query Cookies</a>
+    <li><a href="#ref-for-cookie-same-site-flag">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-store">
    <b><a href="#cookie-store">#cookie-store</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-cookie-store">2.2. Cookie Store</a> <a href="#ref-for-cookie-store①">(2)</a> <a href="#ref-for-cookie-store②">(3)</a> <a href="#ref-for-cookie-store③">(4)</a>
-    <li><a href="#ref-for-cookie-store④">5.4. Process Changes</a>
+    <li><a href="#ref-for-cookie-store④">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-change-subscription-list">
    <b><a href="#cookie-change-subscription-list">#cookie-change-subscription-list</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-change-subscription-list">3.1.5. subscribeToChanges</a>
-    <li><a href="#ref-for-cookie-change-subscription-list①">3.1.6. getChangeSubscriptions</a>
-    <li><a href="#ref-for-cookie-change-subscription-list②">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-cookie-change-subscription-list">3.5. The subscribeToChanges() method</a>
+    <li><a href="#ref-for-cookie-change-subscription-list①">3.6. The getChangeSubscriptions() method</a>
+    <li><a href="#ref-for-cookie-change-subscription-list②">4. The CookieChangeEvent interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-change-subscription">
    <b><a href="#cookie-change-subscription">#cookie-change-subscription</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-cookie-change-subscription">2.3. Extensions to Service Worker</a>
-    <li><a href="#ref-for-cookie-change-subscription①">3.1.5. subscribeToChanges</a>
+    <li><a href="#ref-for-cookie-change-subscription①">3.5. The subscribeToChanges() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-change-subscription-name">
    <b><a href="#cookie-change-subscription-name">#cookie-change-subscription-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-change-subscription-name">3.1.6. getChangeSubscriptions</a>
+    <li><a href="#ref-for-cookie-change-subscription-name">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-change-subscription-url">
    <b><a href="#cookie-change-subscription-url">#cookie-change-subscription-url</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-change-subscription-url">3.1.6. getChangeSubscriptions</a>
+    <li><a href="#ref-for-cookie-change-subscription-url">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-change-subscription-matchtype">
    <b><a href="#cookie-change-subscription-matchtype">#cookie-change-subscription-matchtype</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-change-subscription-matchtype">3.1.6. getChangeSubscriptions</a>
+    <li><a href="#ref-for-cookie-change-subscription-matchtype">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookiestore">
    <b><a href="#cookiestore">#cookiestore</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-cookiestore">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-cookiestore①">3.3.1. CookieChangeEvent</a>
-    <li><a href="#ref-for-cookiestore②">4.1. The Window Interface</a> <a href="#ref-for-cookiestore③">(2)</a>
-    <li><a href="#ref-for-cookiestore④">4.2. The ServiceWorkerGlobalScope Interface</a> <a href="#ref-for-cookiestore⑤">(2)</a>
-    <li><a href="#ref-for-cookiestore⑥">5.4. Process Changes</a>
+    <li><a href="#ref-for-cookiestore①">4. The CookieChangeEvent interface</a>
+    <li><a href="#ref-for-cookiestore②">5. Global Interfaces</a>
+    <li><a href="#ref-for-cookiestore③">5.1. The Window Interface</a> <a href="#ref-for-cookiestore④">(2)</a>
+    <li><a href="#ref-for-cookiestore⑤">5.2. The ServiceWorkerGlobalScope Interface</a> <a href="#ref-for-cookiestore⑥">(2)</a>
+    <li><a href="#ref-for-cookiestore⑦">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="enumdef-cookiematchtype">
@@ -3804,47 +3794,47 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="dom-cookiematchtype-equals">
    <b><a href="#dom-cookiematchtype-equals">#dom-cookiematchtype-equals</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiematchtype-equals">5.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookiematchtype-equals">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiematchtype-starts-with">
    <b><a href="#dom-cookiematchtype-starts-with">#dom-cookiematchtype-starts-with</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiematchtype-starts-with">5.1. Query Cookies</a> <a href="#ref-for-dom-cookiematchtype-starts-with①">(2)</a>
+    <li><a href="#ref-for-dom-cookiematchtype-starts-with">6.1. Query Cookies</a> <a href="#ref-for-dom-cookiematchtype-starts-with①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiestoregetoptions">
    <b><a href="#dictdef-cookiestoregetoptions">#dictdef-cookiestoregetoptions</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dictdef-cookiestoregetoptions">3. The CookieStore Interface</a> <a href="#ref-for-dictdef-cookiestoregetoptions①">(2)</a> <a href="#ref-for-dictdef-cookiestoregetoptions②">(3)</a> <a href="#ref-for-dictdef-cookiestoregetoptions③">(4)</a>
-    <li><a href="#ref-for-dictdef-cookiestoregetoptions④">3.1.6. getChangeSubscriptions</a>
+    <li><a href="#ref-for-dictdef-cookiestoregetoptions④">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-name">
    <b><a href="#dom-cookiestoregetoptions-name">#dom-cookiestoregetoptions-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-name">3.1.1. get</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-name①">3.1.2. getAll</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-name②">3.1.5. subscribeToChanges</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-name③">3.1.6. getChangeSubscriptions</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-name">3.1. The get() method</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-name①">3.2. The getAll() method</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-name②">3.5. The subscribeToChanges() method</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-name③">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-url">
    <b><a href="#dom-cookiestoregetoptions-url">#dom-cookiestoregetoptions-url</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-url">3.1.1. get</a> <a href="#ref-for-dom-cookiestoregetoptions-url①">(2)</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-url②">3.1.2. getAll</a> <a href="#ref-for-dom-cookiestoregetoptions-url③">(2)</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-url④">3.1.5. subscribeToChanges</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-url⑤">3.1.6. getChangeSubscriptions</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-url">3.1. The get() method</a> <a href="#ref-for-dom-cookiestoregetoptions-url①">(2)</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-url②">3.2. The getAll() method</a> <a href="#ref-for-dom-cookiestoregetoptions-url③">(2)</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-url④">3.5. The subscribeToChanges() method</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-url⑤">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-matchtype">
    <b><a href="#dom-cookiestoregetoptions-matchtype">#dom-cookiestoregetoptions-matchtype</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype">3.1.1. get</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype①">3.1.2. getAll</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype②">3.1.5. subscribeToChanges</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype③">3.1.6. getChangeSubscriptions</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype">3.1. The get() method</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype①">3.2. The getAll() method</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype②">3.5. The subscribeToChanges() method</a>
+    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype③">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="enumdef-cookiesamesite">
@@ -3856,24 +3846,24 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="dom-cookiesamesite-strict">
    <b><a href="#dom-cookiesamesite-strict">#dom-cookiesamesite-strict</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiesamesite-strict">3.1.4. delete</a>
-    <li><a href="#ref-for-dom-cookiesamesite-strict①">5.1. Query Cookies</a>
-    <li><a href="#ref-for-dom-cookiesamesite-strict②">5.2. Set a Cookie</a>
-    <li><a href="#ref-for-dom-cookiesamesite-strict③">5.3. Delete a Cookie</a>
+    <li><a href="#ref-for-dom-cookiesamesite-strict">3.4. The delete() method</a>
+    <li><a href="#ref-for-dom-cookiesamesite-strict①">6.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookiesamesite-strict②">6.2. Set a Cookie</a>
+    <li><a href="#ref-for-dom-cookiesamesite-strict③">6.3. Delete a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiesamesite-lax">
    <b><a href="#dom-cookiesamesite-lax">#dom-cookiesamesite-lax</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiesamesite-lax">5.1. Query Cookies</a>
-    <li><a href="#ref-for-dom-cookiesamesite-lax①">5.2. Set a Cookie</a>
+    <li><a href="#ref-for-dom-cookiesamesite-lax">6.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookiesamesite-lax①">6.2. Set a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiesamesite-unrestricted">
    <b><a href="#dom-cookiesamesite-unrestricted">#dom-cookiesamesite-unrestricted</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiesamesite-unrestricted">5.1. Query Cookies</a>
-    <li><a href="#ref-for-dom-cookiesamesite-unrestricted①">5.2. Set a Cookie</a>
+    <li><a href="#ref-for-dom-cookiesamesite-unrestricted">6.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookiesamesite-unrestricted①">6.2. Set a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiestoresetoptions">
@@ -3885,37 +3875,37 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-expires">
    <b><a href="#dom-cookiestoresetoptions-expires">#dom-cookiestoresetoptions-expires</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-expires">3.1.3. set</a> <a href="#ref-for-dom-cookiestoresetoptions-expires①">(2)</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-expires">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-expires①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-domain">
    <b><a href="#dom-cookiestoresetoptions-domain">#dom-cookiestoresetoptions-domain</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-domain">3.1.3. set</a> <a href="#ref-for-dom-cookiestoresetoptions-domain①">(2)</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-domain">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-domain①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-path">
    <b><a href="#dom-cookiestoresetoptions-path">#dom-cookiestoresetoptions-path</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-path">3.1.3. set</a> <a href="#ref-for-dom-cookiestoresetoptions-path①">(2)</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-path">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-path①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-secure">
    <b><a href="#dom-cookiestoresetoptions-secure">#dom-cookiestoresetoptions-secure</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-secure">3.1.3. set</a> <a href="#ref-for-dom-cookiestoresetoptions-secure①">(2)</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-secure">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-secure①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-httponly">
    <b><a href="#dom-cookiestoresetoptions-httponly">#dom-cookiestoresetoptions-httponly</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-httponly">3.1.3. set</a> <a href="#ref-for-dom-cookiestoresetoptions-httponly①">(2)</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-httponly">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-httponly①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-samesite">
    <b><a href="#dom-cookiestoresetoptions-samesite">#dom-cookiestoresetoptions-samesite</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-samesite">3.1.3. set</a> <a href="#ref-for-dom-cookiestoresetoptions-samesite①">(2)</a>
+    <li><a href="#ref-for-dom-cookiestoresetoptions-samesite">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-samesite①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiestoresetextraoptions">
@@ -3927,13 +3917,13 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="dom-cookiestoresetextraoptions-name">
    <b><a href="#dom-cookiestoresetextraoptions-name">#dom-cookiestoresetextraoptions-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetextraoptions-name">3.1.3. set</a>
+    <li><a href="#ref-for-dom-cookiestoresetextraoptions-name">3.3. The set() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoresetextraoptions-value">
    <b><a href="#dom-cookiestoresetextraoptions-value">#dom-cookiestoresetextraoptions-value</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetextraoptions-value">3.1.3. set</a>
+    <li><a href="#ref-for-dom-cookiestoresetextraoptions-value">3.3. The set() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiestoredeleteoptions">
@@ -3945,76 +3935,76 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="dom-cookiestoredeleteoptions-name">
    <b><a href="#dom-cookiestoredeleteoptions-name">#dom-cookiestoredeleteoptions-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoredeleteoptions-name">3.1.4. delete</a>
+    <li><a href="#ref-for-dom-cookiestoredeleteoptions-name">3.4. The delete() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoredeleteoptions-domain">
    <b><a href="#dom-cookiestoredeleteoptions-domain">#dom-cookiestoredeleteoptions-domain</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoredeleteoptions-domain">3.1.4. delete</a>
+    <li><a href="#ref-for-dom-cookiestoredeleteoptions-domain">3.4. The delete() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestoredeleteoptions-path">
    <b><a href="#dom-cookiestoredeleteoptions-path">#dom-cookiestoredeleteoptions-path</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoredeleteoptions-path">3.1.4. delete</a>
+    <li><a href="#ref-for-dom-cookiestoredeleteoptions-path">3.4. The delete() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookielistitem">
    <b><a href="#dictdef-cookielistitem">#dictdef-cookielistitem</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dictdef-cookielistitem">3. The CookieStore Interface</a> <a href="#ref-for-dictdef-cookielistitem①">(2)</a> <a href="#ref-for-dictdef-cookielistitem②">(3)</a>
-    <li><a href="#ref-for-dictdef-cookielistitem③">5.1. Query Cookies</a> <a href="#ref-for-dictdef-cookielistitem④">(2)</a>
+    <li><a href="#ref-for-dictdef-cookielistitem③">6.1. Query Cookies</a> <a href="#ref-for-dictdef-cookielistitem④">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-name">
    <b><a href="#dom-cookielistitem-name">#dom-cookielistitem-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookielistitem-name">5.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookielistitem-name">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-value">
    <b><a href="#dom-cookielistitem-value">#dom-cookielistitem-value</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookielistitem-value">5.1. Query Cookies</a>
-    <li><a href="#ref-for-dom-cookielistitem-value①">5.4. Process Changes</a>
+    <li><a href="#ref-for-dom-cookielistitem-value">6.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookielistitem-value①">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-domain">
    <b><a href="#dom-cookielistitem-domain">#dom-cookielistitem-domain</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookielistitem-domain">5.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookielistitem-domain">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-path">
    <b><a href="#dom-cookielistitem-path">#dom-cookielistitem-path</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookielistitem-path">5.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookielistitem-path">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-expires">
    <b><a href="#dom-cookielistitem-expires">#dom-cookielistitem-expires</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookielistitem-expires">5.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookielistitem-expires">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-secure">
    <b><a href="#dom-cookielistitem-secure">#dom-cookielistitem-secure</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookielistitem-secure">5.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookielistitem-secure">6.1. Query Cookies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookielistitem-samesite">
    <b><a href="#dom-cookielistitem-samesite">#dom-cookielistitem-samesite</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookielistitem-samesite">5.1. Query Cookies</a> <a href="#ref-for-dom-cookielistitem-samesite①">(2)</a> <a href="#ref-for-dom-cookielistitem-samesite②">(3)</a>
+    <li><a href="#ref-for-dom-cookielistitem-samesite">6.1. Query Cookies</a> <a href="#ref-for-dom-cookielistitem-samesite①">(2)</a> <a href="#ref-for-dom-cookielistitem-samesite②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedefdef-cookielist">
    <b><a href="#typedefdef-cookielist">#typedefdef-cookielist</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-typedefdef-cookielist">3. The CookieStore Interface</a> <a href="#ref-for-typedefdef-cookielist①">(2)</a>
-    <li><a href="#ref-for-typedefdef-cookielist②">3.3.1. CookieChangeEvent</a> <a href="#ref-for-typedefdef-cookielist③">(2)</a> <a href="#ref-for-typedefdef-cookielist④">(3)</a> <a href="#ref-for-typedefdef-cookielist⑤">(4)</a>
+    <li><a href="#ref-for-typedefdef-cookielist②">4. The CookieChangeEvent interface</a> <a href="#ref-for-typedefdef-cookielist③">(2)</a> <a href="#ref-for-typedefdef-cookielist④">(3)</a> <a href="#ref-for-typedefdef-cookielist⑤">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="read">
@@ -4027,28 +4017,28 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <b><a href="#dom-cookiestore-get">#dom-cookiestore-get</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-get">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-get①">3.1.1. get</a>
+    <li><a href="#ref-for-dom-cookiestore-get①">3.1. The get() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-get-options">
    <b><a href="#dom-cookiestore-get-options">#dom-cookiestore-get-options</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-get-options">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-get-options①">3.1.1. get</a> <a href="#ref-for-dom-cookiestore-get-options②">(2)</a>
+    <li><a href="#ref-for-dom-cookiestore-get-options①">3.1. The get() method</a> <a href="#ref-for-dom-cookiestore-get-options②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-getall">
    <b><a href="#dom-cookiestore-getall">#dom-cookiestore-getall</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-getall">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-getall①">3.1.2. getAll</a>
+    <li><a href="#ref-for-dom-cookiestore-getall①">3.2. The getAll() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-getall-options">
    <b><a href="#dom-cookiestore-getall-options">#dom-cookiestore-getall-options</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-getall-options">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-getall-options①">3.1.2. getAll</a> <a href="#ref-for-dom-cookiestore-getall-options②">(2)</a>
+    <li><a href="#ref-for-dom-cookiestore-getall-options①">3.2. The getAll() method</a> <a href="#ref-for-dom-cookiestore-getall-options②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="writing">
@@ -4061,15 +4051,15 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <b><a href="#dom-cookiestore-set">#dom-cookiestore-set</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-set">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-set①">3.1.3. set</a> <a href="#ref-for-dom-cookiestore-set②">(2)</a>
+    <li><a href="#ref-for-dom-cookiestore-set①">3.3. The set() method</a> <a href="#ref-for-dom-cookiestore-set②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-set-options">
    <b><a href="#dom-cookiestore-set-options">#dom-cookiestore-set-options</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-set-options">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-set-options①">3.1.3. set</a>
-    <li><a href="#ref-for-dom-cookiestore-set-options②">3.1.4. delete</a>
+    <li><a href="#ref-for-dom-cookiestore-set-options①">3.3. The set() method</a>
+    <li><a href="#ref-for-dom-cookiestore-set-options②">3.4. The delete() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="deleting">
@@ -4082,7 +4072,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <b><a href="#dom-cookiestore-delete">#dom-cookiestore-delete</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-delete">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-delete①">3.1.4. delete</a> <a href="#ref-for-dom-cookiestore-delete②">(2)</a>
+    <li><a href="#ref-for-dom-cookiestore-delete①">3.4. The delete() method</a> <a href="#ref-for-dom-cookiestore-delete②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-delete-options">
@@ -4101,102 +4091,94 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <b><a href="#dom-cookiestore-subscribetochanges">#dom-cookiestore-subscribetochanges</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-subscribetochanges">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-subscribetochanges①">3.1.5. subscribeToChanges</a> <a href="#ref-for-dom-cookiestore-subscribetochanges②">(2)</a>
+    <li><a href="#ref-for-dom-cookiestore-subscribetochanges①">3.5. The subscribeToChanges() method</a> <a href="#ref-for-dom-cookiestore-subscribetochanges②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-getchangesubscriptions">
    <b><a href="#dom-cookiestore-getchangesubscriptions">#dom-cookiestore-getchangesubscriptions</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cookiestore-getchangesubscriptions">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-getchangesubscriptions①">3.1.5. subscribeToChanges</a>
-    <li><a href="#ref-for-dom-cookiestore-getchangesubscriptions②">3.1.6. getChangeSubscriptions</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestore-onchange">
-   <b><a href="#dom-cookiestore-onchange">#dom-cookiestore-onchange</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cookiestore-onchange">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-onchange①">3.2.1. onchange</a>
+    <li><a href="#ref-for-dom-cookiestore-getchangesubscriptions①">3.5. The subscribeToChanges() method</a>
+    <li><a href="#ref-for-dom-cookiestore-getchangesubscriptions②">3.6. The getChangeSubscriptions() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookiechangeevent">
    <b><a href="#cookiechangeevent">#cookiechangeevent</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookiechangeevent">3.2.1. onchange</a>
-    <li><a href="#ref-for-cookiechangeevent①">3.3.1. CookieChangeEvent</a> <a href="#ref-for-cookiechangeevent②">(2)</a>
-    <li><a href="#ref-for-cookiechangeevent③">5.4. Process Changes</a>
+    <li><a href="#ref-for-cookiechangeevent">4. The CookieChangeEvent interface</a> <a href="#ref-for-cookiechangeevent①">(2)</a>
+    <li><a href="#ref-for-cookiechangeevent②">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiechangeevent-changed">
    <b><a href="#dom-cookiechangeevent-changed">#dom-cookiechangeevent-changed</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiechangeevent-changed">3.3.1. CookieChangeEvent</a>
-    <li><a href="#ref-for-dom-cookiechangeevent-changed①">5.4. Process Changes</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-changed">4. The CookieChangeEvent interface</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-changed①">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiechangeevent-deleted">
    <b><a href="#dom-cookiechangeevent-deleted">#dom-cookiechangeevent-deleted</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiechangeevent-deleted">3.3.1. CookieChangeEvent</a>
-    <li><a href="#ref-for-dom-cookiechangeevent-deleted①">5.4. Process Changes</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-deleted">4. The CookieChangeEvent interface</a>
+    <li><a href="#ref-for-dom-cookiechangeevent-deleted①">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiechangeeventinit">
    <b><a href="#dictdef-cookiechangeeventinit">#dictdef-cookiechangeeventinit</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-cookiechangeeventinit">3.3.1. CookieChangeEvent</a>
+    <li><a href="#ref-for-dictdef-cookiechangeeventinit">4. The CookieChangeEvent interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-window-cookiestore">
    <b><a href="#dom-window-cookiestore">#dom-window-cookiestore</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-window-cookiestore">4.1. The Window Interface</a>
+    <li><a href="#ref-for-dom-window-cookiestore">5.1. The Window Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-serviceworkerglobalscope-cookiestore">
    <b><a href="#dom-serviceworkerglobalscope-cookiestore">#dom-serviceworkerglobalscope-cookiestore</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-serviceworkerglobalscope-cookiestore">4.2. The ServiceWorkerGlobalScope Interface</a>
+    <li><a href="#ref-for-dom-serviceworkerglobalscope-cookiestore">5.2. The ServiceWorkerGlobalScope Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="query-cookies">
    <b><a href="#query-cookies">#query-cookies</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-query-cookies">3.1.1. get</a> <a href="#ref-for-query-cookies①">(2)</a>
-    <li><a href="#ref-for-query-cookies②">3.1.2. getAll</a> <a href="#ref-for-query-cookies③">(2)</a>
+    <li><a href="#ref-for-query-cookies">3.1. The get() method</a> <a href="#ref-for-query-cookies①">(2)</a>
+    <li><a href="#ref-for-query-cookies②">3.2. The getAll() method</a> <a href="#ref-for-query-cookies③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="create-a-cookielistitem">
    <b><a href="#create-a-cookielistitem">#create-a-cookielistitem</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-create-a-cookielistitem">5.1. Query Cookies</a>
-    <li><a href="#ref-for-create-a-cookielistitem①">5.4. Process Changes</a>
+    <li><a href="#ref-for-create-a-cookielistitem">6.1. Query Cookies</a>
+    <li><a href="#ref-for-create-a-cookielistitem①">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="as-a-timestamp">
    <b><a href="#as-a-timestamp">#as-a-timestamp</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-as-a-timestamp">5.1. Query Cookies</a>
-    <li><a href="#ref-for-as-a-timestamp①">5.3. Delete a Cookie</a>
+    <li><a href="#ref-for-as-a-timestamp">6.1. Query Cookies</a>
+    <li><a href="#ref-for-as-a-timestamp①">6.3. Delete a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="set-a-cookie">
    <b><a href="#set-a-cookie">#set-a-cookie</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-set-a-cookie">3.1.3. set</a> <a href="#ref-for-set-a-cookie①">(2)</a>
-    <li><a href="#ref-for-set-a-cookie②">5.3. Delete a Cookie</a>
+    <li><a href="#ref-for-set-a-cookie">3.3. The set() method</a> <a href="#ref-for-set-a-cookie①">(2)</a>
+    <li><a href="#ref-for-set-a-cookie②">6.3. Delete a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="date-serialize">
    <b><a href="#date-serialize">#date-serialize</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-date-serialize">5.2. Set a Cookie</a>
+    <li><a href="#ref-for-date-serialize">6.2. Set a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="delete-a-cookie">
    <b><a href="#delete-a-cookie">#delete-a-cookie</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-delete-a-cookie">3.1.4. delete</a> <a href="#ref-for-delete-a-cookie①">(2)</a>
+    <li><a href="#ref-for-delete-a-cookie">3.4. The delete() method</a> <a href="#ref-for-delete-a-cookie①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="process-cookie-changes">
@@ -4208,19 +4190,19 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="observable-changes">
    <b><a href="#observable-changes">#observable-changes</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-observable-changes">5.4. Process Changes</a> <a href="#ref-for-observable-changes①">(2)</a>
+    <li><a href="#ref-for-observable-changes">6.4. Process Changes</a> <a href="#ref-for-observable-changes①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-change">
    <b><a href="#cookie-change">#cookie-change</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cookie-change">5.4. Process Changes</a>
+    <li><a href="#ref-for-cookie-change">6.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="fire-a-change-event">
    <b><a href="#fire-a-change-event">#fire-a-change-event</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-fire-a-change-event">5.4. Process Changes</a> <a href="#ref-for-fire-a-change-event①">(2)</a>
+    <li><a href="#ref-for-fire-a-change-event">6.4. Process Changes</a> <a href="#ref-for-fire-a-change-event①">(2)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
