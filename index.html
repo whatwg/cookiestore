@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version 9c7b3c1bf4afcf8eca4fd3a1529a298ee35be006" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="bb4adea14f144fcc3261b4f27bbe1b3d8a0dfda5" name="document-revision">
+  <meta content="9a8c15d10abd3a9ffbae6bd74c38cb10762e4360" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -1476,7 +1476,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-07-30">30 July 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-07-31">31 July 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1605,7 +1605,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <p><em>This section is non-normative.</em></p>
    <p>This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and <a data-link-type="biblio" href="#biblio-service-workers">service workers</a>.</p>
    <p><a data-link-type="biblio" href="#biblio-rfc6265bis">HTTP cookies</a> have, since their origins at Netscape <a href="https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html">(documentation preserved by archive.org)</a>, provided a <a href="http://www.montulli-blog.com/2013/05/the-reasoning-behind-web-cookies.html">valuable state-management mechanism</a> for the web.</p>
-   <p>The synchronous single-threaded script-level <code class="idl"><a data-link-type="idl">document.cookie</a></code> interface to cookies has been a source of <a href="https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html">complexity and performance woes</a> further exacerbated by the move in many browsers from:</p>
+   <p>The synchronous single-threaded script-level <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie">document.cookie</a></code> interface to cookies has been a source of <a href="https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html">complexity and performance woes</a> further exacerbated by the move in many browsers from:</p>
    <ul>
     <li data-md>
      <p>a single browser process,</p>
@@ -1632,7 +1632,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li data-md>
      <p>the browser as a whole.</p>
    </ul>
-   <p>Newer parts of the web built in service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies too</a> but cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl">document.cookie</a></code> interface at all as they both have no <code>document</code> and also cannot block the event loop as that would interfere with handling of unrelated events.</p>
+   <p>Newer parts of the web built in service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies too</a> but cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie①">document.cookie</a></code> interface at all as they both have no <code>document</code> and also cannot block the event loop as that would interfere with handling of unrelated events.</p>
    <h3 class="heading settled" data-level="1.1" id="intro-proposed-change"><span class="secno">1.1. </span><span class="content">A Taste of the Proposed Change</span><a class="self-link" href="#intro-proposed-change"></a></h3>
    <p>Although it is tempting to <a href="https://discourse.wicg.io/t/rethinking-cookies/744">rethink cookies</a> entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.</p>
    <p>Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in <code>Set-Cookie</code> format:</p>
@@ -1707,7 +1707,7 @@ in <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> 
    <p>A cookie is <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="script-visible">script-visible</dfn> when it is in-scope and does not have the <code>HttpOnly</code> cookie flag.</p>
    <h4 class="heading settled" data-level="1.2.2" id="intro-motivation"><span class="secno">1.2.2. </span><span class="content">Motivations</span><a class="self-link" href="#intro-motivation"></a></h4>
    <p>Some service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies</a> but
-cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl">document.cookie</a></code> interface as they both have no <code>document</code> and
+cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie②">document.cookie</a></code> interface as they both have no <code>document</code> and
 also cannot block the event loop as that would interfere with handling of unrelated events.</p>
    <p>A new API may also provide a rare and valuable chance to address
 some <a href="https://github.com/inikulin/cookie-compat">outstanding cross-browser incompatibilities</a> and bring <a href="https://github.com/whatwg/html/issues/804">divergent
@@ -1732,13 +1732,13 @@ so this API allows JavaScript Date objects and numeric timestamps (milliseconds 
    <p>Some user-agents implement non-standard extensions to cookie behavior. The intent of this specification,
 though, is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented
 across modern browsers. As new cookie features are specified and adopted it is expected that this API will be
-extended to include them. A secondary goal is to converge with <code class="idl"><a data-link-type="idl">document.cookie</a></code> behavior
+extended to include them. A secondary goal is to converge with <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie③">document.cookie</a></code> behavior
 and the http cookie specification. See https://github.com/whatwg/html/issues/804 and https://inikulin.github.io/cookie-compat/
 for the current state of this convergence.</p>
    <p>Differences across browsers in how bytes outside the printable-ASCII subset are interpreted has led to
 long-lasting user- and developer-visible incompatibilities across browsers making internationalized use of cookies
 needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and uses <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString">USVString</a></code> for the script interface,
-with the additional side-effects that subsequent uses of <code class="idl"><a data-link-type="idl">document.cookie</a></code> to read a cookie read or written through this interface and subsequent uses of <code class="idl"><a data-link-type="idl">document.cookie</a></code> to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
+with the additional side-effects that subsequent uses of <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie④">document.cookie</a></code> to read a cookie read or written through this interface and subsequent uses of <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑤">document.cookie</a></code> to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this
 will change the behavior of <code>WinINet</code>-based user agents and Safari but should bring their behavior into concordance
 with other modern user agents.</p>
    <h2 class="heading settled" data-level="2" id="concepts"><span class="secno">2. </span><span class="content">Concepts</span><a class="self-link" href="#concepts"></a></h2>
@@ -1784,7 +1784,7 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed②"><c- g>Exposed</c-></a>=<c- n>ServiceWorker</c->]
   <c- b>Promise</c->&lt;<c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions③"><c- n>CookieStoreGetOptions</c-></a>>> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-getchangesubscriptions" id="ref-for-dom-cookiestore-getchangesubscriptions"><c- g>getChangeSubscriptions</c-></a>();
 
-  <c- b>attribute</c-> <a class="n" data-link-type="idl-name"><c- n>EventHandler</c-></a> <a class="idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange"><c- g>onchange</c-></a>;
+  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler"><c- n>EventHandler</c-></a> <a class="idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange"><c- g>onchange</c-></a>;
 };
 
 <c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-cookiematchtype"><code><c- g>CookieMatchType</c-></code></dfn> {
@@ -1845,7 +1845,7 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
      <dd>
       <p>You can <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="read">read</dfn> the first in-scope <a data-link-type="dfn" href="#script-visible" id="ref-for-script-visible②">script-visible</a> value for a given cookie name. In a service worker context this defaults to the path
 of the service worker’s registered scope. In a document it defaults to the path of the current document and does not respect
-changes from <code class="idl"><a data-link-type="idl">replaceState()</a></code> or <code class="idl"><a data-link-type="idl">document.domain</a></code>.</p>
+changes from <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/history.html#dom-history-replacestate" id="ref-for-dom-history-replacestate">replaceState()</a></code> or <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain" id="ref-for-dom-document-domain">document.domain</a></code>.</p>
       <div class="example" id="example-68f91a60">
        <a class="self-link" href="#example-68f91a60"></a> 
 <pre class="language-js highlight"><c- a>function</c-> getOneSimpleOriginCookie<c- p>()</c-> <c- p>{</c->
@@ -2415,9 +2415,9 @@ then return a new promise rejected with a <code class="idl"><a data-link-type="i
    <h3 class="heading settled" data-level="3.2" id="CookieStore-attributes"><span class="secno">3.2. </span><span class="content">Attributes</span><a class="self-link" href="#CookieStore-attributes"></a></h3>
    <h4 class="heading settled" data-level="3.2.1" id="CookieStore-attributes-onchange"><span class="secno">3.2.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange①">onchange</a></code></span><a class="self-link" href="#CookieStore-attributes-onchange"></a></h4>
    <dl>
-    <dt data-md><dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="attribute" data-export id="dom-cookiestore-onchange"><code>onchange</code></dfn>, <span> of type <a data-link-type="idl-name">EventHandler</a></span>
+    <dt data-md><dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="attribute" data-export id="dom-cookiestore-onchange"><code>onchange</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler①">EventHandler</a></span>
     <dd data-md>
-     <p>An <code class="idl"><a data-link-type="idl">EventHandler</a></code> of type <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent">CookieChangeEvent</a></code>.</p>
+     <p>An <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler②">EventHandler</a></code> of type <code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent">CookieChangeEvent</a></code>.</p>
    </dl>
    <h3 class="heading settled" data-level="3.3" id="Events"><span class="secno">3.3. </span><span class="content">Events</span><a class="self-link" href="#Events"></a></h3>
    <h4 class="heading settled" data-level="3.3.1" id="CookieChangeEvent"><span class="secno">3.3.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#cookiechangeevent" id="ref-for-cookiechangeevent①">CookieChangeEvent</a></code></span><a class="self-link" href="#CookieChangeEvent"></a></h4>
@@ -2450,7 +2450,7 @@ and against <code class="idl"><a data-link-type="idl" href="https://w3c.github.i
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope①"><c- g>ServiceWorkerGlobalScope</c-></a> {
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable①"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore④"><c- n>CookieStore</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export data-readonly data-type="CookieStore" id="dom-serviceworkerglobalscope-cookiestore"><code><c- g>cookieStore</c-></code></dfn>;
 
-  <c- b>attribute</c-> <a class="n" data-link-type="idl-name"><c- n>EventHandler</c-></a> <dfn class="idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code><a class="self-link" href="#dom-serviceworkerglobalscope-oncookiechange"></a></dfn>;
+  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler③"><c- n>EventHandler</c-></a> <dfn class="idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code><a class="self-link" href="#dom-serviceworkerglobalscope-oncookiechange"></a></dfn>;
 };
 </pre>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore">cookieStore</a></code> attribute’s getter must return <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑤">CookieStore</a></code> object.</p>
@@ -2726,8 +2726,8 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <p>When the service worker is scoped more narrowly than <code>/</code> it may still be able to read path-scoped cookies from outside its scope’s path space by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.</p>
    <h3 class="heading settled" data-level="6.6" id="aversion"><span class="secno">6.6. </span><span class="content">Cookie aversion</span><a class="self-link" href="#aversion"></a></h3>
    <p>To reduce complexity for developers and eliminate the need for ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won’t invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)</p>
-   <p>Today writing to <code class="idl"><a data-link-type="idl">document.cookie</a></code> in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.</p>
-   <p>Likewise, today reading <code class="idl"><a data-link-type="idl">document.cookie</a></code> in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.</p>
+   <p>Today writing to <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑥">document.cookie</a></code> in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.</p>
+   <p>Likewise, today reading <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑦">document.cookie</a></code> in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.</p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -3103,6 +3103,14 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
     <li><a href="#ref-for-concept-request-window">3.3.1. CookieChangeEvent</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-eventhandler">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler">https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-eventhandler">3. The CookieStore Interface</a>
+    <li><a href="#ref-for-eventhandler①">3.2.1. onchange</a> <a href="#ref-for-eventhandler②">(2)</a>
+    <li><a href="#ref-for-eventhandler③">4.2. The ServiceWorkerGlobalScope Interface</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-window">
    <a href="https://html.spec.whatwg.org/multipage/window-object.html#window">https://html.spec.whatwg.org/multipage/window-object.html#window</a><b>Referenced in:</b>
    <ul>
@@ -3110,6 +3118,15 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
     <li><a href="#ref-for-window①">3.1.2. getAll</a>
     <li><a href="#ref-for-window②">4.1. The Window Interface</a>
     <li><a href="#ref-for-window③">5.4. Process Changes</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-document-cookie">
+   <a href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie">https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-document-cookie">1. Introduction</a> <a href="#ref-for-dom-document-cookie①">(2)</a>
+    <li><a href="#ref-for-dom-document-cookie②">1.2.2. Motivations</a>
+    <li><a href="#ref-for-dom-document-cookie③">1.2.4. Compatiblity</a> <a href="#ref-for-dom-document-cookie④">(2)</a> <a href="#ref-for-dom-document-cookie⑤">(3)</a>
+    <li><a href="#ref-for-dom-document-cookie⑥">6.6. Cookie aversion</a> <a href="#ref-for-dom-document-cookie⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-environment-creation-url">
@@ -3136,6 +3153,12 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
     <li><a href="#ref-for-current-settings-object②">3.1.2. getAll</a> <a href="#ref-for-current-settings-object③">(2)</a>
     <li><a href="#ref-for-current-settings-object④">3.1.3. set</a> <a href="#ref-for-current-settings-object⑤">(2)</a>
     <li><a href="#ref-for-current-settings-object⑥">3.1.4. delete</a> <a href="#ref-for-current-settings-object⑦">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-document-domain">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain">https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-document-domain">3.1.1. get</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-settings-object-global">
@@ -3168,6 +3191,12 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <ul>
     <li><a href="#ref-for-relevant-settings-object">4.1. The Window Interface</a>
     <li><a href="#ref-for-relevant-settings-object①">4.2. The ServiceWorkerGlobalScope Interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-history-replacestate">
+   <a href="https://html.spec.whatwg.org/multipage/history.html#dom-history-replacestate">https://html.spec.whatwg.org/multipage/history.html#dom-history-replacestate</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-history-replacestate">3.1.1. get</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-same-origin">
@@ -3420,14 +3449,18 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="term-for-eventhandler" style="color:initial">EventHandler</span>
      <li><span class="dfn-paneled" id="term-for-window" style="color:initial">Window</span>
+     <li><span class="dfn-paneled" id="term-for-dom-document-cookie" style="color:initial">cookie</span>
      <li><span class="dfn-paneled" id="term-for-concept-environment-creation-url" style="color:initial">creation url</span>
      <li><span class="dfn-paneled" id="term-for-current-global-object" style="color:initial">current global object</span>
      <li><span class="dfn-paneled" id="term-for-current-settings-object" style="color:initial">current settings object</span>
+     <li><span class="dfn-paneled" id="term-for-dom-document-domain" style="color:initial">domain</span>
      <li><span class="dfn-paneled" id="term-for-concept-settings-object-global" style="color:initial">global object</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-opaque" style="color:initial">opaque origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin" style="color:initial">origin</span>
      <li><span class="dfn-paneled" id="term-for-relevant-settings-object" style="color:initial">relevant settings object</span>
+     <li><span class="dfn-paneled" id="term-for-dom-history-replacestate" style="color:initial">replaceState(data, title)</span>
      <li><span class="dfn-paneled" id="term-for-same-origin" style="color:initial">same origin</span>
     </ul>
    <li>
@@ -3536,7 +3569,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed②①"><c- g>Exposed</c-></a>=<c- n>ServiceWorker</c->]
   <c- b>Promise</c->&lt;<c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions③①"><c- n>CookieStoreGetOptions</c-></a>>> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-getchangesubscriptions" id="ref-for-dom-cookiestore-getchangesubscriptions③"><c- g>getChangeSubscriptions</c-></a>();
 
-  <c- b>attribute</c-> <a class="n" data-link-type="idl-name"><c- n>EventHandler</c-></a> <a class="idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange②"><c- g>onchange</c-></a>;
+  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler④"><c- n>EventHandler</c-></a> <a class="idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-cookiestore-onchange" id="ref-for-dom-cookiestore-onchange②"><c- g>onchange</c-></a>;
 };
 
 <c- b>enum</c-> <a href="#enumdef-cookiematchtype"><code><c- g>CookieMatchType</c-></code></a> {
@@ -3609,7 +3642,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope①①"><c- g>ServiceWorkerGlobalScope</c-></a> {
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable①①"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①①"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore④①"><c- n>CookieStore</c-></a> <a data-readonly data-type="CookieStore" href="#dom-serviceworkerglobalscope-cookiestore"><code><c- g>cookieStore</c-></code></a>;
 
-  <c- b>attribute</c-> <a class="n" data-link-type="idl-name"><c- n>EventHandler</c-></a> <a data-type="EventHandler" href="#dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code></a>;
+  <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler③①"><c- n>EventHandler</c-></a> <a data-type="EventHandler" href="#dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code></a>;
 };
 
 </pre>
