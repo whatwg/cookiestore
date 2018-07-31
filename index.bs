@@ -55,6 +55,7 @@ dl.domintro dt code {
 <img src="logo-cookies.svg" alt="logo"
     style="height: 100px; width: 100px; position: absolute; right: 20px; top: 30px;">
 
+
 <!-- ============================================================ -->
 # Introduction # {#intro}
 <!-- ============================================================ -->
