@@ -10,7 +10,7 @@ Editor: Victor Costan, Google Inc. https://google.com, costan@google.com
 Editor: Raymond Toy, Google Inc. https://google.com, rtoy@google.com
 Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
 Favicon: logo-cookies.png
-Markup Shorthands: markdown yes, css no
+Markup Shorthands: markdown yes, css no, biblio yes
 Abstract: An asynchronous Javascript cookies API for documents and workers
 </pre>
 
@@ -232,7 +232,7 @@ with other modern user agents.
 ## Cookie ## {#cookie-concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie</dfn> is normatively defined for [=user agents=] by [[RFC6265bis#section-5|Cookies: HTTP State Management Mechanism §User Agent Requirements]].
+A <dfn>cookie</dfn> is normatively defined for user agents by [[RFC6265bis#section-5|Cookies: HTTP State Management Mechanism §User Agent Requirements]].
 
 <div dfn-for=cookie>
 Per [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage Model]], a [=cookie=] has the following fields:
@@ -255,7 +255,7 @@ Per [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage 
 ## Cookie Store ## {#cookie-store--concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie store</dfn> is normatively defined for [=user agents=] by [[!RFC6265bis|Cookies: HTTP State Management Mechanism §User Agent Requirements]].
+A <dfn>cookie store</dfn> is normatively defined for user agents by [[!RFC6265bis|Cookies: HTTP State Management Mechanism §User Agent Requirements]].
 
 When any of the following conditions occur for a [=cookie store=], perform the steps to [=process cookie changes=].
 
@@ -360,11 +360,7 @@ typedef sequence<CookieListItem> CookieList;
 </xmp>
 
 <!-- ============================================================ -->
-## Methods ## {#CookieStore-methods}
-<!-- ============================================================ -->
-
-<!-- ============================================================ -->
-### {{CookieStore/get}} ### {#CookieStore-get}
+## The {{CookieStore/get()}} method ## {#CookieStore-get}
 <!-- ============================================================ -->
 
 <div class=note>
@@ -434,8 +430,8 @@ The <dfn method for=CookieStore>get(|name|)</dfn> method, when invoked, must run
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
         |url| and |name|.
-    1. If |list| is failure, reject |p| with a {{TypeError}} and abort these steps.
-    1. If |list| [=list/is empty=], resolve |p| with undefined.
+    1. If |list| is failure, then reject |p| with a {{TypeError}} and abort these steps.
+    1. If |list| [=list/is empty=], then resolve |p| with undefined.
     1. Otherwise, resolve |p| with the first item of |list|.
 1. Return |p|.
 
@@ -460,15 +456,15 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
         |url|,
         |options|' {{CookieStoreGetOptions/name}} dictionary member (if present), and
         |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
-    1. If |list| is failure, reject |p| with a {{TypeError}} and abort these steps.
-    1. If |list| [=list/is empty=], resolve |p| with undefined.
+    1. If |list| is failure, then reject |p| with a {{TypeError}} and abort these steps.
+    1. If |list| [=list/is empty=], then resolve |p| with undefined.
     1. Otherwise, resolve |p| with the first item of |list|.
 1. Return |p|.
 
 </div>
 
 <!-- ============================================================ -->
-### {{CookieStore/getAll}} ### {#CookieStore-getAll}
+## The {{CookieStore/getAll()}} method ## {#CookieStore-getAll}
 <!-- ============================================================ -->
 
 <div class=note>
@@ -516,7 +512,7 @@ The <dfn method for=CookieStore>getAll(|name|)</dfn> method, when invoked, must 
 1. Run the following steps in parallel:
     1. Let |list| be the results of running the steps to [=query cookies=] with
         |url| and |name|.
-    1. If |list| is failure, reject |p| with a {{TypeError}}.
+    1. If |list| is failure, then reject |p| with a {{TypeError}}.
     1. Otherwise, resolve |p| with |list|.
 1. Return |p|.
 
@@ -541,7 +537,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
         |url|,
         |options|' {{CookieStoreGetOptions/name}} dictionary member (if present), and
         |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
-    1. If |list| is failure, reject |p| with a {{TypeError}}.
+    1. If |list| is failure, then reject |p| with a {{TypeError}}.
     1. Otherwise, resolve |p| with |list|.
 1. Return |p|.
 
@@ -550,7 +546,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 
 
 <!-- ============================================================ -->
-### {{CookieStore/set(name, value, options)|set}} ### {#CookieStore-set}
+## The {{CookieStore/set(name, value, options)|set()}} method ## {#CookieStore-set}
 <!-- ============================================================ -->
 
 <div class=note>
@@ -707,7 +703,7 @@ The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method, wh
         |options|' {{CookieStoreSetOptions/secure}} dictionary member,
         |options|' {{CookieStoreSetOptions/httpOnly}} dictionary member, and
         |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
-    1. If |r| is failure, reject |p| with a {{TypeError}} and abort these steps.
+    1. If |r| is failure, then reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
 1. Return |p|.
 
@@ -731,7 +727,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
         |options|' {{CookieStoreSetOptions/secure}} dictionary member,
         |options|' {{CookieStoreSetOptions/httpOnly}} dictionary member, and
         |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
-    1. If |r| is failure, reject |p| with a {{TypeError}} and abort these steps.
+    1. If |r| is failure, then reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
 1. Return |p|.
 
@@ -739,7 +735,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
 
 
 <!-- ============================================================ -->
-### {{CookieStore/delete(name)|delete}} ### {#CookieStore-delete}
+## The {{CookieStore/delete(name)|delete()}} method ## {#CookieStore-delete}
 <!-- ============================================================ -->
 
 <div class=note>
@@ -810,7 +806,7 @@ The <dfn method for=CookieStore>delete(|name|)</dfn> method, when invoked, must 
         "`/`",
         true, and
         "{{CookieSameSite/strict}}".
-    1. If |r| is failure, reject |p| with a {{TypeError}} and abort these steps.
+    1. If |r| is failure, then reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
 1. Return |p|.
 
@@ -829,7 +825,7 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, mu
         |options|' {{CookieStoreDeleteOptions/name}} dictionary member,
         |options|' {{CookieStoreDeleteOptions/domain}} dictionary member, and
         |options|' {{CookieStoreDeleteOptions/path}} dictionary member.
-    1. If |r| is failure, reject |p| with a {{TypeError}} and abort these steps.
+    1. If |r| is failure, then reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
 1. Return |p|.
 
@@ -837,7 +833,7 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, mu
 
 
 <!-- ============================================================ -->
-### {{CookieStore/subscribeToChanges()|subscribeToChanges}} ### {#CookieStore-subscribeToChanges}
+## The {{CookieStore/subscribeToChanges()|subscribeToChanges()}} method ## {#CookieStore-subscribeToChanges}
 <!-- ============================================================ -->
 
 <div class=note>
@@ -911,7 +907,7 @@ The <dfn method for=CookieStore>subscribeToChanges(|subscriptions|)</dfn> method
 </div>
 
 <!-- ============================================================ -->
-### {{CookieStore/getChangeSubscriptions()|getChangeSubscriptions}} ### {#CookieStore-getChangeSubscriptions}
+## The {{CookieStore/getChangeSubscriptions()}} method ## {#CookieStore-getChangeSubscriptions}
 <!-- ============================================================ -->
 
 <div class=algorithm>
@@ -933,27 +929,9 @@ The <dfn method for=CookieStore>getChangeSubscriptions()</dfn> method, when invo
 
 </div>
 
-<!-- ============================================================ -->
-## Attributes ## {#CookieStore-attributes}
-<!-- ============================================================ -->
 
 <!-- ============================================================ -->
-### {{onchange}} ### {#CookieStore-attributes-onchange}
-<!-- ============================================================ -->
-
-<dl dfn-type=attribute dfn-for=CookieStore>
-    : <dfn>onchange</dfn>
-    ::
-        An {{EventHandler}} of type {{CookieChangeEvent}}.
-</dl>
-
-
-<!-- ============================================================ -->
-## Events ## {#Events}
-<!-- ============================================================ -->
-
-<!-- ============================================================ -->
-### {{CookieChangeEvent}} ### {#CookieChangeEvent}
+# The {{CookieChangeEvent}} interface # {#CookieChangeEvent}
 <!-- ============================================================ -->
 
 A {{CookieChangeEvent}} is [=dispatched=] against {{CookieStore}} objects
@@ -978,9 +956,14 @@ dictionary CookieChangeEventInit : EventInit {
 
 The {{CookieChangeEvent/changed}} and {{CookieChangeEvent/deleted}} attributes must return the value they were initialized to.
 
+
 <!-- ============================================================ -->
 # Global Interfaces # {#globals}
 <!-- ============================================================ -->
+
+A {{CookieStore}} is accessed by script using an attribute in the global
+scope in a {{Window}} or {{ServiceWorkerGlobalScope}} context.
+
 
 <!-- ============================================================ -->
 ## The Window Interface ## {#Window}
@@ -1121,12 +1104,12 @@ run the following steps:
     1. If |host| does not equal |domain| and
         |host| does not end with U+002D (`.`) followed by |domain|,
         then return failure.
-1. Otherwise, if |domain| is null, set |domain| to |host|.
+1. Otherwise, if |domain| is null, then set |domain| to |host|.
 1. If |secure| is false and |name| starts with either "`__Secure-`" or "`__Host-`",
     then return failure.
 1. Let |attributes| be a [=list=].
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
-1. If |domain| is not null, then [=list/append=] \``Domain`\`/|domain| ([=UTF-8 encoded=]) to |attributes|.
+1. [=list/Append=] \``Domain`\`/|domain| ([=UTF-8 encoded=]) to |attributes|.
 1. [=list/Append=] \``Path`\`/|path| ([=UTF-8 encoded=]) to |attributes|.
 1. If |secure| is true, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
 1. If |httpOnly| is true, then [=list/append=] \``HttpOnly`\`/\`\` to |attributes|.
@@ -1211,11 +1194,11 @@ To <dfn>process cookie changes</dfn>, run the following steps:
 1. For every {{Window}} |window|, run the following steps:
     1. Let |url| be |window|'s [=creation URL=].
     1. Let |changes| be the [=observable changes=] for |url|.
-    1. If |changes| is not empty, [=fire a change event=] named "`change`" with |changes| at |window|'s {{CookieStore}}.
+    1. If |changes| is not empty, then [=fire a change event=] named "`change`" with |changes| at |window|'s {{CookieStore}}.
 1. For every {{ServiceWorkerGlobalScope}} |worker|, run the following steps:
     1. Let |url| be |worker|'s [=creation URL=].
     1. Let |changes| be the [=observable changes=] for |url|.
-    1. If |changes| is not empty, [=fire a change event=] named "`cookiechange`" with |changes| at |worker|.
+    1. If |changes| is not empty, then [=fire a change event=] named "`cookiechange`" with |changes| at |worker|.
 
 </div>
 
