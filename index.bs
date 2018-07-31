@@ -1053,8 +1053,6 @@ run the following steps:
     1. [=list/Append=] |item| to |list|.
 1. Return |list|.
 
-Issue: Define failure cases, if any.
-
 </div>
 
 <div class=algorithm>
@@ -1062,20 +1060,20 @@ Issue: Define failure cases, if any.
 To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps.
 
 1. Let |item| be a new {{CookieListItem}}.
-1. Set |item|'s {{CookieListItem/name}} to |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/value}} to |cookie|'s [=cookie/value=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/domain}} to |cookie|'s [=cookie/domain=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/path}} to |cookie|'s [=cookie/path=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/expires}} to |cookie|'s [=cookie/expiry-time=] ([=as a timestamp=]).
-1. Set |item|'s {{CookieListItem/secure}} to |cookie|'s [=cookie/secure-only-flag=].
+1. Set |item|'s {{CookieListItem/name}} dictionary member to |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
+1. Set |item|'s {{CookieListItem/value}} dictionary member to |cookie|'s [=cookie/value=] ([=UTF-8 decoded=]).
+1. Set |item|'s {{CookieListItem/domain}} dictionary member to |cookie|'s [=cookie/domain=] ([=UTF-8 decoded=]).
+1. Set |item|'s {{CookieListItem/path}} dictionary member to |cookie|'s [=cookie/path=] ([=UTF-8 decoded=]).
+1. Set |item|'s {{CookieListItem/expires}} dictionary member to |cookie|'s [=cookie/expiry-time=] ([=as a timestamp=]).
+1. Set |item|'s {{CookieListItem/secure}} dictionary member to |cookie|'s [=cookie/secure-only-flag=].
 1. Switch on |cookie|'s [=cookie/same-site-flag=]:
     <dl class=switch>
         : \``None`\`
-        :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/unrestricted}}".
+        :: Set |item|'s {{CookieListItem/sameSite}} dictionary member to "{{CookieSameSite/unrestricted}}".
         : \``Strict`\`
-        :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/strict}}".
+        :: Set |item|'s {{CookieListItem/sameSite}} dictionary member to "{{CookieSameSite/strict}}".
         : \``Lax`\`
-        :: Set |item|'s {{CookieListItem/sameSite}} to "{{CookieSameSite/lax}}".
+        :: Set |item|'s {{CookieListItem/sameSite}} dictionary member to "{{CookieSameSite/lax}}".
     </dl>
 1. Return |item|.
 
@@ -1116,6 +1114,16 @@ optional |expires|,
 |sameSite|,
 run the following steps:
 
+1. If |name| is empty and |value| contains U+003D (`=`), then return failure.
+1. Let |host| be |url|'s [=url/host=]
+1. If |domain| is not null, then run these steps:
+    1. If |domain| starts with U+002D (`.`), then return failure.
+    1. If |host| does not equal |domain| and
+        |host| does not end with U+002D (`.`) followed by |domain|,
+        then return failure.
+1. Otherwise, if |domain| is null, set |domain| to |host|.
+1. If |secure| is false and |name| starts with either "`__Secure-`" or "`__Host-`",
+    then return failure.
 1. Let |attributes| be a [=list=].
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. If |domain| is not null, then [=list/append=] \``Domain`\`/|domain| ([=UTF-8 encoded=]) to |attributes|.
@@ -1138,10 +1146,12 @@ run the following steps:
     |attributes| as <var ignore>cookie-attribute-list</var>.
 
     For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
+1. Return success.
+
+    Note: Storing the cookie may still fail due to requirements in [[!RFC6265bis]]
+    but these steps will be considered successful.
 
 </div>
-
-Issue: Define failure cases, if any.
 
 <div class=algorithm>
 To <dfn>date serialize</dfn> a {{DOMTimeStamp}} |millis|,
@@ -1188,8 +1198,6 @@ run the following steps:
     |sameSite|.
 
 </div>
-
-Issue: Define failure cases, if any.
 
 
 <!-- ============================================================ -->
@@ -1239,7 +1247,7 @@ To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run t
     1. Let |item| be the result of running the steps to [=create a CookieListItem=] from |change|'s cookie.
     1. If |change|'s type is *changed*, then [=list/append=] |item| to |changedList|.
     1. Otherwise, run these steps:
-        1. Set |item|'s {{CookieListItem/value}} to undefined.
+        1. Set |item|'s {{CookieListItem/value}} dictionary member to undefined.
         1. [=list/Append=] |item| to |deletedList|.
 1. Set |event|'s {{CookieChangeEvent/changed}} attribute to |changedList|.
 1. Set |event|'s {{CookieChangeEvent/deleted}} attribute to |deletedList|.
