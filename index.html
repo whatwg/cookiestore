@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version 9c7b3c1bf4afcf8eca4fd3a1529a298ee35be006" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="5a424764e442ae4f62755e016baf109c675463d8" name="document-revision">
+  <meta content="af0680ae220ee11dd056aeb66fa98938e59c1def" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -1476,7 +1476,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-07-31">31 July 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-08-01">1 August 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1916,7 +1916,7 @@ the subscriptions that have been made.</p>
    <h3 class="heading settled" data-level="2.3" id="service-worker-extensions"><span class="secno">2.3. </span><span class="content">Extensions to Service Worker</span><a class="self-link" href="#service-worker-extensions"></a></h3>
    <p><a data-link-type="biblio" href="#biblio-service-workers">[Service-Workers]</a> defines <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration①">service worker registration</a>, which this specification extends.</p>
    <p>A <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration②">service worker registration</a> has an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-list">cookie change subscription list</dfn> which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list">list</a>;
-each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-change-subscription">cookie change subscription</dfn>. A <a data-link-type="dfn" href="#cookie-change-subscription" id="ref-for-cookie-change-subscription">cookie change subscription</a> is <span> a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> of <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-name">name</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-url">url</dfn>, and <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-matchtype">matchType</dfn>. </span>.</p>
+each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-change-subscription">cookie change subscription</dfn>. A <a data-link-type="dfn" href="#cookie-change-subscription" id="ref-for-cookie-change-subscription">cookie change subscription</a> is <span> a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> of <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-name">name</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-url">url</dfn>, and <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-matchtype">matchType</dfn>. </span></p>
    <h2 class="heading settled" data-level="3" id="CookieStore"><span class="secno">3. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore①">CookieStore</a></code> Interface</span><a class="self-link" href="#CookieStore"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=(<c- n>ServiceWorker</c->,<c- n>Window</c->),
  <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext"><c- g>SecureContext</c-></a>]
@@ -2407,6 +2407,9 @@ scope in a <code class="idl"><a data-link-type="idl" href="https://html.spec.wha
 </pre>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore">cookieStore</a></code> attribute’s getter must return <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑦">CookieStore</a></code> object.</p>
    <h2 class="heading settled" data-level="6" id="algorithms"><span class="secno">6. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
+   <p><a data-link-type="dfn" href="#cookie" id="ref-for-cookie④">Cookie</a> attribute-values are stored as <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-sequence" id="ref-for-byte-sequence">byte sequences</a>, not strings.</p>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="encode">encode</dfn> a <var>string</var>, run <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode">UTF-8 encode</a> on <var>string</var>.</p>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="decode">decode</dfn> a <var>value</var>, run <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode-without-bom" id="ref-for-utf-8-decode-without-bom">UTF-8 decode without BOM</a> on <var>value</var>.</p>
    <h3 class="heading settled" data-level="6.1" id="query-cookies-algorithm"><span class="secno">6.1. </span><span class="content">Query Cookies</span><a class="self-link" href="#query-cookies-algorithm"></a></h3>
    <div class="algorithm">
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="query-cookies">query cookies</dfn> with <var>url</var>,
@@ -2427,7 +2430,7 @@ The <var>cookie-string</var> itself is ignored, but the intermediate <var>cookie
        <li data-md>
         <p class="assertion">Assert: <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-http-only-flag" id="ref-for-cookie-http-only-flag">http-only-flag</a> is false.</p>
        <li data-md>
-        <p>Let <var>cookieName</var> be <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name①">name</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode">UTF-8 decoded</a>).</p>
+        <p>Let <var>cookieName</var> be <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name①">name</a> (<a data-link-type="dfn" href="#decode" id="ref-for-decode">decoded</a>).</p>
        <li data-md>
         <p>Switch on <var>matchType</var>:</p>
         <dl class="switch">
@@ -2460,13 +2463,13 @@ then all cookies are matched.</p>
      <li data-md>
       <p>Let <var>item</var> be a new <code class="idl"><a data-link-type="idl" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem④">CookieListItem</a></code>.</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-name" id="ref-for-dom-cookielistitem-name">name</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name②">name</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode①">UTF-8 decoded</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-name" id="ref-for-dom-cookielistitem-name">name</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name②">name</a> (<a data-link-type="dfn" href="#decode" id="ref-for-decode①">decoded</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value">value</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-value" id="ref-for-cookie-value①">value</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode②">UTF-8 decoded</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value">value</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-value" id="ref-for-cookie-value①">value</a> (<a data-link-type="dfn" href="#decode" id="ref-for-decode②">decoded</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-domain" id="ref-for-dom-cookielistitem-domain">domain</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-domain" id="ref-for-cookie-domain">domain</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode③">UTF-8 decoded</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-domain" id="ref-for-dom-cookielistitem-domain">domain</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-domain" id="ref-for-cookie-domain">domain</a> (<a data-link-type="dfn" href="#decode" id="ref-for-decode③">decoded</a>).</p>
      <li data-md>
-      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-path" id="ref-for-dom-cookielistitem-path">path</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-path" id="ref-for-cookie-path">path</a> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-decode" id="ref-for-utf-8-decode④">UTF-8 decoded</a>).</p>
+      <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-path" id="ref-for-dom-cookielistitem-path">path</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-path" id="ref-for-cookie-path">path</a> (<a data-link-type="dfn" href="#decode" id="ref-for-decode④">decoded</a>).</p>
      <li data-md>
       <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-expires" id="ref-for-dom-cookielistitem-expires">expires</a></code> dictionary member to <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-expiry-time" id="ref-for-cookie-expiry-time">expiry-time</a> (<a data-link-type="dfn" href="#as-a-timestamp" id="ref-for-as-a-timestamp">as a timestamp</a>).</p>
      <li data-md>
@@ -2524,9 +2527,9 @@ then return failure.</p>
      <li data-md>
       <p>If <var>expires</var> is given, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append①">append</a> `<code>Expires</code>`/<var>expires</var> (<a data-link-type="dfn" href="#date-serialize" id="ref-for-date-serialize">date serialized</a>) to <var>attributes</var>.</p>
      <li data-md>
-      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append②">Append</a> `<code>Domain</code>`/<var>domain</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode">UTF-8 encoded</a>) to <var>attributes</var>.</p>
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append②">Append</a> `<code>Domain</code>`/<var>domain</var> (<a data-link-type="dfn" href="#encode" id="ref-for-encode">encoded</a>) to <var>attributes</var>.</p>
      <li data-md>
-      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append③">Append</a> `<code>Path</code>`/<var>path</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode①">UTF-8 encoded</a>) to <var>attributes</var>.</p>
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append③">Append</a> `<code>Path</code>`/<var>path</var> (<a data-link-type="dfn" href="#encode" id="ref-for-encode①">encoded</a>) to <var>attributes</var>.</p>
      <li data-md>
       <p>If <var>secure</var> is true, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append④">append</a> `<code>Secure</code>`/`` to <var>attributes</var>.</p>
      <li data-md>
@@ -2545,7 +2548,7 @@ then return failure.</p>
         <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑦">Append</a> `<code>SameSite</code>`/`<code>Lax</code>` to <var>attributes</var>.</p>
       </dl>
      <li data-md>
-      <p>Perform the steps defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.4">Cookies: HTTP State Management Mechanism §Storage Model</a> for when the user agent "receives a cookie" with <var>url</var> as <var>request-uri</var>, <var>name</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode②">UTF-8 encoded</a>) as <var>cookie-name</var>, <var>value</var> (<a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode③">UTF-8 encoded</a>) as <var>cookie-value</var>, and <var>attributes</var> as <var>cookie-attribute-list</var>.</p>
+      <p>Perform the steps defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.4">Cookies: HTTP State Management Mechanism §Storage Model</a> for when the user agent "receives a cookie" with <var>url</var> as <var>request-uri</var>, <var>name</var> (<a data-link-type="dfn" href="#encode" id="ref-for-encode②">encoded</a>) as <var>cookie-name</var>, <var>value</var> (<a data-link-type="dfn" href="#encode" id="ref-for-encode③">encoded</a>) as <var>cookie-value</var>, and <var>attributes</var> as <var>cookie-attribute-list</var>.</p>
       <p>For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.</p>
      <li data-md>
       <p>Return success.</p>
@@ -2555,7 +2558,7 @@ then return failure.</p>
    <div class="algorithm"> To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="date-serialize">date serialize</dfn> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp②">DOMTimeStamp</a></code> <var>millis</var>,
 let <var>dateTime</var> be the date and time <var>millis</var> milliseconds after 00:00:00 UTC, 1 January 1970
 (assuming that there are exactly 86,400,000 milliseconds per day),
-and return a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-sequence" id="ref-for-byte-sequence">byte sequence</a> corresponding to the closest <code>cookie-date</code> representation of <var>dateTime</var> according to <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.1.1">Cookies: HTTP State Management Mechanism §Dates</a>. </div>
+and return a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-sequence" id="ref-for-byte-sequence①">byte sequence</a> corresponding to the closest <code>cookie-date</code> representation of <var>dateTime</var> according to <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.1.1">Cookies: HTTP State Management Mechanism §Dates</a>. </div>
    <h3 class="heading settled" data-level="6.3" id="delete-cookie-algorithm"><span class="secno">6.3. </span><span class="content">Delete a Cookie</span><a class="self-link" href="#delete-cookie-algorithm"></a></h3>
    <div class="algorithm">
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="delete-a-cookie">delete a cookie</dfn> with <var>url</var>, <var>name</var>, <var>domain</var> and <var>path</var>,
@@ -2606,18 +2609,18 @@ by this algorithm.</p>
     </ol>
    </div>
    <div class="algorithm">
-    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="observable-changes">observable changes</dfn> for <var>url</var> are the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set">set</a> of <a data-link-type="dfn" href="#cookie-change" id="ref-for-cookie-change">cookie changes</a> to <a data-link-type="dfn" href="#cookie" id="ref-for-cookie④">cookies</a> in a <a data-link-type="dfn" href="#cookie-store" id="ref-for-cookie-store④">cookie store</a> which meet the requirements in step 1 of <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.5">Cookies: HTTP State Management Mechanism §The Cookie Header</a>'s steps to "compute the cookie-string from a cookie store"
+    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="observable-changes">observable changes</dfn> for <var>url</var> are the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set">set</a> of <a data-link-type="dfn" href="#cookie-change" id="ref-for-cookie-change">cookie changes</a> to <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑤">cookies</a> in a <a data-link-type="dfn" href="#cookie-store" id="ref-for-cookie-store④">cookie store</a> which meet the requirements in step 1 of <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.5">Cookies: HTTP State Management Mechanism §The Cookie Header</a>'s steps to "compute the cookie-string from a cookie store"
 with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
-    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-change">cookie change</dfn> is a <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑤">cookie</a> and a type (either <em>changed</em> or <em>deleted</em>):</p>
+    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-change">cookie change</dfn> is a <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑥">cookie</a> and a type (either <em>changed</em> or <em>deleted</em>):</p>
     <ul>
      <li data-md>
-      <p>A <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑥">cookie</a> which is removed due to an insertion of another <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑦">cookie</a> with the same <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name③">name</a>, <a data-link-type="dfn" href="#cookie-domain" id="ref-for-cookie-domain①">domain</a>, and <a data-link-type="dfn" href="#cookie-path" id="ref-for-cookie-path①">path</a> is ignored.</p>
+      <p>A <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑦">cookie</a> which is removed due to an insertion of another <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑧">cookie</a> with the same <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name③">name</a>, <a data-link-type="dfn" href="#cookie-domain" id="ref-for-cookie-domain①">domain</a>, and <a data-link-type="dfn" href="#cookie-path" id="ref-for-cookie-path①">path</a> is ignored.</p>
      <li data-md>
-      <p>A newly-created <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑧">cookie</a> which is not immediately evicted is considered <em>changed</em>.</p>
+      <p>A newly-created <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑨">cookie</a> which is not immediately evicted is considered <em>changed</em>.</p>
      <li data-md>
-      <p>A newly-created <a data-link-type="dfn" href="#cookie" id="ref-for-cookie⑨">cookie</a> which is immediately evicted is considered <em>deleted</em>.</p>
+      <p>A newly-created <a data-link-type="dfn" href="#cookie" id="ref-for-cookie①⓪">cookie</a> which is immediately evicted is considered <em>deleted</em>.</p>
      <li data-md>
-      <p>A <a data-link-type="dfn" href="#cookie" id="ref-for-cookie①⓪">cookie</a> which is otherwise evicted or removed is considered <em>deleted</em></p>
+      <p>A <a data-link-type="dfn" href="#cookie" id="ref-for-cookie①①">cookie</a> which is otherwise evicted or removed is considered <em>deleted</em></p>
     </ul>
    </div>
    <div class="algorithm">
@@ -2882,6 +2885,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <li><a href="#create-a-cookielistitem">create a CookieListItem</a><span>, in §6.1</span>
    <li><a href="#cookie-creation-time">creation-time</a><span>, in §2.1</span>
    <li><a href="#date-serialize">date serialize</a><span>, in §6.2</span>
+   <li><a href="#decode">decode</a><span>, in §6</span>
    <li><a href="#delete-a-cookie">delete a cookie</a><span>, in §6.3</span>
    <li>
     deleted
@@ -2899,6 +2903,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
      <li><a href="#dom-cookiestoredeleteoptions-domain">dict-member for CookieStoreDeleteOptions</a><span>, in §3</span>
      <li><a href="#dom-cookiestoresetoptions-domain">dict-member for CookieStoreSetOptions</a><span>, in §3</span>
     </ul>
+   <li><a href="#encode">encode</a><span>, in §6</span>
    <li><a href="#dom-cookiematchtype-equals">"equals"</a><span>, in §3</span>
    <li>
     expires
@@ -3065,16 +3070,16 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
     <li><a href="#ref-for-sec-time-values-and-time-range">6.1. Query Cookies</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-utf-8-decode">
-   <a href="https://encoding.spec.whatwg.org/#utf-8-decode">https://encoding.spec.whatwg.org/#utf-8-decode</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-utf-8-decode-without-bom">
+   <a href="https://encoding.spec.whatwg.org/#utf-8-decode-without-bom">https://encoding.spec.whatwg.org/#utf-8-decode-without-bom</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-utf-8-decode">6.1. Query Cookies</a> <a href="#ref-for-utf-8-decode①">(2)</a> <a href="#ref-for-utf-8-decode②">(3)</a> <a href="#ref-for-utf-8-decode③">(4)</a> <a href="#ref-for-utf-8-decode④">(5)</a>
+    <li><a href="#ref-for-utf-8-decode-without-bom">6. Algorithms</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-utf-8-encode">
    <a href="https://encoding.spec.whatwg.org/#utf-8-encode">https://encoding.spec.whatwg.org/#utf-8-encode</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-utf-8-encode">6.2. Set a Cookie</a> <a href="#ref-for-utf-8-encode①">(2)</a> <a href="#ref-for-utf-8-encode②">(3)</a> <a href="#ref-for-utf-8-encode③">(4)</a>
+    <li><a href="#ref-for-utf-8-encode">6. Algorithms</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-fetch">
@@ -3207,7 +3212,8 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
   <aside class="dfn-panel" data-for="term-for-byte-sequence">
    <a href="https://infra.spec.whatwg.org/#byte-sequence">https://infra.spec.whatwg.org/#byte-sequence</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-byte-sequence">6.2. Set a Cookie</a>
+    <li><a href="#ref-for-byte-sequence">6. Algorithms</a>
+    <li><a href="#ref-for-byte-sequence①">6.2. Set a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-code-point">
@@ -3441,7 +3447,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <li>
     <a data-link-type="biblio">[ENCODING]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-utf-8-decode" style="color:initial">utf-8 decode</span>
+     <li><span class="dfn-paneled" id="term-for-utf-8-decode-without-bom" style="color:initial">utf-8 decode without bom</span>
      <li><span class="dfn-paneled" id="term-for-utf-8-encode" style="color:initial">utf-8 encode</span>
     </ul>
    <li>
@@ -3663,7 +3669,8 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <ul>
     <li><a href="#ref-for-cookie">2.1. Cookie</a>
     <li><a href="#ref-for-cookie①">2.2. Cookie Store</a> <a href="#ref-for-cookie②">(2)</a> <a href="#ref-for-cookie③">(3)</a>
-    <li><a href="#ref-for-cookie④">6.4. Process Changes</a> <a href="#ref-for-cookie⑤">(2)</a> <a href="#ref-for-cookie⑥">(3)</a> <a href="#ref-for-cookie⑦">(4)</a> <a href="#ref-for-cookie⑧">(5)</a> <a href="#ref-for-cookie⑨">(6)</a> <a href="#ref-for-cookie①⓪">(7)</a>
+    <li><a href="#ref-for-cookie④">6. Algorithms</a>
+    <li><a href="#ref-for-cookie⑤">6.4. Process Changes</a> <a href="#ref-for-cookie⑥">(2)</a> <a href="#ref-for-cookie⑦">(3)</a> <a href="#ref-for-cookie⑧">(4)</a> <a href="#ref-for-cookie⑨">(5)</a> <a href="#ref-for-cookie①⓪">(6)</a> <a href="#ref-for-cookie①①">(7)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-name">
@@ -4135,6 +4142,18 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <b><a href="#dom-serviceworkerglobalscope-cookiestore">#dom-serviceworkerglobalscope-cookiestore</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-serviceworkerglobalscope-cookiestore">5.2. The ServiceWorkerGlobalScope Interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="encode">
+   <b><a href="#encode">#encode</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-encode">6.2. Set a Cookie</a> <a href="#ref-for-encode①">(2)</a> <a href="#ref-for-encode②">(3)</a> <a href="#ref-for-encode③">(4)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="decode">
+   <b><a href="#decode">#decode</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-decode">6.1. Query Cookies</a> <a href="#ref-for-decode①">(2)</a> <a href="#ref-for-decode②">(3)</a> <a href="#ref-for-decode③">(4)</a> <a href="#ref-for-decode④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="query-cookies">
