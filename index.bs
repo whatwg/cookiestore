@@ -513,7 +513,7 @@ A [=service worker registration=] has an associated <dfn>cookie change subscript
 each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
 <span dfn-for="cookie change subscription">
 a [=tuple=] of <dfn>name</dfn>, <dfn>url</dfn>, and <dfn>matchType</dfn>.
-</span>.
+</span>
 
 
 <!-- ============================================================ -->
@@ -986,6 +986,13 @@ The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=
 # Algorithms # {#algorithms}
 <!-- ============================================================ -->
 
+[=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
+
+To <dfn>encode</dfn> a |string|, run [=UTF-8 encode=] on |string|.
+
+To <dfn>decode</dfn> a |value|, run [=UTF-8 decode without BOM=] on |value|.
+
+
 <!-- ============================================================ -->
 ## Query Cookies ## {#query-cookies-algorithm}
 <!-- ============================================================ -->
@@ -1007,7 +1014,7 @@ run the following steps:
 1. Let |list| be a new [=list=].
 1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
-    1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
+    1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=decoded=]).
     1. Switch on |matchType|:
         <dl class=switch>
             : unspecified
@@ -1033,10 +1040,10 @@ run the following steps:
 To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps.
 
 1. Let |item| be a new {{CookieListItem}}.
-1. Set |item|'s {{CookieListItem/name}} dictionary member to |cookie|'s [=cookie/name=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/value}} dictionary member to |cookie|'s [=cookie/value=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/domain}} dictionary member to |cookie|'s [=cookie/domain=] ([=UTF-8 decoded=]).
-1. Set |item|'s {{CookieListItem/path}} dictionary member to |cookie|'s [=cookie/path=] ([=UTF-8 decoded=]).
+1. Set |item|'s {{CookieListItem/name}} dictionary member to |cookie|'s [=cookie/name=] ([=decoded=]).
+1. Set |item|'s {{CookieListItem/value}} dictionary member to |cookie|'s [=cookie/value=] ([=decoded=]).
+1. Set |item|'s {{CookieListItem/domain}} dictionary member to |cookie|'s [=cookie/domain=] ([=decoded=]).
+1. Set |item|'s {{CookieListItem/path}} dictionary member to |cookie|'s [=cookie/path=] ([=decoded=]).
 1. Set |item|'s {{CookieListItem/expires}} dictionary member to |cookie|'s [=cookie/expiry-time=] ([=as a timestamp=]).
 1. Set |item|'s {{CookieListItem/secure}} dictionary member to |cookie|'s [=cookie/secure-only-flag=].
 1. Switch on |cookie|'s [=cookie/same-site-flag=]:
@@ -1099,8 +1106,8 @@ run the following steps:
     then return failure.
 1. Let |attributes| be a [=list=].
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
-1. [=list/Append=] \``Domain`\`/|domain| ([=UTF-8 encoded=]) to |attributes|.
-1. [=list/Append=] \``Path`\`/|path| ([=UTF-8 encoded=]) to |attributes|.
+1. [=list/Append=] \``Domain`\`/|domain| ([=encoded=]) to |attributes|.
+1. [=list/Append=] \``Path`\`/|path| ([=encoded=]) to |attributes|.
 1. If |secure| is true, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
 1. If |httpOnly| is true, then [=list/append=] \``HttpOnly`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
@@ -1114,8 +1121,8 @@ run the following steps:
     </dl>
 1. Perform the steps defined in [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage Model]] for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
-    |name| ([=UTF-8 encoded=]) as <var ignore>cookie-name</var>,
-    |value| ([=UTF-8 encoded=]) as <var ignore>cookie-value</var>, and
+    |name| ([=encoded=]) as <var ignore>cookie-name</var>,
+    |value| ([=encoded=]) as <var ignore>cookie-value</var>, and
     |attributes| as <var ignore>cookie-attribute-list</var>.
 
     For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
