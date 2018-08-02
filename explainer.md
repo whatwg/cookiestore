@@ -263,7 +263,7 @@ await cookieStore.set({
   path: '/',
 
   // Creates secure cookies by default on secure origins.
-  secure: (new URL(self.location.href)).protocol === 'https:'
+  secure: (new URL(self.location.href)).protocol === 'https:',
 });
 ```
 
