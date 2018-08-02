@@ -264,7 +264,6 @@ await cookieStore.set({
 
   // Creates secure cookies by default on secure origins.
   secure: (new URL(self.location.href)).protocol === 'https:',
-  httpOnly: false,
 });
 ```
 
@@ -377,7 +376,7 @@ situations, this principle means deferring to RFC 6265bis.
 
 ### The HttpOnly flag
 
-The modification API can be used to set HttpOnly cookies. Neither the query
+The modification API can not be used to set HttpOnly cookies. Neither the query
 nor the monitoring API will include HttpOnly cookies in their results. This
 matches the behavior of `document.cookie`.
 

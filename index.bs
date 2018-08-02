@@ -346,7 +346,6 @@ await cookieStore.set({
 
   // Creates secure cookies by default on secure origins.
   secure: true,
-  httpOnly: false,
 });
 ```
 
@@ -568,7 +567,6 @@ dictionary CookieStoreSetOptions {
   USVString? domain = null;
   USVString path = "/";
   boolean secure = true;
-  boolean httpOnly = false;
   CookieSameSite sameSite = "strict";
 };
 
@@ -735,7 +733,6 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
         * Domain: same as the domain of the current document or service worker's location
         * No expiry date
         * Secure flag: set (cookie only transmitted over secure protocol)
-        * HttpOnly flag: unset
         * SameSite: strict
 
   </dl>
@@ -756,8 +753,7 @@ The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method, wh
         |options|' {{CookieStoreSetOptions/expires}} dictionary member,
         |options|' {{CookieStoreSetOptions/domain}} dictionary member,
         |options|' {{CookieStoreSetOptions/path}} dictionary member,
-        |options|' {{CookieStoreSetOptions/secure}} dictionary member,
-        |options|' {{CookieStoreSetOptions/httpOnly}} dictionary member, and
+        |options|' {{CookieStoreSetOptions/secure}} dictionary member, and
         |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
     1. If |r| is failure, then reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
@@ -780,8 +776,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
         |options|' {{CookieStoreSetOptions/expires}} dictionary member,
         |options|' {{CookieStoreSetOptions/domain}} dictionary member,
         |options|' {{CookieStoreSetOptions/path}} dictionary member,
-        |options|' {{CookieStoreSetOptions/secure}} dictionary member,
-        |options|' {{CookieStoreSetOptions/httpOnly}} dictionary member, and
+        |options|' {{CookieStoreSetOptions/secure}} dictionary member, and
         |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
     1. If |r| is failure, then reject |p| with a {{TypeError}} and abort these steps.
     1. Resolve |p| with undefined.
@@ -1089,8 +1084,7 @@ To <dfn>set a cookie</dfn> with
 optional |expires|,
 |domain|,
 |path|,
-|secure| flag,
-|httpOnly| flag, and
+|secure| flag, and
 |sameSite|,
 run the following steps:
 
@@ -1109,7 +1103,6 @@ run the following steps:
 1. [=list/Append=] \``Domain`\`/|domain| ([=encoded=]) to |attributes|.
 1. [=list/Append=] \``Path`\`/|path| ([=encoded=]) to |attributes|.
 1. If |secure| is true, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
-1. If |httpOnly| is true, then [=list/append=] \``HttpOnly`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
     <dl class=switch>
         : "{{CookieSameSite/unrestricted}}"
@@ -1160,10 +1153,9 @@ run the following steps:
 
 1. Let |value| be the empty string.
 1. Let |secure| be true.
-1. Let |httpOnly| be false.
 1. Let |sameSite| be "{{CookieSameSite/strict}}".
 
-    Note: The values for |value|, |secure|, |httpOnly|, and |sameSite| will not be persisted
+    Note: The values for |value|, |secure|, and |sameSite| will not be persisted
     by this algorithm.
 
 1. Return the results of running the steps to [=set a cookie=] with
@@ -1173,8 +1165,7 @@ run the following steps:
     |expires|,
     |domain|,
     |path|,
-    |secure|,
-    |httpOnly|, and
+    |secure|, and
     |sameSite|.
 
 </div>
