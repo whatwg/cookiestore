@@ -3,7 +3,7 @@
 # So we can see what we're doing
 set -x
 
-# Exist with nonzero exit code if anything fails
+# Exit with nonzero exit code if anything fails
 set -e
 
 # Run bikeshed.  If there are errors, exit with a non-zero code
