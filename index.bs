@@ -519,7 +519,7 @@ a [=tuple=] of <dfn>name</dfn>, <dfn>url</dfn>, and <dfn>matchType</dfn>.
 # The {{CookieStore}} Interface # {#CookieStore}
 <!-- ============================================================ -->
 
-<xmp class="idl">
+<xmp class=idl>
 [Exposed=(ServiceWorker,Window),
  SecureContext]
 interface CookieStore : EventTarget {
@@ -924,7 +924,7 @@ in {{Window}} contexts when any [=script-visible=] cookie changes have occurred,
 and against {{ServiceWorkerGlobalScope}} objects when any [=script-visible=]
 cookie changes have occurred which match the [=Service Worker=]'s [=cookie change subscription list=].
 
-<pre class="idl">
+<xmp class=idl>
 [Exposed=(ServiceWorker,Window),
  SecureContext,
  Constructor(DOMString type, optional CookieChangeEventInit eventInitDict)]
@@ -937,7 +937,7 @@ dictionary CookieChangeEventInit : EventInit {
   CookieList changed;
   CookieList deleted;
 };
-</pre>
+</xmp>
 
 The {{CookieChangeEvent/changed}} and {{CookieChangeEvent/deleted}} attributes must return the value they were initialized to.
 
@@ -954,12 +954,12 @@ scope in a {{Window}} or {{ServiceWorkerGlobalScope}} context.
 ## The Window Interface ## {#Window}
 <!-- ============================================================ -->
 
-<pre class="idl">
+<xmp class=idl>
 [SecureContext]
 partial interface Window {
   [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
 };
-</pre>
+</xmp>
 
 The {{Window/cookieStore}} attribute’s getter must return [=context object=]’s [=relevant settings object=]’s {{CookieStore}} object.
 
@@ -967,13 +967,13 @@ The {{Window/cookieStore}} attribute’s getter must return [=context object=]�
 ## The ServiceWorkerGlobalScope Interface ## {#ServiceWorkerGlobalScope}
 <!-- ============================================================ -->
 
-<pre class="idl">
+<xmp class=idl>
 partial interface ServiceWorkerGlobalScope {
   [Replaceable, SameObject] readonly attribute CookieStore cookieStore;
 
   attribute EventHandler oncookiechange;
 };
-</pre>
+</xmp>
 
 The {{ServiceWorkerGlobalScope/cookieStore}} attribute’s getter must return [=context object=]’s [=relevant settings object=]’s {{CookieStore}} object.
 
