@@ -12,6 +12,7 @@ Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
 Favicon: logo-cookies.png
 Markup Shorthands: markdown yes, css no, biblio yes
 Abstract: An asynchronous Javascript cookies API for documents and workers
+Test Suite: https://github.com/web-platform-tests/wpt/tree/master/cookie-store
 </pre>
 
 <pre class=biblio>
