@@ -543,6 +543,7 @@ interface CookieStore : EventTarget {
   [Exposed=ServiceWorker]
   Promise<sequence<CookieStoreGetOptions>> getChangeSubscriptions();
 
+  [Exposed=Window]
   attribute EventHandler onchange;
 };
 
@@ -874,9 +875,12 @@ The <dfn method for=CookieStore>subscribeToChanges(|subscriptions|)</dfn> method
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
         1. Let |name| be |entry|'s {{CookieStoreGetOptions/name}} member.
         1. Let |url| be |entry|'s {{CookieStoreGetOptions/url}} member.
+        1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
+            then reject |p| with a {{TypeError}} and abort these steps.
         1. Let |matchType| be |entry|'s {{CookieStoreGetOptions/matchType}} member.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|, |matchType|).
         1. Append |subscription| to |registration|'s associated [=cookie change subscription list=].
+    1. Resolve |p| with undefined.
 1. Return |p|.
 
 </div>
@@ -917,16 +921,18 @@ The <dfn method for=CookieStore>getChangeSubscriptions()</dfn> method, when invo
 
 
 <!-- ============================================================ -->
-# The {{CookieChangeEvent}} interface # {#CookieChangeEvent}
+# Event Interfaces # {#event-interfaces}
+<!-- ============================================================ -->
+
+<!-- ============================================================ -->
+## The {{CookieChangeEvent}} interface ## {#CookieChangeEvent}
 <!-- ============================================================ -->
 
 A {{CookieChangeEvent}} is [=dispatched=] against {{CookieStore}} objects
-in {{Window}} contexts when any [=script-visible=] cookie changes have occurred,
-and against {{ServiceWorkerGlobalScope}} objects when any [=script-visible=]
-cookie changes have occurred which match the [=Service Worker=]'s [=cookie change subscription list=].
+in {{Window}} contexts when any [=script-visible=] cookie changes have occurred.
 
 <xmp class=idl>
-[Exposed=(ServiceWorker,Window),
+[Exposed=Window,
  SecureContext,
  Constructor(DOMString type, optional CookieChangeEventInit eventInitDict)]
 interface CookieChangeEvent : Event {
@@ -942,6 +948,30 @@ dictionary CookieChangeEventInit : EventInit {
 
 The {{CookieChangeEvent/changed}} and {{CookieChangeEvent/deleted}} attributes must return the value they were initialized to.
 
+<!-- ============================================================ -->
+## The {{ExtendableCookieChangeEvent}} interface ## {#ExtendableCookieChangeEvent}
+<!-- ============================================================ -->
+
+An {{ExtendableCookieChangeEvent}} is [=dispatched=] against
+{{ServiceWorkerGlobalScope}} objects when any [=script-visible=]
+cookie changes have occurred which match the [=Service Worker=]'s
+[=cookie change subscription list=].
+
+<xmp class=idl>
+[Exposed=ServiceWorker,
+ Constructor(DOMString type, optional ExtendableCookieChangeEventInit eventInitDict)
+] interface ExtendableCookieChangeEvent : ExtendableEvent {
+  readonly attribute CookieList changed;
+  readonly attribute CookieList deleted;
+};
+
+dictionary ExtendableCookieChangeEventInit : ExtendableEventInit {
+  CookieList changed;
+  CookieList deleted;
+};
+</xmp>
+
+The {{ExtendableCookieChangeEvent/changed}} and {{ExtendableCookieChangeEvent/deleted}} attributes must return the value they were initialized to.
 
 <!-- ============================================================ -->
 # Global Interfaces # {#globals}
@@ -952,7 +982,7 @@ scope in a {{Window}} or {{ServiceWorkerGlobalScope}} context.
 
 
 <!-- ============================================================ -->
-## The Window Interface ## {#Window}
+## The {{Window}} interface ## {#Window}
 <!-- ============================================================ -->
 
 <xmp class=idl>
@@ -965,7 +995,7 @@ partial interface Window {
 The {{Window/cookieStore}} attribute’s getter must return [=context object=]’s [=relevant settings object=]’s {{CookieStore}} object.
 
 <!-- ============================================================ -->
-## The ServiceWorkerGlobalScope Interface ## {#ServiceWorkerGlobalScope}
+## The {{ServiceWorkerGlobalScope}} interface ## {#ServiceWorkerGlobalScope}
 <!-- ============================================================ -->
 
 <xmp class=idl>
@@ -1011,25 +1041,35 @@ run the following steps:
 1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
     1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=decoded=]).
-    1. Switch on |matchType|:
-        <dl class=switch>
-            : unspecified
-            :: Do nothing.
-            : "{{CookieMatchType/equals}}"
-            :: If |cookieName| does not equal |name|,
-                then [=continue=].
-            : "{{CookieMatchType/starts-with}}"
-            :: If |cookieName| does not start with |name|,
-                then [=continue=].
-
-                Note: If |name| is the empty string and |matchType| is "{{CookieMatchType/starts-with}}",
-                then all cookies are matched.
-        </dl>
+    1. If |cookieName| does not [=match=] |name| using |matchType|,
+        then [=continue=].
     1. Let |item| be the result of running the steps to [=create a CookieListItem=] from |cookie|.
     1. [=list/Append=] |item| to |list|.
 1. Return |list|.
 
 </div>
+
+<div class=algorithm>
+
+A |cookieName| <dfn>matches</dfn> |matchName| using |matchType| if the following steps return true:
+
+1. Switch on |matchType|:
+    <dl class=switch>
+        : unspecified
+        :: Return true.
+        : "{{CookieMatchType/equals}}"
+        :: If |cookieName| does not equal |matchName|,
+            then return false.
+        : "{{CookieMatchType/starts-with}}"
+        :: If |cookieName| does not start with |matchName|,
+            then return false.
+    </dl>
+2. Return true.
+
+Note: If |matchName| is the empty string and |matchType| is "{{CookieMatchType/starts-with}}",
+       then all |cookieName|s are matched.
+</div>
+
 
 <div class=algorithm>
 
@@ -1183,11 +1223,29 @@ To <dfn>process cookie changes</dfn>, run the following steps:
 1. For every {{Window}} |window|, run the following steps:
     1. Let |url| be |window|'s [=creation URL=].
     1. Let |changes| be the [=observable changes=] for |url|.
-    1. If |changes| is not empty, then [=fire a change event=] named "`change`" with |changes| at |window|'s {{CookieStore}}.
-1. For every {{ServiceWorkerGlobalScope}} |worker|, run the following steps:
-    1. Let |url| be |worker|'s [=creation URL=].
-    1. Let |changes| be the [=observable changes=] for |url|.
-    1. If |changes| is not empty, then [=fire a change event=] named "`cookiechange`" with |changes| at |worker|.
+    1. If |changes| [=set/is empty=], then [=continue=].
+    1. [=Queue a task=] to
+        [=fire a change event=] named "`change`" with |changes| at |window|'s {{CookieStore}}
+        on |window|'s [=responsible event loop=].
+
+1. For every [=service worker registration=] |registration|, run the following steps:
+    1. Let |changes| be a new [=/set=].
+    1. [=set/For each=] |change| in the [=observable changes=] for |registration|'s [=service worker registration/scope url=], run these steps:
+        1. Let |cookie| be |change|'s cookie.
+        1. [=list/For each=] |subscription| in |registration|'s [=cookie change subscription list=], run these steps:
+            1. If |change| is not [=set/contains|in=] the [=observable changes=] for |subscription|'s [=cookie change subscription/url=],
+                then [=continue=].
+            1. If |cookie|'s [=cookie/name=] ([=decoded=]) [=matches=] |subscription|'s [=cookie change subscription/name=] using |subscription|'s [=cookie change subscription/matchType=],
+                then [=set/append=] |change| to |changes| and [=break=].
+    1. If |changes| [=set/is empty=], then [=continue=].
+    1. Let |changedList| and |deletedList| be the result of running the steps to [=prepare lists=] using |changes| for |registration|.
+    1. [=Fire a functional event=] named "`cookiechange`"
+        using {{ExtendableCookieChangeEvent}} on |registration|
+        with these properties:
+        : {{ExtendableCookieChangeEvent/changed}}
+        :: |changedList|
+        : {{ExtendableCookieChangeEvent/deleted}}
+        :: |deletedList|
 
 </div>
 
@@ -1213,6 +1271,17 @@ To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run t
 1. Let |event| be the result of [=creating an Event=] using {{CookieChangeEvent}}.
 1. Set |event|'s {{Event/type}} attribute to |type|.
 1. Set |event|'s {{Event/bubbles}} and {{Event/cancelable}} attributes to false.
+1. Let |changedList| and |deletedList| be the result of running the steps to [=prepare lists=] using |changes| for |target|.
+1. Set |event|'s {{CookieChangeEvent/changed}} attribute to |changedList|.
+1. Set |event|'s {{CookieChangeEvent/deleted}} attribute to |deletedList|.
+1. [=Dispatch=] |event| at |target|.
+
+</div>
+
+<div class=algorithm>
+
+To <dfn>prepare lists</dfn> using |changes| for |target|, run the following steps:
+
 1. Let |changedList| be a new [=list=].
 1. Let |deletedList| be a new [=list=].
 1. [=set/For each=] |change| in |changes|, run these steps:
@@ -1221,9 +1290,7 @@ To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run t
     1. Otherwise, run these steps:
         1. Set |item|'s {{CookieListItem/value}} dictionary member to undefined.
         1. [=list/Append=] |item| to |deletedList|.
-1. Set |event|'s {{CookieChangeEvent/changed}} attribute to |changedList|.
-1. Set |event|'s {{CookieChangeEvent/deleted}} attribute to |deletedList|.
-1. [=Dispatch=] |event| at |target|.
+1. Return |changedList| and |deletedList|.
 
 </div>
 
