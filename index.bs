@@ -1040,9 +1040,10 @@ run the following steps:
 1. Let |list| be a new [=list=].
 1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
-    1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=decoded=]).
-    1. If |cookieName| does not [=match=] |name| using |matchType|,
-        then [=continue=].
+    1. If |name| is given, then run these steps:
+        1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=decoded=]).
+        1. If |cookieName| does not [=match=] |name| using |matchType|,
+             then [=continue=].
     1. Let |item| be the result of running the steps to [=create a CookieListItem=] from |cookie|.
     1. [=list/Append=] |item| to |list|.
 1. Return |list|.
