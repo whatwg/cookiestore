@@ -321,10 +321,10 @@ API has the following steps:
 ```javascript
 cookieStore.addEventListener('change', (event) => {
   console.log(`${event.changed.length} changed cookies`);
-  for (const cookie in event.changed)
+  for (const cookie of event.changed)
     console.log(`Cookie ${cookie.name} changed to ${cookie.value}`);
   console.log(`${event.deleted.length} deleted cookies`);
-  for (const cookie in event.deleted)
+  for (const cookie of event.deleted)
     console.log(`Cookie ${cookie.name} deleted`);
 });
 ```
