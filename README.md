@@ -37,7 +37,7 @@ The Cookie Store API has also been discussed in the following places.
 
 The best resource for understanding the deep technical aspects of cookies is
 the most recent draft of
-[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02).
+[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03).
 
 This API aims to replace
 [document.cookie](https://www.w3.org/TR/html/dom.html#dom-document-cookie)
