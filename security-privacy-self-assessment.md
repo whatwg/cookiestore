@@ -26,7 +26,7 @@ This specification defers to
 the storage and security models of HTTP cookies. Cookies can be scoped to an
 entire eTLD+1, transcending the same origin policy. For example, a cookie
 whose
-[domain](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-5.3.3)
+[domain](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-4.1.2.3)
 attribute is set to `example.com` is visible to `www.example.com` and
 `foo.example.com`.
 
@@ -73,7 +73,7 @@ No.
 This specification defers to
 [RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03) for
 the storage and security models of HTTP cookies. Cookies have a
-[SameSite](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-5.3.7)
+[SameSite](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-4.1.2.7)
 attribute that introduces differences in behavior between first-party and
 third-party contexts.
 
