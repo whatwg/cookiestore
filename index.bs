@@ -561,7 +561,7 @@ dictionary CookieStoreGetOptions {
 enum CookieSameSite {
   "strict",
   "lax",
-  "unrestricted"
+  "none"
 };
 
 dictionary CookieStoreSetOptions {
@@ -1086,7 +1086,7 @@ To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps
 1. Switch on |cookie|'s [=cookie/same-site-flag=]:
     <dl class=switch>
         : \``None`\`
-        :: Set |item|'s {{CookieListItem/sameSite}} dictionary member to "{{CookieSameSite/unrestricted}}".
+        :: Set |item|'s {{CookieListItem/sameSite}} dictionary member to "{{CookieSameSite/none}}".
         : \``Strict`\`
         :: Set |item|'s {{CookieListItem/sameSite}} dictionary member to "{{CookieSameSite/strict}}".
         : \``Lax`\`
@@ -1147,8 +1147,8 @@ run the following steps:
 1. If |secure| is true, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
     <dl class=switch>
-        : "{{CookieSameSite/unrestricted}}"
-        :: Do nothing.
+        : "{{CookieSameSite/none}}"
+        :: [=list/Append=] \``SameSite`\`/\``None`\` to |attributes|.
         : "{{CookieSameSite/strict}}"
         :: [=list/Append=] \``SameSite`\`/\``Strict`\` to |attributes|.
         : "{{CookieSameSite/lax}}"
