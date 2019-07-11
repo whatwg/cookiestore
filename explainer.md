@@ -551,7 +551,7 @@ foresight to handle errors they might not experience while building their sites.
 
 ## Related Work
 
-[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02)
+[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03)
 explains HTTP cookies. Cookies were implemented independently in separate HTTP
 stacks without a comprehensive testing suite, leading to visible cross-browser
 incompatibilities. The RFC explains many of these incompatibilities and lays out

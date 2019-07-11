@@ -22,11 +22,11 @@ mechanism is introduced.
 Yes. However, it does not expose any **new** persistent cross-origin state.
 
 This specification defers to
-[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02) for
+[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03) for
 the storage and security models of HTTP cookies. Cookies can be scoped to an
-entire eTLD+1, transcending the same origin policy. For eaxmple, a cookie
+entire eTLD+1, transcending the same origin policy. For example, a cookie
 whose
-[domain](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-4.1.2.3)
+[domain](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-4.1.2.3)
 attribute is set to `example.com` is visible to `www.example.com` and
 `foo.example.com`.
 
@@ -71,9 +71,9 @@ No.
 No.
 
 This specification defers to
-[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02) for
+[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03) for
 the storage and security models of HTTP cookies. Cookies have a
-[SameSite](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-4.1.2.7)
+[SameSite](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-4.1.2.7)
 attribute that introduces differences in behavior between first-party and
 third-party contexts.
 
@@ -83,7 +83,7 @@ attribute.
 ### 3.14 How should this specification work in the context of a user agent’s "incognito" mode?
 
 This specification builds on top of HTTP cookies as defined in
-[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02). The
+[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03). The
 specification should be compatible with any manner user agents choose to handle
  cookies in "incognito".
 
@@ -96,11 +96,11 @@ Yes. However, it does not introduce any **new** persistence mechanism.
 No.
 
 The specification will defer to
-[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02) for
+[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03) for
 its extensive treatment of
-[Security](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-8)
+[Security](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-8)
 and
-[Privacy](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-7)
+[Privacy](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-7)
 issues.
 
 ### 3.17 Does this specification allow downgrading default security characteristics?
