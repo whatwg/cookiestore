@@ -124,7 +124,7 @@ currently opened in a browser tab / window.
 const kCookieName = 'session';
 
 self.addEventListener('install', (event) => {
-  event.waitFor(async () => {
+  event.waitUntil(async () => {
     await cookieStore.subscribeToChanges([{ name: kCookieName }]);
   });
 });
@@ -341,7 +341,7 @@ and start receiving events when activated.
 
 ```javascript
 self.addEventListener('install', (event) => {
-  event.waitFor(async () => {
+  event.waitUntil(async () => {
     await cookieStore.subscribeToChanges([{
       name: 'session',  // Get change events for session-related cookies.
       matchType: 'starts-with',  // Matches session_id, session-id, etc.
