@@ -1213,10 +1213,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version b76a1f3caa65320a39ee72dbf2680ea887ace619" name="generator">
+  <meta content="Bikeshed version 86a39676f08870ba1210b97fe65ff62bd4e723c9" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="21bf755650b35cd8fc4edf8e84de3cdacc1b1260" name="document-revision">
+  <meta content="0b3e92b7ed045897ed2bd4d7e7f16da7dacdb81d" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -1477,7 +1477,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-10-07">7 October 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-10-11">11 October 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1967,7 +1967,7 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
 <c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-cookiesamesite"><code><c- g>CookieSameSite</c-></code></dfn> {
   <dfn class="dfn-paneled idl-code" data-dfn-for="CookieSameSite" data-dfn-type="enum-value" data-export id="dom-cookiesamesite-strict"><code><c- s>"strict"</c-></code></dfn>,
   <dfn class="dfn-paneled idl-code" data-dfn-for="CookieSameSite" data-dfn-type="enum-value" data-export id="dom-cookiesamesite-lax"><code><c- s>"lax"</c-></code></dfn>,
-  <dfn class="dfn-paneled idl-code" data-dfn-for="CookieSameSite" data-dfn-type="enum-value" data-export id="dom-cookiesamesite-unrestricted"><code><c- s>"unrestricted"</c-></code></dfn>
+  <dfn class="dfn-paneled idl-code" data-dfn-for="CookieSameSite" data-dfn-type="enum-value" data-export id="dom-cookiesamesite-none"><code><c- s>"none"</c-></code></dfn>
 };
 
 <c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cookiestoresetoptions"><code><c- g>CookieStoreSetOptions</c-></code></dfn> {
@@ -2520,7 +2520,7 @@ then return false.</p>
       <dl class="switch">
        <dt data-md>`<code>None</code>`
        <dd data-md>
-        <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-samesite" id="ref-for-dom-cookielistitem-samesite">sameSite</a></code> dictionary member to "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-unrestricted" id="ref-for-dom-cookiesamesite-unrestricted">unrestricted</a></code>".</p>
+        <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-samesite" id="ref-for-dom-cookielistitem-samesite">sameSite</a></code> dictionary member to "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-none" id="ref-for-dom-cookiesamesite-none">none</a></code>".</p>
        <dt data-md>`<code>Strict</code>`
        <dd data-md>
         <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-samesite" id="ref-for-dom-cookielistitem-samesite①">sameSite</a></code> dictionary member to "<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-strict" id="ref-for-dom-cookiesamesite-strict①">strict</a></code>".</p>
@@ -2576,15 +2576,15 @@ then return failure.</p>
      <li data-md>
       <p>Switch on <var>sameSite</var>:</p>
       <dl class="switch">
-       <dt data-md>"<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-unrestricted" id="ref-for-dom-cookiesamesite-unrestricted①">unrestricted</a></code>"
+       <dt data-md>"<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-none" id="ref-for-dom-cookiesamesite-none①">none</a></code>"
        <dd data-md>
-        <p>Do nothing.</p>
+        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑤">Append</a> `<code>SameSite</code>`/`<code>None</code>` to <var>attributes</var>.</p>
        <dt data-md>"<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-strict" id="ref-for-dom-cookiesamesite-strict②">strict</a></code>"
        <dd data-md>
-        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑤">Append</a> `<code>SameSite</code>`/`<code>Strict</code>` to <var>attributes</var>.</p>
+        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑥">Append</a> `<code>SameSite</code>`/`<code>Strict</code>` to <var>attributes</var>.</p>
        <dt data-md>"<code class="idl"><a data-link-type="idl" href="#dom-cookiesamesite-lax" id="ref-for-dom-cookiesamesite-lax①">lax</a></code>"
        <dd data-md>
-        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑥">Append</a> `<code>SameSite</code>`/`<code>Lax</code>` to <var>attributes</var>.</p>
+        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑦">Append</a> `<code>SameSite</code>`/`<code>Lax</code>` to <var>attributes</var>.</p>
       </dl>
      <li data-md>
       <p>Perform the steps defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-5.4">Cookies: HTTP State Management Mechanism §Storage Model</a> for when the user agent "receives a cookie" with <var>url</var> as <var>request-uri</var>, <var>name</var> (<a data-link-type="dfn" href="#encode" id="ref-for-encode②">encoded</a>) as <var>cookie-name</var>, <var>value</var> (<a data-link-type="dfn" href="#encode" id="ref-for-encode③">encoded</a>) as <var>cookie-value</var>, and <var>attributes</var> as <var>cookie-attribute-list</var>.</p>
@@ -2721,14 +2721,14 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
        <li data-md>
         <p>Let <var>item</var> be the result of running the steps to <a data-link-type="dfn" href="#create-a-cookielistitem" id="ref-for-create-a-cookielistitem①">create a CookieListItem</a> from <var>change</var>’s cookie.</p>
        <li data-md>
-        <p>If <var>change</var>’s type is <em>changed</em>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑦">append</a> <var>item</var> to <var>changedList</var>.</p>
+        <p>If <var>change</var>’s type is <em>changed</em>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑧">append</a> <var>item</var> to <var>changedList</var>.</p>
        <li data-md>
         <p>Otherwise, run these steps:</p>
         <ol>
          <li data-md>
           <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value①">value</a></code> dictionary member to undefined.</p>
          <li data-md>
-          <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑧">Append</a> <var>item</var> to <var>deletedList</var>.</p>
+          <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑨">Append</a> <var>item</var> to <var>deletedList</var>.</p>
         </ol>
       </ol>
      <li data-md>
@@ -3057,6 +3057,7 @@ authoring advice.</p>
      <li><a href="#dom-cookiestoregetoptions-name">dict-member for CookieStoreGetOptions</a><span>, in §3</span>
      <li><a href="#dom-cookiestoresetextraoptions-name">dict-member for CookieStoreSetExtraOptions</a><span>, in §3</span>
     </ul>
+   <li><a href="#dom-cookiesamesite-none">"none"</a><span>, in §3</span>
    <li><a href="#observable-changes">observable changes</a><span>, in §6.4</span>
    <li><a href="#dom-cookiestore-onchange">onchange</a><span>, in §3</span>
    <li><a href="#dom-serviceworkerglobalscope-oncookiechange">oncookiechange</a><span>, in §5.2</span>
@@ -3094,7 +3095,6 @@ authoring advice.</p>
    <li><a href="#dom-cookiematchtype-starts-with">"starts-with"</a><span>, in §3</span>
    <li><a href="#dom-cookiesamesite-strict">"strict"</a><span>, in §3</span>
    <li><a href="#dom-cookiestore-subscribetochanges">subscribeToChanges(subscriptions)</a><span>, in §3.5</span>
-   <li><a href="#dom-cookiesamesite-unrestricted">"unrestricted"</a><span>, in §3</span>
    <li>
     url
     <ul>
@@ -3776,7 +3776,7 @@ authoring advice.</p>
 <c- b>enum</c-> <a href="#enumdef-cookiesamesite"><code><c- g>CookieSameSite</c-></code></a> {
   <a href="#dom-cookiesamesite-strict"><code><c- s>"strict"</c-></code></a>,
   <a href="#dom-cookiesamesite-lax"><code><c- s>"lax"</c-></code></a>,
-  <a href="#dom-cookiesamesite-unrestricted"><code><c- s>"unrestricted"</c-></code></a>
+  <a href="#dom-cookiesamesite-none"><code><c- s>"none"</c-></code></a>
 };
 
 <c- b>dictionary</c-> <a href="#dictdef-cookiestoresetoptions"><code><c- g>CookieStoreSetOptions</c-></code></a> {
@@ -4078,11 +4078,11 @@ authoring advice.</p>
     <li><a href="#ref-for-dom-cookiesamesite-lax①">6.2. Set a Cookie</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-cookiesamesite-unrestricted">
-   <b><a href="#dom-cookiesamesite-unrestricted">#dom-cookiesamesite-unrestricted</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-cookiesamesite-none">
+   <b><a href="#dom-cookiesamesite-none">#dom-cookiesamesite-none</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiesamesite-unrestricted">6.1. Query Cookies</a>
-    <li><a href="#ref-for-dom-cookiesamesite-unrestricted①">6.2. Set a Cookie</a>
+    <li><a href="#ref-for-dom-cookiesamesite-none">6.1. Query Cookies</a>
+    <li><a href="#ref-for-dom-cookiesamesite-none①">6.2. Set a Cookie</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiestoresetoptions">
