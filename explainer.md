@@ -3,6 +3,7 @@
 **Authors:**
 *   Benjamin C. Wiley Sittler
 *   Marijn Kruisselbrink - [mek@chromium.org](mailto:mek@chromium.org)
+*   Staphany Park - [staphany@chromium.org](mailto:staphany@chromium.org)
 *   Victor Costan - [pwnall@chromium.org](mailto:pwnall@chromium.org)
 
 This proposal has the following main goals.
@@ -128,9 +129,9 @@ currently opened in a browser tab / window.
 ```javascript
 const kCookieName = 'session';
 
-self.addEventListener('install', (event) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(async () => {
-    await cookieStore.subscribeToChanges([{ name: kCookieName }]);
+    await self.registration.cookies.subscribe([{ name: kCookieName }]);
   });
 });
 
@@ -341,19 +342,7 @@ reasons.
 
 ### Get change events in service workers
 
-Service workers have to subscribe for change events during the install stage,
-and start receiving events when activated.
-
 ```javascript
-self.addEventListener('install', (event) => {
-  event.waitUntil(async () => {
-    await cookieStore.subscribeToChanges([{
-      name: 'session',  // Get change events for session-related cookies.
-      matchType: 'starts-with',  // Matches session_id, session-id, etc.
-    }]);
-  });
-});
-
 self.addEventListener('cookiechange', (event) => {
   // The event has |changed| and |deleted| properties with
   // the same semantics as the Document events.
@@ -362,10 +351,6 @@ self.addEventListener('cookiechange', (event) => {
 });
 ```
 
-Calls to `subscribeToChanges()` are cumulative, so that independently maintained
-modules or libraries can set up their own subscriptions. As expected, a service
-worker's subscriptions are persisted for the worker's lifetime.
-
 Subscriptions can use the same options as `cookieStore.get` /
 `cookieStore.getAll`. The complexity of fine-grained subscriptions is justified
 by the cost of dispatching an irrelevant cookie change event to a service
@@ -373,6 +358,62 @@ worker, which is is much higher than the cost of dispatching an equivalent event
 to a Document. Specifically, dispatching an event to a service worker might
 require waking up the worker, which has a significant impact on battery life.
 
+### Subscribing/unsubscribing to change events
+
+All service workers under the same registration operate on a single set of
+subscriptions that lives on the registration. This pattern is also seen
+in the Push API and Periodic Background Sync API, where push subscriptions and
+sync registrations, respectively, are aggregated under the service worker
+registration. Due to the need for permission prompts, however, these two APIs
+restrict registration changes to the window context, while the Cookie Store API
+allows subscription modifications from both the window and service worker
+contexts.
+
+The main disadvantage of this pattern is that each service worker must account
+for subscriptions registered by other versions. To avoid cross-contamination, it
+is recommended to always wait until the 'activate' event before snapshotting or
+modifying cookie change subscriptions. Modifying the subscription state during
+installation could cause the currently active version to unexpectedly receive or
+drop cookie change events.
+
+Calls to `subscribe()` and `unsubscribe()` are idempotent.
+
+```javascript
+self.addEventListener('activate', (event) => {
+  // Snapshot current state of subscriptions.
+  const subscriptions = await self.registration.cookies.getSubscriptions();
+
+  // Clear any existing subscriptions.
+  for (const subscription of subscriptions)
+    await self.registration.cookies.unsubscribe(subscription);
+
+  await self.registration.cookies.subscribe([
+    {
+      name: 'session',  // Get change events for session-related cookies.
+      matchType: 'starts-with',  // Matches session_id, session-id, etc.
+    }
+  ]);
+});
+```
+### Alternative subscription model
+
+Alternatively, each service worker version could manage its own set of
+subscriptions. During installation, the service worker would set up its
+subscriptions; after activation, it would receive only change events that match
+those subscriptions.
+
+The main advantage of this approach is that each service worker starts with a
+clean slate of subscriptions, rather than potentially carrying over
+subscriptions from previous service worker versions. Thus, a service worker's
+script contains all the information needed to know what subscriptions it has.
+
+The main disadvantage of this approach is the loss of any change events
+dispatched while there is no active service worker. For example, even if two
+sequential service worker versions subscribe to the same change events, neither
+of them would see the change events dispatched in the window between
+deactivation of the first and activation of the second. If the second service
+worker version takes a snapshot of the cookie jar at install time, that snapshot
+could be outdated by the time the service worker becomes active.
 
 ## Security Model
 
