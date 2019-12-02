@@ -3,6 +3,7 @@
 **Authors:**
 *   Benjamin C. Wiley Sittler
 *   Marijn Kruisselbrink - [mek@chromium.org](mailto:mek@chromium.org)
+*   Staphany Park - [staphany@chromium.org](mailto:staphany@chromium.org)
 *   Victor Costan - [pwnall@chromium.org](mailto:pwnall@chromium.org)
 
 This proposal has the following main goals.
