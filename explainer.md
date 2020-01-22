@@ -358,7 +358,7 @@ worker, which is is much higher than the cost of dispatching an equivalent event
 to a Document. Specifically, dispatching an event to a service worker might
 require waking up the worker, which has a significant impact on battery life.
 
-### Subscribing/unsubscribing to change events
+#### Subscribing/unsubscribing service workers to change events
 
 All service workers under the same registration operate on a single set of
 subscriptions that lives on the registration. This pattern is also seen
@@ -395,7 +395,7 @@ self.addEventListener('activate', (event) => {
   ]);
 });
 ```
-### Alternative subscription model
+#### Alternative subscription model for service workers
 
 Alternatively, each service worker version could manage its own set of
 subscriptions. During installation, the service worker would set up its
