@@ -1006,12 +1006,12 @@ The {{CookieChangeEvent/changed}} and {{CookieChangeEvent/deleted}} attributes m
 ## The {{ExtendableCookieChangeEvent}} interface ## {#ExtendableCookieChangeEvent}
 <!-- ============================================================ -->
 
-Issue: Why do we need these to be Extendable? `waitUntil()` does nothing.
-
 An {{ExtendableCookieChangeEvent}} is [=dispatched=] against
 {{ServiceWorkerGlobalScope}} objects when any [=script-visible=]
 cookie changes have occurred which match the [=Service Worker=]'s
 [=cookie change subscription list=].
+
+Note: {{ExtendableEvent}} is used as the ancestor interface for all events in [=Service Workers=] so that the worker itself can be kept alive while the async operations are performed.
 
 <xmp class=idl>
 [Exposed=ServiceWorker]
