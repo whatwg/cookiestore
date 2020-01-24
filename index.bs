@@ -447,8 +447,6 @@ self.addEventListener('cookiechange', event => {
 ```
 </div>
 
-Issue: Need `waitUntil()` ?
-
 Calls to {{CookieStoreManager/subscribe()}} are cumulative, so that independently maintained
 modules or libraries can set up their own subscriptions. As expected, a [=service worker=]'s
 subscriptions are persisted for with the [=service worker registration=].
@@ -855,7 +853,7 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, mu
 # The {{CookieStoreManager}} Interface # {#CookieStoreManager}
 <!-- ============================================================ -->
 
-Issue: Give examples from both Window and Worker.
+The {{CookieStoreManager}} interface allows [=Service Workers=] to subscribe to events for cookie changes. Using the {{CookieStoreManager/subscribe()}} method is necessary to indicate that a particular [=service worker registration=] is interested in change events.
 
 <xmp class=idl>
 [Exposed=(ServiceWorker,Window),
@@ -874,14 +872,13 @@ interface CookieStoreManager {
 
 <div class=note>
   <dl class=domintro>
-    : await self . registration . cookies . {{CookieStoreManager/subscribe()|subscribe}}(|subscriptions|)
+    : await |registration| . cookies . {{CookieStoreManager/subscribe()|subscribe}}(|subscriptions|)
+    :
     ::
 
        Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}}, {{CookieStoreGetOptions/url}} and {{CookieStoreGetOptions/matchType}} properties.
 
        Once subscribed, notifications are delivered as "`cookiechange`" events fired against the [=Service Worker=]'s global scope:
-
-       Issue: Give Window example.
 
   </dl>
 </div>
@@ -913,11 +910,9 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method, 
 
 <div class=note>
   <dl class=domintro>
-    : |subscriptions| = await self . registration . cookies . {{CookieStoreManager/getSubscriptions()}}
+    : |subscriptions| = await |registration| . cookies . {{CookieStoreManager/getSubscriptions()}}
     ::
         This method returns a promise which resolves to a list of the cookie change subscriptions made for this Service Worker registration.
-
-       Issue: Give Window example.
 
   </dl>
 </div>
@@ -943,12 +938,11 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method, when inv
 
 <div class=note>
   <dl class=domintro>
-    : await self . registration . cookies . {{CookieStoreManager/subscribe()|unsubscribe}}(|subscriptions|)
+    : await |registration| . cookies . {{CookieStoreManager/unsubscribe()|unsubscribe}}(|subscriptions|)
     ::
 
-       Issue: Write me!
+        Calling this method will stop the registered service worker from receiving previously subscribed events. The |subscriptions| argument should list subscriptions in the same form passed to {{CookieStoreManager/subscribe()}} or returned from {{CookieStoreManager/getSubscriptions()}}.
 
-       Issue: Give Window example.
 
   </dl>
 </div>
@@ -972,6 +966,39 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
     1. [=Resolve=] |p| with undefined.
 1. Return |p|.
 
+</div>
+
+
+<!-- ============================================================ -->
+## The {{ServiceWorkerRegistration}} interface ## {#ServiceWorkerRegistration}
+<!-- ============================================================ -->
+
+The {{ServiceWorkerRegistration}} interface is extended to give access to a {{CookieStoreManager}}.
+
+<xmp class=idl>
+[Exposed=(ServiceWorker,Window)]
+partial interface ServiceWorkerRegistration {
+  readonly attribute CookieStoreManager cookies;
+};
+</xmp>
+
+
+<div class=example>
+Subscribing to cookie changes from a Service Worker script:
+
+```js
+self.registration.cookies.subscribe([{name:'session-id'}]);
+```
+</div>
+
+<div class=example>
+Subscribing to cookie changes from a script in a window context:
+
+```js
+navigator.serviceWorker.register('sw.js').then(registration => {
+  registration.cookies.subscribe([{name:'session-id'}]);
+});
+```
 </div>
 
 
@@ -1065,17 +1092,6 @@ partial interface ServiceWorkerGlobalScope {
 The {{ServiceWorkerGlobalScope/cookieStore}} attribute's getter must return [=context object=]'s [=relevant settings object=]'s {{CookieStore}} object.
 
 <!-- ============================================================ -->
-## The {{ServiceWorkerRegistration}} interface ## {#ServiceWorkerRegistration}
-<!-- ============================================================ -->
-
-<xmp class=idl>
-[Exposed=(ServiceWorker,Window)]
-partial interface ServiceWorkerRegistration {
-  readonly attribute CookieStoreManager cookies;
-};
-</xmp>
-
-<!-- ============================================================ -->
 # Algorithms # {#algorithms}
 <!-- ============================================================ -->
 
@@ -1084,6 +1100,23 @@ partial interface ServiceWorkerRegistration {
 To <dfn>encode</dfn> a |string|, run [=UTF-8 encode=] on |string|.
 
 To <dfn>decode</dfn> a |value|, run [=UTF-8 decode without BOM=] on |value|.
+
+
+<div class=algorithm>
+To represent a date and time |dateTime| <dfn>as a timestamp</dfn>,
+return the number of milliseconds from 00:00:00 UTC, 1 January 1970 to |dateTime|
+(assuming that there are exactly 86,400,000 milliseconds per day).
+
+Note: This is the same representation used for [=time values=] in [[ECMAScript]].
+</div>
+
+
+<div class=algorithm>
+To <dfn>date serialize</dfn> a {{DOMTimeStamp}} |millis|,
+let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
+(assuming that there are exactly 86,400,000 milliseconds per day),
+and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[RFC6265bis#section-5.1.1|Cookies: HTTP State Management Mechanism §Dates]].
+</div>
 
 
 <!-- ============================================================ -->
@@ -1178,15 +1211,6 @@ attributes are not exposed to script.
 
 </div>
 
-<div class=algorithm>
-To represent a date and time |dateTime| <dfn>as a timestamp</dfn>,
-return the number of milliseconds from 00:00:00 UTC, 1 January 1970 to |dateTime|,
-(assuming that there are exactly 86,400,000 milliseconds per day).
-
-Note: This is the same representation used for [=time values=] in [[ECMAScript]].
-</div>
-
-
 <!-- ============================================================ -->
 ## Set a Cookie ## {#set-cookie-algorithm}
 <!-- ============================================================ -->
@@ -1242,12 +1266,6 @@ run the following steps:
 
 </div>
 
-<div class=algorithm>
-To <dfn>date serialize</dfn> a {{DOMTimeStamp}} |millis|,
-let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
-(assuming that there are exactly 86,400,000 milliseconds per day),
-and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[RFC6265bis#section-5.1.1|Cookies: HTTP State Management Mechanism §Dates]].
-</div>
 
 <!-- ============================================================ -->
 ## Delete a Cookie ## {#delete-cookie-algorithm}
