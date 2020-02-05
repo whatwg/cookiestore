@@ -40,16 +40,12 @@ to session state changes, to clean up private cached data.
 Cookies have also found a niche in storing user decisions to opt out of tracking
 by ad networks, and receive less personalized ads.
 
-Separetly, from a conceptual angle, a service worker is intended to be an
+Separately, from a conceptual angle, a service worker is intended to be an
 HTTP proxy for the pages under its scope. By this principle, service workers
 must be able to read and modify the cookies accessible to pages under their
 scopes.
 
 ### Reacting to session state changes
-
-While the previous samples are mostly aimed at updating a
-page's UI to reflect
-
 
 The following code illustrates synchronous polling via `document.cookie`. The
 code periodically induces jank, as `document.cookie` is a synchronous call
@@ -169,11 +165,11 @@ The following code snippet uses the Cookie Store API instead, and does not jank
 the main thread.
 
 ```javascript
-document.getElementById('opt-out-button').addEventListener('click', () => {
+document.getElementById('opt-out-button').addEventListener('click', async () => {
   await cookieStore.set({ name: 'opt_out', value: '1',
                           expires: new Date('Wed, 1 Jan 2025 00:00:00 GMT') });
 });
-document.getElementById('opt-in-button').addEventListener('click', () => {
+document.getElementById('opt-in-button').addEventListener('click', async () => {
   await cookieStore.delete({ name: 'opt_out' });
 });
 ```
@@ -229,7 +225,9 @@ In other words, `get` and `getAll` take the same arguments, which can be
 
 ### Read the cookies for a specific URL
 
-Cookies are URL-scoped, so pages
+Cookies are URL-scoped, so fetches to different URLs may include different
+cookies, even when the URLs have the same origin. The application can specify
+the URL whose associated cookies will be read.
 
 ```javascript
 await cookieStore.getAll({url: '/admin'});
@@ -380,19 +378,20 @@ Calls to `subscribe()` and `unsubscribe()` are idempotent.
 
 ```javascript
 self.addEventListener('activate', (event) => {
-  // Snapshot current state of subscriptions.
-  const subscriptions = await self.registration.cookies.getSubscriptions();
+  event.waitUntil(async () =>
+    // Snapshot current state of subscriptions.
+    const subscriptions = await self.registration.cookies.getSubscriptions();
 
-  // Clear any existing subscriptions.
-  for (const subscription of subscriptions)
-    await self.registration.cookies.unsubscribe(subscription);
+    // Clear any existing subscriptions.
+    await self.registration.cookies.unsubscribe(subscriptions);
 
-  await self.registration.cookies.subscribe([
-    {
-      name: 'session',  // Get change events for session-related cookies.
-      matchType: 'starts-with',  // Matches session_id, session-id, etc.
-    }
-  ]);
+    await self.registration.cookies.subscribe([
+      {
+        name: 'session',  // Get change events for session-related cookies.
+        matchType: 'starts-with',  // Matches session_id, session-id, etc.
+      }
+    ]);
+  });
 });
 ```
 #### Alternative subscription model for service workers
