@@ -423,19 +423,21 @@ In [=service workers=], `cookiechange` events are fired against the global scope
 Register for `cookiechange` events in a service worker:
 
 ```js
-self.addEventListener('activate', async (event) => {
-  // Snapshot current state of subscriptions.
-  const subscriptions = await self.registration.cookies.getSubscriptions();
+self.addEventListener('activate', (event) => {
+  event.waitUntil(async () => {
+    // Snapshot current state of subscriptions.
+    const subscriptions = await self.registration.cookies.getSubscriptions();
 
-  // Clear any existing subscriptions.
-  await self.registration.cookies.unsubscribe(subscriptions);
+    // Clear any existing subscriptions.
+    await self.registration.cookies.unsubscribe(subscriptions);
 
-  await self.registration.cookies.subscribe([
-    {
-      name: 'session',  // Get change events for session-related cookies.
-      matchType: 'starts-with',  // Matches session_id, session-id, etc.
-    }
-  ]);
+    await self.registration.cookies.subscribe([
+      {
+        name: 'session',  // Get change events for session-related cookies.
+        matchType: 'starts-with',  // Matches session_id, session-id, etc.
+      }
+    ]);
+  });
 });
 
 self.addEventListener('cookiechange', event => {
