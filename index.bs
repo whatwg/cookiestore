@@ -289,15 +289,20 @@ try {
 [=Service workers=] can obtain the list of cookies that would be sent by a [=/fetch=] to
 any URL under their [=service worker registration/scope url|scope=].
 
+<aside class=advisement>
+  &#x1F6A7;
+  Access to cookies from [=service workers=] is **not** included in Chrome's Origin Trial.
+  &#x1F6A7;
+</aside>
+
 <div class=example>
 Read the cookies for a specific URL (in a [=service worker=]):
 
 ```js
 await cookieStore.getAll({url: '/admin'});
 ```
-
-
 </div>
+
 
 [=Documents=] can only obtain the cookies at their current URL. In other words,
 the only valid {{CookieStoreGetOptions/url}} value in [=Document=] contexts is the document's URL.
@@ -418,6 +423,13 @@ cookieStore.addEventListener('change', event => {
 </div>
 
 In [=service workers=], `cookiechange` events are fired against the global scope, but an explicit subscription is required, associated with the service worker's registration.
+
+<aside class=advisement>
+  &#x1F6A7;
+  Access to cookies from [=service workers=] is **not** included in Chrome's Origin Trial.
+  &#x1F6A7;
+</aside>
+
 
 <div class=example>
 Register for `cookiechange` events in a service worker:
@@ -603,6 +615,14 @@ dictionary CookieListItem {
 
 typedef sequence<CookieListItem> CookieList;
 </xmp>
+
+
+<aside class=advisement>
+  &#x1F6A7;
+  The {{CookieStore}} interface **is** included in Chrome's Origin Trial.
+  &#x1F6A7;
+</aside>
+
 
 <!-- ============================================================ -->
 ## The {{CookieStore/get()}} method ## {#CookieStore-get}
@@ -867,6 +887,12 @@ interface CookieStoreManager {
 };
 </xmp>
 
+<aside class=advisement>
+  &#x1F6A7;
+  The {{CookieStoreManager}} interface is **not** included in Chrome's Origin Trial.
+  &#x1F6A7;
+</aside>
+
 
 <!-- ============================================================ -->
 ## The {{CookieStoreManager/subscribe()|subscribe()}} method ## {#CookieStoreManager-subscribe}
@@ -1031,6 +1057,13 @@ dictionary CookieChangeEventInit : EventInit {
 
 The {{CookieChangeEvent/changed}} and {{CookieChangeEvent/deleted}} attributes must return the value they were initialized to.
 
+<aside class=advisement>
+  &#x1F6A7;
+  The {{CookieChangeEvent}} interface **is** included in Chrome's Origin Trial.
+  &#x1F6A7;
+</aside>
+
+
 <!-- ============================================================ -->
 ## The {{ExtendableCookieChangeEvent}} interface ## {#ExtendableCookieChangeEvent}
 <!-- ============================================================ -->
@@ -1058,6 +1091,13 @@ dictionary ExtendableCookieChangeEventInit : ExtendableEventInit {
 
 The {{ExtendableCookieChangeEvent/changed}} and {{ExtendableCookieChangeEvent/deleted}} attributes must return the value they were initialized to.
 
+<aside class=advisement>
+  &#x1F6A7;
+  The {{ExtendableCookieChangeEvent}} interface is **not** included in Chrome's Origin Trial.
+  &#x1F6A7;
+</aside>
+
+
 <!-- ============================================================ -->
 # Global Interfaces # {#globals}
 <!-- ============================================================ -->
@@ -1079,6 +1119,13 @@ partial interface Window {
 
 The {{Window/cookieStore}} attribute's getter must return [=context object=]'s [=relevant settings object=]'s {{CookieStore}} object.
 
+<aside class=advisement>
+  &#x1F6A7;
+  The {{Window/cookieStore}} attribute **is** included in Chrome's Origin Trial.
+  &#x1F6A7;
+</aside>
+
+
 <!-- ============================================================ -->
 ## The {{ServiceWorkerGlobalScope}} interface ## {#ServiceWorkerGlobalScope}
 <!-- ============================================================ -->
@@ -1092,6 +1139,13 @@ partial interface ServiceWorkerGlobalScope {
 </xmp>
 
 The {{ServiceWorkerGlobalScope/cookieStore}} attribute's getter must return [=context object=]'s [=relevant settings object=]'s {{CookieStore}} object.
+
+<aside class=advisement>
+  &#x1F6A7;
+  The {{ServiceWorkerGlobalScope/cookieStore}} attribute is **not** included in Chrome's Origin Trial.
+  &#x1F6A7;
+</aside>
+
 
 <!-- ============================================================ -->
 # Algorithms # {#algorithms}
