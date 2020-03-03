@@ -1,6 +1,7 @@
 # Cookie Store API Explainer
 
 **Authors:**
+*   Ayu Ishii - [ayui@chromium.org](mailto:ayui@chromium.org)
 *   Benjamin C. Wiley Sittler
 *   Marijn Kruisselbrink - [mek@chromium.org](mailto:mek@chromium.org)
 *   Staphany Park - [staphany@chromium.org](mailto:staphany@chromium.org)
@@ -505,6 +506,12 @@ The change events API exposed to documents does not accept URLs.
 
 Service workers may pass any URL under their scopes into the query or
 change event API.
+
+#### Service Worker Scope 
+
+The Cookie Store API does not change the access level for Service Workers.
+
+Service Workers can currently access the cookies of any URL under their scope. For example, a Service Worker could respond to any top-level request with an HTML document embedding an `<iframe>` pointing to the desired URL. When responding to the request for that URL, the Service Worker can respond with an HTML document containing a `<script>` that proxies the Service Worker's access to the `document.cookie` API using `postMessage`.
 
 ### Expiration Dates
 
