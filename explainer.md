@@ -1,11 +1,11 @@
 # Cookie Store API Explainer
 
 **Authors:**
+*   Ayu Ishii - [ayui@chromium.org](mailto:ayui@chromium.org)
 *   Benjamin C. Wiley Sittler
 *   Marijn Kruisselbrink - [mek@chromium.org](mailto:mek@chromium.org)
 *   Staphany Park - [staphany@chromium.org](mailto:staphany@chromium.org)
 *   Victor Costan - [pwnall@chromium.org](mailto:pwnall@chromium.org)
-*   Ayu Ishii - [ayui@chromium.org](mailto:ayui@chromium.org)
 
 This proposal has the following main goals.
 
@@ -511,9 +511,7 @@ change event API.
 
 The Cookie Store API does not change the access level for Service Workers.
 
-We think that Service Workers can currently effectively access the cookies of any URL under their scope. For example, a Service Worker could respond to any top-level request with an HTML document embedding an `<iframe>` pointing to the desired URL. When responding to the request for that URL, the Service Worker can respond with an HTML document containing a `<script>` that implements a postMessage API that proxies the Service Worker's access to the `document.cookie` API.
-
-For this reason we think that the API does not change the security properties of cookies on the Web Platform. 
+Service Workers can currently access the cookies of any URL under their scope. For example, a Service Worker could respond to any top-level request with an HTML document embedding an `<iframe>` pointing to the desired URL. When responding to the request for that URL, the Service Worker can respond with an HTML document containing a `<script>` that proxies the Service Worker's access to the `document.cookie` API using `postMessage`.
 
 ### Expiration Dates
 
