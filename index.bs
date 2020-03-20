@@ -38,6 +38,7 @@ spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
 spec:infra; type:dfn; text:list
 spec:html; type:dfn; for:environment settings object; text:global object
 spec:webidl; type:dfn; text:resolve
+spec:service-workers; type:dfn; for:/; text:service worker
 </pre>
 
 <style>
@@ -84,7 +85,7 @@ On the modern web a cookie operation in one part of a web application cannot blo
   - the rest of the web origin, or
   - the browser as a whole.
 
-Newer parts of the web built in service workers [need access to cookies too](https://github.com/slightlyoff/ServiceWorker/issues/707) but cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
+Newer parts of the web built in service workers [need access to cookies too](https://github.com/w3c/ServiceWorker/issues/707) but cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
 
 <!-- ============================================================ -->
 ## A Taste of the Proposed Change ## {#intro-proposed-change}
@@ -173,7 +174,7 @@ A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the 
 
 Issue: Review/rewrite this section.
 
-Some service workers [need access to cookies](https://github.com/slightlyoff/ServiceWorker/issues/707) but
+Some service workers [need access to cookies](https://github.com/w3c/ServiceWorker/issues/707) but
 cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface as they both have no `document` and
 also cannot block the event loop as that would interfere with handling of unrelated events.
 
