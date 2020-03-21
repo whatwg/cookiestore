@@ -1222,10 +1222,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 8a606cd39d36033b27400c47ffcf6a695f400519" name="generator">
+  <meta content="Bikeshed version 2d9ffc40, updated Fri Mar 20 17:26:52 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="fe40c654b00fb0bd311eb8a6c0ab9506d0f5f829" name="document-revision">
+  <meta content="fb8654806bc841e703578b959ac38b54212e8d68" name="document-revision">
 <style>
 dl.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
@@ -1486,7 +1486,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-20">20 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-21">21 March 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1647,7 +1647,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li data-md>
      <p>the browser as a whole.</p>
    </ul>
-   <p>Newer parts of the web built in service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies too</a> but cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie①">document.cookie</a></code> interface at all as they both have no <code>document</code> and also cannot block the event loop as that would interfere with handling of unrelated events.</p>
+   <p>Newer parts of the web built in service workers <a href="https://github.com/w3c/ServiceWorker/issues/707">need access to cookies too</a> but cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie①">document.cookie</a></code> interface at all as they both have no <code>document</code> and also cannot block the event loop as that would interfere with handling of unrelated events.</p>
    <h3 class="heading settled" data-level="1.1" id="intro-proposed-change"><span class="secno">1.1. </span><span class="content">A Taste of the Proposed Change</span><a class="self-link" href="#intro-proposed-change"></a></h3>
    <p>Although it is tempting to <a href="https://discourse.wicg.io/t/rethinking-cookies/744">rethink cookies</a> entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.</p>
    <p>Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in <code>Set-Cookie</code> format:</p>
@@ -1721,7 +1721,7 @@ in <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> 
    <p>A cookie is <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="script-visible">script-visible</dfn> when it is in-scope and does not have the <code>HttpOnly</code> cookie flag.</p>
    <h4 class="heading settled" data-level="1.2.2" id="intro-motivation"><span class="secno">1.2.2. </span><span class="content">Motivations</span><a class="self-link" href="#intro-motivation"></a></h4>
    <p class="issue" id="issue-88fe361f"><a class="self-link" href="#issue-88fe361f"></a> Review/rewrite this section.</p>
-   <p>Some service workers <a href="https://github.com/slightlyoff/ServiceWorker/issues/707">need access to cookies</a> but
+   <p>Some service workers <a href="https://github.com/w3c/ServiceWorker/issues/707">need access to cookies</a> but
 cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie②">document.cookie</a></code> interface as they both have no <code>document</code> and
 also cannot block the event loop as that would interfere with handling of unrelated events.</p>
    <p>A new API may also provide a rare and valuable chance to address
