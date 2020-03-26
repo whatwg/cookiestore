@@ -890,7 +890,7 @@ interface CookieStoreManager {
 <div class=algorithm>
 The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method, when invoked, must run these steps:
 
-1. Let |registration| be **this**.
+1. Let |registration| be [=/this=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
@@ -923,7 +923,7 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method, 
 <div class=algorithm>
 The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method, when invoked, must run these steps:
 
-1. Let |registration| be **this**.
+1. Let |registration| be [=/this=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |subscriptions| be |registration|'s associated [=cookie change subscription list=].
@@ -954,7 +954,7 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method, when inv
 <div class=algorithm>
 The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method, when invoked, must run these steps:
 
-1. Let |registration| be **this**.
+1. Let |registration| be [=/this=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
