@@ -42,16 +42,20 @@ spec:service-workers; type:dfn; for:/; text:service worker
 </pre>
 
 <style>
-dl.domintro dt {
+.domintro::before {
+    content: 'For web developers (non-normative)';
+    text-transform: initial;
+}
+.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
 
     padding-top: 0.5em;
     padding-bottom: 1em;
 }
-dl.domintro dt a {
+.domintro dt a {
     color: inherit; border-bottom-style: none;
 }
-dl.domintro dt code {
+.domintro dt code {
     font-size: inherit;
 }
 </style>
@@ -609,17 +613,15 @@ typedef sequence<CookieListItem> CookieList;
 ## The {{CookieStore/get()}} method ## {#CookieStore-get}
 <!-- ============================================================ -->
 
-<div class=note>
-  <dl class=domintro>
+<div class="domintro note">
     : |cookie| = await cookieStore . {{CookieStore/get(name)|get}}(|name|)
     : |cookie| = await cookieStore . {{CookieStore/get(options)|get}}(|options|)
-    ::
-        Returns a promise resolving to the first in-scope [=script-visible=] value
+
+    ::  Returns a promise resolving to the first in-scope [=script-visible=] value
         for a given cookie name (or other options).
         In a service worker context this defaults to the path of the service worker's registered scope.
         In a document it defaults to the path of the current document and does not respect changes from {{History/replaceState()}} or {{Document/domain|document.domain}}.
 
-  </dl>
 </div>
 
 <div class=algorithm>
@@ -669,17 +671,14 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
 ## The {{CookieStore/getAll()}} method ## {#CookieStore-getAll}
 <!-- ============================================================ -->
 
-<div class=note>
-  <dl class=domintro>
+<div class="domintro note">
     : |cookies| = await cookieStore . {{CookieStore/getAll(name)|getAll}}(|name|)
     : |cookies| = await cookieStore . {{CookieStore/getAll(options)|getAll}}(|options|)
-    ::
 
-        Returns a promise resolving to the all in-scope [=script-visible=] value for a given cookie name (or other options).
+    ::  Returns a promise resolving to the all in-scope [=script-visible=] value for a given cookie name (or other options).
         In a service worker context this defaults to the path of the service worker's registered scope.
         In a document it defaults to the path of the current document and does not respect changes from {{History/replaceState()}} or {{Document/domain|document.domain}}.
 
-  </dl>
 </div>
 
 
@@ -730,12 +729,11 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 ## The {{CookieStore/set(name, value, options)|set()}} method ## {#CookieStore-set}
 <!-- ============================================================ -->
 
-<div class=note>
-  <dl class=domintro>
+<div class="domintro note">
     : await cookieStore . {{CookieStore/set(name, value)|set}}(|name|, |value|)
     : await cookieStore . {{CookieStore/set(options)|set}}(|options|)
-    ::
-        Writes (creates or modifies) a cookie.
+
+    ::  Writes (creates or modifies) a cookie.
 
         The options default to:
 
@@ -745,7 +743,6 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
         * Secure flag: set (cookie only transmitted over secure protocol)
         * SameSite: strict
 
-  </dl>
 </div>
 
 <div class=algorithm>
@@ -799,15 +796,12 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
 ## The {{CookieStore/delete(name)|delete()}} method ## {#CookieStore-delete}
 <!-- ============================================================ -->
 
-<div class=note>
-
-  <dl class=domintro>
+<div class="domintro note">
     : await cookieStore . {{CookieStore/delete(name)|delete}}(|name|)
     : await cookieStore . {{CookieStore/delete(options)|delete}}(|options|)
-    ::
-        Deletes (expires) a cookie with the given name or name and optional domain and path.
 
-  </dl>
+    ::  Deletes (expires) a cookie with the given name or name and optional domain and path.
+
 </div>
 
 
@@ -873,17 +867,13 @@ interface CookieStoreManager {
 ## The {{CookieStoreManager/subscribe()|subscribe()}} method ## {#CookieStoreManager-subscribe}
 <!-- ============================================================ -->
 
-<div class=note>
-  <dl class=domintro>
+<div class="domintro note">
     : await |registration| . cookies . {{CookieStoreManager/subscribe()|subscribe}}(|subscriptions|)
-    :
-    ::
 
-       Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}}, {{CookieStoreGetOptions/url}} and {{CookieStoreGetOptions/matchType}} properties.
+    ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}}, {{CookieStoreGetOptions/url}} and {{CookieStoreGetOptions/matchType}} properties.
 
-       Once subscribed, notifications are delivered as "`cookiechange`" events fired against the [=Service Worker=]'s global scope:
+        Once subscribed, notifications are delivered as "`cookiechange`" events fired against the [=Service Worker=]'s global scope:
 
-  </dl>
 </div>
 
 
@@ -911,13 +901,11 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method, 
 ## The {{CookieStoreManager/getSubscriptions()}} method ## {#CookieStoreManager-getSubscriptions}
 <!-- ============================================================ -->
 
-<div class=note>
-  <dl class=domintro>
+<div class="domintro note">
     : |subscriptions| = await |registration| . cookies . {{CookieStoreManager/getSubscriptions()}}
-    ::
-        This method returns a promise which resolves to a list of the cookie change subscriptions made for this Service Worker registration.
 
-  </dl>
+    ::  This method returns a promise which resolves to a list of the cookie change subscriptions made for this Service Worker registration.
+
 </div>
 
 <div class=algorithm>
@@ -939,15 +927,11 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method, when inv
 ## The {{CookieStoreManager/unsubscribe()|unsubscribe()}} method ## {#CookieStoreManager-unsubscribe}
 <!-- ============================================================ -->
 
-<div class=note>
-  <dl class=domintro>
+<div class="domintro note">
     : await |registration| . cookies . {{CookieStoreManager/unsubscribe()|unsubscribe}}(|subscriptions|)
-    ::
 
-        Calling this method will stop the registered service worker from receiving previously subscribed events. The |subscriptions| argument should list subscriptions in the same form passed to {{CookieStoreManager/subscribe()}} or returned from {{CookieStoreManager/getSubscriptions()}}.
+    ::  Calling this method will stop the registered service worker from receiving previously subscribed events. The |subscriptions| argument should list subscriptions in the same form passed to {{CookieStoreManager/subscribe()}} or returned from {{CookieStoreManager/getSubscriptions()}}.
 
-
-  </dl>
 </div>
 
 
