@@ -1222,21 +1222,25 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 2891b22e, updated Thu Mar 26 15:21:43 2020 -0700" name="generator">
+  <meta content="Bikeshed version 959d006d, updated Sat Mar 28 12:38:37 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="d3240b44db81f4d648a129c84d9f33a719268d74" name="document-revision">
+  <meta content="2ff16dbd2d5f60c20fb244060ed94bb817f24b6f" name="document-revision">
 <style>
-dl.domintro dt {
+.domintro::before {
+    content: 'For web developers (non-normative)';
+    text-transform: initial;
+}
+.domintro dt {
     font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
 
     padding-top: 0.5em;
     padding-bottom: 1em;
 }
-dl.domintro dt a {
+.domintro dt a {
     color: inherit; border-bottom-style: none;
 }
-dl.domintro dt code {
+.domintro dt code {
     font-size: inherit;
 }
 </style>
@@ -1486,7 +1490,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-26">26 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-30">30 March 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2022,8 +2026,8 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
 <c- b>typedef</c-> <c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem②"><c- n>CookieListItem</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-type="typedef" data-export id="typedefdef-cookielist"><code><c- g>CookieList</c-></code></dfn>;
 </pre>
    <h3 class="heading settled" data-level="3.1" id="CookieStore-get"><span class="secno">3.1. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options⑤">get()</a></code> method</span><a class="self-link" href="#CookieStore-get"></a></h3>
-   <div class="note" role="note">
-    <dl class="domintro">
+   <div class="domintro note" role="note">
+    <dl>
      <dt data-md><var>cookie</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get①">get</a></code>(<var>name</var>)
      <dt data-md><var>cookie</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options⑥">get</a></code>(<var>options</var>)
      <dd data-md>
@@ -2102,8 +2106,8 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
     </ol>
    </div>
    <h3 class="heading settled" data-level="3.2" id="CookieStore-getAll"><span class="secno">3.2. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options⑤">getAll()</a></code> method</span><a class="self-link" href="#CookieStore-getAll"></a></h3>
-   <div class="note" role="note">
-    <dl class="domintro">
+   <div class="domintro note" role="note">
+    <dl>
      <dt data-md><var>cookies</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall" id="ref-for-dom-cookiestore-getall①">getAll</a></code>(<var>name</var>)
      <dt data-md><var>cookies</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options⑥">getAll</a></code>(<var>options</var>)
      <dd data-md>
@@ -2177,8 +2181,8 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
     </ol>
    </div>
    <h3 class="heading settled" data-level="3.3" id="CookieStore-set"><span class="secno">3.3. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set③">set()</a></code> method</span><a class="self-link" href="#CookieStore-set"></a></h3>
-   <div class="note" role="note">
-    <dl class="domintro">
+   <div class="domintro note" role="note">
+    <dl>
      <dt data-md>await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set④">set</a></code>(<var>name</var>, <var>value</var>)
      <dt data-md>await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set-options" id="ref-for-dom-cookiestore-set-options①">set</a></code>(<var>options</var>)
      <dd data-md>
@@ -2249,8 +2253,8 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
     </ol>
    </div>
    <h3 class="heading settled" data-level="3.4" id="CookieStore-delete"><span class="secno">3.4. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete②">delete()</a></code> method</span><a class="self-link" href="#CookieStore-delete"></a></h3>
-   <div class="note" role="note">
-    <dl class="domintro">
+   <div class="domintro note" role="note">
+    <dl>
      <dt data-md>await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete③">delete</a></code>(<var>name</var>)
      <dt data-md>await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-delete-options" id="ref-for-dom-cookiestore-delete-options①">delete</a></code>(<var>options</var>)
      <dd data-md>
@@ -2322,15 +2326,12 @@ true, and
 };
 </pre>
    <h3 class="heading settled" data-level="4.1" id="CookieStoreManager-subscribe"><span class="secno">4.1. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-subscribe" id="ref-for-dom-cookiestoremanager-subscribe③">subscribe()</a></code> method</span><a class="self-link" href="#CookieStoreManager-subscribe"></a></h3>
-   <div class="note" role="note">
-    <dl class="domintro">
-     <dl>
-      <dt data-md>await <var>registration</var> . cookies . <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-subscribe" id="ref-for-dom-cookiestoremanager-subscribe④">subscribe</a></code>(<var>subscriptions</var>)
-      <dt data-md>
-      <dd data-md>
-     </dl>
-     <p>Subscribe to changes to cookies. Subscriptions can use the same options as <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options⑦">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options⑦">getAll()</a></code>, with optional <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name②">name</a></code>, <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑤">url</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype②">matchType</a></code> properties.</p>
-     <p>Once subscribed, notifications are delivered as "<code>cookiechange</code>" events fired against the <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker①⓪">Service Worker</a>'s global scope:</p>
+   <div class="domintro note" role="note">
+    <dl>
+     <dt data-md>await <var>registration</var> . cookies . <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-subscribe" id="ref-for-dom-cookiestoremanager-subscribe④">subscribe</a></code>(<var>subscriptions</var>)
+     <dd data-md>
+      <p>Subscribe to changes to cookies. Subscriptions can use the same options as <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options⑦">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options⑦">getAll()</a></code>, with optional <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name②">name</a></code>, <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑤">url</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype②">matchType</a></code> properties.</p>
+      <p>Once subscribed, notifications are delivered as "<code>cookiechange</code>" events fired against the <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker①⓪">Service Worker</a>'s global scope:</p>
     </dl>
    </div>
    <div class="algorithm">
@@ -2370,8 +2371,8 @@ then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="
     </ol>
    </div>
    <h3 class="heading settled" data-level="4.2" id="CookieStoreManager-getSubscriptions"><span class="secno">4.2. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-getsubscriptions" id="ref-for-dom-cookiestoremanager-getsubscriptions②">getSubscriptions()</a></code> method</span><a class="self-link" href="#CookieStoreManager-getSubscriptions"></a></h3>
-   <div class="note" role="note">
-    <dl class="domintro">
+   <div class="domintro note" role="note">
+    <dl>
      <dt data-md><var>subscriptions</var> = await <var>registration</var> . cookies . <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-getsubscriptions" id="ref-for-dom-cookiestoremanager-getsubscriptions③">getSubscriptions()</a></code>
      <dd data-md>
       <p>This method returns a promise which resolves to a list of the cookie change subscriptions made for this Service Worker registration.</p>
@@ -2405,8 +2406,8 @@ then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="
     </ol>
    </div>
    <h3 class="heading settled" data-level="4.3" id="CookieStoreManager-unsubscribe"><span class="secno">4.3. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-unsubscribe" id="ref-for-dom-cookiestoremanager-unsubscribe①">unsubscribe()</a></code> method</span><a class="self-link" href="#CookieStoreManager-unsubscribe"></a></h3>
-   <div class="note" role="note">
-    <dl class="domintro">
+   <div class="domintro note" role="note">
+    <dl>
      <dt data-md>await <var>registration</var> . cookies . <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-unsubscribe" id="ref-for-dom-cookiestoremanager-unsubscribe②">unsubscribe</a></code>(<var>subscriptions</var>)
      <dd data-md>
       <p>Calling this method will stop the registered service worker from receiving previously subscribed events. The <var>subscriptions</var> argument should list subscriptions in the same form passed to <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-subscribe" id="ref-for-dom-cookiestoremanager-subscribe⑤">subscribe()</a></code> or returned from <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-getsubscriptions" id="ref-for-dom-cookiestoremanager-getsubscriptions④">getSubscriptions()</a></code>.</p>
