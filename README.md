@@ -1,3 +1,5 @@
+<img src="https://wicg.github.io/cookie-store/logo-cookies.svg" height="100" align=right>
+
 # Cookie Store API
 
 [![Build Status](https://travis-ci.org/WICG/cookie-store.svg?branch=gh-pages)](https://travis-ci.org/WICG/cookie-store)
