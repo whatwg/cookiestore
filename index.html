@@ -1222,10 +1222,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 831bcbdc, updated Thu Apr 2 11:59:45 2020 -0700" name="generator">
+  <meta content="Bikeshed version 3d0743c8, updated Mon Apr 6 16:15:57 2020 +0200" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="57383b733144fceec648780c05120a3a02f943be" name="document-revision">
+  <meta content="7d1d8759c9c4f3d92da3c6ee648ca223062e878f" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1490,7 +1490,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-03">3 April 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-06">6 April 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2851,7 +2851,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    </ul>
    <p>For these reasons it is best to use caution when interpreting any cookie’s value, and never execute a cookie’s value as script, HTML, CSS, XML, PDF, or any other executable format.</p>
    <h3 class="heading settled" data-level="8.2" id="restrict"><span class="secno">8.2. </span><span class="content">Restrict?</span><a class="self-link" href="#restrict"></a></h3>
-   <p>This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured <code>http</code> contexts this could result in a web less safe for users. For that reason it may be desirable to restrict its use, or at least the use of the <code>set</code> and <code>delete</code> operations, to secure origins running in secure contexts.</p>
+   <p>This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured <code>http</code> contexts this could result in a web less safe for users. For that reason this API has been restricted to secure contexts only.</p>
    <h3 class="heading settled" data-level="8.3" id="surprises"><span class="secno">8.3. </span><span class="content">Surprises</span><a class="self-link" href="#surprises"></a></h3>
    <p>Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.</p>
    <p>Other surprises are documented in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-1">Section 1 of Cookies: HTTP State Management Mechanism (RFC 6265bis)</a> - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.</p>
