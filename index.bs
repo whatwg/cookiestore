@@ -1402,7 +1402,7 @@ For these reasons it is best to use caution when interpreting any cookie's value
 ## Restrict? ## {#restrict}
 <!-- ============================================================ -->
 
-This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured `http` contexts this could result in a web less safe for users. For that reason it may be desirable to restrict its use, or at least the use of the `set` and `delete` operations, to secure origins running in secure contexts.
+This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured `http` contexts this could result in a web less safe for users. For that reason this API has been restricted to secure contexts only.
 
 <!-- ============================================================ -->
 ## Surprises ## {#surprises}
