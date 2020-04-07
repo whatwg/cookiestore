@@ -355,8 +355,8 @@ await cookieStore.set({
   value: '1',
   expires: null,  // session cookie
 
-  // By default, cookies are scoped at the current domain.
-  domain: (new URL(self.location.href)).hostname,
+  // By default, domain is set to null which means the scope is locked at the current domain.
+  domain: null,
   path: '/',
 
   // Creates secure cookies by default on secure origins.
@@ -1222,7 +1222,10 @@ run the following steps:
     1. If |host| does not equal |domain| and
         |host| does not end with U+002D (`.`) followed by |domain|,
         then return failure.
-1. Otherwise, if |domain| is null, then set |domain| to |host|.
+    1. Otherwise, set the cookie's |host-only-flag| to false.
+1. Otherwise, if |domain| is null, run these steps:
+    1. Set the cookie's |host-only-flag| to true.
+    1. Set |domain| to |host|.
 1. If |secure| is false and |name| starts with either "`__Secure-`" or "`__Host-`",
     then return failure.
 1. Let |attributes| be a [=list=].
