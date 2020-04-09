@@ -263,8 +263,8 @@ await cookieStore.set({
   value: '1',
   expires: null,  // session cookie
 
-  // By default, cookies are scoped at the current domain.
-  domain: (new URL(self.location.href)).hostname,
+  // By default, domain is set to null which means the scope is locked at the current domain.
+  domain: null,
   path: '/',
 
   // Creates secure cookies by default on secure origins.
