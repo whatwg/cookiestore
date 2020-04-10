@@ -154,7 +154,7 @@ because Web developers expect that the cookie change would be reflected in a
 
 ```javascript
 document.getElementById('opt-out-button').addEventListener('click', () => {
-  document.cookie = 'opt_out=1; Expires=Wed, 1 Jan 2025 00:00:00 GMT; :';
+  document.cookie = 'opt_out=1; Expires=Wed, 1 Jan 2025 00:00:00 GMT; Secure';
 });
 document.getElementById('opt-in-button').addEventListener('click', () => {
   // Cookies are deleted by setting their expiration dates in the past.
