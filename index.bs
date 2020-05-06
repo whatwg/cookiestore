@@ -1275,8 +1275,7 @@ run the following steps:
     |value|,
     |expires|,
     |domain|,
-    |path|,
-    |secure|, and
+    |path|, and
     |sameSite|.
 
 </div>
