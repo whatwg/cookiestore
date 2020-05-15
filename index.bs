@@ -1216,8 +1216,6 @@ run the following steps:
         |host| does not end with U+002D (`.`) followed by |domain|,
         then return failure.
     1. [=list/Append=] \``Domain`\`/|domain| ([=encoded=]) to |attributes|.
-1. If |name| starts with either "`__Secure-`" or "`__Host-`",
-    then return failure.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. [=list/Append=] \``Path`\`/|path| ([=encoded=]) to |attributes|.
 1. [=list/Append=] \``Secure`\`/\`\` to |attributes|.
