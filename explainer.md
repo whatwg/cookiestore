@@ -581,7 +581,7 @@ The API will be able to fetch insecure cookies, however will only be able to mod
 ```javascript
 const cookie = await cookieStore.get('insecure-cookie');
 cookie.value = 'new-value';
-cookieStore.set(cookie);  // 'cookie' is now a secure cookie
+cookieStore.set(cookie);  // 'cookie' will be modified into a secure cookie.
 ```
 
 ### Cookie Store Caching
