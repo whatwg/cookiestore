@@ -576,7 +576,7 @@ console.log(cookie);
 ```
 
 ### Modifying Insecure Cookies 
-The API will be able to fetch insecure cookies, however will only be able to modify secure cookies. This will mean that when modifying an insecure cookie with the API, the insecure cookie will automatically be modified to secure. 
+The API will be able to fetch insecure cookies, but will only be able to modify secure cookies. This will mean that when modifying an insecure cookie with the API, the insecure cookie will automatically be changed to secure. 
 
 ```javascript
 const cookie = await cookieStore.get('insecure-cookie');
