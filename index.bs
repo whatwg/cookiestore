@@ -357,10 +357,7 @@ await cookieStore.set({
 
   // By default, domain is set to null which means the scope is locked at the current domain.
   domain: null,
-  path: '/',
-
-  // Creates secure cookies by default on secure origins.
-  secure: true,
+  path: '/'
 });
 ```
 
@@ -581,7 +578,6 @@ dictionary CookieStoreSetOptions {
   DOMTimeStamp? expires = null;
   USVString? domain = null;
   USVString path = "/";
-  boolean secure = true;
   CookieSameSite sameSite = "strict";
 };
 
@@ -740,7 +736,6 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
         * Path: `/`
         * Domain: same as the domain of the current document or service worker's location
         * No expiry date
-        * Secure flag: set (cookie only transmitted over secure protocol)
         * SameSite: strict
 
 </div>
@@ -759,8 +754,7 @@ The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method, wh
         |value|,
         |options|' {{CookieStoreSetOptions/expires}} dictionary member,
         |options|' {{CookieStoreSetOptions/domain}} dictionary member,
-        |options|' {{CookieStoreSetOptions/path}} dictionary member,
-        |options|' {{CookieStoreSetOptions/secure}} dictionary member, and
+        |options|' {{CookieStoreSetOptions/path}} dictionary member, and
         |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=Resolve=] |p| with undefined.
@@ -782,8 +776,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
         |options|' {{CookieStoreSetExtraOptions/value}} dictionary member,
         |options|' {{CookieStoreSetOptions/expires}} dictionary member,
         |options|' {{CookieStoreSetOptions/domain}} dictionary member,
-        |options|' {{CookieStoreSetOptions/path}} dictionary member,
-        |options|' {{CookieStoreSetOptions/secure}} dictionary member, and
+        |options|' {{CookieStoreSetOptions/path}} dictionary member, and
         |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=Resolve=] |p| with undefined.
@@ -1210,8 +1203,7 @@ To <dfn>set a cookie</dfn> with
 |value|,
 optional |expires|,
 |domain|,
-|path|,
-|secure| flag, and
+|path|, and
 |sameSite|,
 run the following steps:
 
@@ -1224,11 +1216,9 @@ run the following steps:
         |host| does not end with U+002D (`.`) followed by |domain|,
         then return failure.
     1. [=list/Append=] \``Domain`\`/|domain| ([=encoded=]) to |attributes|.
-1. If |secure| is false and |name| starts with either "`__Secure-`" or "`__Host-`",
-    then return failure.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. [=list/Append=] \``Path`\`/|path| ([=encoded=]) to |attributes|.
-1. If |secure| is true, then [=list/append=] \``Secure`\`/\`\` to |attributes|.
+1. [=list/Append=] \``Secure`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
     <dl class=switch>
         : "{{CookieSameSite/none}}"
@@ -1272,10 +1262,9 @@ run the following steps:
     as long as it is in the past.
 
 1. Let |value| be the empty string.
-1. Let |secure| be true.
 1. Let |sameSite| be "{{CookieSameSite/strict}}".
 
-    Note: The values for |value|, |secure|, and |sameSite| will not be persisted
+    Note: The values for |value|, and |sameSite| will not be persisted
     by this algorithm.
 
 1. Return the results of running [=set a cookie=] with
@@ -1284,8 +1273,7 @@ run the following steps:
     |value|,
     |expires|,
     |domain|,
-    |path|,
-    |secure|, and
+    |path|, and
     |sameSite|.
 
 </div>

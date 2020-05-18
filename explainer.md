@@ -265,10 +265,7 @@ await cookieStore.set({
 
   // By default, domain is set to null which means the scope is locked at the current domain.
   domain: null,
-  path: '/',
-
-  // Creates secure cookies by default on secure origins.
-  secure: (new URL(self.location.href)).protocol === 'https:',
+  path: '/'
 });
 ```
 
@@ -428,12 +425,12 @@ matches the behavior of `document.cookie`.
 
 ### The Secure flag
 
-The modification API defaults the `secure` (HTTPS-only) flag to true for
-secure origins. This is an intentional difference from `document.cookie`,
+The modification API sets the `secure` (HTTPS-only) flag to true for
+all origins. This is an intentional difference from `document.cookie`,
 which always defaults to insecure cookies.
 
-The modification API disallows modifying (overwriting or deleting) a secure
-cookie from a non-secure origin, following a
+The modification API disallows modifying (overwriting or deleting) cookies
+from a non-secure origin, following a
 [recent proposal](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-01).
 
 ### Names and Values
