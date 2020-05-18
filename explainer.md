@@ -575,6 +575,15 @@ const cookie = await cookieStore.get('session-id');
 console.log(cookie);
 ```
 
+### Modifying Insecure Cookies 
+The API will be able to fetch insecure cookies, but will only be able to modify secure cookies. This will mean that when modifying an insecure cookie with the API, the insecure cookie will automatically be changed to secure. 
+
+```javascript
+const cookie = await cookieStore.get('insecure-cookie');
+cookie.value = 'new-value';
+cookieStore.set(cookie);  // 'cookie' will be modified into a secure cookie.
+```
+
 ### Cookie Store Caching
 
 A reasonable usage pattern for this API is obtaining a baseline snapshot of the
