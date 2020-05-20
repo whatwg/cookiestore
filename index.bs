@@ -620,8 +620,8 @@ typedef sequence<CookieListItem> CookieList;
 
 </div>
 
-<div class=algorithm>
-The <dfn method for=CookieStore>get(|name|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStore>get(|name|)</dfn> method steps are:
 
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
@@ -637,8 +637,8 @@ The <dfn method for=CookieStore>get(|name|)</dfn> method, when invoked, must run
 
 </div>
 
-<div class=algorithm>
-The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
@@ -678,8 +678,8 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method, when invoked, must 
 </div>
 
 
-<div class=algorithm>
-The <dfn method for=CookieStore>getAll(|name|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStore>getAll(|name|)</dfn> method steps are:
 
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
@@ -694,8 +694,8 @@ The <dfn method for=CookieStore>getAll(|name|)</dfn> method, when invoked, must 
 
 </div>
 
-<div class=algorithm>
-The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
@@ -740,8 +740,8 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method, when invoked, mu
 
 </div>
 
-<div class=algorithm>
-The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method steps are:
 
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
@@ -762,8 +762,8 @@ The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method, wh
 
 </div>
 
-<div class=algorithm>
-The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
@@ -798,8 +798,8 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method, when invoked, must 
 </div>
 
 
-<div class=algorithm>
-The <dfn method for=CookieStore>delete(|name|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStore>delete(|name|)</dfn> method steps are:
 
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
@@ -819,8 +819,8 @@ The <dfn method for=CookieStore>delete(|name|)</dfn> method, when invoked, must 
 
 </div>
 
-<div class=algorithm>
-The <dfn method for=CookieStore>delete(|options|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
 
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
@@ -870,8 +870,8 @@ interface CookieStoreManager {
 </div>
 
 
-<div class=algorithm>
-The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method steps are:
 
 1. Let |registration| be [=/this=].
 1. Let |p| be [=a new promise=].
@@ -901,8 +901,8 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method, 
 
 </div>
 
-<div class=algorithm>
-The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are:
 
 1. Let |registration| be [=/this=].
 1. Let |p| be [=a new promise=].
@@ -928,8 +928,8 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method, when inv
 </div>
 
 
-<div class=algorithm>
-The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method, when invoked, must run these steps:
+<div algorithm>
+The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method steps are:
 
 1. Let |registration| be [=/this=].
 1. Let |p| be [=a new promise=].
@@ -1055,7 +1055,7 @@ partial interface Window {
 };
 </xmp>
 
-The {{Window/cookieStore}} attribute's getter must return [=context object=]'s [=relevant settings object=]'s {{CookieStore}} object.
+The <dfn attribute for=Window>cookieStore</dfn> getter steps are to return [=context object=]'s [=relevant settings object=]'s {{CookieStore}} object.
 
 <!-- ============================================================ -->
 ## The {{ServiceWorkerGlobalScope}} interface ## {#ServiceWorkerGlobalScope}
@@ -1069,7 +1069,7 @@ partial interface ServiceWorkerGlobalScope {
 };
 </xmp>
 
-The {{ServiceWorkerGlobalScope/cookieStore}} attribute's getter must return [=context object=]'s [=relevant settings object=]'s {{CookieStore}} object.
+The <dfn attribute for=ServiceWorkerGlobalScope>cookieStore</dfn> getter steps are to return [=context object=]'s [=relevant settings object=]'s {{CookieStore}} object.
 
 <!-- ============================================================ -->
 # Algorithms # {#algorithms}
@@ -1082,7 +1082,7 @@ To <dfn>encode</dfn> a |string|, run [=UTF-8 encode=] on |string|.
 To <dfn>decode</dfn> a |value|, run [=UTF-8 decode without BOM=] on |value|.
 
 
-<div class=algorithm>
+<div algorithm>
 To represent a date and time |dateTime| <dfn>as a timestamp</dfn>,
 return the number of milliseconds from 00:00:00 UTC, 1 January 1970 to |dateTime|
 (assuming that there are exactly 86,400,000 milliseconds per day).
@@ -1091,7 +1091,7 @@ Note: This is the same representation used for [=time values=] in [[ECMAScript]]
 </div>
 
 
-<div class=algorithm>
+<div algorithm>
 To <dfn>date serialize</dfn> a {{DOMTimeStamp}} |millis|,
 let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
 (assuming that there are exactly 86,400,000 milliseconds per day),
@@ -1103,7 +1103,7 @@ and return a [=byte sequence=] corresponding to the closest `cookie-date` repres
 ## Query Cookies ## {#query-cookies-algorithm}
 <!-- ============================================================ -->
 
-<div class=algorithm>
+<div algorithm>
 
 To <dfn>query cookies</dfn> with
 |url|,
@@ -1130,7 +1130,7 @@ run the following steps:
 
 </div>
 
-<div class=algorithm>
+<div algorithm>
 
 A |cookieName| <dfn>matches</dfn> |matchName| using |matchType| if the following steps return true:
 
@@ -1152,7 +1152,7 @@ Note: If |matchName| is the empty string and |matchType| is "{{CookieMatchType/s
 </div>
 
 
-<div class=algorithm>
+<div algorithm>
 
 To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps.
 
@@ -1195,7 +1195,7 @@ attributes are not exposed to script.
 ## Set a Cookie ## {#set-cookie-algorithm}
 <!-- ============================================================ -->
 
-<div class=algorithm>
+<div algorithm>
 
 To <dfn>set a cookie</dfn> with
 |url|,
@@ -1247,7 +1247,7 @@ run the following steps:
 ## Delete a Cookie ## {#delete-cookie-algorithm}
 <!-- ============================================================ -->
 
-<div class=algorithm>
+<div algorithm>
 
 To <dfn>delete a cookie</dfn> with
 |url|,
@@ -1283,7 +1283,7 @@ run the following steps:
 ## Process Changes ## {#process-changes}
 <!-- ============================================================ -->
 
-<div class=algorithm>
+<div algorithm>
 
 To <dfn>process cookie changes</dfn>, run the following steps:
 
@@ -1316,11 +1316,15 @@ To <dfn>process cookie changes</dfn>, run the following steps:
 
 </div>
 
-<div class=algorithm>
+<div algorithm>
 
 The <dfn>observable changes</dfn> for |url| are the [=/set=] of [=cookie changes=] to [=cookies=] in a [=cookie store=]
 which meet the requirements in step 1 of [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §The Cookie Header]]'s steps to "compute the cookie-string from a cookie store"
 with |url| as <var ignore>request-uri</var>, for a "non-HTTP" API.
+
+</div>
+
+<div algorithm>
 
 A <dfn>cookie change</dfn> is a [=cookie=] and a type (either *changed* or *deleted*):
 
@@ -1331,7 +1335,7 @@ A <dfn>cookie change</dfn> is a [=cookie=] and a type (either *changed* or *dele
 
 </div>
 
-<div class=algorithm>
+<div algorithm>
 
 To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run the following steps:
 
@@ -1345,7 +1349,7 @@ To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run t
 
 </div>
 
-<div class=algorithm>
+<div algorithm>
 
 To <dfn>prepare lists</dfn> using |changes| for |target|, run the following steps:
 
@@ -1358,6 +1362,8 @@ To <dfn>prepare lists</dfn> using |changes| for |target|, run the following step
         1. Set |item|'s {{CookieListItem/value}} dictionary member to undefined.
         1. [=list/Append=] |item| to |deletedList|.
 1. Return |changedList| and |deletedList|.
+
+Issue: |target| isn't used in these steps; were these intended to filter with |target|, e.g. distinguish Service Worker from Window cases ?
 
 </div>
 
