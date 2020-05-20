@@ -644,7 +644,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
-    1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|' {{CookieStoreGetOptions/url}} dictionary member with the [=context object=]'s [=relevant settings object=]'s [=API base URL=].
+    1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|' {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
     1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
@@ -701,7 +701,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
-    1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|' {{CookieStoreGetOptions/url}} dictionary member with the [=context object=]'s [=relevant settings object=]'s [=API base URL=].
+    1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|' {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
     1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
@@ -879,7 +879,7 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
         1. Let |name| be |entry|'s {{CookieStoreGetOptions/name}} member.
-        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with the [=context object=]'s [=relevant settings object=]'s [=API base URL=].
+        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |matchType| be |entry|'s {{CookieStoreGetOptions/matchType}} member.
@@ -937,7 +937,7 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
         1. Let |name| be |entry|'s {{CookieStoreGetOptions/name}} member.
-        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with the [=context object=]'s [=relevant settings object=]'s [=API base URL=].
+        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |matchType| be |entry|'s {{CookieStoreGetOptions/matchType}} member.
@@ -1055,7 +1055,7 @@ partial interface Window {
 };
 </xmp>
 
-The <dfn attribute for=Window>cookieStore</dfn> getter steps are to return [=context object=]'s [=relevant settings object=]'s {{CookieStore}} object.
+The <dfn attribute for=Window>cookieStore</dfn> getter steps are to return [=/this=]'s [=relevant settings object=]'s {{CookieStore}} object.
 
 <!-- ============================================================ -->
 ## The {{ServiceWorkerGlobalScope}} interface ## {#ServiceWorkerGlobalScope}
@@ -1069,7 +1069,7 @@ partial interface ServiceWorkerGlobalScope {
 };
 </xmp>
 
-The <dfn attribute for=ServiceWorkerGlobalScope>cookieStore</dfn> getter steps are to return [=context object=]'s [=relevant settings object=]'s {{CookieStore}} object.
+The <dfn attribute for=ServiceWorkerGlobalScope>cookieStore</dfn> getter steps are to return [=/this=]'s [=relevant settings object=]'s {{CookieStore}} object.
 
 <!-- ============================================================ -->
 # Algorithms # {#algorithms}
