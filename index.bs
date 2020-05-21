@@ -1305,7 +1305,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
             1. If |cookie|'s [=cookie/name=] ([=decoded=]) [=matches=] |subscription|'s [=cookie change subscription/name=] using |subscription|'s [=cookie change subscription/matchType=],
                 then [=set/append=] |change| to |changes| and [=break=].
     1. If |changes| [=set/is empty=], then [=continue=].
-    1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] using |changes| for |registration|.
+    1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] from |changes|.
     1. [=Fire a functional event=] named "`cookiechange`"
         using {{ExtendableCookieChangeEvent}} on |registration|
         with these properties:
@@ -1342,7 +1342,7 @@ To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run t
 1. Let |event| be the result of [=creating an Event=] using {{CookieChangeEvent}}.
 1. Set |event|'s {{Event/type}} attribute to |type|.
 1. Set |event|'s {{Event/bubbles}} and {{Event/cancelable}} attributes to false.
-1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] using |changes| for |target|.
+1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] from |changes|.
 1. Set |event|'s {{CookieChangeEvent/changed}} attribute to |changedList|.
 1. Set |event|'s {{CookieChangeEvent/deleted}} attribute to |deletedList|.
 1. [=Dispatch=] |event| at |target|.
@@ -1351,7 +1351,7 @@ To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run t
 
 <div algorithm>
 
-To <dfn>prepare lists</dfn> using |changes| for |target|, run the following steps:
+To <dfn>prepare lists</dfn> from |changes|, run the following steps:
 
 1. Let |changedList| be a new [=list=].
 1. Let |deletedList| be a new [=list=].
@@ -1362,8 +1362,6 @@ To <dfn>prepare lists</dfn> using |changes| for |target|, run the following step
         1. Set |item|'s {{CookieListItem/value}} dictionary member to undefined.
         1. [=list/Append=] |item| to |deletedList|.
 1. Return |changedList| and |deletedList|.
-
-Issue: |target| isn't used in these steps; were these intended to filter with |target|, e.g. distinguish Service Worker from Window cases ?
 
 </div>
 
