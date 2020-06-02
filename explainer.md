@@ -219,9 +219,8 @@ In Document contexts, `await cookieStore.getAll()` is an equivalent of
 `document.cookie`.
 
 In other words, `get` and `getAll` take the same arguments, which can be
-* an optional dictionary of options
-* a name and an optional dictionary of options; in this case, the bag must not
-  contain the `name` properties
+* a name
+* a dictionary of options (optional for `getAll`)
 
 
 ### Read the cookies for a specific URL
