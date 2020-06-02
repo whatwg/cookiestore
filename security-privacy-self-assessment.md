@@ -13,6 +13,8 @@ Yes.
 
 No.
 
+Particularly in the case for Service Workers, we think that Service Workers can currently effectively access the cookies of any URL under their scope. For example, a service worker could respond to any top-level request with an HTML document embedding an `<iframe>` pointing to the desired URL. When responding to the request for that URL, the Service Worker can respond with an HTML document containing a `<script>` that implements a postMessage API that proxies the Service Worker's access to the document.cookie API.
+
 This specification offers high-performance methods for accessing HTTP cookies,
 which have already become an established part of the Web platform. No new state
 mechanism is introduced.

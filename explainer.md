@@ -1,6 +1,7 @@
 # Cookie Store API Explainer
 
 **Authors:**
+*   Ayu Ishii - [ayui@chromium.org](mailto:ayui@chromium.org)
 *   Benjamin C. Wiley Sittler
 *   Marijn Kruisselbrink - [mek@chromium.org](mailto:mek@chromium.org)
 *   Staphany Park - [staphany@chromium.org](mailto:staphany@chromium.org)
@@ -40,16 +41,12 @@ to session state changes, to clean up private cached data.
 Cookies have also found a niche in storing user decisions to opt out of tracking
 by ad networks, and receive less personalized ads.
 
-Separetly, from a conceptual angle, a service worker is intended to be an
+Separately, from a conceptual angle, a service worker is intended to be an
 HTTP proxy for the pages under its scope. By this principle, service workers
 must be able to read and modify the cookies accessible to pages under their
 scopes.
 
 ### Reacting to session state changes
-
-While the previous samples are mostly aimed at updating a
-page's UI to reflect
-
 
 The following code illustrates synchronous polling via `document.cookie`. The
 code periodically induces jank, as `document.cookie` is a synchronous call
@@ -169,11 +166,11 @@ The following code snippet uses the Cookie Store API instead, and does not jank
 the main thread.
 
 ```javascript
-document.getElementById('opt-out-button').addEventListener('click', () => {
+document.getElementById('opt-out-button').addEventListener('click', async () => {
   await cookieStore.set({ name: 'opt_out', value: '1',
                           expires: new Date('Wed, 1 Jan 2025 00:00:00 GMT') });
 });
-document.getElementById('opt-in-button').addEventListener('click', () => {
+document.getElementById('opt-in-button').addEventListener('click', async () => {
   await cookieStore.delete({ name: 'opt_out' });
 });
 ```
@@ -229,7 +226,9 @@ In other words, `get` and `getAll` take the same arguments, which can be
 
 ### Read the cookies for a specific URL
 
-Cookies are URL-scoped, so pages
+Cookies are URL-scoped, so fetches to different URLs may include different
+cookies, even when the URLs have the same origin. The application can specify
+the URL whose associated cookies will be read.
 
 ```javascript
 await cookieStore.getAll({url: '/admin'});
@@ -264,12 +263,9 @@ await cookieStore.set({
   value: '1',
   expires: null,  // session cookie
 
-  // By default, cookies are scoped at the current domain.
-  domain: (new URL(self.location.href)).hostname,
-  path: '/',
-
-  // Creates secure cookies by default on secure origins.
-  secure: (new URL(self.location.href)).protocol === 'https:',
+  // By default, domain is set to null which means the scope is locked at the current domain.
+  domain: null,
+  path: '/'
 });
 ```
 
@@ -380,19 +376,20 @@ Calls to `subscribe()` and `unsubscribe()` are idempotent.
 
 ```javascript
 self.addEventListener('activate', (event) => {
-  // Snapshot current state of subscriptions.
-  const subscriptions = await self.registration.cookies.getSubscriptions();
+  event.waitUntil(async () =>
+    // Snapshot current state of subscriptions.
+    const subscriptions = await self.registration.cookies.getSubscriptions();
 
-  // Clear any existing subscriptions.
-  for (const subscription of subscriptions)
-    await self.registration.cookies.unsubscribe(subscription);
+    // Clear any existing subscriptions.
+    await self.registration.cookies.unsubscribe(subscriptions);
 
-  await self.registration.cookies.subscribe([
-    {
-      name: 'session',  // Get change events for session-related cookies.
-      matchType: 'starts-with',  // Matches session_id, session-id, etc.
-    }
-  ]);
+    await self.registration.cookies.subscribe([
+      {
+        name: 'session',  // Get change events for session-related cookies.
+        matchType: 'starts-with',  // Matches session_id, session-id, etc.
+      }
+    ]);
+  });
 });
 ```
 #### Alternative subscription model for service workers
@@ -428,12 +425,12 @@ matches the behavior of `document.cookie`.
 
 ### The Secure flag
 
-The modification API defaults the `secure` (HTTPS-only) flag to true for
-secure origins. This is an intentional difference from `document.cookie`,
+The modification API sets the `secure` (HTTPS-only) flag to true for
+all origins. This is an intentional difference from `document.cookie`,
 which always defaults to insecure cookies.
 
-The modification API disallows modifying (overwriting or deleting) a secure
-cookie from a non-secure origin, following a
+The modification API disallows modifying (overwriting or deleting) cookies
+from a non-secure origin, following a
 [recent proposal](https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone-01).
 
 ### Names and Values
@@ -507,6 +504,12 @@ The change events API exposed to documents does not accept URLs.
 Service workers may pass any URL under their scopes into the query or
 change event API.
 
+#### Service Worker Scope 
+
+The Cookie Store API does not change the access level for Service Workers.
+
+Service Workers can currently access the cookies of any URL under their scope. For example, a Service Worker could respond to any top-level request with an HTML document embedding an `<iframe>` pointing to the desired URL. When responding to the request for that URL, the Service Worker can respond with an HTML document containing a `<script>` that proxies the Service Worker's access to the `document.cookie` API using `postMessage`.
+
 ### Expiration Dates
 
 This proposal side-steps date parsing issues by only accepting
@@ -570,6 +573,15 @@ const response = await fetch('/auth');
 const cookie = await cookieStore.get('session-id');
 // |cookie| is guaranteed to be a dictionary including {name: "session-id"}.
 console.log(cookie);
+```
+
+### Modifying Insecure Cookies 
+The API will be able to fetch insecure cookies, but will only be able to modify secure cookies. This will mean that when modifying an insecure cookie with the API, the insecure cookie will automatically be changed to secure. 
+
+```javascript
+const cookie = await cookieStore.get('insecure-cookie');
+cookie.value = 'new-value';
+cookieStore.set(cookie);  // 'cookie' will be modified into a secure cookie.
 ```
 
 ### Cookie Store Caching
