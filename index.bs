@@ -334,7 +334,7 @@ if (cookie.secure)
 Both [=documents=] and [=service workers=] access the same modification API, via the
 {{Window/cookieStore}} property on the [[#globals|global object]].
 
-Cookies are created or modified (written) using the {{CookieStore/set(options)|set()}} method.
+Cookies are created or modified (written) using the {{CookieStore/set(name, value)|set()}} method.
 
 <div class=example>
 Write a cookie:
@@ -347,7 +347,7 @@ try {
 }
 ```
 
-The {{CookieStore/set(options)|set()}} call above is a shorthand for the following:
+The {{CookieStore/set(name, value)|set()}} call above is shorthand for using an options dictionary, as follows:
 
 ```js
 await cookieStore.set({
@@ -577,7 +577,7 @@ enum CookieSameSite {
 
 dictionary CookieInit {
   required USVString name;
-  USVString value;
+  required USVString value;
   DOMTimeStamp? expires = null;
   USVString? domain = null;
   USVString path = "/";
