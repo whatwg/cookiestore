@@ -645,9 +645,9 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|' {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
 1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
-        then return [=a promise rejected with=] a {{TypeError}}.
+     then return [=a promise rejected with=] a {{TypeError}}.
 1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
-        then return [=a promise rejected with=] a {{TypeError}}.
+     then return [=a promise rejected with=] a {{TypeError}}.
 1. Set |url| to |parsed|.
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
