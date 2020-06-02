@@ -125,11 +125,12 @@ What if you could instead write:
 
 <div class=example>
 ```js
+const one_day_ms = 24 * 60 * 60 * 1000;
 cookieStore.set(
   {
     name: '__Secure-COOKIENAME',
     value: 'cookie-value',
-    expires: Date.now() + 24*60*60*1000,
+    expires: Date.now() + one_day_ms,
     domain: 'example.org'
   }).then(function() {
     console.log('It worked!');
