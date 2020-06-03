@@ -591,15 +591,9 @@ dictionary CookieStoreDeleteOptions {
   USVString path = "/";
 };
 
-dictionary CookieListItem {
-  required USVString name;
-  USVString value;
-  USVString? domain = null;
-  USVString path = "/";
-  DOMTimeStamp? expires = null;
+dictionary CookieListItem : CookieInit {
   boolean secure = true;
-  CookieSameSite sameSite = "strict";
-};
+}
 
 typedef sequence<CookieListItem> CookieList;
 </xmp>
