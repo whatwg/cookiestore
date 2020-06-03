@@ -125,11 +125,12 @@ What if you could instead write:
 
 <div class=example>
 ```js
+const one_day_ms = 24 * 60 * 60 * 1000;
 cookieStore.set(
-  '__Secure-COOKIENAME',
-  'cookie-value',
   {
-    expires: Date.now() + 24*60*60*1000,
+    name: '__Secure-COOKIENAME',
+    value: 'cookie-value',
+    expires: Date.now() + one_day_ms,
     domain: 'example.org'
   }).then(function() {
     console.log('It worked!');
@@ -334,7 +335,7 @@ if (cookie.secure)
 Both [=documents=] and [=service workers=] access the same modification API, via the
 {{Window/cookieStore}} property on the [[#globals|global object]].
 
-Cookies are created or modified (written) using the {{CookieStore/set(name, value, options)|set()}} method.
+Cookies are created or modified (written) using the {{CookieStore/set(name, value)|set()}} method.
 
 <div class=example>
 Write a cookie:
@@ -347,7 +348,7 @@ try {
 }
 ```
 
-The {{CookieStore/set(name, value, options)|set()}} call above is a shorthand for the following:
+The {{CookieStore/set(name, value)|set()}} call above is shorthand for using an options dictionary, as follows:
 
 ```js
 await cookieStore.set({
@@ -385,8 +386,10 @@ Deleting a cookie by changing the expiry date:
 ```js
 try {
   const one_day_ms = 24 * 60 * 60 * 1000;
-  await cookieStore.set('session_id', 'value will be ignored',
-                        { expires: Date.now() - one_day_ms });
+  await cookieStore.set({
+    name: 'session_id',
+    value: 'value will be ignored',
+    expires: Date.now() - one_day_ms });
 } catch (e) {
   console.error(\`Failed to delete cookie: ${e}\`);
 }
@@ -546,9 +549,8 @@ interface CookieStore : EventTarget {
   Promise<CookieList> getAll(USVString name);
   Promise<CookieList> getAll(optional CookieStoreGetOptions options = {});
 
-  Promise<void> set(USVString name, USVString value,
-                    optional CookieStoreSetOptions options = {});
-  Promise<void> set(CookieStoreSetExtraOptions options);
+  Promise<void> set(USVString name, USVString value);
+  Promise<void> set(CookieInit options);
 
   Promise<void> delete(USVString name);
   Promise<void> delete(CookieStoreDeleteOptions options);
@@ -574,16 +576,13 @@ enum CookieSameSite {
   "none"
 };
 
-dictionary CookieStoreSetOptions {
+dictionary CookieInit {
+  required USVString name;
+  required USVString value;
   DOMTimeStamp? expires = null;
   USVString? domain = null;
   USVString path = "/";
   CookieSameSite sameSite = "strict";
-};
-
-dictionary CookieStoreSetExtraOptions : CookieStoreSetOptions {
-  required USVString name;
-  required USVString value;
 };
 
 dictionary CookieStoreDeleteOptions {
@@ -592,15 +591,9 @@ dictionary CookieStoreDeleteOptions {
   USVString path = "/";
 };
 
-dictionary CookieListItem {
-  required USVString name;
-  USVString value;
-  USVString? domain = null;
-  USVString path = "/";
-  DOMTimeStamp? expires = null;
+dictionary CookieListItem : CookieInit {
   boolean secure = true;
-  CookieSameSite sameSite = "strict";
-};
+}
 
 typedef sequence<CookieListItem> CookieList;
 </xmp>
@@ -722,7 +715,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 
 
 <!-- ============================================================ -->
-## The {{CookieStore/set(name, value, options)|set()}} method ## {#CookieStore-set}
+## The {{CookieStore/set(name, value)|set()}} method ## {#CookieStore-set}
 <!-- ============================================================ -->
 
 <div class="domintro note">
@@ -741,7 +734,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 </div>
 
 <div algorithm>
-The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method steps are:
+The <dfn method for=CookieStore>set(|name|, |value|)</dfn> method steps are:
 
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
@@ -751,11 +744,7 @@ The <dfn method for=CookieStore>set(|name|, |value|, |options|)</dfn> method ste
     1. Let |r| be the result of running [=set a cookie=] with
         |url|,
         |name|,
-        |value|,
-        |options|' {{CookieStoreSetOptions/expires}} dictionary member,
-        |options|' {{CookieStoreSetOptions/domain}} dictionary member,
-        |options|' {{CookieStoreSetOptions/path}} dictionary member, and
-        |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
+        |value|.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=Resolve=] |p| with undefined.
 1. Return |p|.
@@ -772,12 +761,12 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
         |url|,
-        |options|' {{CookieStoreSetExtraOptions/name}} dictionary member,
-        |options|' {{CookieStoreSetExtraOptions/value}} dictionary member,
-        |options|' {{CookieStoreSetOptions/expires}} dictionary member,
-        |options|' {{CookieStoreSetOptions/domain}} dictionary member,
-        |options|' {{CookieStoreSetOptions/path}} dictionary member, and
-        |options|' {{CookieStoreSetOptions/sameSite}} dictionary member.
+        |options|' {{CookieInit/name}} dictionary member,
+        |options|' {{CookieInit/value}} dictionary member,
+        |options|' {{CookieInit/expires}} dictionary member,
+        |options|' {{CookieInit/domain}} dictionary member,
+        |options|' {{CookieInit/path}} dictionary member, and
+        |options|' {{CookieInit/sameSite}} dictionary member.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=Resolve=] |p| with undefined.
 1. Return |p|.

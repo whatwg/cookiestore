@@ -283,8 +283,10 @@ expiration date to the past still works.
 
 ```javascript
 try {
-  await cookieStore.set('session_id', 'value will be ignored',
-                        { expires: Date.now() - 24 * 60 * 60 * 1000 });
+  await cookieStore.set({
+    name: 'session_id',
+    value: 'value will be ignored',
+    expires: Date.now() - 24 * 60 * 60 * 1000 });
 } catch (e) {
   console.error(`Failed to delete cookie: ${e}`);
 }
