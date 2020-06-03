@@ -251,7 +251,7 @@ Both methods return [=promises=].
 Both methods take the same arguments, which can be either:
 
 * a name, or
-* a optional dictionary of options
+* a dictionary of options (optional for {{CookieStore/getAll()}})
 
 The {{CookieStore/get()}} method is essentially a form of {{CookieStore/getAll()}} that only returns the first result.
 
@@ -541,7 +541,7 @@ a [=tuple=] of <dfn>name</dfn>, <dfn>url</dfn>, and <dfn>matchType</dfn>.
  SecureContext]
 interface CookieStore : EventTarget {
   Promise<CookieListItem?> get(USVString name);
-  Promise<CookieListItem?> get(optional CookieStoreGetOptions options = {});
+  Promise<CookieListItem?> get(CookieStoreGetOptions options);
 
   Promise<CookieList> getAll(USVString name);
   Promise<CookieList> getAll(optional CookieStoreGetOptions options = {});
