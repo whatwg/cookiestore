@@ -1222,10 +1222,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 2a602184, updated Tue Jun 2 15:47:28 2020 -0700" name="generator">
+  <meta content="Bikeshed version 01b08064, updated Wed Jun 3 09:46:07 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="da0ae24cd4181cce6bac526a74439a7b5717d47e" name="document-revision">
+  <meta content="d6308ddb3703b3757a1ddd2da4c08fe512dffa43" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1687,13 +1687,14 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
 </pre>
    </div>
    <p>What if you could instead write:</p>
-   <div class="example" id="example-ac70a48e">
-    <a class="self-link" href="#example-ac70a48e"></a> 
-<pre class="language-js highlight">cookieStore<c- p>.</c->set<c- p>(</c->
-  <c- t>'__Secure-COOKIENAME'</c-><c- p>,</c->
-  <c- t>'cookie-value'</c-><c- p>,</c->
+   <div class="example" id="example-e2699daa">
+    <a class="self-link" href="#example-e2699daa"></a> 
+<pre class="language-js highlight"><c- kr>const</c-> one_day_ms <c- o>=</c-> <c- mi>24</c-> <c- o>*</c-> <c- mi>60</c-> <c- o>*</c-> <c- mi>60</c-> <c- o>*</c-> <c- mi>1000</c-><c- p>;</c->
+cookieStore<c- p>.</c->set<c- p>(</c->
   <c- p>{</c->
-    expires<c- o>:</c-> Date<c- p>.</c->now<c- p>()</c-> <c- o>+</c-> <c- mi>24</c-><c- o>*</c-><c- mi>60</c-><c- o>*</c-><c- mi>60</c-><c- o>*</c-><c- mi>1000</c-><c- p>,</c->
+    name<c- o>:</c-> <c- t>'__Secure-COOKIENAME'</c-><c- p>,</c->
+    value<c- o>:</c-> <c- t>'cookie-value'</c-><c- p>,</c->
+    expires<c- o>:</c-> Date<c- p>.</c->now<c- p>()</c-> <c- o>+</c-> one_day_ms<c- p>,</c->
     domain<c- o>:</c-> <c- t>'example.org'</c->
   <c- p>}).</c->then<c- p>(</c-><c- a>function</c-><c- p>()</c-> <c- p>{</c->
     console<c- p>.</c->log<c- p>(</c-><c- t>'It worked!'</c-><c- p>);</c->
@@ -1775,7 +1776,7 @@ will change the behavior of <code>WinINet</code>-based user agents and Safari bu
 with other modern user agents.</p>
    <h3 class="heading settled" data-level="1.3" id="intro-query"><span class="secno">1.3. </span><span class="content">Querying Cookies</span><a class="self-link" href="#intro-query"></a></h3>
    <p>Both <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document">documents</a> and <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker">service workers</a> access the same query API, via the <code class="idl"><a data-link-type="idl" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore">cookieStore</a></code> property on the <a href="#globals">global object</a>.</p>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options">getAll()</a></code> methods on <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore">CookieStore</a></code> are used to query cookies.
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options">getAll()</a></code> methods on <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore">CookieStore</a></code> are used to query cookies.
 Both methods return <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-promise-objects" id="ref-for-sec-promise-objects">promises</a>.
 Both methods take the same arguments, which can be either:</p>
    <ul>
@@ -1784,7 +1785,7 @@ Both methods take the same arguments, which can be either:</p>
     <li data-md>
      <p>a dictionary of options (optional for <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options①">getAll()</a></code>)</p>
    </ul>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options">get()</a></code> method is essentially a form of <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options②">getAll()</a></code> that only returns the first result.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get">get()</a></code> method is essentially a form of <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options②">getAll()</a></code> that only returns the first result.</p>
    <div class="example" id="example-75b57f43">
     <a class="self-link" href="#example-75b57f43"></a> Reading a cookie: 
 <pre class="language-js highlight"><c- k>try</c-> <c- p>{</c->
@@ -1822,7 +1823,7 @@ any URL under their <a data-link-type="dfn" href="https://w3c.github.io/ServiceW
    </div>
    <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document①">Documents</a> can only obtain the cookies at their current URL. In other words,
 the only valid <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url">url</a></code> value in <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document②">Document</a> contexts is the document’s URL.</p>
-   <p>The objects returned by <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options①">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options③">getAll()</a></code> contain all the relevant information in the cookie store, not just the <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name">name</a> and the <a data-link-type="dfn" href="#cookie-value" id="ref-for-cookie-value">value</a> as in the older <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑥">document.cookie</a></code> API.</p>
+   <p>The objects returned by <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get①">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options③">getAll()</a></code> contain all the relevant information in the cookie store, not just the <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name">name</a> and the <a data-link-type="dfn" href="#cookie-value" id="ref-for-cookie-value">value</a> as in the older <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑥">document.cookie</a></code> API.</p>
    <div class="example" id="example-74bb82cb">
     <a class="self-link" href="#example-74bb82cb"></a> Accessing all the cookie data: 
 <pre class="language-js highlight">await cookie <c- o>=</c-> cookieStore<c- p>.</c->get<c- p>(</c-><c- t>'session_id'</c-><c- p>);</c->
@@ -1839,15 +1840,15 @@ console<c- p>.</c->log<c- p>(</c-><c- sb>`Cookie scope - Domain: </c-><c- si>${<
    <h3 class="heading settled" data-level="1.4" id="intro-modify"><span class="secno">1.4. </span><span class="content">Modifying Cookies</span><a class="self-link" href="#intro-modify"></a></h3>
    <p>Both <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document③">documents</a> and <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker③">service workers</a> access the same modification API, via the <code class="idl"><a data-link-type="idl" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore①">cookieStore</a></code> property on the <a href="#globals">global object</a>.</p>
    <p>Cookies are created or modified (written) using the <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set">set()</a></code> method.</p>
-   <div class="example" id="example-1e79f3a6">
-    <a class="self-link" href="#example-1e79f3a6"></a> Write a cookie: 
+   <div class="example" id="example-cf76b712">
+    <a class="self-link" href="#example-cf76b712"></a> Write a cookie: 
 <pre class="language-js highlight"><c- k>try</c-> <c- p>{</c->
   await cookieStore<c- p>.</c->set<c- p>(</c-><c- t>'opted_out'</c-><c- p>,</c-> <c- t>'1'</c-><c- p>);</c->
 <c- p>}</c-> <c- k>catch</c-> <c- p>(</c->e<c- p>)</c-> <c- p>{</c->
   console<c- p>.</c->error<c- p>(</c-><c- sb>`Failed to set cookie: </c-><c- si>${</c->e<c- si>}</c-><c- sb>`</c-><c- p>);</c->
 <c- p>}</c->
 </pre>
-    <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set①">set()</a></code> call above is a shorthand for the following:</p>
+    <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set①">set()</a></code> call above is shorthand for using an options dictionary, as follows:</p>
 <pre class="language-js highlight">await cookieStore<c- p>.</c->set<c- p>({</c->
   name<c- o>:</c-> <c- t>'opted_out'</c-><c- p>,</c->
   value<c- o>:</c-> <c- t>'1'</c-><c- p>,</c->
@@ -1870,12 +1871,14 @@ console<c- p>.</c->log<c- p>(</c-><c- sb>`Cookie scope - Domain: </c-><c- si>${<
 </pre>
    </div>
    <p>Under the hood, deleting a cookie is done by changing the cookie’s expiration date to the past, which still works.</p>
-   <div class="example" id="example-5614708e">
-    <a class="self-link" href="#example-5614708e"></a> Deleting a cookie by changing the expiry date: 
+   <div class="example" id="example-e0eca546">
+    <a class="self-link" href="#example-e0eca546"></a> Deleting a cookie by changing the expiry date: 
 <pre class="language-js highlight"><c- k>try</c-> <c- p>{</c->
   <c- kr>const</c-> one_day_ms <c- o>=</c-> <c- mi>24</c-> <c- o>*</c-> <c- mi>60</c-> <c- o>*</c-> <c- mi>60</c-> <c- o>*</c-> <c- mi>1000</c-><c- p>;</c->
-  await cookieStore<c- p>.</c->set<c- p>(</c-><c- t>'session_id'</c-><c- p>,</c-> <c- t>'value will be ignored'</c-><c- p>,</c->
-                        <c- p>{</c-> expires<c- o>:</c-> Date<c- p>.</c->now<c- p>()</c-> <c- o>-</c-> one_day_ms <c- p>});</c->
+  await cookieStore<c- p>.</c->set<c- p>({</c->
+    name<c- o>:</c-> <c- t>'session_id'</c-><c- p>,</c->
+    value<c- o>:</c-> <c- t>'value will be ignored'</c-><c- p>,</c->
+    expires<c- o>:</c-> Date<c- p>.</c->now<c- p>()</c-> <c- o>-</c-> one_day_ms <c- p>});</c->
 <c- p>}</c-> <c- k>catch</c-> <c- p>(</c->e<c- p>)</c-> <c- p>{</c->
   console<c- p>.</c->error<c- p>(</c-><c- sb>`Failed to delete cookie: </c-><c- si>${</c->e<c- si>}</c-><c- sb>`</c-><c- p>);</c->
 <c- p>}</c->
@@ -1928,7 +1931,7 @@ self<c- p>.</c->addEventListener<c- p>(</c-><c- t>'cookiechange'</c-><c- p>,</c-
    <p>Calls to <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-subscribe" id="ref-for-dom-cookiestoremanager-subscribe">subscribe()</a></code> are cumulative, so that independently maintained
 modules or libraries can set up their own subscriptions. As expected, a <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker⑤">service worker</a>'s
 subscriptions are persisted for with the <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration">service worker registration</a>.</p>
-   <p>Subscriptions can use the same options as <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get①">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options④">getAll()</a></code>.
+   <p>Subscriptions can use the same options as <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get②">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options④">getAll()</a></code>.
 The complexity of fine-grained subscriptions is justified
 by the cost of dispatching an irrelevant cookie change event to a <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker⑥">service worker</a>,
 which is is much higher than the cost of dispatching an equivalent event
@@ -1968,15 +1971,14 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=(<c- n>ServiceWorker</c->,<c- n>Window</c->),
  <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext"><c- g>SecureContext</c-></a>]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="cookiestore"><code><c- g>CookieStore</c-></code></dfn> : <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#eventtarget" id="ref-for-eventtarget"><c- n>EventTarget</c-></a> {
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem"><c- n>CookieListItem</c-></a>?> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get②"><c- g>get</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/get(name)" data-dfn-type="argument" data-export id="dom-cookiestore-get-name-name"><code><c- g>name</c-></code><a class="self-link" href="#dom-cookiestore-get-name-name"></a></dfn>);
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem①"><c- n>CookieListItem</c-></a>?> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options②"><c- g>get</c-></a>(<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions"><c- n>CookieStoreGetOptions</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/get(options)" data-dfn-type="argument" data-export id="dom-cookiestore-get-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cookiestore-get-options-options"></a></dfn>);
+  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem"><c- n>CookieListItem</c-></a>?> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get③"><c- g>get</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/get(name)" data-dfn-type="argument" data-export id="dom-cookiestore-get-name-name"><code><c- g>name</c-></code><a class="self-link" href="#dom-cookiestore-get-name-name"></a></dfn>);
+  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem①"><c- n>CookieListItem</c-></a>?> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options①"><c- g>get</c-></a>(<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions"><c- n>CookieStoreGetOptions</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/get(options)" data-dfn-type="argument" data-export id="dom-cookiestore-get-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cookiestore-get-options-options"></a></dfn>);
 
   <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist"><c- n>CookieList</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-getall" id="ref-for-dom-cookiestore-getall"><c- g>getAll</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/getAll(name)" data-dfn-type="argument" data-export id="dom-cookiestore-getall-name-name"><code><c- g>name</c-></code><a class="self-link" href="#dom-cookiestore-getall-name-name"></a></dfn>);
   <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist" id="ref-for-typedefdef-cookielist①"><c- n>CookieList</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options⑤"><c- g>getAll</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions" id="ref-for-dictdef-cookiestoregetoptions①"><c- n>CookieStoreGetOptions</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/getAll(options), CookieStore/getAll()" data-dfn-type="argument" data-export id="dom-cookiestore-getall-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cookiestore-getall-options-options"></a></dfn> = {});
 
-  <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set②"><c- g>set</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString③"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/set(name, value, options), CookieStore/set(name, value)" data-dfn-type="argument" data-export id="dom-cookiestore-set-name-value-options-name"><code><c- g>name</c-></code><a class="self-link" href="#dom-cookiestore-set-name-value-options-name"></a></dfn>, <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString④"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/set(name, value, options), CookieStore/set(name, value)" data-dfn-type="argument" data-export id="dom-cookiestore-set-name-value-options-value"><code><c- g>value</c-></code><a class="self-link" href="#dom-cookiestore-set-name-value-options-value"></a></dfn>,
-                    <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions"><c- n>CookieStoreSetOptions</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/set(name, value, options), CookieStore/set(name, value)" data-dfn-type="argument" data-export id="dom-cookiestore-set-name-value-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cookiestore-set-name-value-options-options"></a></dfn> = {});
-  <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-set-options" id="ref-for-dom-cookiestore-set-options"><c- g>set</c-></a>(<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetextraoptions" id="ref-for-dictdef-cookiestoresetextraoptions"><c- n>CookieStoreSetExtraOptions</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/set(options)" data-dfn-type="argument" data-export id="dom-cookiestore-set-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cookiestore-set-options-options"></a></dfn>);
+  <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-set" id="ref-for-dom-cookiestore-set②"><c- g>set</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString③"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/set(name, value)" data-dfn-type="argument" data-export id="dom-cookiestore-set-name-value-name"><code><c- g>name</c-></code><a class="self-link" href="#dom-cookiestore-set-name-value-name"></a></dfn>, <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString④"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/set(name, value)" data-dfn-type="argument" data-export id="dom-cookiestore-set-name-value-value"><code><c- g>value</c-></code><a class="self-link" href="#dom-cookiestore-set-name-value-value"></a></dfn>);
+  <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-set-options" id="ref-for-dom-cookiestore-set-options"><c- g>set</c-></a>(<a class="n" data-link-type="idl-name" href="#dictdef-cookieinit" id="ref-for-dictdef-cookieinit"><c- n>CookieInit</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/set(options)" data-dfn-type="argument" data-export id="dom-cookiestore-set-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cookiestore-set-options-options"></a></dfn>);
 
   <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-delete" id="ref-for-dom-cookiestore-delete①"><c- g>delete</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑤"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/delete(name)" data-dfn-type="argument" data-export id="dom-cookiestore-delete-name-name"><code><c- g>name</c-></code><a class="self-link" href="#dom-cookiestore-delete-name-name"></a></dfn>);
   <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-delete-options" id="ref-for-dom-cookiestore-delete-options"><c- g>delete</c-></a>(<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoredeleteoptions" id="ref-for-dictdef-cookiestoredeleteoptions"><c- n>CookieStoreDeleteOptions</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore/delete(options)" data-dfn-type="argument" data-export id="dom-cookiestore-delete-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cookiestore-delete-options-options"></a></dfn>);
@@ -2002,16 +2004,13 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
   <dfn class="dfn-paneled idl-code" data-dfn-for="CookieSameSite" data-dfn-type="enum-value" data-export id="dom-cookiesamesite-none"><code><c- s>"none"</c-></code></dfn>
 };
 
-<c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cookiestoresetoptions"><code><c- g>CookieStoreSetOptions</c-></code></dfn> {
-  <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp"><c- n>DOMTimeStamp</c-></a>? <dfn class="dfn-paneled idl-code" data-default="null" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export data-type="DOMTimeStamp? " id="dom-cookiestoresetoptions-expires"><code><c- g>expires</c-></code></dfn> = <c- b>null</c->;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑧"><c- b>USVString</c-></a>? <dfn class="dfn-paneled idl-code" data-default="null" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export data-type="USVString? " id="dom-cookiestoresetoptions-domain"><code><c- g>domain</c-></code></dfn> = <c- b>null</c->;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑨"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-default="&quot;/&quot;" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookiestoresetoptions-path"><code><c- g>path</c-></code></dfn> = "/";
-  <a class="n" data-link-type="idl-name" href="#enumdef-cookiesamesite" id="ref-for-enumdef-cookiesamesite"><c- n>CookieSameSite</c-></a> <dfn class="dfn-paneled idl-code" data-default="&quot;strict&quot;" data-dfn-for="CookieStoreSetOptions" data-dfn-type="dict-member" data-export data-type="CookieSameSite " id="dom-cookiestoresetoptions-samesite"><code><c- g>sameSite</c-></code></dfn> = "strict";
-};
-
-<c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cookiestoresetextraoptions"><code><c- g>CookieStoreSetExtraOptions</c-></code></dfn> : <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions" id="ref-for-dictdef-cookiestoresetoptions①"><c- n>CookieStoreSetOptions</c-></a> {
-  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⓪"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStoreSetExtraOptions" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookiestoresetextraoptions-name"><code><c- g>name</c-></code></dfn>;
-  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStoreSetExtraOptions" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookiestoresetextraoptions-value"><code><c- g>value</c-></code></dfn>;
+<c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cookieinit"><code><c- g>CookieInit</c-></code></dfn> {
+  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑧"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="CookieInit" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookieinit-name"><code><c- g>name</c-></code></dfn>;
+  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑨"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="CookieInit" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookieinit-value"><code><c- g>value</c-></code></dfn>;
+  <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp"><c- n>DOMTimeStamp</c-></a>? <dfn class="dfn-paneled idl-code" data-default="null" data-dfn-for="CookieInit" data-dfn-type="dict-member" data-export data-type="DOMTimeStamp? " id="dom-cookieinit-expires"><code><c- g>expires</c-></code></dfn> = <c- b>null</c->;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⓪"><c- b>USVString</c-></a>? <dfn class="dfn-paneled idl-code" data-default="null" data-dfn-for="CookieInit" data-dfn-type="dict-member" data-export data-type="USVString? " id="dom-cookieinit-domain"><code><c- g>domain</c-></code></dfn> = <c- b>null</c->;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-default="&quot;/&quot;" data-dfn-for="CookieInit" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookieinit-path"><code><c- g>path</c-></code></dfn> = "/";
+  <a class="n" data-link-type="idl-name" href="#enumdef-cookiesamesite" id="ref-for-enumdef-cookiesamesite"><c- n>CookieSameSite</c-></a> <dfn class="dfn-paneled idl-code" data-default="&quot;strict&quot;" data-dfn-for="CookieInit" data-dfn-type="dict-member" data-export data-type="CookieSameSite " id="dom-cookieinit-samesite"><code><c- g>sameSite</c-></code></dfn> = "strict";
 };
 
 <c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cookiestoredeleteoptions"><code><c- g>CookieStoreDeleteOptions</c-></code></dfn> {
@@ -2020,23 +2019,17 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①④"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-default="&quot;/&quot;" data-dfn-for="CookieStoreDeleteOptions" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookiestoredeleteoptions-path"><code><c- g>path</c-></code></dfn> = "/";
 };
 
-<c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cookielistitem"><code><c- g>CookieListItem</c-></code></dfn> {
-  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑤"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookielistitem-name"><code><c- g>name</c-></code><a class="self-link" href="#dom-cookielistitem-name"></a></dfn>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑥"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookielistitem-value"><code><c- g>value</c-></code></dfn>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑦"><c- b>USVString</c-></a>? <dfn class="idl-code" data-default="null" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export data-type="USVString? " id="dom-cookielistitem-domain"><code><c- g>domain</c-></code><a class="self-link" href="#dom-cookielistitem-domain"></a></dfn> = <c- b>null</c->;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①⑧"><c- b>USVString</c-></a> <dfn class="idl-code" data-default="&quot;/&quot;" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookielistitem-path"><code><c- g>path</c-></code><a class="self-link" href="#dom-cookielistitem-path"></a></dfn> = "/";
-  <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp①"><c- n>DOMTimeStamp</c-></a>? <dfn class="idl-code" data-default="null" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export data-type="DOMTimeStamp? " id="dom-cookielistitem-expires"><code><c- g>expires</c-></code><a class="self-link" href="#dom-cookielistitem-expires"></a></dfn> = <c- b>null</c->;
+<c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cookielistitem"><code><c- g>CookieListItem</c-></code></dfn> : <a class="n" data-link-type="idl-name" href="#dictdef-cookieinit" id="ref-for-dictdef-cookieinit①"><c- n>CookieInit</c-></a> {
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><c- b>boolean</c-></a> <dfn class="idl-code" data-default="true" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export data-type="boolean " id="dom-cookielistitem-secure"><code><c- g>secure</c-></code><a class="self-link" href="#dom-cookielistitem-secure"></a></dfn> = <c- b>true</c->;
-  <a class="n" data-link-type="idl-name" href="#enumdef-cookiesamesite" id="ref-for-enumdef-cookiesamesite①"><c- n>CookieSameSite</c-></a> <dfn class="idl-code" data-default="&quot;strict&quot;" data-dfn-for="CookieListItem" data-dfn-type="dict-member" data-export data-type="CookieSameSite " id="dom-cookielistitem-samesite"><code><c- g>sameSite</c-></code><a class="self-link" href="#dom-cookielistitem-samesite"></a></dfn> = "strict";
-};
+}
 
 <c- b>typedef</c-> <c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem②"><c- n>CookieListItem</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-type="typedef" data-export id="typedefdef-cookielist"><code><c- g>CookieList</c-></code></dfn>;
 </pre>
-   <h3 class="heading settled" data-level="3.1" id="CookieStore-get"><span class="secno">3.1. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options③">get()</a></code> method</span><a class="self-link" href="#CookieStore-get"></a></h3>
+   <h3 class="heading settled" data-level="3.1" id="CookieStore-get"><span class="secno">3.1. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options②">get()</a></code> method</span><a class="self-link" href="#CookieStore-get"></a></h3>
    <div class="domintro note" role="note">
     <dl>
-     <dt data-md><var>cookie</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get③">get</a></code>(<var>name</var>)
-     <dt data-md><var>cookie</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options④">get</a></code>(<var>options</var>)
+     <dt data-md><var>cookie</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get" id="ref-for-dom-cookiestore-get④">get</a></code>(<var>name</var>)
+     <dt data-md><var>cookie</var> = await cookieStore . <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options③">get</a></code>(<var>options</var>)
      <dd data-md>
       <p>Returns a promise resolving to the first in-scope <a data-link-type="dfn" href="#script-visible" id="ref-for-script-visible②">script-visible</a> value
 for a given cookie name (or other options).
@@ -2207,8 +2200,8 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
       </ul>
     </dl>
    </div>
-   <div class="algorithm" data-algorithm="set(name, value, options)" data-algorithm-for="CookieStore">
-     The <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="method" data-export data-lt="set(name, value, options)|set(name, value)" id="dom-cookiestore-set"><code>set(<var>name</var>, <var>value</var>, <var>options</var>)</code></dfn> method steps are: 
+   <div class="algorithm" data-algorithm="set(name, value)" data-algorithm-for="CookieStore">
+     The <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStore" data-dfn-type="method" data-export id="dom-cookiestore-set"><code>set(<var>name</var>, <var>value</var>)</code></dfn> method steps are: 
     <ol>
      <li data-md>
       <p>Let <var>origin</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object⑧">current settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin④">origin</a>.</p>
@@ -2222,7 +2215,7 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
       <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel④">in parallel</a>:</p>
       <ol>
        <li data-md>
-        <p>Let <var>r</var> be the result of running <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie">set a cookie</a> with <var>url</var>, <var>name</var>, <var>value</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-expires" id="ref-for-dom-cookiestoresetoptions-expires">expires</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-domain" id="ref-for-dom-cookiestoresetoptions-domain">domain</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-path" id="ref-for-dom-cookiestoresetoptions-path">path</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-samesite" id="ref-for-dom-cookiestoresetoptions-samesite">sameSite</a></code> dictionary member.</p>
+        <p>Let <var>r</var> be the result of running <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie">set a cookie</a> with <var>url</var>, <var>name</var>, <var>value</var>.</p>
        <li data-md>
         <p>If <var>r</var> is failure, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject④">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code> and abort these steps.</p>
        <li data-md>
@@ -2247,7 +2240,7 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
       <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel⑤">in parallel</a>:</p>
       <ol>
        <li data-md>
-        <p>Let <var>r</var> be the result of running <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie①">set a cookie</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetextraoptions-name" id="ref-for-dom-cookiestoresetextraoptions-name">name</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetextraoptions-value" id="ref-for-dom-cookiestoresetextraoptions-value">value</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-expires" id="ref-for-dom-cookiestoresetoptions-expires①">expires</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-domain" id="ref-for-dom-cookiestoresetoptions-domain①">domain</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-path" id="ref-for-dom-cookiestoresetoptions-path①">path</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoresetoptions-samesite" id="ref-for-dom-cookiestoresetoptions-samesite①">sameSite</a></code> dictionary member.</p>
+        <p>Let <var>r</var> be the result of running <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie①">set a cookie</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-name" id="ref-for-dom-cookieinit-name">name</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-value" id="ref-for-dom-cookieinit-value">value</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-expires" id="ref-for-dom-cookieinit-expires">expires</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-domain" id="ref-for-dom-cookieinit-domain">domain</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-path" id="ref-for-dom-cookieinit-path">path</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-samesite" id="ref-for-dom-cookieinit-samesite">sameSite</a></code> dictionary member.</p>
        <li data-md>
         <p>If <var>r</var> is failure, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑤">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑨">TypeError</a></code> and abort these steps.</p>
        <li data-md>
@@ -2335,7 +2328,7 @@ true, and
     <dl>
      <dt data-md>await <var>registration</var> . cookies . <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-subscribe" id="ref-for-dom-cookiestoremanager-subscribe④">subscribe</a></code>(<var>subscriptions</var>)
      <dd data-md>
-      <p>Subscribe to changes to cookies. Subscriptions can use the same options as <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options⑤">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options⑧">getAll()</a></code>, with optional <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name②">name</a></code>, <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑤">url</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype②">matchType</a></code> properties.</p>
+      <p>Subscribe to changes to cookies. Subscriptions can use the same options as <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options④">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options⑧">getAll()</a></code>, with optional <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name②">name</a></code>, <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑤">url</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype②">matchType</a></code> properties.</p>
       <p>Once subscribed, notifications are delivered as "<code>cookiechange</code>" events fired against the <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker①⓪">Service Worker</a>'s global scope:</p>
     </dl>
    </div>
@@ -2533,7 +2526,7 @@ scope in a <code class="idl"><a data-link-type="idl" href="https://html.spec.wha
 return the number of milliseconds from 00:00:00 UTC, 1 January 1970 to <var>dateTime</var> (assuming that there are exactly 86,400,000 milliseconds per day). 
     <p class="note" role="note"><span>Note:</span> This is the same representation used for <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-time-values-and-time-range" id="ref-for-sec-time-values-and-time-range">time values</a> in <a data-link-type="biblio" href="#biblio-ecmascript">[ECMAScript]</a>.</p>
    </div>
-   <div class="algorithm" data-algorithm="date serialize"> To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="date-serialize">date serialize</dfn> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp②">DOMTimeStamp</a></code> <var>millis</var>,
+   <div class="algorithm" data-algorithm="date serialize"> To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="date-serialize">date serialize</dfn> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#DOMTimeStamp" id="ref-for-DOMTimeStamp①">DOMTimeStamp</a></code> <var>millis</var>,
 let <var>dateTime</var> be the date and time <var>millis</var> milliseconds after 00:00:00 UTC, 1 January 1970
 (assuming that there are exactly 86,400,000 milliseconds per day),
 and return a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-sequence" id="ref-for-byte-sequence①">byte sequence</a> corresponding to the closest <code>cookie-date</code> representation of <var>dateTime</var> according to <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-5.1.1">Cookies: HTTP State Management Mechanism §Dates</a>. </div>
@@ -2816,7 +2809,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
         <p>Otherwise, run these steps:</p>
         <ol>
          <li data-md>
-          <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value">value</a></code> dictionary member to undefined.</p>
+          <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl">value</a></code> dictionary member to undefined.</p>
          <li data-md>
           <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append①①">Append</a> <var>item</var> to <var>deletedList</var>.</p>
         </ol>
@@ -3067,6 +3060,7 @@ authoring advice.</p>
    <li><a href="#dom-cookiechangeevent-cookiechangeevent">CookieChangeEvent(type, eventInitDict)</a><span>, in §5.1</span>
    <li><a href="#cookie-change-subscription">cookie change subscription</a><span>, in §2.3</span>
    <li><a href="#cookie-change-subscription-list">cookie change subscription list</a><span>, in §2.3</span>
+   <li><a href="#dictdef-cookieinit">CookieInit</a><span>, in §3</span>
    <li><a href="#typedefdef-cookielist">CookieList</a><span>, in §3</span>
    <li><a href="#dictdef-cookielistitem">CookieListItem</a><span>, in §3</span>
    <li><a href="#enumdef-cookiematchtype">CookieMatchType</a><span>, in §3</span>
@@ -3083,8 +3077,6 @@ authoring advice.</p>
    <li><a href="#dictdef-cookiestoredeleteoptions">CookieStoreDeleteOptions</a><span>, in §3</span>
    <li><a href="#dictdef-cookiestoregetoptions">CookieStoreGetOptions</a><span>, in §3</span>
    <li><a href="#cookiestoremanager">CookieStoreManager</a><span>, in §4</span>
-   <li><a href="#dictdef-cookiestoresetextraoptions">CookieStoreSetExtraOptions</a><span>, in §3</span>
-   <li><a href="#dictdef-cookiestoresetoptions">CookieStoreSetOptions</a><span>, in §3</span>
    <li><a href="#create-a-cookielistitem">create a CookieListItem</a><span>, in §7.1</span>
    <li><a href="#cookie-creation-time">creation-time</a><span>, in §2.1</span>
    <li><a href="#date-serialize">date serialize</a><span>, in §7</span>
@@ -3104,18 +3096,12 @@ authoring advice.</p>
     domain
     <ul>
      <li><a href="#cookie-domain">dfn for cookie</a><span>, in §2.1</span>
-     <li><a href="#dom-cookielistitem-domain">dict-member for CookieListItem</a><span>, in §3</span>
+     <li><a href="#dom-cookieinit-domain">dict-member for CookieInit</a><span>, in §3</span>
      <li><a href="#dom-cookiestoredeleteoptions-domain">dict-member for CookieStoreDeleteOptions</a><span>, in §3</span>
-     <li><a href="#dom-cookiestoresetoptions-domain">dict-member for CookieStoreSetOptions</a><span>, in §3</span>
     </ul>
    <li><a href="#encode">encode</a><span>, in §7</span>
    <li><a href="#dom-cookiematchtype-equals">"equals"</a><span>, in §3</span>
-   <li>
-    expires
-    <ul>
-     <li><a href="#dom-cookielistitem-expires">dict-member for CookieListItem</a><span>, in §3</span>
-     <li><a href="#dom-cookiestoresetoptions-expires">dict-member for CookieStoreSetOptions</a><span>, in §3</span>
-    </ul>
+   <li><a href="#dom-cookieinit-expires">expires</a><span>, in §3</span>
    <li><a href="#cookie-expiry-time">expiry-time</a><span>, in §2.1</span>
    <li><a href="#extendablecookiechangeevent">ExtendableCookieChangeEvent</a><span>, in §5.2</span>
    <li><a href="#dictdef-extendablecookiechangeeventinit">ExtendableCookieChangeEventInit</a><span>, in §5.2</span>
@@ -3144,10 +3130,9 @@ authoring advice.</p>
     <ul>
      <li><a href="#cookie-name">dfn for cookie</a><span>, in §2.1</span>
      <li><a href="#cookie-change-subscription-name">dfn for cookie change subscription</a><span>, in §2.3</span>
-     <li><a href="#dom-cookielistitem-name">dict-member for CookieListItem</a><span>, in §3</span>
+     <li><a href="#dom-cookieinit-name">dict-member for CookieInit</a><span>, in §3</span>
      <li><a href="#dom-cookiestoredeleteoptions-name">dict-member for CookieStoreDeleteOptions</a><span>, in §3</span>
      <li><a href="#dom-cookiestoregetoptions-name">dict-member for CookieStoreGetOptions</a><span>, in §3</span>
-     <li><a href="#dom-cookiestoresetextraoptions-name">dict-member for CookieStoreSetExtraOptions</a><span>, in §3</span>
     </ul>
    <li><a href="#dom-cookiesamesite-none">"none"</a><span>, in §3</span>
    <li><a href="#observable-changes">observable changes</a><span>, in §7.4</span>
@@ -3157,27 +3142,20 @@ authoring advice.</p>
     path
     <ul>
      <li><a href="#cookie-path">dfn for cookie</a><span>, in §2.1</span>
-     <li><a href="#dom-cookielistitem-path">dict-member for CookieListItem</a><span>, in §3</span>
+     <li><a href="#dom-cookieinit-path">dict-member for CookieInit</a><span>, in §3</span>
      <li><a href="#dom-cookiestoredeleteoptions-path">dict-member for CookieStoreDeleteOptions</a><span>, in §3</span>
-     <li><a href="#dom-cookiestoresetoptions-path">dict-member for CookieStoreSetOptions</a><span>, in §3</span>
     </ul>
    <li><a href="#cookie-persistent-flag">persistent-flag</a><span>, in §2.1</span>
    <li><a href="#prepare-lists">prepare lists</a><span>, in §7.4</span>
    <li><a href="#process-cookie-changes">process cookie changes</a><span>, in §7.4</span>
    <li><a href="#query-cookies">query cookies</a><span>, in §7.1</span>
-   <li>
-    sameSite
-    <ul>
-     <li><a href="#dom-cookielistitem-samesite">dict-member for CookieListItem</a><span>, in §3</span>
-     <li><a href="#dom-cookiestoresetoptions-samesite">dict-member for CookieStoreSetOptions</a><span>, in §3</span>
-    </ul>
+   <li><a href="#dom-cookieinit-samesite">sameSite</a><span>, in §3</span>
    <li><a href="#cookie-same-site-flag">same-site-flag</a><span>, in §2.1</span>
    <li><a href="#script-visible">script-visible</a><span>, in §1.2.1</span>
    <li><a href="#dom-cookielistitem-secure">secure</a><span>, in §3</span>
    <li><a href="#cookie-secure-only-flag">secure-only-flag</a><span>, in §2.1</span>
    <li><a href="#set-a-cookie">set a cookie</a><span>, in §7.2</span>
    <li><a href="#dom-cookiestore-set">set(name, value)</a><span>, in §3.3</span>
-   <li><a href="#dom-cookiestore-set">set(name, value, options)</a><span>, in §3.3</span>
    <li><a href="#dom-cookiestore-set-options">set(options)</a><span>, in §3.3</span>
    <li><a href="#dom-cookiematchtype-starts-with">"starts-with"</a><span>, in §3</span>
    <li><a href="#dom-cookiesamesite-strict">"strict"</a><span>, in §3</span>
@@ -3193,8 +3171,7 @@ authoring advice.</p>
     value
     <ul>
      <li><a href="#cookie-value">dfn for cookie</a><span>, in §2.1</span>
-     <li><a href="#dom-cookielistitem-value">dict-member for CookieListItem</a><span>, in §3</span>
-     <li><a href="#dom-cookiestoresetextraoptions-value">dict-member for CookieStoreSetExtraOptions</a><span>, in §3</span>
+     <li><a href="#dom-cookieinit-value">dict-member for CookieInit</a><span>, in §3</span>
     </ul>
   </ul>
   <aside class="dfn-panel" data-for="term-for-event">
@@ -3632,8 +3609,8 @@ authoring advice.</p>
   <aside class="dfn-panel" data-for="term-for-DOMTimeStamp">
    <a href="https://heycam.github.io/webidl/#DOMTimeStamp">https://heycam.github.io/webidl/#DOMTimeStamp</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-DOMTimeStamp">3. The CookieStore Interface</a> <a href="#ref-for-DOMTimeStamp①">(2)</a>
-    <li><a href="#ref-for-DOMTimeStamp②">7. Algorithms</a>
+    <li><a href="#ref-for-DOMTimeStamp">3. The CookieStore Interface</a>
+    <li><a href="#ref-for-DOMTimeStamp①">7. Algorithms</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-Exposed">
@@ -3693,7 +3670,7 @@ authoring advice.</p>
    <a href="https://heycam.github.io/webidl/#idl-USVString">https://heycam.github.io/webidl/#idl-USVString</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-idl-USVString">1.2.4. Compatiblity</a>
-    <li><a href="#ref-for-idl-USVString①">3. The CookieStore Interface</a> <a href="#ref-for-idl-USVString②">(2)</a> <a href="#ref-for-idl-USVString③">(3)</a> <a href="#ref-for-idl-USVString④">(4)</a> <a href="#ref-for-idl-USVString⑤">(5)</a> <a href="#ref-for-idl-USVString⑥">(6)</a> <a href="#ref-for-idl-USVString⑦">(7)</a> <a href="#ref-for-idl-USVString⑧">(8)</a> <a href="#ref-for-idl-USVString⑨">(9)</a> <a href="#ref-for-idl-USVString①⓪">(10)</a> <a href="#ref-for-idl-USVString①①">(11)</a> <a href="#ref-for-idl-USVString①②">(12)</a> <a href="#ref-for-idl-USVString①③">(13)</a> <a href="#ref-for-idl-USVString①④">(14)</a> <a href="#ref-for-idl-USVString①⑤">(15)</a> <a href="#ref-for-idl-USVString①⑥">(16)</a> <a href="#ref-for-idl-USVString①⑦">(17)</a> <a href="#ref-for-idl-USVString①⑧">(18)</a>
+    <li><a href="#ref-for-idl-USVString①">3. The CookieStore Interface</a> <a href="#ref-for-idl-USVString②">(2)</a> <a href="#ref-for-idl-USVString③">(3)</a> <a href="#ref-for-idl-USVString④">(4)</a> <a href="#ref-for-idl-USVString⑤">(5)</a> <a href="#ref-for-idl-USVString⑥">(6)</a> <a href="#ref-for-idl-USVString⑦">(7)</a> <a href="#ref-for-idl-USVString⑧">(8)</a> <a href="#ref-for-idl-USVString⑨">(9)</a> <a href="#ref-for-idl-USVString①⓪">(10)</a> <a href="#ref-for-idl-USVString①①">(11)</a> <a href="#ref-for-idl-USVString①②">(12)</a> <a href="#ref-for-idl-USVString①③">(13)</a> <a href="#ref-for-idl-USVString①④">(14)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-a-new-promise">
@@ -3909,9 +3886,8 @@ authoring advice.</p>
   <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist"><c- n>CookieList</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-getall"><c- g>getAll</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a href="#dom-cookiestore-getall-name-name"><code><c- g>name</c-></code></a>);
   <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="#typedefdef-cookielist"><c- n>CookieList</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-getall-options"><c- g>getAll</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoregetoptions"><c- n>CookieStoreGetOptions</c-></a> <a href="#dom-cookiestore-getall-options-options"><code><c- g>options</c-></code></a> = {});
 
-  <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-set"><c- g>set</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a href="#dom-cookiestore-set-name-value-options-name"><code><c- g>name</c-></code></a>, <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a href="#dom-cookiestore-set-name-value-options-value"><code><c- g>value</c-></code></a>,
-                    <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions"><c- n>CookieStoreSetOptions</c-></a> <a href="#dom-cookiestore-set-name-value-options-options"><code><c- g>options</c-></code></a> = {});
-  <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-set-options"><c- g>set</c-></a>(<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetextraoptions"><c- n>CookieStoreSetExtraOptions</c-></a> <a href="#dom-cookiestore-set-options-options"><code><c- g>options</c-></code></a>);
+  <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-set"><c- g>set</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a href="#dom-cookiestore-set-name-value-name"><code><c- g>name</c-></code></a>, <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a href="#dom-cookiestore-set-name-value-value"><code><c- g>value</c-></code></a>);
+  <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-set-options"><c- g>set</c-></a>(<a class="n" data-link-type="idl-name" href="#dictdef-cookieinit"><c- n>CookieInit</c-></a> <a href="#dom-cookiestore-set-options-options"><code><c- g>options</c-></code></a>);
 
   <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-delete"><c- g>delete</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a href="#dom-cookiestore-delete-name-name"><code><c- g>name</c-></code></a>);
   <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-cookiestore-delete-options"><c- g>delete</c-></a>(<a class="n" data-link-type="idl-name" href="#dictdef-cookiestoredeleteoptions"><c- n>CookieStoreDeleteOptions</c-></a> <a href="#dom-cookiestore-delete-options-options"><code><c- g>options</c-></code></a>);
@@ -3937,16 +3913,13 @@ authoring advice.</p>
   <a href="#dom-cookiesamesite-none"><code><c- s>"none"</c-></code></a>
 };
 
-<c- b>dictionary</c-> <a href="#dictdef-cookiestoresetoptions"><code><c- g>CookieStoreSetOptions</c-></code></a> {
-  <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp"><c- n>DOMTimeStamp</c-></a>? <a data-default="null" data-type="DOMTimeStamp? " href="#dom-cookiestoresetoptions-expires"><code><c- g>expires</c-></code></a> = <c- b>null</c->;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a>? <a data-default="null" data-type="USVString? " href="#dom-cookiestoresetoptions-domain"><code><c- g>domain</c-></code></a> = <c- b>null</c->;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-default="&quot;/&quot;" data-type="USVString " href="#dom-cookiestoresetoptions-path"><code><c- g>path</c-></code></a> = "/";
-  <a class="n" data-link-type="idl-name" href="#enumdef-cookiesamesite"><c- n>CookieSameSite</c-></a> <a data-default="&quot;strict&quot;" data-type="CookieSameSite " href="#dom-cookiestoresetoptions-samesite"><code><c- g>sameSite</c-></code></a> = "strict";
-};
-
-<c- b>dictionary</c-> <a href="#dictdef-cookiestoresetextraoptions"><code><c- g>CookieStoreSetExtraOptions</c-></code></a> : <a class="n" data-link-type="idl-name" href="#dictdef-cookiestoresetoptions"><c- n>CookieStoreSetOptions</c-></a> {
-  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-type="USVString " href="#dom-cookiestoresetextraoptions-name"><code><c- g>name</c-></code></a>;
-  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-type="USVString " href="#dom-cookiestoresetextraoptions-value"><code><c- g>value</c-></code></a>;
+<c- b>dictionary</c-> <a href="#dictdef-cookieinit"><code><c- g>CookieInit</c-></code></a> {
+  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-type="USVString " href="#dom-cookieinit-name"><code><c- g>name</c-></code></a>;
+  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-type="USVString " href="#dom-cookieinit-value"><code><c- g>value</c-></code></a>;
+  <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp"><c- n>DOMTimeStamp</c-></a>? <a data-default="null" data-type="DOMTimeStamp? " href="#dom-cookieinit-expires"><code><c- g>expires</c-></code></a> = <c- b>null</c->;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a>? <a data-default="null" data-type="USVString? " href="#dom-cookieinit-domain"><code><c- g>domain</c-></code></a> = <c- b>null</c->;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-default="&quot;/&quot;" data-type="USVString " href="#dom-cookieinit-path"><code><c- g>path</c-></code></a> = "/";
+  <a class="n" data-link-type="idl-name" href="#enumdef-cookiesamesite"><c- n>CookieSameSite</c-></a> <a data-default="&quot;strict&quot;" data-type="CookieSameSite " href="#dom-cookieinit-samesite"><code><c- g>sameSite</c-></code></a> = "strict";
 };
 
 <c- b>dictionary</c-> <a href="#dictdef-cookiestoredeleteoptions"><code><c- g>CookieStoreDeleteOptions</c-></code></a> {
@@ -3955,15 +3928,9 @@ authoring advice.</p>
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-default="&quot;/&quot;" data-type="USVString " href="#dom-cookiestoredeleteoptions-path"><code><c- g>path</c-></code></a> = "/";
 };
 
-<c- b>dictionary</c-> <a href="#dictdef-cookielistitem"><code><c- g>CookieListItem</c-></code></a> {
-  <c- b>required</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-type="USVString " href="#dom-cookielistitem-name"><code><c- g>name</c-></code></a>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-type="USVString " href="#dom-cookielistitem-value"><code><c- g>value</c-></code></a>;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a>? <a data-default="null" data-type="USVString? " href="#dom-cookielistitem-domain"><code><c- g>domain</c-></code></a> = <c- b>null</c->;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-default="&quot;/&quot;" data-type="USVString " href="#dom-cookielistitem-path"><code><c- g>path</c-></code></a> = "/";
-  <a class="n" data-link-type="idl-name" href="https://heycam.github.io/webidl/#DOMTimeStamp"><c- n>DOMTimeStamp</c-></a>? <a data-default="null" data-type="DOMTimeStamp? " href="#dom-cookielistitem-expires"><code><c- g>expires</c-></code></a> = <c- b>null</c->;
+<c- b>dictionary</c-> <a href="#dictdef-cookielistitem"><code><c- g>CookieListItem</c-></code></a> : <a class="n" data-link-type="idl-name" href="#dictdef-cookieinit"><c- n>CookieInit</c-></a> {
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean"><c- b>boolean</c-></a> <a data-default="true" data-type="boolean " href="#dom-cookielistitem-secure"><code><c- g>secure</c-></code></a> = <c- b>true</c->;
-  <a class="n" data-link-type="idl-name" href="#enumdef-cookiesamesite"><c- n>CookieSameSite</c-></a> <a data-default="&quot;strict&quot;" data-type="CookieSameSite " href="#dom-cookielistitem-samesite"><code><c- g>sameSite</c-></code></a> = "strict";
-};
+}
 
 <c- b>typedef</c-> <c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="#dictdef-cookielistitem"><c- n>CookieListItem</c-></a>> <a href="#typedefdef-cookielist"><code><c- g>CookieList</c-></code></a>;
 
@@ -4235,7 +4202,7 @@ authoring advice.</p>
   <aside class="dfn-panel" data-for="enumdef-cookiesamesite">
    <b><a href="#enumdef-cookiesamesite">#enumdef-cookiesamesite</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-enumdef-cookiesamesite">3. The CookieStore Interface</a> <a href="#ref-for-enumdef-cookiesamesite①">(2)</a>
+    <li><a href="#ref-for-enumdef-cookiesamesite">3. The CookieStore Interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiesamesite-strict">
@@ -4261,52 +4228,46 @@ authoring advice.</p>
     <li><a href="#ref-for-dom-cookiesamesite-none①">7.2. Set a Cookie</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dictdef-cookiestoresetoptions">
-   <b><a href="#dictdef-cookiestoresetoptions">#dictdef-cookiestoresetoptions</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dictdef-cookieinit">
+   <b><a href="#dictdef-cookieinit">#dictdef-cookieinit</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-cookiestoresetoptions">3. The CookieStore Interface</a> <a href="#ref-for-dictdef-cookiestoresetoptions①">(2)</a>
+    <li><a href="#ref-for-dictdef-cookieinit">3. The CookieStore Interface</a> <a href="#ref-for-dictdef-cookieinit①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-expires">
-   <b><a href="#dom-cookiestoresetoptions-expires">#dom-cookiestoresetoptions-expires</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-cookieinit-name">
+   <b><a href="#dom-cookieinit-name">#dom-cookieinit-name</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-expires">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-expires①">(2)</a>
+    <li><a href="#ref-for-dom-cookieinit-name">3.3. The set() method</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-domain">
-   <b><a href="#dom-cookiestoresetoptions-domain">#dom-cookiestoresetoptions-domain</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-cookieinit-value">
+   <b><a href="#dom-cookieinit-value">#dom-cookieinit-value</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-domain">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-domain①">(2)</a>
+    <li><a href="#ref-for-dom-cookieinit-value">3.3. The set() method</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-path">
-   <b><a href="#dom-cookiestoresetoptions-path">#dom-cookiestoresetoptions-path</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-cookieinit-expires">
+   <b><a href="#dom-cookieinit-expires">#dom-cookieinit-expires</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-path">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-path①">(2)</a>
+    <li><a href="#ref-for-dom-cookieinit-expires">3.3. The set() method</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestoresetoptions-samesite">
-   <b><a href="#dom-cookiestoresetoptions-samesite">#dom-cookiestoresetoptions-samesite</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-cookieinit-domain">
+   <b><a href="#dom-cookieinit-domain">#dom-cookieinit-domain</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetoptions-samesite">3.3. The set() method</a> <a href="#ref-for-dom-cookiestoresetoptions-samesite①">(2)</a>
+    <li><a href="#ref-for-dom-cookieinit-domain">3.3. The set() method</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dictdef-cookiestoresetextraoptions">
-   <b><a href="#dictdef-cookiestoresetextraoptions">#dictdef-cookiestoresetextraoptions</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-cookieinit-path">
+   <b><a href="#dom-cookieinit-path">#dom-cookieinit-path</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-cookiestoresetextraoptions">3. The CookieStore Interface</a>
+    <li><a href="#ref-for-dom-cookieinit-path">3.3. The set() method</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestoresetextraoptions-name">
-   <b><a href="#dom-cookiestoresetextraoptions-name">#dom-cookiestoresetextraoptions-name</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-cookieinit-samesite">
+   <b><a href="#dom-cookieinit-samesite">#dom-cookieinit-samesite</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestoresetextraoptions-name">3.3. The set() method</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestoresetextraoptions-value">
-   <b><a href="#dom-cookiestoresetextraoptions-value">#dom-cookiestoresetextraoptions-value</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cookiestoresetextraoptions-value">3.3. The set() method</a>
+    <li><a href="#ref-for-dom-cookieinit-samesite">3.3. The set() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiestoredeleteoptions">
@@ -4340,12 +4301,6 @@ authoring advice.</p>
     <li><a href="#ref-for-dictdef-cookielistitem③">7.1. Query Cookies</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-cookielistitem-value">
-   <b><a href="#dom-cookielistitem-value">#dom-cookielistitem-value</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cookielistitem-value">7.4. Process Changes</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="typedefdef-cookielist">
    <b><a href="#typedefdef-cookielist">#typedefdef-cookielist</a></b><b>Referenced in:</b>
    <ul>
@@ -4357,19 +4312,19 @@ authoring advice.</p>
   <aside class="dfn-panel" data-for="dom-cookiestore-get">
    <b><a href="#dom-cookiestore-get">#dom-cookiestore-get</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestore-get">1.3. Querying Cookies</a>
-    <li><a href="#ref-for-dom-cookiestore-get①">1.5. Monitoring Cookies</a>
-    <li><a href="#ref-for-dom-cookiestore-get②">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-get③">3.1. The get() method</a>
+    <li><a href="#ref-for-dom-cookiestore-get">1.3. Querying Cookies</a> <a href="#ref-for-dom-cookiestore-get①">(2)</a>
+    <li><a href="#ref-for-dom-cookiestore-get②">1.5. Monitoring Cookies</a>
+    <li><a href="#ref-for-dom-cookiestore-get③">3. The CookieStore Interface</a>
+    <li><a href="#ref-for-dom-cookiestore-get④">3.1. The get() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-get-options">
    <b><a href="#dom-cookiestore-get-options">#dom-cookiestore-get-options</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cookiestore-get-options">1.3. Querying Cookies</a> <a href="#ref-for-dom-cookiestore-get-options①">(2)</a>
-    <li><a href="#ref-for-dom-cookiestore-get-options②">3. The CookieStore Interface</a>
-    <li><a href="#ref-for-dom-cookiestore-get-options③">3.1. The get() method</a> <a href="#ref-for-dom-cookiestore-get-options④">(2)</a>
-    <li><a href="#ref-for-dom-cookiestore-get-options⑤">4.1. The subscribe() method</a>
+    <li><a href="#ref-for-dom-cookiestore-get-options">1.3. Querying Cookies</a>
+    <li><a href="#ref-for-dom-cookiestore-get-options①">3. The CookieStore Interface</a>
+    <li><a href="#ref-for-dom-cookiestore-get-options②">3.1. The get() method</a> <a href="#ref-for-dom-cookiestore-get-options③">(2)</a>
+    <li><a href="#ref-for-dom-cookiestore-get-options④">4.1. The subscribe() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cookiestore-getall">
