@@ -592,7 +592,7 @@ dictionary CookieStoreDeleteOptions {
 };
 
 dictionary CookieListItem {
-  required USVString name;
+  USVString name;
   USVString value;
   USVString? domain;
   USVString path;
