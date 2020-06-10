@@ -252,7 +252,7 @@ Both methods return [=promises=].
 Both methods take the same arguments, which can be either:
 
 * a name, or
-* a optional dictionary of options
+* an optional dictionary of options
 
 The {{CookieStore/get()}} method is essentially a form of {{CookieStore/getAll()}} that only returns the first result.
 
