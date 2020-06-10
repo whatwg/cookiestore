@@ -220,7 +220,7 @@ In Document contexts, `await cookieStore.getAll()` is an equivalent of
 
 In other words, `get` and `getAll` take the same arguments, which can be
 * a name
-* a dictionary of options (optional for `getAll`)
+* an optional dictionary of options
 
 
 ### Read the cookies for a specific URL
