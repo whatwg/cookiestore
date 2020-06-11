@@ -1440,12 +1440,15 @@ Anne van Kesteren,
 Ayu Ishii,
 Ben Kelly,
 Craig Francis,
+Daniel Appelquist,
 Daniel Murphy,
 Domenic Denicola,
 Elliott Sprehn,
 Fagner Brack,
 Jake Archibald,
 Joel Weinberger,
+Kenneth Rohde Christiansen,
+Lukasz Olejnik,
 Marijn Kruisselbrink, and
 Mike West
 for helping craft this proposal.
