@@ -1435,7 +1435,7 @@ Likewise, today reading {{Document/cookie|document.cookie}} in contexts where sc
 ## Clear cookies ## {#clear-cookies}
 <!-- ============================================================ -->
 
-When a user clears cookies for an origin, the browser needs to wipe all storage for that origin; including service workers. This is to prevent service workers from restoring any user identifiers in persisted storage that outlives "clear cookies".
+When a user clears cookies for an origin, the browser needs to wipe all storage for that origin; including service workers. This is to prevent websites from restoring any user identifiers in persistent storage after a user initiates "clear cookies".
 
 <!-- ====================================================================== -->
 # Acknowledgements # {#acknowledgements}
