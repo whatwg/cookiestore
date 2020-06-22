@@ -1367,7 +1367,7 @@ To <dfn>prepare lists</dfn> from |changes|, run the following steps:
 
 
 <!-- ============================================================ -->
-# Security # {#security}
+# Security Considerations # {#security}
 <!-- ============================================================ -->
 
 Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.
@@ -1432,10 +1432,16 @@ Today writing to {{Document/cookie|document.cookie}} in contexts where script-in
 Likewise, today reading {{Document/cookie|document.cookie}} in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.
 
 <!-- ============================================================ -->
+# Privacy Considerations # {#privacy}
+<!-- ============================================================ -->
+
+<!-- ============================================================ -->
 ## Clear cookies ## {#clear-cookies}
 <!-- ============================================================ -->
 
-When a user clears cookies for an origin, the browser needs to wipe all storage for that origin; including service workers. This is to prevent websites from restoring any user identifiers in persistent storage after a user initiates "clear cookies".
+*This section is non-normative.*
+
+When a user clears cookies for an origin, the user agent needs to wipe all storage for that origin; including service workers and [DOM-accessible storage for that origin](https://w3c.github.io/webappsec-clear-site-data/#abstract-opdef-clear-dom-accessible-storage-for-origin). This is to prevent websites from restoring any user identifiers in persistent storage after a user initiates the action.
 
 <!-- ====================================================================== -->
 # Acknowledgements # {#acknowledgements}
