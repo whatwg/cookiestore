@@ -1222,10 +1222,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 792aee41, updated Fri Jun 5 17:22:42 2020 -0700" name="generator">
+  <meta content="Bikeshed version 76c0936a, updated Fri Jun 12 19:44:53 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.png" rel="icon">
-  <meta content="5f59cf003d4527250919fa5999a4e67d81302f74" name="document-revision">
+  <meta content="c4735c5f01362430ae5a2654505a88112bb49a34" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1501,7 +1501,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-06-11">11 June 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-06-23">23 June 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1602,7 +1602,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li><a href="#process-changes"><span class="secno">7.4</span> <span class="content">Process Changes</span></a>
      </ol>
     <li>
-     <a href="#security"><span class="secno">8</span> <span class="content">Security</span></a>
+     <a href="#security"><span class="secno">8</span> <span class="content">Security Considerations</span></a>
      <ol class="toc">
       <li><a href="#gotcha"><span class="secno">8.1</span> <span class="content">Gotcha!</span></a>
       <li><a href="#restrict"><span class="secno">8.2</span> <span class="content">Restrict?</span></a>
@@ -1611,7 +1611,12 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li><a href="#url-scoping"><span class="secno">8.5</span> <span class="content">URL scoping</span></a>
       <li><a href="#aversion"><span class="secno">8.6</span> <span class="content">Cookie aversion</span></a>
      </ol>
-    <li><a href="#acknowledgements"><span class="secno">9</span> <span class="content">Acknowledgements</span></a>
+    <li>
+     <a href="#privacy"><span class="secno">9</span> <span class="content">Privacy Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#clear-cookies"><span class="secno">9.1</span> <span class="content">Clear cookies</span></a>
+     </ol>
+    <li><a href="#acknowledgements"><span class="secno">10</span> <span class="content">Acknowledgements</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -2824,7 +2829,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
       <p>Return <var>changedList</var> and <var>deletedList</var>.</p>
     </ol>
    </div>
-   <h2 class="heading settled" data-level="8" id="security"><span class="secno">8. </span><span class="content">Security</span><a class="self-link" href="#security"></a></h2>
+   <h2 class="heading settled" data-level="8" id="security"><span class="secno">8. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
    <p>Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.</p>
    <h3 class="heading settled" data-level="8.1" id="gotcha"><span class="secno">8.1. </span><span class="content">Gotcha!</span><a class="self-link" href="#gotcha"></a></h3>
    <p>Although browser cookie implementations are now evolving in the direction of better security and fewer surprising and error-prone defaults, there are at present few guarantees about cookie data security.</p>
@@ -2865,7 +2870,11 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <p>To reduce complexity for developers and eliminate the need for ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won’t invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)</p>
    <p>Today writing to <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑦">document.cookie</a></code> in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.</p>
    <p>Likewise, today reading <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑧">document.cookie</a></code> in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.</p>
-   <h2 class="heading settled" data-level="9" id="acknowledgements"><span class="secno">9. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+   <h2 class="heading settled" data-level="9" id="privacy"><span class="secno">9. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
+   <h3 class="heading settled" data-level="9.1" id="clear-cookies"><span class="secno">9.1. </span><span class="content">Clear cookies</span><a class="self-link" href="#clear-cookies"></a></h3>
+   <p><em>This section is non-normative.</em></p>
+   <p>When a user clears cookies for an origin, the user agent needs to wipe all storage for that origin; including service workers and DOM-accessible storage for that origin. This is to prevent websites from restoring any user identifiers in persistent storage after a user initiates the action.</p>
+   <h2 class="heading settled" data-level="10" id="acknowledgements"><span class="secno">10. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>Thanks to Benjamin Sittler, who created the initial proposal for this API.</p>
    <p>Many thanks to
 Adam Barth,
