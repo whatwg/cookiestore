@@ -1362,7 +1362,7 @@ To <dfn>prepare lists</dfn> from |changes|, run the following steps:
 
 
 <!-- ============================================================ -->
-# Security # {#security}
+# Security Considerations # {#security}
 <!-- ============================================================ -->
 
 Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.
@@ -1425,6 +1425,18 @@ To reduce complexity for developers and eliminate the need for ephemeral test co
 Today writing to {{Document/cookie|document.cookie}} in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.
 
 Likewise, today reading {{Document/cookie|document.cookie}} in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.
+
+<!-- ============================================================ -->
+# Privacy Considerations # {#privacy}
+<!-- ============================================================ -->
+
+<!-- ============================================================ -->
+## Clear cookies ## {#clear-cookies}
+<!-- ============================================================ -->
+
+*This section is non-normative.*
+
+When a user clears cookies for an origin, the user agent needs to wipe all storage for that origin; including service workers and DOM-accessible storage for that origin. This is to prevent websites from restoring any user identifiers in persistent storage after a user initiates the action.
 
 <!-- ====================================================================== -->
 # Acknowledgements # {#acknowledgements}
