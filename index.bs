@@ -1441,7 +1441,7 @@ Likewise, today reading {{Document/cookie|document.cookie}} in contexts where sc
 
 *This section is non-normative.*
 
-When a user clears cookies for an origin, the user agent needs to wipe all storage for that origin; including service workers and [DOM-accessible storage for that origin](https://w3c.github.io/webappsec-clear-site-data/#abstract-opdef-clear-dom-accessible-storage-for-origin). This is to prevent websites from restoring any user identifiers in persistent storage after a user initiates the action.
+When a user clears cookies for an origin, the user agent needs to wipe all storage for that origin; including service workers and DOM-accessible storage for that origin. This is to prevent websites from restoring any user identifiers in persistent storage after a user initiates the action.
 
 <!-- ====================================================================== -->
 # Acknowledgements # {#acknowledgements}
