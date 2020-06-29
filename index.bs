@@ -8,7 +8,7 @@ ED: https://wicg.github.io/cookie-store/
 Repository: WICG/cookie-store
 Editor: Victor Costan, Google Inc. https://google.com, costan@google.com
 Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
-Favicon: logo-cookies.png
+Favicon: logo-cookies.svg
 Former Editor: Raymond Toy, Google Inc. https://google.com, rtoy@google.com
 Markup Shorthands: markdown yes, css no, biblio yes
 Abstract: An asynchronous Javascript cookies API for documents and workers
