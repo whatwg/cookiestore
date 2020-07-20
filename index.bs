@@ -1203,6 +1203,7 @@ optional |expires|,
 run the following steps:
 
 1. If |name|'s [=string/length=] is 0 and |value| contains U+003D (`=`), then return failure.
+1. If |name|'s [=string/length=] is 0 and |value|'s [=string/length=0], then return failure.
 1. Let |host| be |url|'s [=url/host=]
 1. Let |attributes| be a new [=list=].
 1. If |domain| is not null, then run these steps:
