@@ -1222,10 +1222,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 04c91f0f, updated Mon Jun 29 08:51:04 2020 +0200" name="generator">
+  <meta content="Bikeshed version a1fcaa3b, updated Fri Jul 17 17:22:25 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="f2958d200b2e9595757d1e164d52b278dac1f47b" name="document-revision">
+  <meta content="8d13504cf215281b72f36260dbeade40bbaee3ec" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1501,7 +1501,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-06-29">29 June 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-07-23">23 July 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2651,6 +2651,8 @@ run the following steps:</p>
      <li data-md>
       <p>If <var>name</var>’s <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-length" id="ref-for-string-length">length</a> is 0 and <var>value</var> contains U+003D (<code>=</code>), then return failure.</p>
      <li data-md>
+      <p>If <var>name</var>’s <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-length" id="ref-for-string-length①">length</a> is 0 and <var>value</var>’s <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-length" id="ref-for-string-length②">length</a> is 0, then return failure.</p>
+     <li data-md>
       <p>Let <var>host</var> be <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host" id="ref-for-concept-url-host">host</a></p>
      <li data-md>
       <p>Let <var>attributes</var> be a new <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list③">list</a>.</p>
@@ -3502,7 +3504,7 @@ authoring advice.</p>
   <aside class="dfn-panel" data-for="term-for-string-length">
    <a href="https://infra.spec.whatwg.org/#string-length">https://infra.spec.whatwg.org/#string-length</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-string-length">7.2. Set a Cookie</a>
+    <li><a href="#ref-for-string-length">7.2. Set a Cookie</a> <a href="#ref-for-string-length①">(2)</a> <a href="#ref-for-string-length②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list">
