@@ -219,9 +219,8 @@ In Document contexts, `await cookieStore.getAll()` is an equivalent of
 `document.cookie`.
 
 In other words, `get` and `getAll` take the same arguments, which can be
+* a name
 * an optional dictionary of options
-* a name and an optional dictionary of options; in this case, the bag must not
-  contain the `name` properties
 
 
 ### Read the cookies for a specific URL
@@ -284,8 +283,10 @@ expiration date to the past still works.
 
 ```javascript
 try {
-  await cookieStore.set('session_id', 'value will be ignored',
-                        { expires: Date.now() - 24 * 60 * 60 * 1000 });
+  await cookieStore.set({
+    name: 'session_id',
+    value: 'value will be ignored',
+    expires: Date.now() - 24 * 60 * 60 * 1000 });
 } catch (e) {
   console.error(`Failed to delete cookie: ${e}`);
 }
