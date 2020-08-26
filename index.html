@@ -1222,10 +1222,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 65c8882a, updated Fri Aug 14 17:43:28 2020 -0700" name="generator">
+  <meta content="Bikeshed version 4eaf75db, updated Tue Aug 25 08:24:50 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="5b2e3d2ab7447e8722974959014bd6f7fc7f4996" name="document-revision">
+  <meta content="95d1d6e952c6ef4f49bec4f5691d286fbe8800ca" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1501,7 +1501,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-08-18">18 August 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-08-26">26 August 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1525,7 +1525,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>An asynchronous Javascript cookies API for documents and workers</p>
+   <p>An asynchronous Javascript cookies API for documents and service workers</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
@@ -1745,13 +1745,9 @@ in <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> 
    <p>Some service workers <a href="https://github.com/w3c/ServiceWorker/issues/707">need access to cookies</a> but
 cannot use the synchronous, blocking <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie②">document.cookie</a></code> interface as they both have no <code>document</code> and
 also cannot block the event loop as that would interfere with handling of unrelated events.</p>
-   <p>A new API may also provide a rare and valuable chance to address
-some <a href="https://github.com/inikulin/cookie-compat">outstanding cross-browser incompatibilities</a> and bring <a href="https://github.com/whatwg/html/issues/804">divergent
-specs and user-agent behavior</a> into closer correspondence.</p>
-   <p>A well-designed and opinionated API may actually make cookies easier to deal with correctly from
-scripts, with the potential effect of reducing their accidental misuse. An efficient monitoring API, in particular,
-can be used to replace power-hungry polling cookie scanners.</p>
-   <p>The API must interoperate well enough with existing cookie APIs (HTTP-level, HTML-level and script-level) that it can be adopted incrementally by a large or complex website.</p>
+   <p>Having an opinionated API with a parsing component and a well-defined mechanism for reporting errors
+has the potential effect of reducing accidental misuse of cookies while encouraging better decisions about security.</p>
+   <p>An efficient monitoring API can be used to replace power-hungry polling cookie scanners.</p>
    <h4 class="heading settled" data-level="1.2.3" id="intro-opinions"><span class="secno">1.2.3. </span><span class="content">Opinions</span><a class="self-link" href="#intro-opinions"></a></h4>
    <p class="issue" id="issue-88fe361f①"><a class="self-link" href="#issue-88fe361f①"></a> Review/rewrite this section.</p>
    <p>This API defaults cookie paths to <code>/</code> for cookie write operations, including deletion/expiration. The implicit relative path-scoping of cookies to <code>.</code> has caused a lot of additional complexity for relatively little gain given their security equivalence under the same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain. Cookie paths without a trailing <code>/</code> are treated as if they had a trailing <code>/</code> appended for cookie write operations. Cookie paths must start with <code>/</code> for write operations, and must not contain any <code>..</code> path segments. Query parameters and URL fragments are not allowed in paths for cookie write operations.</p>
