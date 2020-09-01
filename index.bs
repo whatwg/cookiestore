@@ -173,20 +173,6 @@ Issue: Update the above, especially w/r/t registration.
 
 A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag.
 
-<!-- ============================================================ -->
-### Motivations ### {#intro-motivation}
-<!-- ============================================================ -->
-
-Issue: Review/rewrite this section.
-
-Some service workers [need access to cookies](https://github.com/w3c/ServiceWorker/issues/707) but
-cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface as they both have no `document` and
-also cannot block the event loop as that would interfere with handling of unrelated events.
-
-Having an opinionated API with a parsing component and a well-defined mechanism for reporting errors
-has the potential effect of reducing accidental misuse of cookies while encouraging better decisions about security.
-
-An efficient monitoring API can be used to replace power-hungry polling cookie scanners.
 
 <!-- ============================================================ -->
 ### Opinions ### {#intro-opinions}
