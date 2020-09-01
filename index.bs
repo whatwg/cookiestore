@@ -11,7 +11,7 @@ Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
 Favicon: logo-cookies.svg
 Former Editor: Raymond Toy, Google Inc. https://google.com, rtoy@google.com
 Markup Shorthands: markdown yes, css no, biblio yes
-Abstract: An asynchronous Javascript cookies API for documents and workers
+Abstract: An asynchronous Javascript cookies API for documents and service workers
 Test Suite: https://github.com/web-platform-tests/wpt/tree/master/cookie-store
 </pre>
 
@@ -183,15 +183,10 @@ Some service workers [need access to cookies](https://github.com/w3c/ServiceWork
 cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface as they both have no `document` and
 also cannot block the event loop as that would interfere with handling of unrelated events.
 
-A new API may also provide a rare and valuable chance to address
-some [outstanding cross-browser incompatibilities](https://github.com/inikulin/cookie-compat) and bring [divergent
-specs and user-agent behavior](https://github.com/whatwg/html/issues/804) into closer correspondence.
+Having an opinionated API with a parsing component and a well-defined mechanism for reporting errors
+has the potential effect of reducing accidental misuse of cookies while encouraging better decisions about security.
 
-A well-designed and opinionated API may actually make cookies easier to deal with correctly from
-scripts, with the potential effect of reducing their accidental misuse. An efficient monitoring API, in particular,
-can be used to replace power-hungry polling cookie scanners.
-
-The API must interoperate well enough with existing cookie APIs (HTTP-level, HTML-level and script-level) that it can be adopted incrementally by a large or complex website.
+An efficient monitoring API can be used to replace power-hungry polling cookie scanners.
 
 <!-- ============================================================ -->
 ### Opinions ### {#intro-opinions}
