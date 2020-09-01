@@ -6,6 +6,7 @@ Status: CG-DRAFT
 Group: WICG
 ED: https://wicg.github.io/cookie-store/
 Repository: WICG/cookie-store
+Editor: Ayu Ishii, Google Inc. https://google.com, ayui@google.com
 Editor: Victor Costan, Google Inc. https://google.com, costan@google.com
 Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
 Favicon: logo-cookies.svg
@@ -1445,7 +1446,6 @@ Adam Barth,
 Alex Russell,
 Andrea Marchesini,
 Anne van Kesteren,
-Ayu Ishii,
 Ben Kelly,
 Craig Francis,
 Daniel Appelquist,
