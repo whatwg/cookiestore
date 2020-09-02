@@ -6,6 +6,7 @@ Status: CG-DRAFT
 Group: WICG
 ED: https://wicg.github.io/cookie-store/
 Repository: WICG/cookie-store
+Editor: Ayu Ishii, Google Inc. https://google.com, ayui@google.com
 Editor: Victor Costan, Google Inc. https://google.com, costan@google.com
 Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
 Favicon: logo-cookies.svg
@@ -173,20 +174,6 @@ Issue: Update the above, especially w/r/t registration.
 
 A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag.
 
-<!-- ============================================================ -->
-### Motivations ### {#intro-motivation}
-<!-- ============================================================ -->
-
-Issue: Review/rewrite this section.
-
-Some service workers [need access to cookies](https://github.com/w3c/ServiceWorker/issues/707) but
-cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface as they both have no `document` and
-also cannot block the event loop as that would interfere with handling of unrelated events.
-
-Having an opinionated API with a parsing component and a well-defined mechanism for reporting errors
-has the potential effect of reducing accidental misuse of cookies while encouraging better decisions about security.
-
-An efficient monitoring API can be used to replace power-hungry polling cookie scanners.
 
 <!-- ============================================================ -->
 ### Opinions ### {#intro-opinions}
@@ -247,7 +234,7 @@ Both methods return [=promises=].
 Both methods take the same arguments, which can be either:
 
 * a name, or
-* an optional dictionary of options
+* a dictionary of options (optional for {{CookieStore/getAll()}})
 
 The {{CookieStore/get()}} method is essentially a form of {{CookieStore/getAll()}} that only returns the first result.
 
@@ -637,6 +624,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be the [=current settings object=]'s [=creation URL=].
+1. If |options| is empty, then return [=a promise rejected with=] a {{TypeError}}.
 1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|' {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
     1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
@@ -1445,7 +1433,6 @@ Adam Barth,
 Alex Russell,
 Andrea Marchesini,
 Anne van Kesteren,
-Ayu Ishii,
 Ben Kelly,
 Craig Francis,
 Daniel Appelquist,
