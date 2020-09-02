@@ -20,7 +20,7 @@ Test Suite: https://github.com/web-platform-tests/wpt/tree/master/cookie-store
 {
   "RFC6265bis": {
     "authors": [ "A. Barth", "M. West" ],
-    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03",
+    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis",
     "title": "Cookies: HTTP State Management Mechanism",
     "publisher": "IETF",
     "status": "Internet-Draft"
