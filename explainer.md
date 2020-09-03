@@ -203,9 +203,7 @@ try {
 
 ```javascript
 try {
-  const cookies = await cookieStore.getAll({
-    name: 'session_id'
-  });
+  const cookies = await cookieStore.getAll('session_id');
   for (const cookie of cookies)
     console.log(`Result: ${cookie.name} = ${cookie.value}`);
 } catch (e) {
