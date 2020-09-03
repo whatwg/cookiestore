@@ -204,8 +204,7 @@ try {
 ```javascript
 try {
   const cookies = await cookieStore.getAll({
-    name: 'session_',
-    matchType: 'starts-with',
+    name: 'session_id'
   });
   for (const cookie of cookies)
     console.log(`Result: ${cookie.name} = ${cookie.value}`);
@@ -386,8 +385,7 @@ self.addEventListener('activate', (event) => {
 
     await self.registration.cookies.subscribe([
       {
-        name: 'session',  // Get change events for session-related cookies.
-        matchType: 'starts-with',  // Matches session_id, session-id, etc.
+        name: 'session_id',  // Get change events for cookies named session_id.
       }
     ]);
   });
@@ -634,11 +632,6 @@ nature of `document.cookie`.
 [inikulin/cookie-compat](https://github.com/inikulin/cookie-compat) is a test
 suite that highlights differences between RFC 6265bis and the way current
 browsers handle cookies.
-
-The
-[Google+ API](https://developers.google.com/+/web/api/javascript#gapiinteractivepost_interactive_posts)
-is a prominent library that identifies cookies based on a name prefix, and
-therefore needs the `matchType: 'starts-with'` option in the query API.
 
 The [chrome.cookies](https://developers.chrome.com/extensions/cookies)
 API (and the [WebExtensions adaptation of the
