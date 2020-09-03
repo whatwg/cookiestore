@@ -1225,7 +1225,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version 64239377, updated Wed Sep 2 16:55:52 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="035ad0f876cb7d9a68048a8bfffe0bef1c89fd1f" name="document-revision">
+  <meta content="af6abcb79931838f98e8d9d0ce1fbfb11b980bdb" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -2506,13 +2506,13 @@ scope in a <code class="idl"><a data-link-type="idl" href="https://html.spec.wha
    <h3 class="heading settled" data-level="6.1" id="Window"><span class="secno">6.1. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window④">Window</a></code> interface</span><a class="self-link" href="#Window"></a></h3>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext③"><c- g>SecureContext</c-></a>]
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window⑤"><c- g>Window</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore④"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore②"><c- g>cookieStore</c-></a>;
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore④"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore②"><c- g>cookieStore</c-></a>;
 };
 </pre>
    <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export id="dom-window-cookiestore"><code>cookieStore</code></dfn> getter steps are to return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this⑦">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object④">relevant settings object</a>'s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑤">CookieStore</a></code> object.</p>
    <h3 class="heading settled" data-level="6.2" id="ServiceWorkerGlobalScope"><span class="secno">6.2. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope②">ServiceWorkerGlobalScope</a></code> interface</span><a class="self-link" href="#ServiceWorkerGlobalScope"></a></h3>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope③"><c- g>ServiceWorkerGlobalScope</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable" id="ref-for-Replaceable①"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore⑥"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore"><c- g>cookieStore</c-></a>;
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore⑥"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore"><c- g>cookieStore</c-></a>;
 
   <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler①"><c- n>EventHandler</c-></a> <dfn class="idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code><a class="self-link" href="#dom-serviceworkerglobalscope-oncookiechange"></a></dfn>;
 };
@@ -3646,13 +3646,6 @@ authoring advice.</p>
     <li><a href="#ref-for-Exposed⑤">5.2. The ExtendableCookieChangeEvent interface</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-Replaceable">
-   <a href="https://heycam.github.io/webidl/#Replaceable">https://heycam.github.io/webidl/#Replaceable</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-Replaceable">6.1. The Window interface</a>
-    <li><a href="#ref-for-Replaceable①">6.2. The ServiceWorkerGlobalScope interface</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-SameObject">
    <a href="https://heycam.github.io/webidl/#SameObject">https://heycam.github.io/webidl/#SameObject</a><b>Referenced in:</b>
    <ul>
@@ -3863,7 +3856,6 @@ authoring advice.</p>
      <li><span class="dfn-paneled" id="term-for-idl-DOMString" style="color:initial">DOMString</span>
      <li><span class="dfn-paneled" id="term-for-DOMTimeStamp" style="color:initial">DOMTimeStamp</span>
      <li><span class="dfn-paneled" id="term-for-Exposed" style="color:initial">Exposed</span>
-     <li><span class="dfn-paneled" id="term-for-Replaceable" style="color:initial">Replaceable</span>
      <li><span class="dfn-paneled" id="term-for-SameObject" style="color:initial">SameObject</span>
      <li><span class="dfn-paneled" id="term-for-SecureContext" style="color:initial">SecureContext</span>
      <li><span class="dfn-paneled" id="term-for-securityerror" style="color:initial">SecurityError</span>
@@ -4011,11 +4003,11 @@ authoring advice.</p>
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext"><c- g>SecureContext</c-></a>]
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/window-object.html#window"><c- g>Window</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-window-cookiestore"><c- g>cookieStore</c-></a>;
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-window-cookiestore"><c- g>cookieStore</c-></a>;
 };
 
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope"><c- g>ServiceWorkerGlobalScope</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Replaceable"><c- g>Replaceable</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-serviceworkerglobalscope-cookiestore"><c- g>cookieStore</c-></a>;
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-serviceworkerglobalscope-cookiestore"><c- g>cookieStore</c-></a>;
 
   <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"><c- n>EventHandler</c-></a> <a data-type="EventHandler" href="#dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code></a>;
 };
