@@ -555,7 +555,7 @@ BAD
 
 ```javascript
 await cookieStore.delete('session-id');
-fetch('/auth');  // The response inclues the HTTP header Cookie: session-id=new.
+fetch('/auth');  // The response includes the HTTP header Cookie: session-id=new.
 const cookie = await cookieStore.get('session-id');
 // The fetch response processing and the cookieStore.get operations are racing.
 // |cookie| may be null or a dictionary including {name: "session-id"}.
