@@ -1222,10 +1222,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 64239377, updated Wed Sep 2 16:55:52 2020 -0700" name="generator">
+  <meta content="Bikeshed version e2e6e5d1, updated Fri Sep 4 10:16:46 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="af6abcb79931838f98e8d9d0ce1fbfb11b980bdb" name="document-revision">
+  <meta content="d8d26002884256209a8779fedfce680dde5e9a95" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1501,7 +1501,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-03">3 September 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-08">8 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1793,13 +1793,10 @@ Both methods take the same arguments, which can be either:</p>
 <c- p>}</c->
 </pre>
    </div>
-   <div class="example" id="example-c8309e80">
-    <a class="self-link" href="#example-c8309e80"></a> Reading multiple cookies: 
+   <div class="example" id="example-9453f9c5">
+    <a class="self-link" href="#example-9453f9c5"></a> Reading multiple cookies: 
 <pre class="language-js highlight"><c- k>try</c-> <c- p>{</c->
-  <c- kr>const</c-> cookies <c- o>=</c-> await cookieStore<c- p>.</c->getAll<c- p>({</c->
-    name<c- o>:</c-> <c- t>'session_'</c-><c- p>,</c->
-    matchType<c- o>:</c-> <c- t>'starts-with'</c-><c- p>,</c->
-  <c- p>});</c->
+  <c- kr>const</c-> cookies <c- o>=</c-> await cookieStore<c- p>.</c->getAll<c- p>(</c-><c- t>'session_id'</c-><c- p>});</c->
   <c- k>for</c-> <c- p>(</c-><c- kr>const</c-> cookie <c- k>of</c-> cookies<c- p>)</c->
     console<c- p>.</c->log<c- p>(</c-><c- sb>`Result: </c-><c- si>${</c->cookie<c- p>.</c->name<c- si>}</c-><c- sb> = </c-><c- si>${</c->cookie<c- p>.</c->value<c- si>}</c-><c- sb>`</c-><c- p>);</c->
 <c- p>}</c-> <c- k>catch</c-> <c- p>(</c->e<c- p>)</c-> <c- p>{</c->
@@ -1894,8 +1891,8 @@ console<c- p>.</c->log<c- p>(</c-><c- sb>`Cookie scope - Domain: </c-><c- si>${<
 </pre>
    </div>
    <p>In <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker④">service workers</a>, <code>cookiechange</code> events are fired against the global scope, but an explicit subscription is required, associated with the service worker’s registration.</p>
-   <div class="example" id="example-e261f390">
-    <a class="self-link" href="#example-e261f390"></a> Register for <code>cookiechange</code> events in a service worker: 
+   <div class="example" id="example-1ce710fe">
+    <a class="self-link" href="#example-1ce710fe"></a> Register for <code>cookiechange</code> events in a service worker: 
 <pre class="language-js highlight">self<c- p>.</c->addEventListener<c- p>(</c-><c- t>'activate'</c-><c- p>,</c-> <c- p>(</c->event<c- p>)</c-> <c- p>=></c-> <c- p>{</c->
   event<c- p>.</c->waitUntil<c- p>(</c->async <c- p>()</c-> <c- p>=></c-> <c- p>{</c->
     <c- c1>// Snapshot current state of subscriptions.</c->
@@ -1906,8 +1903,7 @@ console<c- p>.</c->log<c- p>(</c-><c- sb>`Cookie scope - Domain: </c-><c- si>${<
 
     await self<c- p>.</c->registration<c- p>.</c->cookies<c- p>.</c->subscribe<c- p>([</c->
       <c- p>{</c->
-        name<c- o>:</c-> <c- t>'session'</c-><c- p>,</c->  <c- c1>// Get change events for session-related cookies.</c->
-        matchType<c- o>:</c-> <c- t>'starts-with'</c-><c- p>,</c->  <c- c1>// Matches session_id, session-id, etc.</c->
+        name<c- o>:</c-> <c- t>'session_id'</c-><c- p>,</c->  <c- c1>// Get change events for cookies named session_id.</c->
       <c- p>}</c->
     <c- p>]);</c->
   <c- p>});</c->
@@ -1932,11 +1928,11 @@ to a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-reques
 require waking up the worker, which has a significant impact on battery life.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-getsubscriptions" id="ref-for-dom-cookiestoremanager-getsubscriptions">getSubscriptions()</a></code> allows a <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker⑧">service worker</a> to introspect
 the subscriptions that have been made.</p>
-   <div class="example" id="example-ef0cb9c6">
-    <a class="self-link" href="#example-ef0cb9c6"></a> Checking change subscriptions: 
+   <div class="example" id="example-b01daf53">
+    <a class="self-link" href="#example-b01daf53"></a> Checking change subscriptions: 
 <pre class="language-js highlight">   <c- kr>const</c-> subscriptions <c- o>=</c-> await cookieStore<c- p>.</c->getChangeSubscriptions<c- p>();</c->
    <c- k>for</c-> <c- p>(</c-><c- kr>const</c-> sub <c- k>of</c-> subscriptions<c- p>)</c-> <c- p>{</c->
-     console<c- p>.</c->log<c- p>(</c->sub<c- p>.</c->name<c- p>,</c-> sub<c- p>.</c->url<c- p>,</c-> sub<c- p>.</c->matchType<c- p>);</c->
+     console<c- p>.</c->log<c- p>(</c->sub<c- p>.</c->name<c- p>,</c-> sub<c- p>.</c->url<c- p>);</c->
    <c- p>}</c->
 </pre>
    </div>
@@ -1959,7 +1955,7 @@ the subscriptions that have been made.</p>
    <h3 class="heading settled" data-level="2.3" id="service-worker-extensions"><span class="secno">2.3. </span><span class="content">Extensions to Service Worker</span><a class="self-link" href="#service-worker-extensions"></a></h3>
    <p><a data-link-type="biblio" href="#biblio-service-workers">[Service-Workers]</a> defines <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration①">service worker registration</a>, which this specification extends.</p>
    <p>A <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration②">service worker registration</a> has an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-list">cookie change subscription list</dfn> which is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list">list</a>;
-each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-change-subscription">cookie change subscription</dfn>. A <a data-link-type="dfn" href="#cookie-change-subscription" id="ref-for-cookie-change-subscription">cookie change subscription</a> is <span> a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> of <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-name">name</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-url">url</dfn>, and <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-matchtype">matchType</dfn>. </span></p>
+each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-change-subscription">cookie change subscription</dfn>. A <a data-link-type="dfn" href="#cookie-change-subscription" id="ref-for-cookie-change-subscription">cookie change subscription</a> is <span> a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> of <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-name">name</dfn> and <dfn class="dfn-paneled" data-dfn-for="cookie change subscription" data-dfn-type="dfn" data-noexport id="cookie-change-subscription-url">url</dfn>. </span></p>
    <h2 class="heading settled" data-level="3" id="CookieStore"><span class="secno">3. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore①">CookieStore</a></code> Interface</span><a class="self-link" href="#CookieStore"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=(<c- n>ServiceWorker</c->,<c- n>Window</c->),
  <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext"><c- g>SecureContext</c-></a>]
@@ -1980,15 +1976,9 @@ each member is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="
   <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler"><c- n>EventHandler</c-></a> <dfn class="idl-code" data-dfn-for="CookieStore" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-cookiestore-onchange"><code><c- g>onchange</c-></code><a class="self-link" href="#dom-cookiestore-onchange"></a></dfn>;
 };
 
-<c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-cookiematchtype"><code><c- g>CookieMatchType</c-></code></dfn> {
-  <dfn class="dfn-paneled idl-code" data-dfn-for="CookieMatchType" data-dfn-type="enum-value" data-export id="dom-cookiematchtype-equals"><code><c- s>"equals"</c-></code></dfn>,
-  <dfn class="dfn-paneled idl-code" data-dfn-for="CookieMatchType" data-dfn-type="enum-value" data-export id="dom-cookiematchtype-starts-with"><code><c- s>"starts-with"</c-></code></dfn>
-};
-
 <c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cookiestoregetoptions"><code><c- g>CookieStoreGetOptions</c-></code></dfn> {
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑥"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStoreGetOptions" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookiestoregetoptions-name"><code><c- g>name</c-></code></dfn>;
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString⑦"><c- b>USVString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="CookieStoreGetOptions" data-dfn-type="dict-member" data-export data-type="USVString " id="dom-cookiestoregetoptions-url"><code><c- g>url</c-></code></dfn>;
-  <a class="n" data-link-type="idl-name" href="#enumdef-cookiematchtype" id="ref-for-enumdef-cookiematchtype"><c- n>CookieMatchType</c-></a> <dfn class="dfn-paneled idl-code" data-default="&quot;equals&quot;" data-dfn-for="CookieStoreGetOptions" data-dfn-type="dict-member" data-export data-type="CookieMatchType " id="dom-cookiestoregetoptions-matchtype"><code><c- g>matchType</c-></code></dfn> = "equals";
 };
 
 <c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-cookiesamesite"><code><c- g>CookieSameSite</c-></code></dfn> {
@@ -2094,7 +2084,7 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
       <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel①">in parallel</a>:</p>
       <ol>
        <li data-md>
-        <p>Let <var>list</var> be the results of running <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies①">query cookies</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name">name</a></code> dictionary member (if present), and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype">matchType</a></code> dictionary member.</p>
+        <p>Let <var>list</var> be the results of running <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies①">query cookies</a> with <var>url</var> and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name">name</a></code> dictionary member (if present).</p>
        <li data-md>
         <p>If <var>list</var> is failure, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject①">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror④">TypeError</a></code> and abort these steps.</p>
        <li data-md>
@@ -2171,7 +2161,7 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
       <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel③">in parallel</a>:</p>
       <ol>
        <li data-md>
-        <p>Let <var>list</var> be the results of running <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies③">query cookies</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name①">name</a></code> dictionary member (if present), and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype①">matchType</a></code> dictionary member.</p>
+        <p>Let <var>list</var> be the results of running <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies③">query cookies</a> with <var>url</var> and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name①">name</a></code> dictionary member (if present).</p>
        <li data-md>
         <p>If <var>list</var> is failure, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject③">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code>.</p>
        <li data-md>
@@ -2329,7 +2319,7 @@ true, and
     <dl>
      <dt data-md>await <var>registration</var> . cookies . <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-subscribe" id="ref-for-dom-cookiestoremanager-subscribe④">subscribe</a></code>(<var>subscriptions</var>)
      <dd data-md>
-      <p>Subscribe to changes to cookies. Subscriptions can use the same options as <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options⑦">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options⑧">getAll()</a></code>, with optional <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name②">name</a></code>, <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑤">url</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype②">matchType</a></code> properties.</p>
+      <p>Subscribe to changes to cookies. Subscriptions can use the same options as <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-get-options" id="ref-for-dom-cookiestore-get-options⑦">get()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestore-getall-options" id="ref-for-dom-cookiestore-getall-options⑧">getAll()</a></code>, with optional <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name②">name</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑤">url</a></code> properties.</p>
       <p>Once subscribed, notifications are delivered as "<code>cookiechange</code>" events fired against the <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker①⓪">Service Worker</a>'s global scope:</p>
     </dl>
    </div>
@@ -2356,9 +2346,7 @@ true, and
           <p>If <var>url</var> does not start with <var>registration</var>’s <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-scope-url" id="ref-for-dfn-scope-url①">scope url</a>,
 then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑧">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①③">TypeError</a></code> and abort these steps.</p>
          <li data-md>
-          <p>Let <var>matchType</var> be <var>entry</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype③">matchType</a></code> member.</p>
-         <li data-md>
-          <p>Let <var>subscription</var> be the <a data-link-type="dfn" href="#cookie-change-subscription" id="ref-for-cookie-change-subscription①">cookie change subscription</a> (<var>name</var>, <var>url</var>, <var>matchType</var>).</p>
+          <p>Let <var>subscription</var> be the <a data-link-type="dfn" href="#cookie-change-subscription" id="ref-for-cookie-change-subscription①">cookie change subscription</a> (<var>name</var>, <var>url</var>).</p>
          <li data-md>
           <p>If <var>subscription list</var> does not already <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain">contain</a> <var>subscription</var>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append">append</a> <var>subscription</var> to <var>subscription list</var>.</p>
         </ol>
@@ -2395,7 +2383,7 @@ then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="
         <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate①">For each</a> <var>subscription</var> in <var>subscriptions</var>, run these steps:</p>
         <ol>
          <li data-md>
-          <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append①">Append</a> «[ "name" → <var>subscription</var>’s <a data-link-type="dfn" href="#cookie-change-subscription-name" id="ref-for-cookie-change-subscription-name">name</a>, "url" → <var>subscription</var>’s <a data-link-type="dfn" href="#cookie-change-subscription-url" id="ref-for-cookie-change-subscription-url">url</a>, "matchType" → <var>subscription</var>’s <a data-link-type="dfn" href="#cookie-change-subscription-matchtype" id="ref-for-cookie-change-subscription-matchtype">matchType</a> ]» to <var>result</var>.</p>
+          <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append①">Append</a> «[ "name" → <var>subscription</var>’s <a data-link-type="dfn" href="#cookie-change-subscription-name" id="ref-for-cookie-change-subscription-name">name</a>, "url" → <var>subscription</var>’s <a data-link-type="dfn" href="#cookie-change-subscription-url" id="ref-for-cookie-change-subscription-url">url</a>]» to <var>result</var>.</p>
         </ol>
        <li data-md>
         <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve①①">Resolve</a> <var>p</var> with <var>result</var>.</p>
@@ -2435,9 +2423,7 @@ then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="
           <p>If <var>url</var> does not start with <var>registration</var>’s <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-scope-url" id="ref-for-dfn-scope-url②">scope url</a>,
 then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑨">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①④">TypeError</a></code> and abort these steps.</p>
          <li data-md>
-          <p>Let <var>matchType</var> be <var>entry</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-matchtype" id="ref-for-dom-cookiestoregetoptions-matchtype④">matchType</a></code> member.</p>
-         <li data-md>
-          <p>Let <var>subscription</var> be the <a data-link-type="dfn" href="#cookie-change-subscription" id="ref-for-cookie-change-subscription②">cookie change subscription</a> (<var>name</var>, <var>url</var>, <var>matchType</var>).</p>
+          <p>Let <var>subscription</var> be the <a data-link-type="dfn" href="#cookie-change-subscription" id="ref-for-cookie-change-subscription②">cookie change subscription</a> (<var>name</var>, <var>url</var>).</p>
          <li data-md>
           <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-remove" id="ref-for-list-remove">Remove</a> any <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-item" id="ref-for-list-item">item</a> from <var>subscription list</var> equal to <var>subscription</var>.</p>
         </ol>
@@ -2533,9 +2519,8 @@ let <var>dateTime</var> be the date and time <var>millis</var> milliseconds afte
 and return a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-sequence" id="ref-for-byte-sequence①">byte sequence</a> corresponding to the closest <code>cookie-date</code> representation of <var>dateTime</var> according to <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-5.1.1">Cookies: HTTP State Management Mechanism §Dates</a>. </div>
    <h3 class="heading settled" data-level="7.1" id="query-cookies-algorithm"><span class="secno">7.1. </span><span class="content">Query Cookies</span><a class="self-link" href="#query-cookies-algorithm"></a></h3>
    <div class="algorithm" data-algorithm="query cookies">
-    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="query-cookies">query cookies</dfn> with <var>url</var>,
-optional <var>name</var>, and
-optional <var>matchType</var>,
+    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="query-cookies">query cookies</dfn> with <var>url</var> and
+optional <var>name</var>,
 run the following steps:</p>
     <ol>
      <li data-md>
@@ -2556,7 +2541,7 @@ The <var>cookie-string</var> itself is ignored, but the intermediate <var>cookie
          <li data-md>
           <p>Let <var>cookieName</var> be <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name①">name</a> (<a data-link-type="dfn" href="#decode" id="ref-for-decode">decoded</a>).</p>
          <li data-md>
-          <p>If <var>cookieName</var> does not <a data-link-type="dfn" href="#matches" id="ref-for-matches">match</a> <var>name</var> using <var>matchType</var>,
+          <p>If <var>cookieName</var> does not equal <var>name</var>,
  then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue">continue</a>.</p>
         </ol>
        <li data-md>
@@ -2567,30 +2552,6 @@ The <var>cookie-string</var> itself is ignored, but the intermediate <var>cookie
      <li data-md>
       <p>Return <var>list</var>.</p>
     </ol>
-   </div>
-   <div class="algorithm" data-algorithm="matches">
-    <p>A <var>cookieName</var> <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="matches">matches</dfn> <var>matchName</var> using <var>matchType</var> if the following steps return true:</p>
-    <ol>
-     <li data-md>
-      <p>Switch on <var>matchType</var>:</p>
-      <dl class="switch">
-       <dt data-md>unspecified
-       <dd data-md>
-        <p>Return true.</p>
-       <dt data-md>"<code class="idl"><a data-link-type="idl" href="#dom-cookiematchtype-equals" id="ref-for-dom-cookiematchtype-equals">equals</a></code>"
-       <dd data-md>
-        <p>If <var>cookieName</var> does not equal <var>matchName</var>,
-then return false.</p>
-       <dt data-md>"<code class="idl"><a data-link-type="idl" href="#dom-cookiematchtype-starts-with" id="ref-for-dom-cookiematchtype-starts-with">starts-with</a></code>"
-       <dd data-md>
-        <p>If <var>cookieName</var> does not start with <var>matchName</var>,
-then return false.</p>
-      </dl>
-     <li data-md>
-      <p>Return true.</p>
-    </ol>
-    <p class="note" role="note"><span>Note:</span> If <var>matchName</var> is the empty string and <var>matchType</var> is "<code class="idl"><a data-link-type="idl" href="#dom-cookiematchtype-starts-with" id="ref-for-dom-cookiematchtype-starts-with①">starts-with</a></code>",
-       then all <var>cookieName</var>s are matched.</p>
    </div>
    <div class="algorithm" data-algorithm="create a CookieListItem">
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="create-a-cookielistitem">create a <code class="idl"><a data-link-type="idl" href="#dictdef-cookielistitem" id="ref-for-dictdef-cookielistitem③">CookieListItem</a></code></dfn> from <var>cookie</var>, run the following steps.</p>
@@ -2736,7 +2697,7 @@ by this algorithm.</p>
             <p>If <var>change</var> is not <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain①">in</a> the <a data-link-type="dfn" href="#observable-changes" id="ref-for-observable-changes②">observable changes</a> for <var>subscription</var>’s <a data-link-type="dfn" href="#cookie-change-subscription-url" id="ref-for-cookie-change-subscription-url①">url</a>,
 then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue②">continue</a>.</p>
            <li data-md>
-            <p>If <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name③">name</a> (<a data-link-type="dfn" href="#decode" id="ref-for-decode⑤">decoded</a>) <a data-link-type="dfn" href="#matches" id="ref-for-matches①">matches</a> <var>subscription</var>’s <a data-link-type="dfn" href="#cookie-change-subscription-name" id="ref-for-cookie-change-subscription-name①">name</a> using <var>subscription</var>’s <a data-link-type="dfn" href="#cookie-change-subscription-matchtype" id="ref-for-cookie-change-subscription-matchtype①">matchType</a>,
+            <p>If <var>cookie</var>’s <a data-link-type="dfn" href="#cookie-name" id="ref-for-cookie-name③">name</a> (<a data-link-type="dfn" href="#decode" id="ref-for-decode⑤">decoded</a>) equals <var>subscription</var>’s <a data-link-type="dfn" href="#cookie-change-subscription-name" id="ref-for-cookie-change-subscription-name①">name</a>,
 then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append">append</a> <var>change</var> to <var>changes</var> and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-break" id="ref-for-iteration-break">break</a>.</p>
           </ol>
         </ol>
@@ -3072,7 +3033,6 @@ authoring advice.</p>
    <li><a href="#dictdef-cookieinit">CookieInit</a><span>, in §3</span>
    <li><a href="#typedefdef-cookielist">CookieList</a><span>, in §3</span>
    <li><a href="#dictdef-cookielistitem">CookieListItem</a><span>, in §3</span>
-   <li><a href="#enumdef-cookiematchtype">CookieMatchType</a><span>, in §3</span>
    <li><a href="#dom-serviceworkerregistration-cookies">cookies</a><span>, in §4.4</span>
    <li><a href="#enumdef-cookiesamesite">CookieSameSite</a><span>, in §3</span>
    <li><a href="#cookie-store">cookie store</a><span>, in §2.2</span>
@@ -3110,7 +3070,6 @@ authoring advice.</p>
      <li><a href="#dom-cookiestoredeleteoptions-domain">dict-member for CookieStoreDeleteOptions</a><span>, in §3</span>
     </ul>
    <li><a href="#encode">encode</a><span>, in §7</span>
-   <li><a href="#dom-cookiematchtype-equals">"equals"</a><span>, in §3</span>
    <li>
     expires
     <ul>
@@ -3134,13 +3093,6 @@ authoring advice.</p>
    <li><a href="#cookie-http-only-flag">http-only-flag</a><span>, in §2.1</span>
    <li><a href="#cookie-last-access-time">last-access-time</a><span>, in §2.1</span>
    <li><a href="#dom-cookiesamesite-lax">"lax"</a><span>, in §3</span>
-   <li><a href="#matches">matches</a><span>, in §7.1</span>
-   <li>
-    matchType
-    <ul>
-     <li><a href="#cookie-change-subscription-matchtype">dfn for cookie change subscription</a><span>, in §2.3</span>
-     <li><a href="#dom-cookiestoregetoptions-matchtype">dict-member for CookieStoreGetOptions</a><span>, in §3</span>
-    </ul>
    <li>
     name
     <ul>
@@ -3180,7 +3132,6 @@ authoring advice.</p>
    <li><a href="#set-a-cookie">set a cookie</a><span>, in §7.2</span>
    <li><a href="#dom-cookiestore-set">set(name, value)</a><span>, in §3.3</span>
    <li><a href="#dom-cookiestore-set-options">set(options)</a><span>, in §3.3</span>
-   <li><a href="#dom-cookiematchtype-starts-with">"starts-with"</a><span>, in §3</span>
    <li><a href="#dom-cookiesamesite-strict">"strict"</a><span>, in §3</span>
    <li><a href="#dom-cookiestoremanager-subscribe">subscribe(subscriptions)</a><span>, in §4.1</span>
    <li><a href="#dom-cookiestoremanager-unsubscribe">unsubscribe(subscriptions)</a><span>, in §4.3</span>
@@ -3919,15 +3870,9 @@ authoring advice.</p>
   <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"><c- n>EventHandler</c-></a> <a data-type="EventHandler" href="#dom-cookiestore-onchange"><code><c- g>onchange</c-></code></a>;
 };
 
-<c- b>enum</c-> <a href="#enumdef-cookiematchtype"><code><c- g>CookieMatchType</c-></code></a> {
-  <a href="#dom-cookiematchtype-equals"><code><c- s>"equals"</c-></code></a>,
-  <a href="#dom-cookiematchtype-starts-with"><code><c- s>"starts-with"</c-></code></a>
-};
-
 <c- b>dictionary</c-> <a href="#dictdef-cookiestoregetoptions"><code><c- g>CookieStoreGetOptions</c-></code></a> {
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-type="USVString " href="#dom-cookiestoregetoptions-name"><code><c- g>name</c-></code></a>;
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a data-type="USVString " href="#dom-cookiestoregetoptions-url"><code><c- g>url</c-></code></a>;
-  <a class="n" data-link-type="idl-name" href="#enumdef-cookiematchtype"><c- n>CookieMatchType</c-></a> <a data-default="&quot;equals&quot;" data-type="CookieMatchType " href="#dom-cookiestoregetoptions-matchtype"><code><c- g>matchType</c-></code></a> = "equals";
 };
 
 <c- b>enum</c-> <a href="#enumdef-cookiesamesite"><code><c- g>CookieSameSite</c-></code></a> {
@@ -4155,13 +4100,6 @@ authoring advice.</p>
     <li><a href="#ref-for-cookie-change-subscription-url①">7.4. Process Changes</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="cookie-change-subscription-matchtype">
-   <b><a href="#cookie-change-subscription-matchtype">#cookie-change-subscription-matchtype</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-cookie-change-subscription-matchtype">4.2. The getSubscriptions() method</a>
-    <li><a href="#ref-for-cookie-change-subscription-matchtype①">7.4. Process Changes</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="cookiestore">
    <b><a href="#cookiestore">#cookiestore</a></b><b>Referenced in:</b>
    <ul>
@@ -4172,24 +4110,6 @@ authoring advice.</p>
     <li><a href="#ref-for-cookiestore④">6.1. The Window interface</a> <a href="#ref-for-cookiestore⑤">(2)</a>
     <li><a href="#ref-for-cookiestore⑥">6.2. The ServiceWorkerGlobalScope interface</a> <a href="#ref-for-cookiestore⑦">(2)</a>
     <li><a href="#ref-for-cookiestore⑧">7.4. Process Changes</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="enumdef-cookiematchtype">
-   <b><a href="#enumdef-cookiematchtype">#enumdef-cookiematchtype</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-enumdef-cookiematchtype">3. The CookieStore Interface</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-cookiematchtype-equals">
-   <b><a href="#dom-cookiematchtype-equals">#dom-cookiematchtype-equals</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cookiematchtype-equals">7.1. Query Cookies</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-cookiematchtype-starts-with">
-   <b><a href="#dom-cookiematchtype-starts-with">#dom-cookiematchtype-starts-with</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cookiematchtype-starts-with">7.1. Query Cookies</a> <a href="#ref-for-dom-cookiematchtype-starts-with①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cookiestoregetoptions">
@@ -4216,15 +4136,6 @@ authoring advice.</p>
     <li><a href="#ref-for-dom-cookiestoregetoptions-url③">3.2. The getAll() method</a> <a href="#ref-for-dom-cookiestoregetoptions-url④">(2)</a>
     <li><a href="#ref-for-dom-cookiestoregetoptions-url⑤">4.1. The subscribe() method</a> <a href="#ref-for-dom-cookiestoregetoptions-url⑥">(2)</a>
     <li><a href="#ref-for-dom-cookiestoregetoptions-url⑦">4.3. The unsubscribe() method</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-cookiestoregetoptions-matchtype">
-   <b><a href="#dom-cookiestoregetoptions-matchtype">#dom-cookiestoregetoptions-matchtype</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype">3.1. The get() method</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype①">3.2. The getAll() method</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype②">4.1. The subscribe() method</a> <a href="#ref-for-dom-cookiestoregetoptions-matchtype③">(2)</a>
-    <li><a href="#ref-for-dom-cookiestoregetoptions-matchtype④">4.3. The unsubscribe() method</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="enumdef-cookiesamesite">
@@ -4538,13 +4449,6 @@ authoring advice.</p>
    <ul>
     <li><a href="#ref-for-query-cookies">3.1. The get() method</a> <a href="#ref-for-query-cookies①">(2)</a>
     <li><a href="#ref-for-query-cookies②">3.2. The getAll() method</a> <a href="#ref-for-query-cookies③">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="matches">
-   <b><a href="#matches">#matches</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-matches">7.1. Query Cookies</a>
-    <li><a href="#ref-for-matches①">7.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="create-a-cookielistitem">
