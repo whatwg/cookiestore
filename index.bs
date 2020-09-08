@@ -261,10 +261,7 @@ Reading multiple cookies:
 
 ```js
 try {
-  const cookies = await cookieStore.getAll({
-    name: 'session_',
-    matchType: 'starts-with',
-  });
+  const cookies = await cookieStore.getAll('session_id'});
   for (const cookie of cookies)
     console.log(\`Result: ${cookie.name} = ${cookie.value}\`);
 } catch (e) {
@@ -420,8 +417,7 @@ self.addEventListener('activate', (event) => {
 
     await self.registration.cookies.subscribe([
       {
-        name: 'session',  // Get change events for session-related cookies.
-        matchType: 'starts-with',  // Matches session_id, session-id, etc.
+        name: 'session_id',  // Get change events for cookies named session_id.
       }
     ]);
   });
@@ -456,7 +452,7 @@ Checking change subscriptions:
 ```js
    const subscriptions = await cookieStore.getChangeSubscriptions();
    for (const sub of subscriptions) {
-     console.log(sub.name, sub.url, sub.matchType);
+     console.log(sub.name, sub.url);
    }
 ```
 </div>
@@ -513,7 +509,7 @@ Issue: How about when "the current session is over" for non-persistent cookies?
 A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=list=];
 each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
 <span dfn-for="cookie change subscription">
-a [=tuple=] of <dfn>name</dfn>, <dfn>url</dfn>, and <dfn>matchType</dfn>.
+a [=tuple=] of <dfn>name</dfn> and <dfn>url</dfn>.
 </span>
 
 
@@ -541,15 +537,9 @@ interface CookieStore : EventTarget {
   attribute EventHandler onchange;
 };
 
-enum CookieMatchType {
-  "equals",
-  "starts-with"
-};
-
 dictionary CookieStoreGetOptions {
   USVString name;
   USVString url;
-  CookieMatchType matchType = "equals";
 };
 
 enum CookieSameSite {
@@ -635,9 +625,8 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
-        |url|,
-        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present), and
-        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+        |url| and
+        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present).
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], then [=resolve=] |p| with undefined.
     1. Otherwise, [=resolve=] |p| with the first item of |list|.
@@ -692,9 +681,8 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
-        |url|,
-        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present), and
-        |options|' {{CookieStoreGetOptions/matchType}} dictionary member.
+        |url| and
+        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present).
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}}.
     1. Otherwise, [=resolve=] |p| with |list|.
 1. Return |p|.
@@ -841,7 +829,7 @@ interface CookieStoreManager {
 <div class="domintro note">
     : await |registration| . cookies . {{CookieStoreManager/subscribe()|subscribe}}(|subscriptions|)
 
-    ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}}, {{CookieStoreGetOptions/url}} and {{CookieStoreGetOptions/matchType}} properties.
+    ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}} and {{CookieStoreGetOptions/url}} properties.
 
         Once subscribed, notifications are delivered as "`cookiechange`" events fired against the [=Service Worker=]'s global scope:
 
@@ -860,8 +848,7 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
         1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
-        1. Let |matchType| be |entry|'s {{CookieStoreGetOptions/matchType}} member.
-        1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|, |matchType|).
+        1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. If |subscription list| does not already [=list/contain=] |subscription|, then [=list/append=] |subscription| to |subscription list|.
     1. [=Resolve=] |p| with undefined.
 1. Return |p|.
@@ -888,7 +875,7 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
     1. Let |subscriptions| be |registration|'s associated [=cookie change subscription list=].
     1. Let |result| be a new [=list=].
     1. [=list/For each=] |subscription| in |subscriptions|, run these steps:
-        1. [=list/Append=] «[ "name" → |subscription|'s [=cookie change subscription/name=], "url" → |subscription|'s [=cookie change subscription/url=], "matchType" → |subscription|'s [=cookie change subscription/matchType=] ]» to |result|.
+        1. [=list/Append=] «[ "name" → |subscription|'s [=cookie change subscription/name=], "url" → |subscription|'s [=cookie change subscription/url=]]» to |result|.
     1. [=Resolve=] |p| with |result|.
 1. Return |p|.
 
@@ -918,8 +905,7 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
         1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
-        1. Let |matchType| be |entry|'s {{CookieStoreGetOptions/matchType}} member.
-        1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|, |matchType|).
+        1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. [=list/Remove=] any [=list/item=] from |subscription list| equal to |subscription|.
     1. [=Resolve=] |p| with undefined.
 1. Return |p|.
@@ -1084,9 +1070,8 @@ and return a [=byte sequence=] corresponding to the closest `cookie-date` repres
 <div algorithm>
 
 To <dfn>query cookies</dfn> with
-|url|,
-optional |name|, and
-optional |matchType|,
+|url| and
+optional |name|,
 run the following steps:
 
 1. Perform the steps defined in [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §The Cookie Header]] to "compute the cookie-string from a cookie store"
@@ -1100,35 +1085,13 @@ run the following steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
     1. If |name| is given, then run these steps:
         1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=decoded=]).
-        1. If |cookieName| does not [=match=] |name| using |matchType|,
+        1. If |cookieName| does not equal |name|,
              then [=continue=].
     1. Let |item| be the result of running [=create a CookieListItem=] from |cookie|.
     1. [=list/Append=] |item| to |list|.
 1. Return |list|.
 
 </div>
-
-<div algorithm>
-
-A |cookieName| <dfn>matches</dfn> |matchName| using |matchType| if the following steps return true:
-
-1. Switch on |matchType|:
-    <dl class=switch>
-        : unspecified
-        :: Return true.
-        : "{{CookieMatchType/equals}}"
-        :: If |cookieName| does not equal |matchName|,
-            then return false.
-        : "{{CookieMatchType/starts-with}}"
-        :: If |cookieName| does not start with |matchName|,
-            then return false.
-    </dl>
-2. Return true.
-
-Note: If |matchName| is the empty string and |matchType| is "{{CookieMatchType/starts-with}}",
-       then all |cookieName|s are matched.
-</div>
-
 
 <div algorithm>
 
@@ -1281,7 +1244,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
         1. [=list/For each=] |subscription| in |registration|'s [=cookie change subscription list=], run these steps:
             1. If |change| is not [=set/contains|in=] the [=observable changes=] for |subscription|'s [=cookie change subscription/url=],
                 then [=continue=].
-            1. If |cookie|'s [=cookie/name=] ([=decoded=]) [=matches=] |subscription|'s [=cookie change subscription/name=] using |subscription|'s [=cookie change subscription/matchType=],
+            1. If |cookie|'s [=cookie/name=] ([=decoded=]) equals |subscription|'s [=cookie change subscription/name=],
                 then [=set/append=] |change| to |changes| and [=break=].
     1. If |changes| [=set/is empty=], then [=continue=].
     1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] from |changes|.
