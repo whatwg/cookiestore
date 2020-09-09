@@ -1225,7 +1225,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version e2e6e5d1, updated Fri Sep 4 10:16:46 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="1d2a91f9a3f905db3c9faccd8f70229f66eff205" name="document-revision">
+  <meta content="a8e9870327b620a078eb83be8b3ffab9e5072e57" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1501,7 +1501,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-08">8 September 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-09">9 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1550,9 +1550,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li>
        <a href="#intro-summary"><span class="secno">1.2</span> <span class="content">Summary</span></a>
        <ol class="toc">
-        <li><a href="#script-visibility"><span class="secno">1.2.1</span> <span class="content">Script visibility</span></a>
-        <li><a href="#intro-opinions"><span class="secno">1.2.2</span> <span class="content">Opinions</span></a>
-        <li><a href="#intro-compat"><span class="secno">1.2.3</span> <span class="content">Compatiblity</span></a>
+        <li><a href="#intro-opinions"><span class="secno">1.2.1</span> <span class="content">Opinions</span></a>
+        <li><a href="#intro-compat"><span class="secno">1.2.2</span> <span class="content">Compatiblity</span></a>
        </ol>
       <li><a href="#intro-query"><span class="secno">1.3</span> <span class="content">Querying Cookies</span></a>
       <li><a href="#intro-modify"><span class="secno">1.4</span> <span class="content">Modifying Cookies</span></a>
@@ -1738,9 +1737,7 @@ in <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> 
      </ul>
    </ul>
    <p class="issue" id="issue-26c3a78a"><a class="self-link" href="#issue-26c3a78a"></a> Update the above, especially w/r/t registration.</p>
-   <h4 class="heading settled" data-level="1.2.1" id="script-visibility"><span class="secno">1.2.1. </span><span class="content">Script visibility</span><a class="self-link" href="#script-visibility"></a></h4>
-   <p>A cookie is <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="script-visible">script-visible</dfn> when it is in-scope and does not have the <code>HttpOnly</code> cookie flag.</p>
-   <h4 class="heading settled" data-level="1.2.2" id="intro-opinions"><span class="secno">1.2.2. </span><span class="content">Opinions</span><a class="self-link" href="#intro-opinions"></a></h4>
+   <h4 class="heading settled" data-level="1.2.1" id="intro-opinions"><span class="secno">1.2.1. </span><span class="content">Opinions</span><a class="self-link" href="#intro-opinions"></a></h4>
    <p class="issue" id="issue-88fe361f"><a class="self-link" href="#issue-88fe361f"></a> Review/rewrite this section.</p>
    <p>This API defaults cookie paths to <code>/</code> for cookie write operations, including deletion/expiration. The implicit relative path-scoping of cookies to <code>.</code> has caused a lot of additional complexity for relatively little gain given their security equivalence under the same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain. Cookie paths without a trailing <code>/</code> are treated as if they had a trailing <code>/</code> appended for cookie write operations. Cookie paths must start with <code>/</code> for write operations, and must not contain any <code>..</code> path segments. Query parameters and URL fragments are not allowed in paths for cookie write operations.</p>
    <p>URLs without a trailing <code>/</code> are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.</p>
@@ -1753,7 +1750,7 @@ so this API allows JavaScript Date objects and numeric timestamps (milliseconds 
    <p>Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API mandates UTF-8 interpretation for cookies read or written by this API.</p>
    <p>Use of cookie-change-driven scripts has been hampered by the absence of a power-efficient (non-polling) API for this. This API provides observers for efficient monitoring in document contexts and interest registration for efficient monitoring in service worker contexts.</p>
    <p>Scripts should not have to write and then read "test cookies" to determine whether script-initiated cookie write access is possible, nor should they have to correlate with cooperating server-side versions of the same write-then-read test to determine that script-initiated cookie read access is impossible despite cookies working at the HTTP level.</p>
-   <h4 class="heading settled" data-level="1.2.3" id="intro-compat"><span class="secno">1.2.3. </span><span class="content">Compatiblity</span><a class="self-link" href="#intro-compat"></a></h4>
+   <h4 class="heading settled" data-level="1.2.2" id="intro-compat"><span class="secno">1.2.2. </span><span class="content">Compatiblity</span><a class="self-link" href="#intro-compat"></a></h4>
    <p class="issue" id="issue-88fe361f①"><a class="self-link" href="#issue-88fe361f①"></a> Review/rewrite this section.</p>
    <p>Some user-agents implement non-standard extensions to cookie behavior. The intent of this specification,
 though, is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented
@@ -1940,6 +1937,7 @@ the subscriptions that have been made.</p>
    <h3 class="heading settled" data-level="2.1" id="cookie-concept"><span class="secno">2.1. </span><span class="content">Cookie</span><a class="self-link" href="#cookie-concept"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie">cookie</dfn> is normatively defined for user agents by <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-5">Cookies: HTTP State Management Mechanism §User Agent Requirements</a>.</p>
    <div> Per <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-5.4">Cookies: HTTP State Management Mechanism §Storage Model</a>, a <a data-link-type="dfn" href="#cookie" id="ref-for-cookie">cookie</a> has the following fields: <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-name">name</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-value">value</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-expiry-time">expiry-time</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-domain">domain</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-path">path</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-creation-time">creation-time</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-last-access-time">last-access-time</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-persistent-flag">persistent-flag</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-host-only-flag">host-only-flag</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-secure-only-flag">secure-only-flag</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-http-only-flag">http-only-flag</dfn>, <dfn class="dfn-paneled" data-dfn-for="cookie" data-dfn-type="dfn" data-noexport id="cookie-same-site-flag">same-site-flag</dfn>. </div>
+   <p>A cookie is <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="script-visible">script-visible</dfn> when it is in-scope and does not have the <code>HttpOnly</code> cookie flag. This is more formally enforced in the processing model, which consults <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-5.5">Cookies: HTTP State Management Mechanism §The Cookie Header</a> at appropriate points.</p>
    <h3 class="heading settled" data-level="2.2" id="cookie-store--concept"><span class="secno">2.2. </span><span class="content">Cookie Store</span><a class="self-link" href="#cookie-store--concept"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="cookie-store">cookie store</dfn> is normatively defined for user agents by <a data-link-type="biblio" href="#biblio-rfc6265bis">Cookies: HTTP State Management Mechanism §User Agent Requirements</a>.</p>
    <p>When any of the following conditions occur for a <a data-link-type="dfn" href="#cookie-store" id="ref-for-cookie-store">cookie store</a>, perform the steps to <a data-link-type="dfn" href="#process-cookie-changes" id="ref-for-process-cookie-changes">process cookie changes</a>.</p>
@@ -3126,7 +3124,7 @@ authoring advice.</p>
      <li><a href="#dom-cookielistitem-samesite">dict-member for CookieListItem</a><span>, in §3</span>
     </ul>
    <li><a href="#cookie-same-site-flag">same-site-flag</a><span>, in §2.1</span>
-   <li><a href="#script-visible">script-visible</a><span>, in §1.2.1</span>
+   <li><a href="#script-visible">script-visible</a><span>, in §2.1</span>
    <li><a href="#dom-cookielistitem-secure">secure</a><span>, in §3</span>
    <li><a href="#cookie-secure-only-flag">secure-only-flag</a><span>, in §2.1</span>
    <li><a href="#set-a-cookie">set a cookie</a><span>, in §7.2</span>
@@ -3274,7 +3272,7 @@ authoring advice.</p>
    <a href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie">https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-document-cookie">1. Introduction</a> <a href="#ref-for-dom-document-cookie①">(2)</a>
-    <li><a href="#ref-for-dom-document-cookie②">1.2.3. Compatiblity</a> <a href="#ref-for-dom-document-cookie③">(2)</a> <a href="#ref-for-dom-document-cookie④">(3)</a>
+    <li><a href="#ref-for-dom-document-cookie②">1.2.2. Compatiblity</a> <a href="#ref-for-dom-document-cookie③">(2)</a> <a href="#ref-for-dom-document-cookie④">(3)</a>
     <li><a href="#ref-for-dom-document-cookie⑤">1.3. Querying Cookies</a>
     <li><a href="#ref-for-dom-document-cookie⑥">8.6. Cookie aversion</a> <a href="#ref-for-dom-document-cookie⑦">(2)</a>
    </ul>
@@ -3400,7 +3398,7 @@ authoring advice.</p>
   <aside class="dfn-panel" data-for="term-for-code-point">
    <a href="https://infra.spec.whatwg.org/#code-point">https://infra.spec.whatwg.org/#code-point</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-code-point">1.2.2. Opinions</a> <a href="#ref-for-code-point①">(2)</a>
+    <li><a href="#ref-for-code-point">1.2.1. Opinions</a> <a href="#ref-for-code-point①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list-contain">
@@ -3636,7 +3634,7 @@ authoring advice.</p>
   <aside class="dfn-panel" data-for="term-for-idl-USVString">
    <a href="https://heycam.github.io/webidl/#idl-USVString">https://heycam.github.io/webidl/#idl-USVString</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-USVString">1.2.3. Compatiblity</a>
+    <li><a href="#ref-for-idl-USVString">1.2.2. Compatiblity</a>
     <li><a href="#ref-for-idl-USVString①">3. The CookieStore Interface</a> <a href="#ref-for-idl-USVString②">(2)</a> <a href="#ref-for-idl-USVString③">(3)</a> <a href="#ref-for-idl-USVString④">(4)</a> <a href="#ref-for-idl-USVString⑤">(5)</a> <a href="#ref-for-idl-USVString⑥">(6)</a> <a href="#ref-for-idl-USVString⑦">(7)</a> <a href="#ref-for-idl-USVString⑧">(8)</a> <a href="#ref-for-idl-USVString⑨">(9)</a> <a href="#ref-for-idl-USVString①⓪">(10)</a> <a href="#ref-for-idl-USVString①①">(11)</a> <a href="#ref-for-idl-USVString①②">(12)</a> <a href="#ref-for-idl-USVString①③">(13)</a> <a href="#ref-for-idl-USVString①④">(14)</a> <a href="#ref-for-idl-USVString①⑤">(15)</a> <a href="#ref-for-idl-USVString①⑥">(16)</a> <a href="#ref-for-idl-USVString①⑦">(17)</a> <a href="#ref-for-idl-USVString①⑧">(18)</a>
    </ul>
   </aside>
@@ -3965,16 +3963,6 @@ authoring advice.</p>
    <div class="issue"> Review/rewrite this section.<a href="#issue-88fe361f①"> ↵ </a></div>
    <div class="issue"> How about when "the current session is over" for non-persistent cookies?<a href="#issue-30ac9b7d"> ↵ </a></div>
   </div>
-  <aside class="dfn-panel" data-for="script-visible">
-   <b><a href="#script-visible">#script-visible</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-script-visible">1.2. Summary</a> <a href="#ref-for-script-visible①">(2)</a>
-    <li><a href="#ref-for-script-visible②">3.1. The get() method</a>
-    <li><a href="#ref-for-script-visible③">3.2. The getAll() method</a>
-    <li><a href="#ref-for-script-visible④">5.1. The CookieChangeEvent interface</a>
-    <li><a href="#ref-for-script-visible⑤">5.2. The ExtendableCookieChangeEvent interface</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="cookie">
    <b><a href="#cookie">#cookie</a></b><b>Referenced in:</b>
    <ul>
@@ -4059,6 +4047,16 @@ authoring advice.</p>
    <b><a href="#cookie-same-site-flag">#cookie-same-site-flag</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-cookie-same-site-flag">7.1. Query Cookies</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="script-visible">
+   <b><a href="#script-visible">#script-visible</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-script-visible">1.2. Summary</a> <a href="#ref-for-script-visible①">(2)</a>
+    <li><a href="#ref-for-script-visible②">3.1. The get() method</a>
+    <li><a href="#ref-for-script-visible③">3.2. The getAll() method</a>
+    <li><a href="#ref-for-script-visible④">5.1. The CookieChangeEvent interface</a>
+    <li><a href="#ref-for-script-visible⑤">5.2. The ExtendableCookieChangeEvent interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cookie-store">
