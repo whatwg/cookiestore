@@ -1019,7 +1019,9 @@ partial interface Window {
 };
 </xmp>
 
-The <dfn attribute for=Window>cookieStore</dfn> getter steps are to return [=/this=]'s [=relevant settings object=]'s {{CookieStore}} object.
+A {{Window}} has an <dfn attribute for=Window>associated CookieStore</dfn>, which is a {{CookieStore}}.
+
+The <dfn attribute for=Window>cookieStore</dfn> getter steps are to return [=/this=]'s {{Window/associated CookieStore}}.
 
 <!-- ============================================================ -->
 ## The {{ServiceWorkerGlobalScope}} interface ## {#ServiceWorkerGlobalScope}
@@ -1033,7 +1035,9 @@ partial interface ServiceWorkerGlobalScope {
 };
 </xmp>
 
-The <dfn attribute for=ServiceWorkerGlobalScope>cookieStore</dfn> getter steps are to return [=/this=]'s [=relevant settings object=]'s {{CookieStore}} object.
+A {{ServiceWorkerGlobalScope}} has an <dfn attribute for=ServiceWorkerGlobalScope>associated CookieStore</dfn>, which is a {{CookieStore}}.
+
+The <dfn attribute for=ServiceWorkerGlobalScope>cookieStore</dfn> getter steps are to return [=/this=]'s {{ServiceWorkerGlobalScope/associated CookieStore}}.
 
 <!-- ============================================================ -->
 # Algorithms # {#algorithms}
