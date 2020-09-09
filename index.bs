@@ -168,12 +168,6 @@ This proposal outlines an asynchronous API using Promises/async functions for th
 
 Issue: Update the above, especially w/r/t registration.
 
-<!-- ============================================================ -->
-### Script visibility ### {#script-visibility}
-<!-- ============================================================ -->
-
-A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag.
-
 
 <!-- ============================================================ -->
 ### Opinions ### {#intro-opinions}
@@ -484,6 +478,8 @@ Per [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage 
 <dfn>same-site-flag</dfn>.
 
 </div>
+
+A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag. This is more formally enforced in the processing model, which consults [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §The Cookie Header]] at appropriate points.
 
 <!-- ============================================================ -->
 ## Cookie Store ## {#cookie-store--concept}
