@@ -961,8 +961,8 @@ A {{CookieChangeEvent}} is [=dispatched=] against {{CookieStore}} objects in {{W
  SecureContext]
 interface CookieChangeEvent : Event {
   constructor(DOMString type, optional CookieChangeEventInit eventInitDict = {});
-  [SameObject, SaveSameObject] readonly attribute CookieList changed;
-  [SameObject, SaveSameObject] readonly attribute CookieList deleted;
+  [SameObject] readonly attribute CookieList changed;
+  [SameObject] readonly attribute CookieList deleted;
 };
 
 dictionary CookieChangeEventInit : EventInit {
@@ -988,8 +988,8 @@ Note: {{ExtendableEvent}} is used as the ancestor interface for all events in [=
 [Exposed=ServiceWorker]
 interface ExtendableCookieChangeEvent : ExtendableEvent {
   constructor(DOMString type, optional ExtendableCookieChangeEventInit eventInitDict = {});
-  [SameObject, SaveSameObject] readonly attribute CookieList changed;
-  [SameObject, SaveSameObject] readonly attribute CookieList deleted;
+  [SameObject] readonly attribute CookieList changed;
+  [SameObject] readonly attribute CookieList deleted;
 };
 
 dictionary ExtendableCookieChangeEventInit : ExtendableEventInit {
