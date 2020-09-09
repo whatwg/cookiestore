@@ -444,7 +444,7 @@ the subscriptions that have been made.
 Checking change subscriptions:
 
 ```js
-   const subscriptions = await cookieStore.getChangeSubscriptions();
+   const subscriptions = await self.registration.cookies.getSubscriptions();
    for (const sub of subscriptions) {
      console.log(sub.name, sub.url);
    }
