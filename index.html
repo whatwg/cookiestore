@@ -1225,7 +1225,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version e2e6e5d1, updated Fri Sep 4 10:16:46 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="a8e9870327b620a078eb83be8b3ffab9e5072e57" name="document-revision">
+  <meta content="94a6fcab4e9bd5148fbe4d996a065d2390c342bc" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1925,9 +1925,9 @@ to a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-reques
 require waking up the worker, which has a significant impact on battery life.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-cookiestoremanager-getsubscriptions" id="ref-for-dom-cookiestoremanager-getsubscriptions">getSubscriptions()</a></code> allows a <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker" id="ref-for-dfn-service-worker⑧">service worker</a> to introspect
 the subscriptions that have been made.</p>
-   <div class="example" id="example-b01daf53">
-    <a class="self-link" href="#example-b01daf53"></a> Checking change subscriptions: 
-<pre class="language-js highlight">   <c- kr>const</c-> subscriptions <c- o>=</c-> await cookieStore<c- p>.</c->getChangeSubscriptions<c- p>();</c->
+   <div class="example" id="example-5e735d9a">
+    <a class="self-link" href="#example-5e735d9a"></a> Checking change subscriptions: 
+<pre class="language-js highlight">   <c- kr>const</c-> subscriptions <c- o>=</c-> await self<c- p>.</c->registration<c- p>.</c->cookies<c- p>.</c->getSubscriptions<c- p>();</c->
    <c- k>for</c-> <c- p>(</c-><c- kr>const</c-> sub <c- k>of</c-> subscriptions<c- p>)</c-> <c- p>{</c->
      console<c- p>.</c->log<c- p>(</c->sub<c- p>.</c->name<c- p>,</c-> sub<c- p>.</c->url<c- p>);</c->
    <c- p>}</c->
