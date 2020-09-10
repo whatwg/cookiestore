@@ -1225,7 +1225,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version e2e6e5d1, updated Fri Sep 4 10:16:46 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="94a6fcab4e9bd5148fbe4d996a065d2390c342bc" name="document-revision">
+  <meta content="16a82303b5e68bd36e472b4e223826f22aeb51bc" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1501,7 +1501,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-09">9 September 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-10">10 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2493,7 +2493,8 @@ scope in a <code class="idl"><a data-link-type="idl" href="https://html.spec.wha
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore④"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-window-cookiestore" id="ref-for-dom-window-cookiestore②"><c- g>cookieStore</c-></a>;
 };
 </pre>
-   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export id="dom-window-cookiestore"><code>cookieStore</code></dfn> getter steps are to return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this⑦">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object④">relevant settings object</a>'s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑤">CookieStore</a></code> object.</p>
+   <p>A <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window⑥">Window</a></code> has an <dfn class="dfn-paneled" data-dfn-for="Window" data-dfn-type="dfn" data-noexport id="window-associated-cookiestore">associated CookieStore</dfn>, which is a <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑤">CookieStore</a></code>.</p>
+   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export id="dom-window-cookiestore"><code>cookieStore</code></dfn> getter steps are to return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this⑦">this</a>'s <a data-link-type="dfn" href="#window-associated-cookiestore" id="ref-for-window-associated-cookiestore">associated CookieStore</a>.</p>
    <h3 class="heading settled" data-level="6.2" id="ServiceWorkerGlobalScope"><span class="secno">6.2. </span><span class="content">The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope②">ServiceWorkerGlobalScope</a></code> interface</span><a class="self-link" href="#ServiceWorkerGlobalScope"></a></h3>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope③"><c- g>ServiceWorkerGlobalScope</c-></a> {
   [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SameObject" id="ref-for-SameObject①"><c- g>SameObject</c-></a>] <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="#cookiestore" id="ref-for-cookiestore⑥"><c- n>CookieStore</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="CookieStore" href="#dom-serviceworkerglobalscope-cookiestore" id="ref-for-dom-serviceworkerglobalscope-cookiestore"><c- g>cookieStore</c-></a>;
@@ -2501,7 +2502,8 @@ scope in a <code class="idl"><a data-link-type="idl" href="https://html.spec.wha
   <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler①"><c- n>EventHandler</c-></a> <dfn class="idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export data-type="EventHandler" id="dom-serviceworkerglobalscope-oncookiechange"><code><c- g>oncookiechange</c-></code><a class="self-link" href="#dom-serviceworkerglobalscope-oncookiechange"></a></dfn>;
 };
 </pre>
-   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export id="dom-serviceworkerglobalscope-cookiestore"><code>cookieStore</code></dfn> getter steps are to return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this⑧">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object⑤">relevant settings object</a>'s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑦">CookieStore</a></code> object.</p>
+   <p>A <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope④">ServiceWorkerGlobalScope</a></code> has an <dfn class="dfn-paneled" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="dfn" data-noexport id="serviceworkerglobalscope-associated-cookiestore">associated CookieStore</dfn>, which is a <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑦">CookieStore</a></code>.</p>
+   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="ServiceWorkerGlobalScope" data-dfn-type="attribute" data-export id="dom-serviceworkerglobalscope-cookiestore"><code>cookieStore</code></dfn> getter steps are to return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this⑧">this</a>'s <a data-link-type="dfn" href="#serviceworkerglobalscope-associated-cookiestore" id="ref-for-serviceworkerglobalscope-associated-cookiestore">associated CookieStore</a>.</p>
    <h2 class="heading settled" data-level="7" id="algorithms"><span class="secno">7. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
    <p><a data-link-type="dfn" href="#cookie" id="ref-for-cookie④">Cookie</a> attribute-values are stored as <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-sequence" id="ref-for-byte-sequence">byte sequences</a>, not strings.</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="encode">encode</dfn> a <var>string</var>, run <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8-encode" id="ref-for-utf-8-encode">UTF-8 encode</a> on <var>string</var>.</p>
@@ -2667,7 +2669,7 @@ by this algorithm.</p>
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="process-cookie-changes">process cookie changes</dfn>, run the following steps:</p>
     <ol>
      <li data-md>
-      <p>For every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window⑥">Window</a></code> <var>window</var>, run the following steps:</p>
+      <p>For every <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window⑦">Window</a></code> <var>window</var>, run the following steps:</p>
       <ol>
        <li data-md>
         <p>Let <var>url</var> be <var>window</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url⑧">creation URL</a>.</p>
@@ -3001,6 +3003,12 @@ authoring advice.</p>
   <ul class="index">
    <li><a href="#as-a-timestamp">as a timestamp</a><span>, in §7</span>
    <li>
+    associated CookieStore
+    <ul>
+     <li><a href="#serviceworkerglobalscope-associated-cookiestore">dfn for ServiceWorkerGlobalScope</a><span>, in §6.2</span>
+     <li><a href="#window-associated-cookiestore">dfn for Window</a><span>, in §6.1</span>
+    </ul>
+   <li>
     changed
     <ul>
      <li><a href="#dom-cookiechangeevent-changed">attribute for CookieChangeEvent</a><span>, in §5.1</span>
@@ -3255,8 +3263,8 @@ authoring advice.</p>
     <li><a href="#ref-for-window①">3.2. The getAll() method</a>
     <li><a href="#ref-for-window②">5.1. The CookieChangeEvent interface</a>
     <li><a href="#ref-for-window③">6. Global Interfaces</a>
-    <li><a href="#ref-for-window④">6.1. The Window interface</a> <a href="#ref-for-window⑤">(2)</a>
-    <li><a href="#ref-for-window⑥">7.4. Process Changes</a>
+    <li><a href="#ref-for-window④">6.1. The Window interface</a> <a href="#ref-for-window⑤">(2)</a> <a href="#ref-for-window⑥">(3)</a>
+    <li><a href="#ref-for-window⑦">7.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-api-base-url">
@@ -3353,8 +3361,6 @@ authoring advice.</p>
     <li><a href="#ref-for-relevant-settings-object①">3.2. The getAll() method</a>
     <li><a href="#ref-for-relevant-settings-object②">4.1. The subscribe() method</a>
     <li><a href="#ref-for-relevant-settings-object③">4.3. The unsubscribe() method</a>
-    <li><a href="#ref-for-relevant-settings-object④">6.1. The Window interface</a>
-    <li><a href="#ref-for-relevant-settings-object⑤">6.2. The ServiceWorkerGlobalScope interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-history-replacestate">
@@ -3489,7 +3495,7 @@ authoring advice.</p>
    <ul>
     <li><a href="#ref-for-serviceworkerglobalscope">5.2. The ExtendableCookieChangeEvent interface</a>
     <li><a href="#ref-for-serviceworkerglobalscope①">6. Global Interfaces</a>
-    <li><a href="#ref-for-serviceworkerglobalscope②">6.2. The ServiceWorkerGlobalScope interface</a> <a href="#ref-for-serviceworkerglobalscope③">(2)</a>
+    <li><a href="#ref-for-serviceworkerglobalscope②">6.2. The ServiceWorkerGlobalScope interface</a> <a href="#ref-for-serviceworkerglobalscope③">(2)</a> <a href="#ref-for-serviceworkerglobalscope④">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-serviceworkerregistration">
@@ -4402,12 +4408,24 @@ authoring advice.</p>
     <li><a href="#ref-for-dictdef-extendablecookiechangeeventinit">5.2. The ExtendableCookieChangeEvent interface</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="window-associated-cookiestore">
+   <b><a href="#window-associated-cookiestore">#window-associated-cookiestore</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-window-associated-cookiestore">6.1. The Window interface</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="dom-window-cookiestore">
    <b><a href="#dom-window-cookiestore">#dom-window-cookiestore</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-window-cookiestore">1.3. Querying Cookies</a>
     <li><a href="#ref-for-dom-window-cookiestore①">1.4. Modifying Cookies</a>
     <li><a href="#ref-for-dom-window-cookiestore②">6.1. The Window interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="serviceworkerglobalscope-associated-cookiestore">
+   <b><a href="#serviceworkerglobalscope-associated-cookiestore">#serviceworkerglobalscope-associated-cookiestore</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-serviceworkerglobalscope-associated-cookiestore">6.2. The ServiceWorkerGlobalScope interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-serviceworkerglobalscope-cookiestore">
