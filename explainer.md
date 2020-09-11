@@ -572,6 +572,24 @@ const cookie = await cookieStore.get('session-id');
 console.log(cookie);
 ```
 
+#### Read / Write Race
+
+Cookie store operations are not an atomic read-modify-write transaction. Failure to await during an operation can cause unexpected results as the following.
+
+```javascript
+function increment_cookie(name) {
+  const cookie = await cookieStore.get(name);
+  cookie.value = parseInt(cookie.value) + 1;
+  await cookieStore.set(cookie);
+  return cookie;
+}
+
+await cookieStore.set('cookie-name', 1);
+const cookie1 = increment_cookie('cookie-name');  // Missing "await".
+const cookie2 = increment_cookie('cookie-name');  // Missing "await".
+// cookie1.value and cookie2.value may have the same value 2. 
+```
+
 ### Modifying Insecure Cookies 
 The API will be able to fetch insecure cookies, but will only be able to modify secure cookies. This will mean that when modifying an insecure cookie with the API, the insecure cookie will automatically be changed to secure. 
 
