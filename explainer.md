@@ -574,20 +574,22 @@ console.log(cookie);
 
 #### Read / Write Race
 
-Cookie store operations are not an atomic read-modify-write transaction. Failure to await during an operation can cause unexpected results as the following.
+The ability of passing the return value of `cookieStore.set()` to `cookieStore.get()` may lead to code that reads like an atomic read-modify-write operation, when in reality it's not.
 
 ```javascript
-function increment_cookie(name) {
+async function incrementCookie(name) {
   const cookie = await cookieStore.get(name);
   cookie.value = parseInt(cookie.value) + 1;
   await cookieStore.set(cookie);
-  return cookie;
 }
 
 await cookieStore.set('cookie-name', 1);
-const cookie1 = increment_cookie('cookie-name');  // Missing "await".
-const cookie2 = increment_cookie('cookie-name');  // Missing "await".
-// cookie1.value and cookie2.value may have the same value 2. 
+await Promise.all([
+  incrementCookie('cookie-name'),
+  incrementCookie('cookie-name'),
+]);
+const cookie = await cookieStore.get('cookie-name');
+console.log(cookie.value);  // Value will likely be '2' not '3'.
 ```
 
 ### Modifying Insecure Cookies 
