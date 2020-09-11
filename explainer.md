@@ -599,6 +599,26 @@ const cookie = await cookieStore.get('session-id');
 console.log(cookie);
 ```
 
+#### Read / Write Race
+
+The ability of passing the return value of `cookieStore.set()` to `cookieStore.get()` may lead to code that reads like an atomic read-modify-write operation, when in reality it's not.
+
+```javascript
+async function incrementCookie(name) {
+  const cookie = await cookieStore.get(name);
+  cookie.value = parseInt(cookie.value) + 1;
+  await cookieStore.set(cookie);
+}
+
+await cookieStore.set('cookie-name', 1);
+await Promise.all([
+  incrementCookie('cookie-name'),
+  incrementCookie('cookie-name'),
+]);
+const cookie = await cookieStore.get('cookie-name');
+console.log(cookie.value);  // Value will likely be '2' not '3'.
+```
+
 ### Modifying Insecure Cookies 
 The API will be able to fetch insecure cookies, but will only be able to modify secure cookies. This will mean that when modifying an insecure cookie with the API, the insecure cookie will automatically be changed to secure. 
 
