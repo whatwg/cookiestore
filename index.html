@@ -1225,7 +1225,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version f6ef768c, updated Fri Sep 11 11:29:35 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="79462283609f21793c95d347a5d65314dddaf98e" name="document-revision">
+  <meta content="4cfebaecfb89f0fb92f9f2b0609fdb9dff341d5d" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1501,7 +1501,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-11">11 September 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-14">14 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2678,7 +2678,7 @@ by this algorithm.</p>
        <li data-md>
         <p>If <var>changes</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-is-empty" id="ref-for-list-is-empty②">is empty</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue①">continue</a>.</p>
        <li data-md>
-        <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">Queue a task</a> to <a data-link-type="dfn" href="#fire-a-change-event" id="ref-for-fire-a-change-event">fire a change event</a> named "<code>change</code>" with <var>changes</var> at <var>window</var>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑧">CookieStore</a></code> on <var>window</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-event-loop" id="ref-for-responsible-event-loop">responsible event loop</a>.</p>
+        <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task">Queue a global task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source" id="ref-for-dom-manipulation-task-source">DOM manipulation task source</a> given <var>window</var> to <a data-link-type="dfn" href="#fire-a-change-event" id="ref-for-fire-a-change-event">fire a change event</a> named "<code>change</code>" with <var>changes</var> at <var>window</var>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑧">CookieStore</a></code>.</p>
       </ol>
      <li data-md>
       <p>For every <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration④">service worker registration</a> <var>registration</var>, run the following steps:</p>
@@ -3311,6 +3311,12 @@ authoring advice.</p>
     <li><a href="#ref-for-current-settings-object①②">3.4. The delete() method</a> <a href="#ref-for-current-settings-object①③">(2)</a> <a href="#ref-for-current-settings-object①④">(3)</a> <a href="#ref-for-current-settings-object①⑤">(4)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-manipulation-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source">https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-manipulation-task-source">7.4. Process Changes</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-dom-document-domain">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain">https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain</a><b>Referenced in:</b>
    <ul>
@@ -3348,10 +3354,10 @@ authoring advice.</p>
     <li><a href="#ref-for-concept-origin⑥">3.4. The delete() method</a> <a href="#ref-for-concept-origin⑦">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-queue-a-task">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-queue-a-global-task">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task">https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-queue-a-task">7.4. Process Changes</a>
+    <li><a href="#ref-for-queue-a-global-task">7.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-relevant-settings-object">
@@ -3368,12 +3374,6 @@ authoring advice.</p>
    <ul>
     <li><a href="#ref-for-dom-history-replacestate">3.1. The get() method</a>
     <li><a href="#ref-for-dom-history-replacestate①">3.2. The getAll() method</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-responsible-event-loop">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-event-loop">https://html.spec.whatwg.org/multipage/webappapis.html#responsible-event-loop</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-responsible-event-loop">7.4. Process Changes</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-same-origin">
@@ -3758,14 +3758,14 @@ authoring advice.</p>
      <li><span class="dfn-paneled" id="term-for-concept-environment-creation-url" style="color:initial">creation url</span>
      <li><span class="dfn-paneled" id="term-for-current-global-object" style="color:initial">current global object</span>
      <li><span class="dfn-paneled" id="term-for-current-settings-object" style="color:initial">current settings object</span>
+     <li><span class="dfn-paneled" id="term-for-dom-manipulation-task-source" style="color:initial">dom manipulation task source</span>
      <li><span class="dfn-paneled" id="term-for-dom-document-domain" style="color:initial">domain</span>
      <li><span class="dfn-paneled" id="term-for-in-parallel" style="color:initial">in parallel</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-opaque" style="color:initial">opaque origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin" style="color:initial">origin</span>
-     <li><span class="dfn-paneled" id="term-for-queue-a-task" style="color:initial">queue a task</span>
+     <li><span class="dfn-paneled" id="term-for-queue-a-global-task" style="color:initial">queue a global task</span>
      <li><span class="dfn-paneled" id="term-for-relevant-settings-object" style="color:initial">relevant settings object</span>
      <li><span class="dfn-paneled" id="term-for-dom-history-replacestate" style="color:initial">replaceState(data, title)</span>
-     <li><span class="dfn-paneled" id="term-for-responsible-event-loop" style="color:initial">responsible event loop</span>
      <li><span class="dfn-paneled" id="term-for-same-origin" style="color:initial">same origin</span>
     </ul>
    <li>
