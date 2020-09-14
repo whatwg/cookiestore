@@ -1233,9 +1233,8 @@ To <dfn>process cookie changes</dfn>, run the following steps:
     1. Let |url| be |window|'s [=creation URL=].
     1. Let |changes| be the [=observable changes=] for |url|.
     1. If |changes| [=set/is empty=], then [=continue=].
-    1. [=Queue a task=] to
-        [=fire a change event=] named "`change`" with |changes| at |window|'s {{CookieStore}}
-        on |window|'s [=responsible event loop=].
+    1. [=Queue a global task=] on the [=DOM manipulation task source=] given |window| to
+        [=fire a change event=] named "`change`" with |changes| at |window|'s {{CookieStore}}.
 
 1. For every [=service worker registration=] |registration|, run the following steps:
     1. Let |changes| be a new [=/set=].
