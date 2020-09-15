@@ -527,7 +527,9 @@ This API defaults cookie paths to `/` for cookie write operations, including del
 URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
 
 ### Secure Cookies
-This API only allows writing "Secure" cookies. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure-`flagged cookies from unsecured web origins and enforces special rules for the [__Host-](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-4.1.3.2) and [__Secure-](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-4.1.3.1) cookie name prefixes.
+This API only allows writing [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-5.3.5) cookies. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore, it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure` flagged cookies from unsecured web origins and enforces special rules for the [`Host`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-4.1.3.2) and [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-4.1.3.1) cookie name prefixes.
+
+This API will, however, allow reading non-`Secure` cookies in order to facilitate the migration to `Secure` cookies.
 
 ### Domain Defaults
 This API defaults cookies to "Domain"-less, which in conjunction with "Secure" provides origin-scoped cookie
@@ -541,23 +543,13 @@ so this API allows JavaScript Date objects and numeric timestamps (milliseconds 
 Cookies without U+003D (=) code points in their HTTP Cookie header serialization are treated as having an empty name, consistent with the majority of current browsers. Cookies with an empty name cannot be set using values containing U+003D (=) code points as this would result in ambiguous serializations in the majority of current browsers.
 
 ### Interpreting Strings
-Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API mandates UTF-8 interpretation for cookies read or written by this API.
+Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API requires UTF-8 interpretation of cookie data and uses `USVString` for the script interface,
+with the additional side-effects that subsequent uses of `document.cookie` to read a cookie read or written through this interface and subsequent uses of `document.cookie` to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. This mandates changes to the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance with other modern user agents.
 
-### Monitoring Changes
-Use of cookie-change-driven scripts has been hampered by the absence of a power-efficient (non-polling) API for this. This API provides observers for efficient monitoring in document contexts and interest registration for efficient monitoring in service worker contexts.
-
-### Writing Cookies
-Scripts should not have to write and then read "test cookies" to determine whether script-initiated cookie write access is possible, nor should they have to correlate with cooperating server-side versions of the same write-then-read test to determine that script-initiated cookie read access is impossible despite cookies working at the HTTP level.
-
-### Compatability 
+### Compatibility 
 Some user-agents implement non-standard extensions to cookie behavior. The intent of this API is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented across modern browsers. As new cookie features are specified and adopted it is expected that this API will be extended to include them. A secondary goal is to converge with `document.cookie` behavior
 and the http cookie specification. See https://github.com/whatwg/html/issues/804 and https://inikulin.github.io/cookie-compat/
 for the current state of this convergence.
-
-Differences across browsers in how bytes outside the printable-ASCII subset are interpreted has led to
-long-lasting user- and developer-visible incompatibilities across browsers making internationalized use of cookies
-needlessly cumbersome. This API requires UTF-8 interpretation of cookie data and uses `USVString` for the script interface,
-with the additional side-effects that subsequent uses of `document.cookie` to read a cookie read or written through this interface and subsequent uses of `document.cookie` to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. In practice this will change the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance with other modern user agents.
 
 ## Subtleties
 
