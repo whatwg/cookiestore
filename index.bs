@@ -161,8 +161,7 @@ This proposal outlines an asynchronous API using Promises/async functions for th
             [[Service-Workers|service worker]] contexts
     * [[#intro-monitor|monitor]] [=script-visible=] cookies for changes using `CookieChangeEvent`
         * ... in long-running script contexts (e.g. `document`)
-        * ... again including for script-supplied in-scope request paths
-            in [[Service-Workers|service worker]] contexts
+        * ... for script-supplied in-scope request paths in [[Service-Workers|service worker]] contexts
 
 <!-- ============================================================ -->
 ### Opinions ### {#intro-opinions}
