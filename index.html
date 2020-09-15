@@ -1222,10 +1222,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version f6ef768c, updated Fri Sep 11 11:29:35 2020 -0700" name="generator">
+  <meta content="Bikeshed version 9cdaf2b5, updated Tue Sep 15 11:13:35 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="bc44d2802ca7c665029ba7470810bc47ce4cab99" name="document-revision">
+  <meta content="5a586876f8d15713bc6b24947c99786c7d8a06f2" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1730,13 +1730,9 @@ cookieStore<c- p>.</c->set<c- p>(</c->
       <li data-md>
        <p>... in long-running script contexts (e.g. <code>document</code>)</p>
       <li data-md>
-       <p>... after registration during the <code>InstallEvent</code> in ephemeral <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> contexts</p>
-      <li data-md>
-       <p>... again including for script-supplied in-scope request paths
-in <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> contexts</p>
+       <p>... for script-supplied in-scope request paths in <a data-link-type="biblio" href="#biblio-service-workers">service worker</a> contexts</p>
      </ul>
    </ul>
-   <p class="issue" id="issue-26c3a78a"><a class="self-link" href="#issue-26c3a78a"></a> Update the above, especially w/r/t registration.</p>
    <h4 class="heading settled" data-level="1.2.1" id="intro-opinions"><span class="secno">1.2.1. </span><span class="content">Opinions</span><a class="self-link" href="#intro-opinions"></a></h4>
    <p class="issue" id="issue-88fe361f"><a class="self-link" href="#issue-88fe361f"></a> Review/rewrite this section.</p>
    <p>This API defaults cookie paths to <code>/</code> for cookie write operations, including deletion/expiration. The implicit relative path-scoping of cookies to <code>.</code> has caused a lot of additional complexity for relatively little gain given their security equivalence under the same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain. Cookie paths without a trailing <code>/</code> are treated as if they had a trailing <code>/</code> appended for cookie write operations. Cookie paths must start with <code>/</code> for write operations, and must not contain any <code>..</code> path segments. Query parameters and URL fragments are not allowed in paths for cookie write operations.</p>
@@ -2677,7 +2673,7 @@ by this algorithm.</p>
        <li data-md>
         <p>If <var>changes</var> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-is-empty" id="ref-for-list-is-empty②">is empty</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue①">continue</a>.</p>
        <li data-md>
-        <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task">Queue a global task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source" id="ref-for-dom-manipulation-task-source">DOM manipulation task source</a> given <var>window</var> to <a data-link-type="dfn" href="#fire-a-change-event" id="ref-for-fire-a-change-event">fire a change event</a> named "<code>change</code>" with <var>changes</var> at <var>window</var>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑧">CookieStore</a></code>.</p>
+        <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task">Queue a global task</a> on the <a data-link-type="dfn">DOM manipulation task source</a> given <var>window</var> to <a data-link-type="dfn" href="#fire-a-change-event" id="ref-for-fire-a-change-event">fire a change event</a> named "<code>change</code>" with <var>changes</var> at <var>window</var>’s <code class="idl"><a data-link-type="idl" href="#cookiestore" id="ref-for-cookiestore⑧">CookieStore</a></code>.</p>
       </ol>
      <li data-md>
       <p>For every <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration④">service worker registration</a> <var>registration</var>, run the following steps:</p>
@@ -3310,12 +3306,6 @@ authoring advice.</p>
     <li><a href="#ref-for-current-settings-object①②">3.4. The delete() method</a> <a href="#ref-for-current-settings-object①③">(2)</a> <a href="#ref-for-current-settings-object①④">(3)</a> <a href="#ref-for-current-settings-object①⑤">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-manipulation-task-source">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source">https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-manipulation-task-source">7.4. Process Changes</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-dom-document-domain">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain">https://html.spec.whatwg.org/multipage/origin.html#dom-document-domain</a><b>Referenced in:</b>
    <ul>
@@ -3757,7 +3747,6 @@ authoring advice.</p>
      <li><span class="dfn-paneled" id="term-for-concept-environment-creation-url" style="color:initial">creation url</span>
      <li><span class="dfn-paneled" id="term-for-current-global-object" style="color:initial">current global object</span>
      <li><span class="dfn-paneled" id="term-for-current-settings-object" style="color:initial">current settings object</span>
-     <li><span class="dfn-paneled" id="term-for-dom-manipulation-task-source" style="color:initial">dom manipulation task source</span>
      <li><span class="dfn-paneled" id="term-for-dom-document-domain" style="color:initial">domain</span>
      <li><span class="dfn-paneled" id="term-for-in-parallel" style="color:initial">in parallel</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-opaque" style="color:initial">opaque origin</span>
@@ -3965,7 +3954,6 @@ authoring advice.</p>
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> Update the above, especially w/r/t registration.<a href="#issue-26c3a78a"> ↵ </a></div>
    <div class="issue"> Review/rewrite this section.<a href="#issue-88fe361f"> ↵ </a></div>
    <div class="issue"> Review/rewrite this section.<a href="#issue-88fe361f①"> ↵ </a></div>
   </div>
