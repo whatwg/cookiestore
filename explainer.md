@@ -1,12 +1,39 @@
 # Cookie Store API Explainer
 
-**Authors:**
+## Authors:
 *   Ayu Ishii - [ayui@chromium.org](mailto:ayui@chromium.org)
 *   Benjamin C. Wiley Sittler
 *   Marijn Kruisselbrink - [mek@chromium.org](mailto:mek@chromium.org)
 *   Staphany Park - [staphany@chromium.org](mailto:staphany@chromium.org)
 *   Victor Costan - [pwnall@chromium.org](mailto:pwnall@chromium.org)
 
+## Table of Contents
+* [Introduction](#introduction)
+* [Use Cases](#use-cases)
+* [The Query API](#the-query-api)
+  + [Read a cookie](#read-a-cookie)
+  + [Read multiple cookies](#read-multiple-cookies)
+  + [Read the cookies for a specific URL](#read-the-cookies-for-a-specific-url)
+* [The Modifications API](#the-modifications-api)
+  + [Write a cookie](#write-a-cookie)
+  + [Delete a cookie](#delete-a-cookie)
+  + [Access all the cookie data](#access-all-the-cookie-data)
+* [The Change Events API](#the-change-events-api)
+  + [Get change events in documents](#get-change-events-in-documents)
+  + [Get change events in service workers](#get-change-events-in-service-workers)
+* [Security Model](#security-model)
+  + [The HttpOnly flag](#the-httponly-flag)
+  + [The Secure flag](#the-secure-flag)
+  + [Names and Values](#names-and-values)
+  + [The Scope (Path & Domain)](#the-scope-path--domain)
+  + [Expiration Dates](#expiration-dates)
+* [Subtleties](#subtleties)
+  + [Data Races](#data-races)
+  + [Modifying Insecure Cookies](#modifying-insecure-cookies)
+  + [Error Handling](#error-handling)
+* [Related Work](#related-work)
+
+## Introduction
 This proposal has the following main goals.
 
 * Expose HTTP cookies to service workers.
@@ -604,6 +631,26 @@ const cookie = await cookieStore.get('session-id');
 console.log(cookie);
 ```
 
+#### Read / Write Race
+
+The ability of passing the return value of `cookieStore.set()` to `cookieStore.get()` may lead to code that reads like an atomic read-modify-write operation, when in reality it's not.
+
+```javascript
+async function incrementCookie(name) {
+  const cookie = await cookieStore.get(name);
+  cookie.value = parseInt(cookie.value) + 1;
+  await cookieStore.set(cookie);
+}
+
+await cookieStore.set('cookie-name', 1);
+await Promise.all([
+  incrementCookie('cookie-name'),
+  incrementCookie('cookie-name'),
+]);
+const cookie = await cookieStore.get('cookie-name');
+console.log(cookie.value);  // Value will likely be '2' not '3'.
+```
+
 ### Modifying Insecure Cookies 
 The API will be able to fetch insecure cookies, but will only be able to modify secure cookies. This will mean that when modifying an insecure cookie with the API, the insecure cookie will automatically be changed to secure. 
 
@@ -612,15 +659,6 @@ const cookie = await cookieStore.get('insecure-cookie');
 cookie.value = 'new-value';
 cookieStore.set(cookie);  // 'cookie' will be modified into a secure cookie.
 ```
-
-### Cookie Store Caching
-
-A reasonable usage pattern for this API is obtaining a baseline snapshot of the
-cookie store via the query API and using the change event API to keep the
-snapshot in sync with the browser. This is more difficult than it might
-appear.
-
-TODO: Write up a recommended pattern for this use case or remove it.
 
 ### Error Handling
 
