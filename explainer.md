@@ -527,7 +527,7 @@ This API defaults cookie paths to `/` for cookie write operations, including del
 URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
 
 ### Secure Cookies
-This API only allows writing [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-5.3.5) cookies. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore, it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure` flagged cookies from unsecured web origins and enforces special rules for the [`Host`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-4.1.3.2) and [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-4.1.3.1) cookie name prefixes.
+This API only allows writing [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-06#section-5.3.5) cookies. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore, it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure` flagged cookies from unsecured web origins and enforces special rules for the [`Host`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-06#section-4.1.3.2) and [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-06#section-4.1.3.1) cookie name prefixes.
 
 This API will, however, allow reading non-`Secure` cookies in order to facilitate the migration to `Secure` cookies.
 
