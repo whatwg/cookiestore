@@ -493,9 +493,6 @@ When any of the following conditions occur for a [=cookie store=], perform the s
 * A user agent evicts expired [=cookies=] from the [=cookie store=].
 * A user agent removes excess [=cookies=] from the [=cookie store=].
 
-Issue: How about when "the current session is over" for non-persistent cookies?
-
-
 <!-- ============================================================ -->
 ## Extensions to Service Worker ## {#service-worker-extensions}
 <!-- ============================================================ -->
