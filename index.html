@@ -1225,7 +1225,7 @@ Possible extra rowspan handling
   <meta content="Bikeshed version 9cdaf2b5, updated Tue Sep 15 11:13:35 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="5a586876f8d15713bc6b24947c99786c7d8a06f2" name="document-revision">
+  <meta content="bd2955655fdc5726a926ee9e767f7ff58ef3daa7" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1501,7 +1501,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-15">15 September 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-16">16 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1605,10 +1605,11 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <ol class="toc">
       <li><a href="#gotcha"><span class="secno">8.1</span> <span class="content">Gotcha!</span></a>
       <li><a href="#restrict"><span class="secno">8.2</span> <span class="content">Restrict?</span></a>
-      <li><a href="#surprises"><span class="secno">8.3</span> <span class="content">Surprises</span></a>
-      <li><a href="#prefixes"><span class="secno">8.4</span> <span class="content">Prefixes</span></a>
-      <li><a href="#url-scoping"><span class="secno">8.5</span> <span class="content">URL scoping</span></a>
-      <li><a href="#aversion"><span class="secno">8.6</span> <span class="content">Cookie aversion</span></a>
+      <li><a href="#secure-cookies"><span class="secno">8.3</span> <span class="content">Secure cookies</span></a>
+      <li><a href="#surprises"><span class="secno">8.4</span> <span class="content">Surprises</span></a>
+      <li><a href="#prefixes"><span class="secno">8.5</span> <span class="content">Prefixes</span></a>
+      <li><a href="#url-scoping"><span class="secno">8.6</span> <span class="content">URL scoping</span></a>
+      <li><a href="#aversion"><span class="secno">8.7</span> <span class="content">Cookie aversion</span></a>
      </ol>
     <li>
      <a href="#privacy"><span class="secno">9</span> <span class="content">Privacy Considerations</span></a>
@@ -2804,17 +2805,20 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
    <p>For these reasons it is best to use caution when interpreting any cookie’s value, and never execute a cookie’s value as script, HTML, CSS, XML, PDF, or any other executable format.</p>
    <h3 class="heading settled" data-level="8.2" id="restrict"><span class="secno">8.2. </span><span class="content">Restrict?</span><a class="self-link" href="#restrict"></a></h3>
    <p>This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured <code>http</code> contexts this could result in a web less safe for users. For that reason this API has been restricted to secure contexts only.</p>
-   <h3 class="heading settled" data-level="8.3" id="surprises"><span class="secno">8.3. </span><span class="content">Surprises</span><a class="self-link" href="#surprises"></a></h3>
+   <h3 class="heading settled" data-level="8.3" id="secure-cookies"><span class="secno">8.3. </span><span class="content">Secure cookies</span><a class="self-link" href="#secure-cookies"></a></h3>
+   <p><em>This section is non-normative.</em></p>
+   <p>This API only allows writes for <code>Secure</code> cookies to encourage better decisions around security. However the API will still allow reading non-<code>Secure</code> cookies in order to facilitate the migration to <code>Secure</code> cookies. As a side-effect, when fetching and modifying a non-<code>Secure</code> cookie with this API, the non-<code>Secure</code> cookie will automatically be modified to <code>Secure</code>.</p>
+   <h3 class="heading settled" data-level="8.4" id="surprises"><span class="secno">8.4. </span><span class="content">Surprises</span><a class="self-link" href="#surprises"></a></h3>
    <p>Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.</p>
    <p>Other surprises are documented in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-1">Section 1 of Cookies: HTTP State Management Mechanism (RFC 6265bis)</a> - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.</p>
    <p>Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.</p>
-   <h3 class="heading settled" data-level="8.4" id="prefixes"><span class="secno">8.4. </span><span class="content">Prefixes</span><a class="self-link" href="#prefixes"></a></h3>
+   <h3 class="heading settled" data-level="8.5" id="prefixes"><span class="secno">8.5. </span><span class="content">Prefixes</span><a class="self-link" href="#prefixes"></a></h3>
    <p>Where feasible the examples use the <code>__Host-</code> and <code>__Secure-</code> name prefixes which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no <code>Secure</code> flag, and — in the case of <code>__Host-</code> — disallow overwriting with an explicit <code>Domain</code> or non-'/' <code>Path</code> attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.</p>
    <p>Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.</p>
-   <h3 class="heading settled" data-level="8.5" id="url-scoping"><span class="secno">8.5. </span><span class="content">URL scoping</span><a class="self-link" href="#url-scoping"></a></h3>
+   <h3 class="heading settled" data-level="8.6" id="url-scoping"><span class="secno">8.6. </span><span class="content">URL scoping</span><a class="self-link" href="#url-scoping"></a></h3>
    <p>Although a service worker script cannot directly access cookies today, it can already use controlled rendering of in-scope HTML and script resources to inject cookie-monitoring code under the remote control of the service worker script. This means that cookie access inside the scope of the service worker is technically possible already, it’s just not very convenient.</p>
    <p>When the service worker is scoped more narrowly than <code>/</code> it may still be able to read path-scoped cookies from outside its scope’s path space by successfully guessing/constructing a 404 page URL which allows IFRAME-ing and then running script inside it the same technique could expand to the whole origin, but a carefully constructed site (one where no out-of-scope pages are IFRAME-able) can actually deny this capability to a path-scoped service worker today and I was reluctant to remove that restriction without further discussion of the implications.</p>
-   <h3 class="heading settled" data-level="8.6" id="aversion"><span class="secno">8.6. </span><span class="content">Cookie aversion</span><a class="self-link" href="#aversion"></a></h3>
+   <h3 class="heading settled" data-level="8.7" id="aversion"><span class="secno">8.7. </span><span class="content">Cookie aversion</span><a class="self-link" href="#aversion"></a></h3>
    <p>To reduce complexity for developers and eliminate the need for ephemeral test cookies, this async cookies API will explicitly reject attempts to write or delete cookies when the operation would be ignored. Likewise it will explicitly reject attempts to read cookies when that operation would ignore actual cookie data and simulate an empty cookie jar. Attempts to observe cookie changes in these contexts will still "work", but won’t invoke the callback until and unless read access becomes allowed (due e.g. to changed site permissions.)</p>
    <p>Today writing to <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑥">document.cookie</a></code> in contexts where script-initiated cookie-writing is disallowed typically is a no-op. However, many cookie-writing scripts and frameworks always write a test cookie and then check for its existence to determine whether script-initiated cookie-writing is possible.</p>
    <p>Likewise, today reading <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie⑦">document.cookie</a></code> in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.</p>
@@ -3277,7 +3281,7 @@ authoring advice.</p>
     <li><a href="#ref-for-dom-document-cookie">1. Introduction</a> <a href="#ref-for-dom-document-cookie①">(2)</a>
     <li><a href="#ref-for-dom-document-cookie②">1.2.2. Compatiblity</a> <a href="#ref-for-dom-document-cookie③">(2)</a> <a href="#ref-for-dom-document-cookie④">(3)</a>
     <li><a href="#ref-for-dom-document-cookie⑤">1.3. Querying Cookies</a>
-    <li><a href="#ref-for-dom-document-cookie⑥">8.6. Cookie aversion</a> <a href="#ref-for-dom-document-cookie⑦">(2)</a>
+    <li><a href="#ref-for-dom-document-cookie⑥">8.7. Cookie aversion</a> <a href="#ref-for-dom-document-cookie⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-environment-creation-url">
