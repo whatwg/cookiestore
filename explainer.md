@@ -545,6 +545,38 @@ File API.
 JavaScript Date objects will be automatically converted to timestamps thanks to
 [implicit conversions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/valueOf).
 
+## Design Decisions
+
+### Default Paths
+This API defaults cookie paths to `/` for cookie write operations, including deletion/expiration. The implicit relative path-scoping of cookies to `.` has caused a lot of additional complexity for relatively little gain given their security equivalence under the same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain. Cookie paths without a trailing `/` are treated as if they had a trailing `/` appended for cookie write operations. Cookie paths must start with `/` for write operations, and must not contain any `..` path segments. Query parameters and URL fragments are not allowed in paths for cookie write operations.
+
+### URL Behavior
+URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
+
+### Secure Cookies
+This API only allows writing [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-06#section-5.3.5) cookies. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore, it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure` flagged cookies from unsecured web origins and enforces special rules for the [`Host`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-06#section-4.1.3.2) and [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-06#section-4.1.3.1) cookie name prefixes.
+
+This API will, however, allow reading non-`Secure` cookies in order to facilitate the migration to `Secure` cookies.
+
+### Domain Defaults
+This API defaults cookies to "Domain"-less, which in conjunction with "Secure" provides origin-scoped cookie
+behavior in most modern browsers. When practical the `__Host-` cookie name prefix should be used with these cookies so that cooperating browsers origin-scope them.
+
+### Serializing Expiration Dates
+Serialization of expiration times for non-session cookies in a special cookie-specific format has proven cumbersome,
+so this API allows JavaScript Date objects and numeric timestamps (milliseconds since the beginning of the Unix epoch) to be used instead. The inconsistently-implemented Max-Age parameter is not exposed, although similar functionality is available for the specific case of expiring a cookie.
+
+### HTTP Cookie Header Serialization
+Cookies without U+003D (=) code points in their HTTP Cookie header serialization are treated as having an empty name, consistent with the majority of current browsers. Cookies with an empty name cannot be set using values containing U+003D (=) code points as this would result in ambiguous serializations in the majority of current browsers.
+
+### Interpreting Strings
+Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API requires UTF-8 interpretation of cookie data and uses `USVString` for the script interface,
+with the additional side-effects that subsequent uses of `document.cookie` to read a cookie read or written through this interface and subsequent uses of `document.cookie` to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. This mandates changes to the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance with other modern user agents.
+
+### Compatibility 
+Some user-agents implement non-standard extensions to cookie behavior. The intent of this API is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented across modern browsers. As new cookie features are specified and adopted it is expected that this API will be extended to include them. A secondary goal is to converge with `document.cookie` behavior
+and the http cookie specification. See https://github.com/whatwg/html/issues/804 and https://inikulin.github.io/cookie-compat/
+for the current state of this convergence.
 
 ## Subtleties
 
