@@ -1338,6 +1338,14 @@ For these reasons it is best to use caution when interpreting any cookie's value
 This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured `http` contexts this could result in a web less safe for users. For that reason this API has been restricted to secure contexts only.
 
 <!-- ============================================================ -->
+## Secure cookies ## {#secure-cookies}
+<!-- ============================================================ -->
+
+*This section is non-normative.*
+
+This API only allows writes for `Secure` cookies to encourage better decisions around security. However the API will still allow reading non-`Secure` cookies in order to facilitate the migration to `Secure` cookies. As a side-effect, when fetching and modifying a non-`Secure` cookie with this API, the non-`Secure` cookie will automatically be modified to `Secure`. 
+
+<!-- ============================================================ -->
 ## Surprises ## {#surprises}
 <!-- ============================================================ -->
 
