@@ -915,15 +915,19 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
 ## The {{ServiceWorkerRegistration}} interface ## {#ServiceWorkerRegistration}
 <!-- ============================================================ -->
 
-The {{ServiceWorkerRegistration}} interface is extended to give access to a {{CookieStoreManager}} via {{cookies}} which provides the interface for subscribing to cookie changes.
+The {{ServiceWorkerRegistration}} interface is extended to give access to a {{CookieStoreManager}} via {{ServiceWorkerRegistration/cookies}} which provides the interface for subscribing to cookie changes.
 
 <xmp class=idl>
 [Exposed=(ServiceWorker,Window)]
 partial interface ServiceWorkerRegistration {
-  readonly attribute CookieStoreManager cookies;
+  [SameObject] readonly attribute CookieStoreManager cookies;
 };
 </xmp>
 
+Each {{ServiceWorkerRegistration}} has an associated {{CookieStoreManager}} object.
+The {{CookieStoreManager}}'s [=CookieStoreManager/registration=] is equal to the {{ServiceWorkerRegistration}}'s [=service worker registration=].
+
+The <dfn attribute for=ServiceWorkerRegistration>cookies</dfn> getter steps are to return [=this=]'s associated {{CookieStoreManager}} object.
 
 <div class=example>
 Subscribing to cookie changes from a Service Worker script:
