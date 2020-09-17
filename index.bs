@@ -805,7 +805,7 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
 # The {{CookieStoreManager}} Interface # {#CookieStoreManager}
 <!-- ============================================================ -->
 
-A {{CookieStoreManager}} has an associated <dfn>registration</dfn> which is a [=service worker registration=].
+A {{CookieStoreManager}} has an associated <dfn for=CookieStoreManager>registration</dfn> which is a [=service worker registration=].
 
 The {{CookieStoreManager}} interface allows [=Service Workers=] to subscribe to events for cookie changes. Using the {{CookieStoreManager/subscribe()}} method is necessary to indicate that a particular [=service worker registration=] is interested in change events.
 
@@ -825,7 +825,7 @@ interface CookieStoreManager {
 <!-- ============================================================ -->
 
 <div class="domintro note">
-    : await [=registration=] . cookies . {{CookieStoreManager/subscribe()|subscribe}}(|subscriptions|)
+    : await |registration| . cookies . {{CookieStoreManager/subscribe()|subscribe}}(|subscriptions|)
 
     ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}} and {{CookieStoreGetOptions/url}} properties.
 
@@ -837,14 +837,14 @@ interface CookieStoreManager {
 <div algorithm>
 The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method steps are:
 
-1. Let [=registration=] be [=/this=].
+1. Let |registration| be [=/this=]'s [=CookieStoreManager/registration=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
-    1. Let |subscription list| be [=registration=]'s associated [=cookie change subscription list=].
+    1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
         1. Let |name| be |entry|'s {{CookieStoreGetOptions/name}} member.
         1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
-        1. If |url| does not start with [=registration=]'s [=service worker registration/scope url=],
+        1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. If |subscription list| does not already [=list/contain=] |subscription|, then [=list/append=] |subscription| to |subscription list|.
@@ -858,7 +858,7 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
 <!-- ============================================================ -->
 
 <div class="domintro note">
-    : |subscriptions| = await [=registration=] . cookies . {{CookieStoreManager/getSubscriptions()}}
+    : |subscriptions| = await |registration| . cookies . {{CookieStoreManager/getSubscriptions()}}
 
     ::  This method returns a promise which resolves to a list of the cookie change subscriptions made for this Service Worker registration.
 
@@ -867,10 +867,10 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
 <div algorithm>
 The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are:
 
-1. Let [=registration=] be [=/this=].
+1. Let |registration| be [=/this=]'s [=CookieStoreManager/registration=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
-    1. Let |subscriptions| be [=registration=]'s associated [=cookie change subscription list=].
+    1. Let |subscriptions| be |registration|'s associated [=cookie change subscription list=].
     1. Let |result| be a new [=list=].
     1. [=list/For each=] |subscription| in |subscriptions|, run these steps:
         1. [=list/Append=] «[ "name" → |subscription|'s [=cookie change subscription/name=], "url" → |subscription|'s [=cookie change subscription/url=]]» to |result|.
@@ -884,7 +884,7 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
 <!-- ============================================================ -->
 
 <div class="domintro note">
-    : await [=registration=] . cookies . {{CookieStoreManager/unsubscribe()|unsubscribe}}(|subscriptions|)
+    : await |registration| . cookies . {{CookieStoreManager/unsubscribe()|unsubscribe}}(|subscriptions|)
 
     ::  Calling this method will stop the registered service worker from receiving previously subscribed events. The |subscriptions| argument should list subscriptions in the same form passed to {{CookieStoreManager/subscribe()}} or returned from {{CookieStoreManager/getSubscriptions()}}.
 
@@ -894,14 +894,14 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
 <div algorithm>
 The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method steps are:
 
-1. Let [=registration=] be [=/this=].
+1. Let |registration| be [=/this=]'s [=CookieStoreManager/registration=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
-    1. Let |subscription list| be [=registration=]'s associated [=cookie change subscription list=].
+    1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
         1. Let |name| be |entry|'s {{CookieStoreGetOptions/name}} member.
         1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
-        1. If |url| does not start with [=registration=]'s [=service worker registration/scope url=],
+        1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. [=list/Remove=] any [=list/item=] from |subscription list| equal to |subscription|.
@@ -1239,11 +1239,11 @@ To <dfn>process cookie changes</dfn>, run the following steps:
         [=fire a change event=] named "`change`" with |changes| at |window|'s {{CookieStore}}
         on |window|'s [=responsible event loop=].
 
-1. For every [=service worker registration=] [=registration=], run the following steps:
+1. For every [=service worker registration=] |registration|, run the following steps:
     1. Let |changes| be a new [=/set=].
-    1. [=set/For each=] |change| in the [=observable changes=] for [=registration=]'s [=service worker registration/scope url=], run these steps:
+    1. [=set/For each=] |change| in the [=observable changes=] for |registration|'s [=service worker registration/scope url=], run these steps:
         1. Let |cookie| be |change|'s cookie.
-        1. [=list/For each=] |subscription| in [=registration=]'s [=cookie change subscription list=], run these steps:
+        1. [=list/For each=] |subscription| in |registration|'s [=cookie change subscription list=], run these steps:
             1. If |change| is not [=set/contains|in=] the [=observable changes=] for |subscription|'s [=cookie change subscription/url=],
                 then [=continue=].
             1. If |cookie|'s [=cookie/name=] ([=decoded=]) equals |subscription|'s [=cookie change subscription/name=],
@@ -1251,7 +1251,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
     1. If |changes| [=set/is empty=], then [=continue=].
     1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] from |changes|.
     1. [=Fire a functional event=] named "`cookiechange`"
-        using {{ExtendableCookieChangeEvent}} on [=registration=]
+        using {{ExtendableCookieChangeEvent}} on |registration|
         with these properties:
         : {{ExtendableCookieChangeEvent/changed}}
         :: |changedList|
