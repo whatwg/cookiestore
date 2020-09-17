@@ -749,6 +749,8 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
 # The {{CookieStoreManager}} Interface # {#CookieStoreManager}
 <!-- ============================================================ -->
 
+A {{CookieStoreManager}} has an associated <dfn for=CookieStoreManager>registration</dfn> which is a [=service worker registration=].
+
 The {{CookieStoreManager}} interface allows [=Service Workers=] to subscribe to events for cookie changes. Using the {{CookieStoreManager/subscribe()}} method is necessary to indicate that a particular [=service worker registration=] is interested in change events.
 
 <xmp class=idl>
@@ -779,7 +781,7 @@ interface CookieStoreManager {
 <div algorithm>
 The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method steps are:
 
-1. Let |registration| be [=/this=].
+1. Let |registration| be [=/this=]'s [=CookieStoreManager/registration=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
@@ -809,7 +811,7 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
 <div algorithm>
 The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are:
 
-1. Let |registration| be [=/this=].
+1. Let |registration| be [=/this=]'s [=CookieStoreManager/registration=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |subscriptions| be |registration|'s associated [=cookie change subscription list=].
@@ -836,7 +838,7 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
 <div algorithm>
 The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method steps are:
 
-1. Let |registration| be [=/this=].
+1. Let |registration| be [=/this=]'s [=CookieStoreManager/registration=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
@@ -857,15 +859,19 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
 ## The {{ServiceWorkerRegistration}} interface ## {#ServiceWorkerRegistration}
 <!-- ============================================================ -->
 
-The {{ServiceWorkerRegistration}} interface is extended to give access to a {{CookieStoreManager}}.
+The {{ServiceWorkerRegistration}} interface is extended to give access to a {{CookieStoreManager}} via {{ServiceWorkerRegistration/cookies}} which provides the interface for subscribing to cookie changes.
 
 <xmp class=idl>
 [Exposed=(ServiceWorker,Window)]
 partial interface ServiceWorkerRegistration {
-  readonly attribute CookieStoreManager cookies;
+  [SameObject] readonly attribute CookieStoreManager cookies;
 };
 </xmp>
 
+Each {{ServiceWorkerRegistration}} has an associated {{CookieStoreManager}} object.
+The {{CookieStoreManager}}'s [=CookieStoreManager/registration=] is equal to the {{ServiceWorkerRegistration}}'s [=service worker registration=].
+
+The <dfn attribute for=ServiceWorkerRegistration>cookies</dfn> getter steps are to return [=this=]'s associated {{CookieStoreManager}} object.
 
 <div class=example>
 Subscribing to cookie changes from a Service Worker script:
