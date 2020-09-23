@@ -555,8 +555,8 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be the [=current settings object=]'s [=creation URL=].
 1. If |options| is empty, then return [=a promise rejected with=] a {{TypeError}}.
-1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
-    1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|' {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
+1. If |options|["{{CookieStoreGetOptions/url}}"] is present, then run these steps:
+    1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
     1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
@@ -566,7 +566,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
         |url| and
-        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present).
+        |options|["{{CookieStoreGetOptions/name}}"] (if present).
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], then [=resolve=] |p| with undefined.
     1. Otherwise, [=resolve=] |p| with the first item of |list|.
@@ -611,8 +611,8 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Let |origin| be the [=current settings object=]'s [=/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be the [=current settings object=]'s [=creation URL=].
-1. If |options|' {{CookieStoreGetOptions/url}} dictionary member is present, then run these steps:
-    1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|' {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
+1. If |options|["{{CookieStoreGetOptions/url}}"] is present, then run these steps:
+    1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
     1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
@@ -622,7 +622,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
         |url| and
-        |options|' {{CookieStoreGetOptions/name}} dictionary member (if present).
+        |options|["{{CookieStoreGetOptions/name}}"] (if present).
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}}.
     1. Otherwise, [=resolve=] |p| with |list|.
 1. Return |p|.
@@ -678,12 +678,12 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
         |url|,
-        |options|' {{CookieInit/name}} dictionary member,
-        |options|' {{CookieInit/value}} dictionary member,
-        |options|' {{CookieInit/expires}} dictionary member,
-        |options|' {{CookieInit/domain}} dictionary member,
-        |options|' {{CookieInit/path}} dictionary member, and
-        |options|' {{CookieInit/sameSite}} dictionary member.
+        |options|["{{CookieInit/name}}"],
+        |options|["{{CookieInit/value}}"],
+        |options|["{{CookieInit/expires}}"],
+        |options|["{{CookieInit/domain}}"],
+        |options|["{{CookieInit/path}}"], and
+        |options|["{{CookieInit/sameSite}}"].
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=Resolve=] |p| with undefined.
 1. Return |p|.
@@ -735,9 +735,9 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=delete a cookie=] with
         |url|,
-        |options|' {{CookieStoreDeleteOptions/name}} dictionary member,
-        |options|' {{CookieStoreDeleteOptions/domain}} dictionary member, and
-        |options|' {{CookieStoreDeleteOptions/path}} dictionary member.
+        |options|["{{CookieStoreDeleteOptions/name}}"],
+        |options|["{{CookieStoreDeleteOptions/domain}}"], and
+        |options|["{{CookieStoreDeleteOptions/path}}"].
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=Resolve=] |p| with undefined.
 1. Return |p|.
@@ -786,8 +786,8 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
-        1. Let |name| be |entry|'s {{CookieStoreGetOptions/name}} member.
-        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
+        1. Let |name| be |entry|["{{CookieStoreGetOptions/name}}"].
+        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
@@ -843,8 +843,8 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
-        1. Let |name| be |entry|'s {{CookieStoreGetOptions/name}} member.
-        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|'s {{CookieStoreGetOptions/url}} dictionary member with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
+        1. Let |name| be |entry|["{{CookieStoreGetOptions/name}}"].
+        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with [=/this=]'s [=relevant settings object=]'s [=API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
@@ -1250,7 +1250,7 @@ To <dfn>prepare lists</dfn> from |changes|, run the following steps:
     1. Let |item| be the result of running [=create a CookieListItem=] from |change|'s cookie.
     1. If |change|'s type is *changed*, then [=list/append=] |item| to |changedList|.
     1. Otherwise, run these steps:
-        1. Set |item|'s {{CookieListItem/value}} dictionary member to undefined.
+        1. Set |item|["{{CookieListItem/value}}"] to undefined.
         1. [=list/Append=] |item| to |deletedList|.
 1. Return |changedList| and |deletedList|.
 
@@ -1292,7 +1292,7 @@ This API may have the unintended side-effect of making cookies easier to use and
 
 *This section is non-normative.*
 
-This API only allows writes for `Secure` cookies to encourage better decisions around security. However the API will still allow reading non-`Secure` cookies in order to facilitate the migration to `Secure` cookies. As a side-effect, when fetching and modifying a non-`Secure` cookie with this API, the non-`Secure` cookie will automatically be modified to `Secure`. 
+This API only allows writes for `Secure` cookies to encourage better decisions around security. However the API will still allow reading non-`Secure` cookies in order to facilitate the migration to `Secure` cookies. As a side-effect, when fetching and modifying a non-`Secure` cookie with this API, the non-`Secure` cookie will automatically be modified to `Secure`.
 
 <!-- ============================================================ -->
 ## Surprises ## {#surprises}
