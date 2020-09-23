@@ -74,6 +74,13 @@
 /*                                   Body                                     */
 /******************************************************************************/
 
+	html {
+		color: black;
+		color: var(--text);
+		background-color: white;
+		background-color: var(--bg);
+	}
+
 	body {
 		counter-reset: example figure issue;
 
@@ -92,11 +99,7 @@
 		overflow-wrap: break-word;
 		hyphens: auto;
 
-		/* Colors */
-		color: black;
-		color: var(--text);
-		background: white top left fixed no-repeat;
-		background-color: var(--bg);
+		background: transparent top left fixed no-repeat;
 		background-size: 25px auto;
 	}
 
@@ -1319,10 +1322,10 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version a18c8f28, updated Wed Sep 16 17:34:49 2020 -0700" name="generator">
+  <meta content="Bikeshed version 2c84209d, updated Wed Sep 23 13:18:11 2020 -0700" name="generator">
   <link href="https://wicg.github.io/cookie-store/" rel="canonical">
   <link href="logo-cookies.svg" rel="icon">
-  <meta content="9a100293eb01c0828fea16d266ea6d410ef6934f" name="document-revision">
+  <meta content="c9b98612f7d552dd68667c4b41ff25c4d3e74564" name="document-revision">
 <style>
 .domintro::before {
     content: 'For web developers (non-normative)';
@@ -1341,6 +1344,12 @@ Possible extra rowspan handling
     font-size: inherit;
 }
 </style>
+<style>/* darkmode */
+
+            @media (prefers-color-scheme: dark) {
+                html { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg fill='%23100808' transform='translate(200 200) rotate(-45) translate(-200 -200)' stroke='%23100808' stroke-width='3'%3E%3Ctext x='50%25' y='220' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EUNOFFICIAL%3C/text%3E%3Ctext x='50%25' y='305' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EDRAFT%3C/text%3E%3C/g%3E%3C/svg%3E") !important; }
+            }
+            </style>
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1406,6 +1415,12 @@ pre .property::before, pre .property::after {
 <style>/* style-colors */
 
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
+html {
+    color: black;
+    color: var(--text);
+    background-color: white;
+    background-color: var(--bg);
+}
 :root {
     color-scheme: light dark;
 
@@ -1716,7 +1731,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 @media (prefers-color-scheme: dark) {
     :root {
         --text: #ddd;
-        --bg: #111;
+        --bg: black;
 
         --logo-bg: #1a5e9a;
         --logo-active-bg: #c00;
@@ -1829,426 +1844,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     }
 }
 @media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
-    }
-}
-@media (prefers-color-scheme: dark) {
     .highlight:not(.idl) { background: rgba(255, 255, 255, .05); }
 
     c-[a] { color: #d33682 } /* Keyword.Declaration */
@@ -2315,7 +1910,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Cookie Store API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-17">17 September 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-09-23">23 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2839,10 +2434,10 @@ In a document it defaults to the path of the current document and does not respe
      <li data-md>
       <p>If <var>options</var> is empty, then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with②">a promise rejected with</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①">TypeError</a></code>.</p>
      <li data-md>
-      <p>If <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url①">url</a></code> dictionary member is present, then run these steps:</p>
+      <p>If <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url①">url</a></code>"] is present, then run these steps:</p>
       <ol>
        <li data-md>
-        <p>Let <var>parsed</var> be the result of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser">parsing</a> <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url②">url</a></code> dictionary member with <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url" id="ref-for-api-base-url">API base URL</a>.</p>
+        <p>Let <var>parsed</var> be the result of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser">parsing</a> <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url②">url</a></code>"] with <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url" id="ref-for-api-base-url">API base URL</a>.</p>
        <li data-md>
         <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object" id="ref-for-current-global-object">current global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> object and <var>parsed</var> does not <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-equals" id="ref-for-concept-url-equals">equal</a> <var>url</var>,
 then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with③">a promise rejected with</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror②">TypeError</a></code>.</p>
@@ -2858,7 +2453,7 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
       <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel①">in parallel</a>:</p>
       <ol>
        <li data-md>
-        <p>Let <var>list</var> be the results of running <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies①">query cookies</a> with <var>url</var> and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name">name</a></code> dictionary member (if present).</p>
+        <p>Let <var>list</var> be the results of running <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies①">query cookies</a> with <var>url</var> and <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name">name</a></code>"] (if present).</p>
        <li data-md>
         <p>If <var>list</var> is failure, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject①">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror④">TypeError</a></code> and abort these steps.</p>
        <li data-md>
@@ -2916,10 +2511,10 @@ In a document it defaults to the path of the current document and does not respe
      <li data-md>
       <p>Let <var>url</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object⑦">current settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url③">creation URL</a>.</p>
      <li data-md>
-      <p>If <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url③">url</a></code> dictionary member is present, then run these steps:</p>
+      <p>If <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url③">url</a></code>"] is present, then run these steps:</p>
       <ol>
        <li data-md>
-        <p>Let <var>parsed</var> be the result of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser①">parsing</a> <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url④">url</a></code> dictionary member with <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this①">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url" id="ref-for-api-base-url①">API base URL</a>.</p>
+        <p>Let <var>parsed</var> be the result of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser①">parsing</a> <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url④">url</a></code>"] with <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this①">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url" id="ref-for-api-base-url①">API base URL</a>.</p>
        <li data-md>
         <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object" id="ref-for-current-global-object①">current global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object and <var>parsed</var> does not <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-equals" id="ref-for-concept-url-equals①">equal</a> <var>url</var>,
 then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with⑦">a promise rejected with</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑥">TypeError</a></code>.</p>
@@ -2935,7 +2530,7 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
       <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel③">in parallel</a>:</p>
       <ol>
        <li data-md>
-        <p>Let <var>list</var> be the results of running <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies③">query cookies</a> with <var>url</var> and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name①">name</a></code> dictionary member (if present).</p>
+        <p>Let <var>list</var> be the results of running <a data-link-type="dfn" href="#query-cookies" id="ref-for-query-cookies③">query cookies</a> with <var>url</var> and <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name①">name</a></code>"] (if present).</p>
        <li data-md>
         <p>If <var>list</var> is failure, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject③">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code>.</p>
        <li data-md>
@@ -3005,7 +2600,7 @@ then return <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-pro
       <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel⑤">in parallel</a>:</p>
       <ol>
        <li data-md>
-        <p>Let <var>r</var> be the result of running <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie①">set a cookie</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-name" id="ref-for-dom-cookieinit-name">name</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-value" id="ref-for-dom-cookieinit-value">value</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-expires" id="ref-for-dom-cookieinit-expires">expires</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-domain" id="ref-for-dom-cookieinit-domain">domain</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-path" id="ref-for-dom-cookieinit-path">path</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookieinit-samesite" id="ref-for-dom-cookieinit-samesite">sameSite</a></code> dictionary member.</p>
+        <p>Let <var>r</var> be the result of running <a data-link-type="dfn" href="#set-a-cookie" id="ref-for-set-a-cookie①">set a cookie</a> with <var>url</var>, <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookieinit-name" id="ref-for-dom-cookieinit-name">name</a></code>"], <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookieinit-value" id="ref-for-dom-cookieinit-value">value</a></code>"], <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookieinit-expires" id="ref-for-dom-cookieinit-expires">expires</a></code>"], <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookieinit-domain" id="ref-for-dom-cookieinit-domain">domain</a></code>"], <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookieinit-path" id="ref-for-dom-cookieinit-path">path</a></code>"], and <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookieinit-samesite" id="ref-for-dom-cookieinit-samesite">sameSite</a></code>"].</p>
        <li data-md>
         <p>If <var>r</var> is failure, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑤">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①⓪">TypeError</a></code> and abort these steps.</p>
        <li data-md>
@@ -3068,7 +2663,7 @@ true, and
       <p>Run the following steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel⑦">in parallel</a>:</p>
       <ol>
        <li data-md>
-        <p>Let <var>r</var> be the result of running <a data-link-type="dfn" href="#delete-a-cookie" id="ref-for-delete-a-cookie①">delete a cookie</a> with <var>url</var>, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-name" id="ref-for-dom-cookiestoredeleteoptions-name">name</a></code> dictionary member, <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-domain" id="ref-for-dom-cookiestoredeleteoptions-domain">domain</a></code> dictionary member, and <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-path" id="ref-for-dom-cookiestoredeleteoptions-path">path</a></code> dictionary member.</p>
+        <p>Let <var>r</var> be the result of running <a data-link-type="dfn" href="#delete-a-cookie" id="ref-for-delete-a-cookie①">delete a cookie</a> with <var>url</var>, <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-name" id="ref-for-dom-cookiestoredeleteoptions-name">name</a></code>"], <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-domain" id="ref-for-dom-cookiestoredeleteoptions-domain">domain</a></code>"], and <var>options</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoredeleteoptions-path" id="ref-for-dom-cookiestoredeleteoptions-path">path</a></code>"].</p>
        <li data-md>
         <p>If <var>r</var> is failure, then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑦">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①②">TypeError</a></code> and abort these steps.</p>
        <li data-md>
@@ -3114,9 +2709,9 @@ true, and
         <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate">For each</a> <var>entry</var> in <var>subscriptions</var>, run these steps:</p>
         <ol>
          <li data-md>
-          <p>Let <var>name</var> be <var>entry</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name③">name</a></code> member.</p>
+          <p>Let <var>name</var> be <var>entry</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name③">name</a></code>"].</p>
          <li data-md>
-          <p>Let <var>url</var> be the result of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser②">parsing</a> <var>entry</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑥">url</a></code> dictionary member with <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this③">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object②">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url" id="ref-for-api-base-url②">API base URL</a>.</p>
+          <p>Let <var>url</var> be the result of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser②">parsing</a> <var>entry</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑥">url</a></code>"] with <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this③">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object②">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url" id="ref-for-api-base-url②">API base URL</a>.</p>
          <li data-md>
           <p>If <var>url</var> does not start with <var>registration</var>’s <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-scope-url" id="ref-for-dfn-scope-url①">scope url</a>,
 then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑧">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①③">TypeError</a></code> and abort these steps.</p>
@@ -3191,9 +2786,9 @@ then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="
         <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate②">For each</a> <var>entry</var> in <var>subscriptions</var>, run these steps:</p>
         <ol>
          <li data-md>
-          <p>Let <var>name</var> be <var>entry</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name④">name</a></code> member.</p>
+          <p>Let <var>name</var> be <var>entry</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-name" id="ref-for-dom-cookiestoregetoptions-name④">name</a></code>"].</p>
          <li data-md>
-          <p>Let <var>url</var> be the result of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser③">parsing</a> <var>entry</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑦">url</a></code> dictionary member with <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this⑥">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object③">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url" id="ref-for-api-base-url③">API base URL</a>.</p>
+          <p>Let <var>url</var> be the result of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser③">parsing</a> <var>entry</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookiestoregetoptions-url" id="ref-for-dom-cookiestoregetoptions-url⑦">url</a></code>"] with <a data-link-type="dfn" href="https://heycam.github.io/webidl/#this" id="ref-for-this⑥">this</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object③">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url" id="ref-for-api-base-url③">API base URL</a>.</p>
          <li data-md>
           <p>If <var>url</var> does not start with <var>registration</var>’s <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-scope-url" id="ref-for-dfn-scope-url②">scope url</a>,
 then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑨">reject</a> <var>p</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①④">TypeError</a></code> and abort these steps.</p>
@@ -3553,7 +3148,7 @@ with <var>url</var> as <var>request-uri</var>, for a "non-HTTP" API.</p>
         <p>Otherwise, run these steps:</p>
         <ol>
          <li data-md>
-          <p>Set <var>item</var>’s <code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value">value</a></code> dictionary member to undefined.</p>
+          <p>Set <var>item</var>["<code class="idl"><a data-link-type="idl" href="#dom-cookielistitem-value" id="ref-for-dom-cookielistitem-value">value</a></code>"] to undefined.</p>
          <li data-md>
           <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append①①">Append</a> <var>item</var> to <var>deletedList</var>.</p>
         </ol>
