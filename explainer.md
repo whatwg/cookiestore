@@ -322,7 +322,7 @@ The objects returned by `get` and `getAll` contain all the information in the
 cookie store, not just the name and the value.
 
 ```javascript
-await cookie = cookieStore.get('session_id');
+const cookie = await cookieStore.get('session_id');
 console.log(`Cookie scope - Domain: ${cookie.domain} Path: ${cookie.path}`);
 if (cookie.expires === null) {
   console.log('Cookie expires at the end of the session');
