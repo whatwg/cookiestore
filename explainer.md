@@ -322,7 +322,7 @@ The objects returned by `get` and `getAll` contain all the information in the
 cookie store, not just the name and the value.
 
 ```javascript
-await cookie = cookieStore.get('session_id');
+const cookie = await cookieStore.get('session_id');
 console.log(`Cookie scope - Domain: ${cookie.domain} Path: ${cookie.path}`);
 if (cookie.expires === null) {
   console.log('Cookie expires at the end of the session');
@@ -528,7 +528,7 @@ The change events API exposed to documents does not accept URLs.
 Service workers may pass any URL under their scopes into the query or
 change event API.
 
-#### Service Worker Scope 
+#### Service Worker Scope
 
 The Cookie Store API does not change the access level for Service Workers.
 
@@ -573,7 +573,7 @@ Cookies without U+003D (=) code points in their HTTP Cookie header serialization
 Internationalized cookie usage from scripts has to date been slow and browser-specific due to lack of interoperability because although several major browsers use UTF-8 interpretation for cookie data, historically Safari and browsers based on WinINet have not. This API requires UTF-8 interpretation of cookie data and uses `USVString` for the script interface,
 with the additional side-effects that subsequent uses of `document.cookie` to read a cookie read or written through this interface and subsequent uses of `document.cookie` to update a cookie previously read or written through this interface will also use a UTF-8 interpretation of the cookie data. This mandates changes to the behavior of `WinINet`-based user agents and Safari but should bring their behavior into concordance with other modern user agents.
 
-### Compatibility 
+### Compatibility
 Some user-agents implement non-standard extensions to cookie behavior. The intent of this API is to first capture a useful and interoperable (or mostly-interoperable) subset of cookie behavior implemented across modern browsers. As new cookie features are specified and adopted it is expected that this API will be extended to include them. A secondary goal is to converge with `document.cookie` behavior
 and the http cookie specification. See https://github.com/whatwg/html/issues/804 and https://inikulin.github.io/cookie-compat/
 for the current state of this convergence.
@@ -651,8 +651,8 @@ const cookie = await cookieStore.get('cookie-name');
 console.log(cookie.value);  // Value will likely be '2' not '3'.
 ```
 
-### Modifying Insecure Cookies 
-The API will be able to fetch insecure cookies, but will only be able to modify secure cookies. This will mean that when modifying an insecure cookie with the API, the insecure cookie will automatically be changed to secure. 
+### Modifying Insecure Cookies
+The API will be able to fetch insecure cookies, but will only be able to modify secure cookies. This will mean that when modifying an insecure cookie with the API, the insecure cookie will automatically be changed to secure.
 
 ```javascript
 const cookie = await cookieStore.get('insecure-cookie');
