@@ -1151,6 +1151,10 @@ To <dfn>delete a cookie</dfn> with
 |path|,
 run the following steps:
 
+1. If |path| is not null, then run these steps:
+    1. If |path| does not start with U+0002F (`/`), then return failure.
+    1. If |path| does not end with U+0002F (`/`), append U+0002F (`/`) to |path|.
+    
 1. Let |expires| be the earliest representable date represented [=as a timestamp=].
 
     Note: The exact value of |expires| is not important for the purposes of this algorithm,
