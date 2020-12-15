@@ -1109,6 +1109,9 @@ run the following steps:
         then return failure.
     1. [=list/Append=] \``Domain`\`/|domain| ([=encoded=]) to |attributes|.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
+1. If |path| is not null, then run these steps:
+    1. If |path| does not start with U+0002F (`/`), then return failure.
+    1. If |path| does not end with U+0002F (`/`), append U+0002F (`/`) to |path|.
 1. [=list/Append=] \``Path`\`/|path| ([=encoded=]) to |attributes|.
 1. [=list/Append=] \``Secure`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
