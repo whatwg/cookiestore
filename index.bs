@@ -1286,7 +1286,7 @@ For these reasons it is best to use caution when interpreting any cookie's value
 ## Restrict? ## {#restrict}
 <!-- ============================================================ -->
 
-This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in [=non-secure contexts=] this could result in a web less safe for users. For that reason this API has been restricted to [=secure contexts=].
+This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in [=non-secure contexts=] this could result in a web less safe for users. For that reason this API has been restricted to [=secure contexts=] only.
 
 <!-- ============================================================ -->
 ## Secure cookies ## {#secure-cookies}
