@@ -259,11 +259,11 @@ await cookieStore.set({
   expires: null,  // session cookie
 
   // By default, cookies are scoped at the current domain.
-  domain: (new URL(self.location.href)).domain,
+  domain: self.location.host,
   path: '/',
 
   // Creates secure cookies by default on secure origins.
-  secure: (new URL(self.location.href)).protocol === 'https:',
+  secure: self.location.protocol === 'https:',
   httpOnly: false,
 });
 ```
