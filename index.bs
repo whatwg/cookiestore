@@ -38,6 +38,8 @@ spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
 <pre class=link-defaults>
 spec:infra; type:dfn; text:list
 spec:html; type:dfn; for:environment settings object; text:global object
+spec:html; type:dfn; text:secure context
+spec:html; type:dfn; text:non-secure context
 spec:webidl; type:dfn; text:resolve
 spec:service-workers; type:dfn; for:/; text:service worker
 </pre>
@@ -1284,7 +1286,7 @@ For these reasons it is best to use caution when interpreting any cookie's value
 ## Restrict? ## {#restrict}
 <!-- ============================================================ -->
 
-This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in unsecured `http` contexts this could result in a web less safe for users. For that reason this API has been restricted to secure contexts only.
+This API may have the unintended side-effect of making cookies easier to use and consequently encouraging their further use. If it causes their further use in [=non-secure contexts=] this could result in a web less safe for users. For that reason this API has been restricted to [=secure contexts=] only.
 
 <!-- ============================================================ -->
 ## Secure cookies ## {#secure-cookies}
@@ -1298,7 +1300,7 @@ This API only allows writes for `Secure` cookies to encourage better decisions a
 ## Surprises ## {#surprises}
 <!-- ============================================================ -->
 
-Some existing cookie behavior (especially domain-rather-than-origin orientation, unsecured contexts being able to set cookies readable in secure contexts, and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.
+Some existing cookie behavior (especially domain-rather-than-origin orientation, [=non-secure contexts=] being able to set cookies readable in [=secure contexts=], and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.
 
 Other surprises are documented in [[RFC6265bis#section-1|Section 1 of Cookies: HTTP State Management Mechanism (RFC 6265bis)]] - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
 
@@ -1308,7 +1310,7 @@ Further complicating this are historical differences in cookie-handling across m
 ## Prefixes ## {#prefixes}
 <!-- ============================================================ -->
 
-Where feasible the examples use the `__Host-` and `__Secure-` name prefixes which causes some current browsers to disallow overwriting from unsecured contexts, disallow overwriting with no `Secure` flag, and &mdash; in the case of `__Host-` &mdash; disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
+Where feasible the examples use the `__Host-` and `__Secure-` name prefixes which causes some current browsers to disallow overwriting from [=non-secure contexts=], disallow overwriting with no `Secure` flag, and &mdash; in the case of `__Host-` &mdash; disallow overwriting with an explicit `Domain` or non-'/' `Path` attribute (effectively enforcing same-origin semantics.) These prefixes provide important security benefits in those browsers implementing Secure Cookies and degrade gracefully (i.e. the special semantics may not be enforced in other cookie APIs but the cookies work normally and the async cookies API enforces the secure semantics for write operations) in other browsers. A major goal of this API is interoperation with existing cookies, though, so a few examples have also been provided using cookie names lacking these prefixes.
 
 Prefix rules are also enforced in write operations by this API, but may not be enforced in the same browser for other APIs. For this reason it is inadvisable to rely on their enforcement too heavily until and unless they are more broadly adopted.
 
