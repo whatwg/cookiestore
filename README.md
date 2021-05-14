@@ -1,4 +1,4 @@
- <img src="https://wicg.github.io/cookie-store/logo-cookies.svg" height="100" align=right>
+<img src="https://wicg.github.io/cookie-store/logo-cookies.svg" height="100" align=right>
 
 # Cookie Store API
 
