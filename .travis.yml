@@ -5,8 +5,8 @@ python:
 
 install:
   # Setup bikeshed. See https://tabatkins.github.io/bikeshed/#travis-ci
-  - git clone https://github.com/tabatkins/bikeshed.git
   - pip3 install bikeshed
+  - bikeshed update
 
 script:
   - bash ./deploy.sh
