@@ -32,16 +32,15 @@ Test Suite: https://github.com/web-platform-tests/wpt/tree/master/cookie-store
 spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
     type: dfn
         text: time values; url: sec-time-values-and-time-range
-        text: promise; url: sec-promise-objects
+spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
+    urlPrefix: webappapis.html
+        type: dfn
+            text: DOM manipulation task source; url: dom-manipulation-task-source
 </pre>
 
 <pre class=link-defaults>
-spec:infra; type:dfn; text:list
-spec:html; type:dfn; for:environment settings object; text:global object
-spec:html; type:dfn; text:secure context
-spec:html; type:dfn; text:non-secure context
-spec:webidl; type:dfn; text:resolve
 spec:service-workers; type:dfn; for:/; text:service worker
+spec:service-workers; type:dfn; for:/; text:service worker registration
 </pre>
 
 <style>
@@ -96,7 +95,6 @@ Newer parts of the web built in service workers [need access to cookies too](htt
 
 <!-- ============================================================ -->
 ## A Taste of the Proposed Change ## {#intro-proposed-change}
-
 <!-- ============================================================ -->
 
 Although it is tempting to [rethink cookies](https://discourse.wicg.io/t/rethinking-cookies/744) entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.
@@ -173,7 +171,7 @@ Both [=documents=] and [=service workers=] access the same query API, via the
 {{Window/cookieStore}} property on the [[#globals|global object]].
 
 The {{CookieStore/get()}} and {{CookieStore/getAll()}} methods on {{CookieStore}} are used to query cookies.
-Both methods return [=promises=].
+Both methods return {{Promise}}s.
 Both methods take the same arguments, which can be either:
 
 * a name, or
@@ -448,7 +446,7 @@ When any of the following conditions occur for a [=cookie store=], perform the s
 
 [[Service-Workers]] defines [=service worker registration=], which this specification extends.
 
-A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=list=];
+A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=/list=];
 each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
 <span dfn-for="cookie change subscription">
 a [=tuple=] of <dfn>name</dfn> and <dfn>url</dfn>.
@@ -544,8 +542,8 @@ The <dfn method for=CookieStore>get(|name|)</dfn> method steps are:
     1. Let |list| be the results of running [=query cookies=] with
         |url| and |name|.
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
-    1. If |list| [=list/is empty=], then [=resolve=] |p| with undefined.
-    1. Otherwise, [=resolve=] |p| with the first item of |list|.
+    1. If |list| [=list/is empty=], then [=/resolve=] |p| with undefined.
+    1. Otherwise, [=/resolve=] |p| with the first item of |list|.
 1. Return |p|.
 
 </div>
@@ -570,8 +568,8 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
         |url| and
         |options|["{{CookieStoreGetOptions/name}}"] (if present).
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
-    1. If |list| [=list/is empty=], then [=resolve=] |p| with undefined.
-    1. Otherwise, [=resolve=] |p| with the first item of |list|.
+    1. If |list| [=list/is empty=], then [=/resolve=] |p| with undefined.
+    1. Otherwise, [=/resolve=] |p| with the first item of |list|.
 1. Return |p|.
 
 </div>
@@ -602,7 +600,7 @@ The <dfn method for=CookieStore>getAll(|name|)</dfn> method steps are:
     1. Let |list| be the results of running [=query cookies=] with
         |url| and |name|.
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}}.
-    1. Otherwise, [=resolve=] |p| with |list|.
+    1. Otherwise, [=/resolve=] |p| with |list|.
 1. Return |p|.
 
 </div>
@@ -626,7 +624,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
         |url| and
         |options|["{{CookieStoreGetOptions/name}}"] (if present).
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}}.
-    1. Otherwise, [=resolve=] |p| with |list|.
+    1. Otherwise, [=/resolve=] |p| with |list|.
 1. Return |p|.
 
 </div>
@@ -665,7 +663,7 @@ The <dfn method for=CookieStore>set(|name|, |value|)</dfn> method steps are:
         |name|,
         |value|.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
-    1. [=Resolve=] |p| with undefined.
+    1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
 
 </div>
@@ -687,7 +685,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
         |options|["{{CookieInit/path}}"], and
         |options|["{{CookieInit/sameSite}}"].
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
-    1. [=Resolve=] |p| with undefined.
+    1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
 
 </div>
@@ -722,7 +720,7 @@ The <dfn method for=CookieStore>delete(|name|)</dfn> method steps are:
         true, and
         "{{CookieSameSite/strict}}".
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
-    1. [=Resolve=] |p| with undefined.
+    1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
 
 </div>
@@ -741,7 +739,7 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
         |options|["{{CookieStoreDeleteOptions/domain}}"], and
         |options|["{{CookieStoreDeleteOptions/path}}"].
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
-    1. [=Resolve=] |p| with undefined.
+    1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
 
 </div>
@@ -794,7 +792,7 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. If |subscription list| does not already [=list/contain=] |subscription|, then [=list/append=] |subscription| to |subscription list|.
-    1. [=Resolve=] |p| with undefined.
+    1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
 
 </div>
@@ -817,10 +815,10 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |subscriptions| be |registration|'s associated [=cookie change subscription list=].
-    1. Let |result| be a new [=list=].
+    1. Let |result| be a new [=/list=].
     1. [=list/For each=] |subscription| in |subscriptions|, run these steps:
         1. [=list/Append=] «[ "name" → |subscription|'s [=cookie change subscription/name=], "url" → |subscription|'s [=cookie change subscription/url=]]» to |result|.
-    1. [=Resolve=] |p| with |result|.
+    1. [=/Resolve=] |p| with |result|.
 1. Return |p|.
 
 </div>
@@ -851,7 +849,7 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. [=list/Remove=] any [=list/item=] from |subscription list| equal to |subscription|.
-    1. [=Resolve=] |p| with undefined.
+    1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
 
 </div>
@@ -1032,7 +1030,7 @@ run the following steps:
 
     For the purposes of the steps, the |cookie-string| is being generated for a "non-HTTP" API.
 
-1. Let |list| be a new [=list=].
+1. Let |list| be a new [=/list=].
 1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
     1. If |name| is given, then run these steps:
@@ -1103,7 +1101,7 @@ run the following steps:
 1. If |name|'s [=string/length=] is 0 and |value| contains U+003D (`=`), then return failure.
 1. If |name|'s [=string/length=] is 0 and |value|'s [=string/length=] is 0, then return failure.
 1. Let |host| be |url|'s [=url/host=]
-1. Let |attributes| be a new [=list=].
+1. Let |attributes| be a new [=/list=].
 1. If |domain| is not null, then run these steps:
     1. If |domain| starts with U+002D (`.`), then return failure.
     1. If |host| does not equal |domain| and
@@ -1192,7 +1190,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
     1. Let |url| be |window|'s [=creation URL=].
     1. Let |changes| be the [=observable changes=] for |url|.
     1. If |changes| [=set/is empty=], then [=continue=].
-    1. [=Queue a global task=] on the [=DOM manipulation task source=] given |window| to
+    1. [=Queue a global task=] on the [=/DOM manipulation task source=] given |window| to
         [=fire a change event=] named "`change`" with |changes| at |window|'s {{CookieStore}}.
 
 1. For every [=service worker registration=] |registration|, run the following steps:
@@ -1253,8 +1251,8 @@ To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run t
 
 To <dfn>prepare lists</dfn> from |changes|, run the following steps:
 
-1. Let |changedList| be a new [=list=].
-1. Let |deletedList| be a new [=list=].
+1. Let |changedList| be a new [=/list=].
+1. Let |deletedList| be a new [=/list=].
 1. [=set/For each=] |change| in |changes|, run these steps:
     1. Let |item| be the result of running [=create a CookieListItem=] from |change|'s cookie.
     1. If |change|'s type is *changed*, then [=list/append=] |item| to |changedList|.
