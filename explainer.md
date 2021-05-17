@@ -529,7 +529,7 @@ Tutorials on this feature might want to cover the following topics.
 
 ### Data loss with invalid expires timestamps
 
-**The expiration date is an absolute timestamp, not a relative time interval.** If users of this API pass in a small non-zero number for `expires`, e.g. `expires: 30` or `expires: 1000`, the Cookie Store API will delete the cookie data, resulting in data loss.
+The expiration date is an absolute timestamp, not a relative time interval. If users of this API pass in a small non-zero number for `expires`, e.g. `expires: 30` or `expires: 1000`, the Cookie Store API will delete the cookie data, resulting in data loss.
 
 For example, this code sample might superficially appear to set a cookie that lasts for a year, but instead it sets the cookie to expire at midnight of 1971 UTC, which will delete the cookie and its data immedately.
 
