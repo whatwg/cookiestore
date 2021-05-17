@@ -1111,6 +1111,9 @@ run the following steps:
         then return failure.
     1. [=list/Append=] \``Domain`\`/|domain| ([=encoded=]) to |attributes|.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
+1. If |path| is not null, then run these steps:
+    1. If |path| does not start with U+002F (`/`), then return failure.
+    1. If |path| does not end with U+002F (`/`), then append U+002F (`/`) to |path|.
 1. [=list/Append=] \``Path`\`/|path| ([=encoded=]) to |attributes|.
 1. [=list/Append=] \``Secure`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
@@ -1150,6 +1153,10 @@ To <dfn>delete a cookie</dfn> with
 |path|,
 run the following steps:
 
+1. If |path| is not null, then run these steps:
+    1. If |path| does not start with U+002F (`/`), then return failure.
+    1. If |path| does not end with U+002F (`/`), then append U+002F (`/`) to |path|.
+    
 1. Let |expires| be the earliest representable date represented [=as a timestamp=].
 
     Note: The exact value of |expires| is not important for the purposes of this algorithm,
