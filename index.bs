@@ -63,7 +63,7 @@ spec:service-workers; type:dfn; for:/; text:service worker
 }
 </style>
 
-<img src="logo-cookies.svg" alt="logo"
+<img src="logo-cookies.svg" alt="logo" width="100" height="100"
     style="height: 100px; width: 100px; position: absolute; right: 20px; top: 30px;">
 
 
@@ -1156,7 +1156,7 @@ run the following steps:
 1. If |path| is not null, then run these steps:
     1. If |path| does not start with U+002F (`/`), then return failure.
     1. If |path| does not end with U+002F (`/`), then append U+002F (`/`) to |path|.
-    
+
 1. Let |expires| be the earliest representable date represented [=as a timestamp=].
 
     Note: The exact value of |expires| is not important for the purposes of this algorithm,
