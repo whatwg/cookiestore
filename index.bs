@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Cookie Store API
-Shortname: cookiestore
+Shortname: cookie-store
 Level: 1
 Status: CG-DRAFT
 Group: WICG
@@ -14,6 +14,7 @@ Former Editor: Raymond Toy, Google Inc. https://google.com, rtoy@google.com
 Markup Shorthands: markdown yes, css no, biblio yes
 Abstract: An asynchronous Javascript cookies API for documents and service workers
 Test Suite: https://github.com/web-platform-tests/wpt/tree/master/cookie-store
+Include MDN Panels: yes
 </pre>
 
 <pre class=biblio>
