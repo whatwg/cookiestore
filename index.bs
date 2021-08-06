@@ -429,6 +429,10 @@ Per [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage 
 
 A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag. This is more formally enforced in the processing model, which consults [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §The Cookie Header]] at appropriate points.
 
+A cookie is also subject to certain size limits. Per [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §Storage Model]]:
+* The combined lengths of the name and value fields must not be greater than 4096 [=byte|bytes=] (the <dfn for=cookie>maximum name/value pair size</dfn>).
+* The length of every field except the name and value fields must not be greater than 1024 [=bytes|bytes=] (the <dfn for=cookie>maximum attribute value size</dfn>).
+
 <!-- ============================================================ -->
 ## Cookie Store ## {#cookie-store--concept}
 <!-- ============================================================ -->
@@ -1102,24 +1106,25 @@ run the following steps:
 1. If |name|, |value|, |domain|, or |path| contain U+003B (`;`), any [=C0 control=] character, or U+007F, then return failure.
 1. If |name|'s [=string/length=] is 0 and |value| contains U+003D (`=`), then return failure.
 1. If |name|'s [=string/length=] is 0 and |value|'s [=string/length=] is 0, then return failure.
-1. Determine whether |name| and |value| together exceed cookie size limits using these steps:
-    1. [=UTF-8 encode=] |name| and then compute its [=byte sequence=] [=byte sequence/length=].
-    1. [=UTF-8 encode=] |value| and then compute its [=byte sequence=] [=byte sequence/length=].
-    1. If the sum of the two computed lengths is greater than 4096 [=byte|bytes=], then return failure.
+1. Let |encodedName| be the result of [=UTF-8 encode|UTF-8 encoding=] |name|.
+1. Let |encodedValue| be the result of [=UTF-8 encode|UTF-8 encoding=] |value|.
+1. If the [=byte sequence=] [=byte sequence/length=] of |encodedName| plus the [=byte sequence=] [=byte sequence/length=] of |encodedValue| is greater than the <a for=cookie>maximum name/value pair size</a>, then return failure.
 1. Let |host| be |url|'s [=url/host=]
 1. Let |attributes| be a new [=/list=].
 1. If |domain| is not null, then run these steps:
-    1. If |domain|'s [=UTF-8 encode|UTF-8-encoded=] [=byte sequence=] [=byte sequence/length=] is greater than 1024 [=byte|bytes=], then return failure.
     1. If |domain| starts with U+002D (`.`), then return failure.
     1. If |host| does not equal |domain| and
         |host| does not end with U+002D (`.`) followed by |domain|,
         then return failure.
+    1. Let |encodedDomain| be the result of [=UTF-8 encode|UTF-8 encoding=] |domain|.
+    1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] \``Domain`\`/|domain| ([=encoded=]) to |attributes|.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. If |path| is not null, then run these steps:
-    1. If |path|'s [=UTF-8 encode|UTF-8-encoded] [=byte sequence=] [=byte sequence/length=] is greater than 1024 [=byte|bytes=], then return failure.
     1. If |path| does not start with U+002F (`/`), then return failure.
     1. If |path| does not end with U+002F (`/`), then append U+002F (`/`) to |path|.
+    1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
+    1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
 1. [=list/Append=] \``Path`\`/|path| ([=encoded=]) to |attributes|.
 1. [=list/Append=] \``Secure`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
