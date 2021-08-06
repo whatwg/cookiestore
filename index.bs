@@ -20,7 +20,7 @@ Include MDN Panels: yes
 <pre class=biblio>
 {
   "RFC6265bis": {
-    "authors": [ "A. Barth", "M. West" ],
+    "authors": [ "L. Chen", "S. Englehardt", "M. West", "J. Wilander" ],
     "href": "https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis",
     "title": "Cookies: HTTP State Management Mechanism",
     "publisher": "IETF",
@@ -411,7 +411,7 @@ Checking change subscriptions:
 A <dfn>cookie</dfn> is normatively defined for user agents by [[RFC6265bis#section-5|Cookies: HTTP State Management Mechanism §User Agent Requirements]].
 
 <div dfn-for=cookie>
-Per [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage Model]], a [=cookie=] has the following fields:
+Per [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §Storage Model]], a [=cookie=] has the following fields:
 <dfn>name</dfn>,
 <dfn>value</dfn>,
 <dfn>expiry-time</dfn>,
@@ -427,7 +427,11 @@ Per [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage 
 
 </div>
 
-A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag. This is more formally enforced in the processing model, which consults [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §The Cookie Header]] at appropriate points.
+A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag. This is more formally enforced in the processing model, which consults [[RFC6265bis#section-5.6|Cookies: HTTP State Management Mechanism §Retrieval Model]] at appropriate points.
+
+A cookie is also subject to certain size limits. Per [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §Storage Model]]:
+* The combined lengths of the name and value fields must not be greater than 4096 [=byte|bytes=] (the <dfn for=cookie>maximum name/value pair size</dfn>).
+* The length of every field except the name and value fields must not be greater than 1024 [=bytes|bytes=] (the <dfn for=cookie>maximum attribute value size</dfn>).
 
 <!-- ============================================================ -->
 ## Cookie Store ## {#cookie-store--concept}
@@ -992,7 +996,7 @@ The <dfn attribute for=ServiceWorkerGlobalScope>cookieStore</dfn> getter steps a
 
 [=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
 
-To <dfn>encode</dfn> a |string|, run [=UTF-8 encode=] on |string|.
+To encode a |string|, run [=UTF-8 encode=] on |string|.
 
 To <dfn>decode</dfn> a |value|, run [=UTF-8 decode without BOM=] on |value|.
 
@@ -1025,7 +1029,7 @@ To <dfn>query cookies</dfn> with
 optional |name|,
 run the following steps:
 
-1. Perform the steps defined in [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §The Cookie Header]] to "compute the cookie-string from a cookie store"
+1. Perform the steps defined in [[RFC6265bis#section-5.6|Cookies: HTTP State Management Mechanism §Retrieval Model]] to compute the "cookie-string from a given cookie store"
     with |url| as <var ignore>request-uri</var>.
     The |cookie-string| itself is ignored, but the intermediate |cookie-list| is used in subsequent steps.
 
@@ -1099,8 +1103,12 @@ optional |expires|,
 |sameSite|,
 run the following steps:
 
+1. If |name|, |value|, |domain|, or |path| contain U+003B (`;`), any [=C0 control=] character, or U+007F, then return failure.
 1. If |name|'s [=string/length=] is 0 and |value| contains U+003D (`=`), then return failure.
 1. If |name|'s [=string/length=] is 0 and |value|'s [=string/length=] is 0, then return failure.
+1. Let |encodedName| be the result of [=UTF-8 encode|UTF-8 encoding=] |name|.
+1. Let |encodedValue| be the result of [=UTF-8 encode|UTF-8 encoding=] |value|.
+1. If the [=byte sequence=] [=byte sequence/length=] of |encodedName| plus the [=byte sequence=] [=byte sequence/length=] of |encodedValue| is greater than the <a for=cookie>maximum name/value pair size</a>, then return failure.
 1. Let |host| be |url|'s [=url/host=]
 1. Let |attributes| be a new [=/list=].
 1. If |domain| is not null, then run these steps:
@@ -1108,12 +1116,16 @@ run the following steps:
     1. If |host| does not equal |domain| and
         |host| does not end with U+002D (`.`) followed by |domain|,
         then return failure.
-    1. [=list/Append=] \``Domain`\`/|domain| ([=encoded=]) to |attributes|.
+    1. Let |encodedDomain| be the result of [=UTF-8 encode|UTF-8 encoding=] |domain|.
+    1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
+    1. [=list/Append=] \``Domain`\`/|encodedDomain| to |attributes|.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. If |path| is not null, then run these steps:
     1. If |path| does not start with U+002F (`/`), then return failure.
     1. If |path| does not end with U+002F (`/`), then append U+002F (`/`) to |path|.
-1. [=list/Append=] \``Path`\`/|path| ([=encoded=]) to |attributes|.
+    1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
+    1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
+    1. [=list/Append=] \``Path`\`/|encodedPath| to |attributes|.
 1. [=list/Append=] \``Secure`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
     <dl class=switch>
@@ -1124,10 +1136,10 @@ run the following steps:
         : "{{CookieSameSite/lax}}"
         :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
     </dl>
-1. Perform the steps defined in [[RFC6265bis#section-5.4|Cookies: HTTP State Management Mechanism §Storage Model]] for when the user agent "receives a cookie" with
+1. Perform the steps defined in [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §Storage Model]] for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
-    |name| ([=encoded=]) as <var ignore>cookie-name</var>,
-    |value| ([=encoded=]) as <var ignore>cookie-value</var>, and
+    |encodedName| as <var ignore>cookie-name</var>,
+    |encodedValue| as <var ignore>cookie-value</var>, and
     |attributes| as <var ignore>cookie-attribute-list</var>.
 
     For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
@@ -1218,7 +1230,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
 <div algorithm>
 
 The <dfn>observable changes</dfn> for |url| are the [=/set=] of [=cookie changes=] to [=cookies=] in a [=cookie store=]
-which meet the requirements in step 1 of [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §The Cookie Header]]'s steps to "compute the cookie-string from a cookie store"
+which meet the requirements in step 1 of [[RFC6265bis#section-5.6.3|Cookies: HTTP State Management Mechanism §Retrieval Algorithm]]'s steps to compute the "cookie-string from a given cookie store"
 with |url| as <var ignore>request-uri</var>, for a "non-HTTP" API.
 
 </div>
@@ -1279,7 +1291,7 @@ Although browser cookie implementations are now evolving in the direction of bet
 
     * unsecured origins can typically overwrite cookies used on secure origins
     * superdomains can typically overwrite cookies seen by subdomains
-    * cross-site scripting attacts and other script and header injection attacks can be used to forge cookies too
+    * cross-site scripting attacks and other script and header injection attacks can be used to forge cookies too
     * cookie read operations (both from script and on web servers) don't give any indication of where the cookie came from
     * browsers sometimes truncate, transform or evict cookie data in surprising and counterintuitive ways
         * ... due to reaching storage limits
