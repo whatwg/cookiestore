@@ -2,6 +2,8 @@
 
 # Cookie Store API
 
+[![CI](https://github.com/WICG/cookie-store/actions/workflows/auto-publish.yml/badge.svg)](https://github.com/WICG/cookie-store/actions/workflows/auto-publish.yml)
+
 This repository documents an API for accessing HTTP cookies asynchronously from
 Document and Service Worker global contexts.
 
