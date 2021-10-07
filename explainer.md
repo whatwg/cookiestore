@@ -369,7 +369,7 @@ await cookieStore.delete({
 ```
 
 If the site wants to delete the unpartitioned cookie, change the `partitioned`
-field to `false`.
+field to `false`. If the field is not present, the value defaults to `false`.
 
 ### Access all the cookie data
 
