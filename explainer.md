@@ -278,7 +278,10 @@ const cookie = await cookieStore.get('session_id');
 console.log(cookie.partitioned);  // -> false
 
 // Read a Partitioned cookie from a third-party context.
-const cookie = await cookieStore.get('__Host-third_party_session_id');
+const cookie = await cookieStore.get({
+  name: '__Host-third_party_session_id',
+  partitioned: true
+});
 console.log(cookie.partitioned);  // -> true
 ```
 
@@ -321,7 +324,8 @@ await cookieStore.set({
   name: '__Host-third_party_session_id',
   value: 'foobar',
   path: '/',
-  sameSite: 'none'
+  sameSite: 'none',
+  partitioned: true
   // `Secure` is implicitly set
 });
 ```
