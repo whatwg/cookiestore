@@ -905,7 +905,7 @@ navigator.serviceWorker.register('sw.js').then(registration => {
 ## The {{CookieChangeEvent}} interface ## {#CookieChangeEvent}
 <!-- ============================================================ -->
 
-A {{CookieChangeEvent}} is [=dispatched=] against {{CookieStore}} objects in {{Window}} contexts when any [=script-visible=] cookie changes have occurred.
+When any [=script-visible=] cookie changes have occurred, [=fire an event=] named <dfn event for=CookieStore>change</dfn> using {{CookieChangeEvent}} at {{CookieStore}} objects in {{Window}} contexts .
 
 <xmp class=idl>
 [Exposed=Window,
