@@ -392,7 +392,7 @@ Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStor
 The complexity of fine-grained subscriptions is justified
 by the cost of dispatching an irrelevant cookie change event to a [=service worker=],
 which is is much higher than the cost of dispatching an equivalent event
-to a [=window=]. Specifically, dispatching an event to a [=service worker=] might
+to a {{Window}}. Specifically, dispatching an event to a [=service worker=] might
 require waking up the worker, which has a significant impact on battery life.
 
 The {{CookieStoreManager/getSubscriptions()}} allows a [=service worker=] to introspect
@@ -418,10 +418,10 @@ Checking change subscriptions:
 ## Cookie ## {#cookie-concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie</dfn> is normatively defined for user agents by [[RFC6265bis#section-5|Cookies: HTTP State Management Mechanism §User Agent Requirements]].
+A <dfn>cookie</dfn> is normatively defined for user agents by [[RFC6265bis#section-5]]<!-- User Agent Requirements -->.
 
 <div dfn-for=cookie>
-Per [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §Storage Model]], a [=cookie=] has the following fields:
+Per [[RFC6265bis#section-5.6]]<!-- Storage Model -->, a [=cookie=] has the following fields:
 <dfn>name</dfn>,
 <dfn>value</dfn>,
 <dfn>expiry-time</dfn>,
@@ -437,9 +437,9 @@ Per [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §Storage 
 
 </div>
 
-A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag. This is more formally enforced in the processing model, which consults [[RFC6265bis#section-5.6|Cookies: HTTP State Management Mechanism §Retrieval Model]] at appropriate points.
+A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag. This is more formally enforced in the processing model, which consults [[RFC6265bis#section-5.7]]<!-- Retrieval Model --> at appropriate points.
 
-A cookie is also subject to certain size limits. Per [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §Storage Model]]:
+A cookie is also subject to certain size limits. Per [[RFC6265bis#section-5.6]]<!-- Storage Model -->:
 * The combined lengths of the name and value fields must not be greater than 4096 [=byte|bytes=] (the <dfn for=cookie>maximum name/value pair size</dfn>).
 * The length of every field except the name and value fields must not be greater than 1024 [=bytes|bytes=] (the <dfn for=cookie>maximum attribute value size</dfn>).
 
@@ -1024,7 +1024,7 @@ Note: This is the same representation used for [=time values=] in [[ECMAScript]]
 To <dfn>date serialize</dfn> a {{EpochTimeStamp}} |millis|,
 let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
 (assuming that there are exactly 86,400,000 milliseconds per day),
-and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[RFC6265bis#section-5.1.1|Cookies: HTTP State Management Mechanism §Dates]].
+and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[RFC6265bis#section-5.1.1]]<!-- Dates -->.
 </div>
 
 
@@ -1039,7 +1039,7 @@ To <dfn>query cookies</dfn> with
 optional |name|,
 run the following steps:
 
-1. Perform the steps defined in [[RFC6265bis#section-5.6|Cookies: HTTP State Management Mechanism §Retrieval Model]] to compute the "cookie-string from a given cookie store"
+1. Perform the steps defined in [[RFC6265bis#section-5.7]]<!-- Retrieval Model --> to compute the "cookie-string from a given cookie store"
     with |url| as <var ignore>request-uri</var>.
     The |cookie-string| itself is ignored, but the intermediate |cookie-list| is used in subsequent steps.
 
@@ -1149,7 +1149,7 @@ run the following steps:
         : "{{CookieSameSite/lax}}"
         :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
     </dl>
-1. Perform the steps defined in [[RFC6265bis#section-5.5|Cookies: HTTP State Management Mechanism §Storage Model]] for when the user agent "receives a cookie" with
+1. Perform the steps defined in [[RFC6265bis#section-5.6]]<!-- Storage Model --> for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
     |encodedName| as <var ignore>cookie-name</var>,
     |encodedValue| as <var ignore>cookie-value</var>, and
@@ -1243,7 +1243,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
 <div algorithm>
 
 The <dfn>observable changes</dfn> for |url| are the [=/set=] of [=cookie changes=] to [=cookies=] in a [=cookie store=]
-which meet the requirements in step 1 of [[RFC6265bis#section-5.6.3|Cookies: HTTP State Management Mechanism §Retrieval Algorithm]]'s steps to compute the "cookie-string from a given cookie store"
+which meet the requirements in step 1 of [[RFC6265bis#section-5.7.3]]<!-- Retrieval Algorithm -->'s steps to compute the "cookie-string from a given cookie store"
 with |url| as <var ignore>request-uri</var>, for a "non-HTTP" API.
 
 </div>
@@ -1333,7 +1333,7 @@ This API only allows writes for `Secure` cookies to encourage better decisions a
 
 Some existing cookie behavior (especially domain-rather-than-origin orientation, [=non-secure contexts=] being able to set cookies readable in [=secure contexts=], and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.
 
-Other surprises are documented in [[RFC6265bis#section-1|Section 1 of Cookies: HTTP State Management Mechanism (RFC 6265bis)]] - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
+Other surprises are documented in [[RFC6265bis#section-1]]<!-- Introduction --> - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
 
 Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.
 
