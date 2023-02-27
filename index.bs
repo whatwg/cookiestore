@@ -506,7 +506,7 @@ enum CookieSameSite {
 dictionary CookieInit {
   required USVString name;
   required USVString value;
-  EpochTimeStamp? expires = null;
+  DOMHighResTimeStamp? expires = null;
   USVString? domain = null;
   USVString path = "/";
   CookieSameSite sameSite = "strict";
@@ -523,7 +523,7 @@ dictionary CookieListItem {
   USVString value;
   USVString? domain;
   USVString path;
-  EpochTimeStamp? expires;
+  DOMHighResTimeStamp? expires;
   boolean secure;
   CookieSameSite sameSite;
 };
@@ -1021,7 +1021,7 @@ Note: This is the same representation used for [=time values=] in [[ECMAScript]]
 
 
 <div algorithm>
-To <dfn>date serialize</dfn> a {{EpochTimeStamp}} |millis|,
+To <dfn>date serialize</dfn> a {{DOMHighResTimeStamp}} |millis|,
 let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
 (assuming that there are exactly 86,400,000 milliseconds per day),
 and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[RFC6265bis#section-5.1.1]]<!-- Dates -->.
