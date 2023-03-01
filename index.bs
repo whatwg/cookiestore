@@ -575,7 +575,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. If |options| is empty, then return [=a promise rejected with=] a {{TypeError}}.
 1. If |options|["{{CookieStoreGetOptions/url}}"] is present, then run these steps:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-    1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
+    1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
         then return [=a promise rejected with=] a {{TypeError}}.
@@ -633,7 +633,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. If |options|["{{CookieStoreGetOptions/url}}"] is present, then run these steps:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-    1. If the [=current global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
+    1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url|,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
         then return [=a promise rejected with=] a {{TypeError}}.
