@@ -676,6 +676,7 @@ The <dfn method for=CookieStore>set(|name|, |value|)</dfn> method steps are:
 1. Let |settings| be [=/this=]'s [=/relevant settings object=].
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
+1. If |origin| is not a [=/potentially trustworthy origin=], or if |origin|'s [=origin/scheme=] is "`file`", then return [=a promise rejected with=] a {{TypeError}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
@@ -695,6 +696,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 1. Let |settings| be [=/this=]'s [=/relevant settings object=].
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
+1. If |origin| is not a [=/potentially trustworthy origin=], or if |origin|'s [=origin/scheme=] is "`file`", then return [=a promise rejected with=] a {{TypeError}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
@@ -732,6 +734,7 @@ The <dfn method for=CookieStore>delete(|name|)</dfn> method steps are:
 1. Let |settings| be [=/this=]'s [=/relevant settings object=].
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
+1. If |origin| is not a [=/potentially trustworthy origin=], or if |origin|'s [=origin/scheme=] is "`file`", then return [=a promise rejected with=] a {{TypeError}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
@@ -754,6 +757,7 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
 1. Let |settings| be [=/this=]'s [=/relevant settings object=].
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
+1. If |origin| is not a [=/potentially trustworthy origin=], or if |origin|'s [=origin/scheme=] is "`file`", then return [=a promise rejected with=] a {{TypeError}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
