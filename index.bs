@@ -559,7 +559,7 @@ The <dfn method for=CookieStore>get(|name|)</dfn> method steps are:
     1. Let |list| be the results of running [=query cookies=] with
         |url| and |name|.
     1. If |list| is failure, then [=/reject=] |p| with a {{TypeError}} and abort these steps.
-    1. If |list| [=list/is empty=], then [=/resolve=] |p| with undefined.
+    1. If |list| [=list/is empty=], then [=/resolve=] |p| with null.
     1. Otherwise, [=/resolve=] |p| with the first item of |list|.
 1. Return |p|.
 
@@ -586,7 +586,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
         |url| and
         |options|["{{CookieStoreGetOptions/name}}"] (if present).
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
-    1. If |list| [=list/is empty=], then [=/resolve=] |p| with undefined.
+    1. If |list| [=list/is empty=], then [=/resolve=] |p| with null.
     1. Otherwise, [=/resolve=] |p| with the first item of |list|.
 1. Return |p|.
 
