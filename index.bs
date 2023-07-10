@@ -444,6 +444,8 @@ A cookie is also subject to certain size limits. Per [[RFC6265bis#section-5.6]]<
 * The combined lengths of the name and value fields must not be greater than 4096 [=bytes=] (the <dfn for=cookie>maximum name/value pair size</dfn>).
 * The length of every field except the name and value fields must not be greater than 1024 [=bytes=] (the <dfn for=cookie>maximum attribute value size</dfn>).
 
+NOTE: [=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
+
 <!-- ============================================================ -->
 ## Cookie Store ## {#cookie-store--concept}
 <!-- ============================================================ -->
@@ -537,8 +539,8 @@ typedef sequence<CookieListItem> CookieList;
 <!-- ============================================================ -->
 
 <div class="domintro note">
-    : |cookie| = await cookieStore . {{CookieStore/get(name)|get}}(|name|)
-    : |cookie| = await cookieStore . {{CookieStore/get(options)|get}}(|options|)
+    : |cookie| = await cookieStore . {{CookieStore/get(name)|get}}(<var ignore>name</var>)
+    : |cookie| = await cookieStore . {{CookieStore/get(options)|get}}(<var ignore>options</var>)
 
     ::  Returns a promise resolving to the first in-scope [=script-visible=] value
         for a given cookie name (or other options).
@@ -597,8 +599,8 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 <!-- ============================================================ -->
 
 <div class="domintro note">
-    : |cookies| = await cookieStore . {{CookieStore/getAll(name)|getAll}}(|name|)
-    : |cookies| = await cookieStore . {{CookieStore/getAll(options)|getAll}}(|options|)
+    : |cookies| = await cookieStore . {{CookieStore/getAll(name)|getAll}}(<var ignore>name</var>)
+    : |cookies| = await cookieStore . {{CookieStore/getAll(options)|getAll}}(<var ignore>options</var>)
 
     ::  Returns a promise resolving to the all in-scope [=script-visible=] value for a given cookie name (or other options).
         In a service worker context this defaults to the path of the service worker's registered scope.
@@ -656,8 +658,8 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 <!-- ============================================================ -->
 
 <div class="domintro note">
-    : await cookieStore . {{CookieStore/set(name, value)|set}}(|name|, |value|)
-    : await cookieStore . {{CookieStore/set(options)|set}}(|options|)
+    : await cookieStore . {{CookieStore/set(name, value)|set}}(<var ignore>name</var>, <var ignore>value</var>)
+    : await cookieStore . {{CookieStore/set(options)|set}}(<var ignore>options</var>)
 
     ::  Writes (creates or modifies) a cookie.
 
@@ -718,8 +720,8 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 <!-- ============================================================ -->
 
 <div class="domintro note">
-    : await cookieStore . {{CookieStore/delete(name)|delete}}(|name|)
-    : await cookieStore . {{CookieStore/delete(options)|delete}}(|options|)
+    : await cookieStore . {{CookieStore/delete(name)|delete}}(<var ignore>name</var>)
+    : await cookieStore . {{CookieStore/delete(options)|delete}}(<var ignore>options</var>)
 
     ::  Deletes (expires) a cookie with the given name or name and optional domain and path.
 
@@ -793,7 +795,7 @@ interface CookieStoreManager {
 <!-- ============================================================ -->
 
 <div class="domintro note">
-    : await |registration| . cookies . {{CookieStoreManager/subscribe()|subscribe}}(|subscriptions|)
+    : await |registration| . cookies . {{CookieStoreManager/subscribe()|subscribe}}(<var ignore>subscriptions</var>)
 
     ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}} and {{CookieStoreGetOptions/url}} properties.
 
@@ -853,7 +855,7 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
 <!-- ============================================================ -->
 
 <div class="domintro note">
-    : await |registration| . cookies . {{CookieStoreManager/unsubscribe()|unsubscribe}}(|subscriptions|)
+    : await |registration| . cookies . {{CookieStoreManager/unsubscribe()|unsubscribe}}(<var ignore>subscriptions</var>)
 
     ::  Calling this method will stop the registered service worker from receiving previously subscribed events. The |subscriptions| argument should list subscriptions in the same form passed to {{CookieStoreManager/subscribe()}} or returned from {{CookieStoreManager/getSubscriptions()}}.
 
@@ -1015,12 +1017,6 @@ The <dfn attribute for=ServiceWorkerGlobalScope>cookieStore</dfn> getter steps a
 # Algorithms # {#algorithms}
 <!-- ============================================================ -->
 
-[=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
-
-To encode a |string|, run [=UTF-8 encode=] on |string|.
-
-To <dfn>decode</dfn> a |value|, run [=UTF-8 decode without BOM=] on |value|.
-
 
 <div algorithm>
 To represent a date and time |dateTime| <dfn>as a timestamp</dfn>,
@@ -1060,7 +1056,7 @@ run the following steps:
 1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
     1. If |name| is given, then run these steps:
-        1. Let |cookieName| be |cookie|'s [=cookie/name=] ([=decoded=]).
+        1. Let |cookieName| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/name=].
         1. If |cookieName| does not equal |name|,
              then [=iteration/continue=].
     1. Let |item| be the result of running [=create a CookieListItem=] from |cookie|.
@@ -1073,10 +1069,10 @@ run the following steps:
 
 To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps.
 
-1. Let |name| be |cookie|'s [=cookie/name=] ([=decoded=]).
-1. Let |value| be |cookie|'s [=cookie/value=] ([=decoded=]).
-1. Let |domain| be |cookie|'s [=cookie/domain=] ([=decoded=]).
-1. Let |path| be |cookie|'s [=cookie/path=] ([=decoded=]).
+1. Let |name| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/name=].
+1. Let |value| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/value=].
+1. Let |domain| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/domain=].
+1. Let |path| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/path=].
 1. Let |expires| be |cookie|'s [=cookie/expiry-time=] ([=as a timestamp=]).
 1. Let |secure| be |cookie|'s [=cookie/secure-only-flag=].
 1. Switch on |cookie|'s [=cookie/same-site-flag=]:
@@ -1237,7 +1233,8 @@ To <dfn>process cookie changes</dfn>, run the following steps:
         1. [=list/For each=] |subscription| in |registration|'s [=cookie change subscription list=], run these steps:
             1. If |change| is not [=set/contains|in=] the [=observable changes=] for |subscription|'s [=cookie change subscription/url=],
                 then [=iteration/continue=].
-            1. If |cookie|'s [=cookie/name=] ([=decoded=]) equals |subscription|'s [=cookie change subscription/name=],
+            1. Let |cookieName| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/name=].
+            1. If |cookieName| equals |subscription|'s [=cookie change subscription/name=],
                 then [=set/append=] |change| to |changes| and [=iteration/break=].
     1. If |changes| [=set/is empty=], then [=iteration/continue=].
     1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] from |changes|.
