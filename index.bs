@@ -198,12 +198,12 @@ Reading a cookie:
 try {
   const cookie = await cookieStore.get('session_id');
   if (cookie) {
-    console.log(\`Found ${cookie.name} cookie: ${cookie.value}\`);
+    console.log(`Found ${cookie.name} cookie: ${cookie.value}`);
   } else {
     console.log('Cookie not found');
   }
 } catch (e) {
-  console.error(\`Cookie store error: ${e}\`);
+  console.error(`Cookie store error: ${e}`);
 }
 ```
 </div>
@@ -216,9 +216,9 @@ Reading multiple cookies:
 try {
   const cookies = await cookieStore.getAll('session_id'});
   for (const cookie of cookies)
-    console.log(\`Result: ${cookie.name} = ${cookie.value}\`);
+    console.log(`Result: ${cookie.name} = ${cookie.value}`);
 } catch (e) {
-  console.error(\`Cookie store error: ${e}\`);
+  console.error(`Cookie store error: ${e}`);
 }
 ```
 </div>
@@ -247,11 +247,11 @@ Accessing all the cookie data:
 
 ```js
 await cookie = cookieStore.get('session_id');
-console.log(\`Cookie scope - Domain: ${cookie.domain} Path: ${cookie.path}\`);
+console.log(`Cookie scope - Domain: ${cookie.domain} Path: ${cookie.path}`);
 if (cookie.expires === null) {
   console.log('Cookie expires at the end of the session');
 } else {
-  console.log(\`Cookie expires at: ${cookie.expires}\`);
+  console.log(`Cookie expires at: ${cookie.expires}`);
 }
 if (cookie.secure)
   console.log('The cookie is restricted to secure origins');
@@ -276,7 +276,7 @@ Write a cookie:
 try {
   await cookieStore.set('opted_out', '1');
 } catch (e) {
-  console.error(\`Failed to set cookie: ${e}\`);
+  console.error(`Failed to set cookie: ${e}`);
 }
 ```
 
@@ -305,7 +305,7 @@ Delete a cookie:
 try {
   await cookieStore.delete('session_id');
 } catch (e) {
-  console.error(\`Failed to delete cookie: ${e}\`);
+  console.error(`Failed to delete cookie: ${e}`);
 }
 ```
 </div>
@@ -323,7 +323,7 @@ try {
     value: 'value will be ignored',
     expires: Date.now() - one_day_ms });
 } catch (e) {
-  console.error(\`Failed to delete cookie: ${e}\`);
+  console.error(`Failed to delete cookie: ${e}`);
 }
 ```
 </div>
@@ -342,13 +342,13 @@ Register for `change` events in documents:
 
 ```js
 cookieStore.addEventListener('change', event => {
-  console.log(\`${event.changed.length} changed cookies\`);
+  console.log(`${event.changed.length} changed cookies`);
   for (const cookie in event.changed)
-    console.log(\`Cookie ${cookie.name} changed to ${cookie.value}\`);
+    console.log(`Cookie ${cookie.name} changed to ${cookie.value}`);
 
-  console.log(\`${event.deleted.length} deleted cookies\`);
+  console.log(`${event.deleted.length} deleted cookies`);
   for (const cookie in event.deleted)
-    console.log(\`Cookie ${cookie.name} deleted\`);
+    console.log(`Cookie ${cookie.name} deleted`);
 });
 ```
 
@@ -379,8 +379,8 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('cookiechange', event => {
   // The event has |changed| and |deleted| properties with
   // the same semantics as the Document events.
-  console.log(\`${event.changed.length} changed cookies\`);
-  console.log(\`${event.deleted.length} deleted cookies\`);
+  console.log(`${event.changed.length} changed cookies`);
+  console.log(`${event.deleted.length} deleted cookies`);
 });
 ```
 </div>
