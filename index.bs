@@ -558,11 +558,12 @@ The <dfn method for=CookieStore>get(|name|)</dfn> method steps are:
 1. Let |settings| be [=/this=]'s [=/relevant settings object=].
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
+1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object, then let |document| be its associated {{Document}}, and nothing otherwise.
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
-        |url| and |name|.
+        |url|, |document|, and |name|.
     1. If |list| is failure, then [=/reject=] |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], then [=/resolve=] |p| with null.
     1. Otherwise, [=/resolve=] |p| with the first item of |list|.
@@ -576,6 +577,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. Let |settings| be [=/this=]'s [=/relevant settings object=].
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
+1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object, then let |document| be its associated {{Document}}, and nothing otherwise.
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. If |options| is empty, then return [=a promise rejected with=] a {{TypeError}}.
 1. If |options|["{{CookieStoreGetOptions/url}}"] is present, then run these steps:
@@ -588,7 +590,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
-        |url| and
+        |url|, |document|, and
         |options|["{{CookieStoreGetOptions/name}}"] (if present).
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], then [=/resolve=] |p| with null.
@@ -618,11 +620,12 @@ The <dfn method for=CookieStore>getAll(|name|)</dfn> method steps are:
 1. Let |settings| be [=/this=]'s [=/relevant settings object=].
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
+1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object, then let |document| be its associated {{Document}}, and nothing otherwise.
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
-        |url| and |name|.
+        |url|, |document|, and |name|.
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}}.
     1. Otherwise, [=/resolve=] |p| with |list|.
 1. Return |p|.
@@ -635,6 +638,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Let |settings| be [=/this=]'s [=/relevant settings object=].
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
+1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object, then let |document| be its associated {{Document}}, and nothing otherwise.
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. If |options|["{{CookieStoreGetOptions/url}}"] is present, then run these steps:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
@@ -646,7 +650,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
-        |url| and
+        |url|, |document|, and
         |options|["{{CookieStoreGetOptions/name}}"] (if present).
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}}.
     1. Otherwise, [=/resolve=] |p| with |list|.
@@ -1046,16 +1050,20 @@ and return a [=byte sequence=] corresponding to the closest `cookie-date` repres
 
 <div algorithm>
 
+<!-- TODO: Is this right? Does this API ever make "same-site" requests? -->
+
 To <dfn>query cookies</dfn> with
-|url| and
+|url|,
+|document| (which may be nothing), and
 optional |name|,
 run the following steps:
 
-1. Perform the steps defined in [[RFC6265bis#section-5.7]]<!-- Retrieval Model --> to compute the "cookie-string from a given cookie store"
-    with |url| as <var ignore>request-uri</var>.
-    The |cookie-string| itself is ignored, but the intermediate |cookie-list| is used in subsequent steps.
+1. Perform the steps defined in [[RFC6265bis#section-5.7.3]]<!-- Retrieval Algorithm --> to compute the "cookie-string from a given cookie store"
+    with |url| as the retrieval's associated <var ignore>URI</var>,
+    |document| as the associated {{Document}},
+    and following the retrieval's requirements in [[RFC6265bis#section-5.7.2]]<!-- Non-HTTP APIs -->.
 
-    For the purposes of the steps, the |cookie-string| is being generated for a "non-HTTP" API.
+    The <var ignore>cookie-string</var> itself is ignored, but the intermediate |cookie-list| is used in subsequent steps.
 
 1. Let |list| be a new [=/list=].
 1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
@@ -1263,7 +1271,8 @@ To <dfn>process cookie changes</dfn>, run the following steps:
 
 The <dfn>observable changes</dfn> for |url| are the [=/set=] of [=cookie changes=] to [=cookies=] in a [=cookie store=]
 which meet the requirements in step 1 of [[RFC6265bis#section-5.7.3]]<!-- Retrieval Algorithm -->'s steps to compute the "cookie-string from a given cookie store"
-with |url| as <var ignore>request-uri</var>, for a "non-HTTP" API.
+with |url| as the retrieval's associated <var ignore>URI</var>,
+and following the retrieval's requirements in [[RFC6265bis#section-5.7.2]]<!-- Non-HTTP APIs -->.
 
 </div>
 
