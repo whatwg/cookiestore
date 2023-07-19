@@ -268,9 +268,7 @@ the only valid `url` value in Document contexts is the document's URL.
 
 ### Read a partitioned cookie
 
-If the user agent supports
-[cookie partitioning](https://github.com/DCtheTall/CHIPS), then the cookie
-objects will have a boolean value indicating if the cookie is partitioned.
+The cookie objects will have a boolean value indicating if the cookie is partitioned.
 
 ```javascript
 // Read a cookie set without the Partitioned attribute.
@@ -360,10 +358,7 @@ If the user agent supports [cookie partitioning](https://github.com/WICG/CHIPS)
 then it is possible for a site to set both a partitioned and unpartitioned
 cookie with the same name.
 
-In this edge case, if a site would like to distinguish between whether they
-want to delete their partitioned and unpartitioned cookie, they can provide
-a `partitioned` attribute. If the site wants to delete the partitioned cookie,
-the site could use:
+To delete a partitioned cookie, the `partitioned` parameter must be provided:
 
 ```javascript
 await cookieStore.delete({
@@ -372,8 +367,8 @@ await cookieStore.delete({
 });
 ```
 
-If the site wants to delete the unpartitioned cookie, change the `partitioned`
-field to `false`. If the field is not present, the value defaults to `false`.
+If the site wants to only delete the unpartitioned cookie, change the `partitioned`
+field to `false` or omit the property.  
 
 ### Access all the cookie data
 

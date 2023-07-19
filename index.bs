@@ -520,7 +520,7 @@ dictionary CookieStoreDeleteOptions {
   required USVString name;
   USVString? domain = null;
   USVString path = "/";
-  boolean partitioned;
+  boolean partitioned = false;
 };
 
 dictionary CookieListItem {
@@ -711,7 +711,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
         |options|["{{CookieInit/domain}}"],
         |options|["{{CookieInit/path}}"], and
         |options|["{{CookieInit/sameSite}}"].
-    1. If the |options|["{{CookieInit/partitioned}}"] attribute is present and the user agent supports [cookie partitioning](https://github.com/WICG/CHIPS), then
+    1. If |options|["{{CookieInit/partitioned}}"] is present and the user agent supports [cookie partitioning](https://github.com/privacycg/CHIPS), then
       1. If the current browsing context is a service worker, set the cookie's partition key be |origin|'s [=site=].
       1. If the current browsing context is an HTML document, then the cookie's partition key is the [=site=] of the topmost frame.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
@@ -770,11 +770,11 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
         |options|["{{CookieStoreDeleteOptions/name}}"],
         |options|["{{CookieStoreDeleteOptions/domain}}"], and
         |options|["{{CookieStoreDeleteOptions/path}}"].
-    1. If the |options|["{{CookieStoreDeleteOptions/partitioned}}"] field is present and the user agent supports [cookie partitioning](https://github.com/WICG/CHIPS), then
-      1. If the value is |false|, then |r| should only match cookies with no partition key.
+    1. If |options|["{{CookieStoreDeleteOptions/partitioned}}"] is present and the user agent supports [cookie partitioning](https://github.com/privacycg/CHIPS), then
       1. If the value is |true|, then
         1. If the browsing context is a service worker, then |r| should only match cookies whose partition key is the [=site=] of |origin|.
         1. If the browsing context is an HTML document, then |r| should only match cookies whose partition key is the [=site=] of the topmost frame.
+      1. Otherwise |r| should only match cookies with no partition key.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
@@ -1095,7 +1095,7 @@ To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps
         : \``Lax`\`
         :: Let |sameSite| be "{{CookieSameSite/lax}}".
     </dl>
-1. Let |partitioned| be a boolean indicating that the user agent supports [cookie partitioning](https://github.com/WICG/CHIPS) and that that |cookie| has a partition key.
+1. Let |partitioned| be a boolean indicating that the user agent supports [cookie partitioning](https://github.com/privacycg/CHIPS) and that that |cookie| has a partition key.
 1. Return «[
     "name" → |name|,
     "value" → |value|,
