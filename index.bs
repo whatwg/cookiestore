@@ -701,6 +701,8 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
+1. Let |partitioned| be a boolean that is true iff |options|["{{CookieInit/partitioned}}"] is present and set to true.
+  1. Otherwise set |partitioned| to false.
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
@@ -709,11 +711,9 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
         |options|["{{CookieInit/value}}"],
         |options|["{{CookieInit/expires}}"],
         |options|["{{CookieInit/domain}}"],
-        |options|["{{CookieInit/path}}"], and
-        |options|["{{CookieInit/sameSite}}"].
-    1. If |options|["{{CookieInit/partitioned}}"] is present and the user agent supports [cookie partitioning](https://github.com/privacycg/CHIPS), then
-      1. If the current browsing context is a service worker, set the cookie's partition key be |origin|'s [=site=].
-      1. If the current browsing context is an HTML document, then the cookie's partition key is the [=site=] of the topmost frame.
+        |options|["{{CookieInit/path}}"],
+        |options|["{{CookieInit/sameSite}}"], and
+        |partitioned|.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
@@ -1129,8 +1129,9 @@ To <dfn>set a cookie</dfn> with
 |value|,
 optional |expires|,
 |domain|,
-|path|, and
-|sameSite|,
+|path|,
+|sameSite|, and
+|partitioned|
 run the following steps:
 
 1. If |name| or |value| contain U+003B (`;`), any [=C0 control=] character except U+0009 (the horizontal tab character), or U+007F, then return failure.
@@ -1169,6 +1170,7 @@ run the following steps:
         : "{{CookieSameSite/lax}}"
         :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
     </dl>
+1. If |partitioned| is true, [=list/Append=] \``Partitioned`\`/\`\` to |attributes|.
 1. Perform the steps defined in [[RFC6265bis#section-5.6]]<!-- Storage Model --> for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
     |encodedName| as <var ignore>cookie-name</var>,
