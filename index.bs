@@ -701,8 +701,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
-1. Let |partitioned| be a boolean that is true iff |options|["{{CookieInit/partitioned}}"] is present and set to true.
-  1. Otherwise set |partitioned| to false.
+1. Let |partitioned| be true if |options|["{{CookieInit/partitioned}}"] is present and true, or false otherwise.
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
@@ -768,13 +767,9 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
     1. Let |r| be the result of running [=delete a cookie=] with
         |url|,
         |options|["{{CookieStoreDeleteOptions/name}}"],
-        |options|["{{CookieStoreDeleteOptions/domain}}"], and
-        |options|["{{CookieStoreDeleteOptions/path}}"].
-    1. If |options|["{{CookieStoreDeleteOptions/partitioned}}"] is present and the user agent supports [cookie partitioning](https://github.com/privacycg/CHIPS), then
-      1. If the value is |true|, then
-        1. If the browsing context is a service worker, then |r| should only match cookies whose partition key is the [=site=] of |origin|.
-        1. If the browsing context is an HTML document, then |r| should only match cookies whose partition key is the [=site=] of the topmost frame.
-      1. Otherwise |r| should only match cookies with no partition key.
+        |options|["{{CookieStoreDeleteOptions/domain}}"],
+        |options|["{{CookieStoreDeleteOptions/path}}"],
+        |options|["{{CookieStoreDeleteOptions/partitioned}}"]
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
@@ -1195,8 +1190,9 @@ run the following steps:
 To <dfn>delete a cookie</dfn> with
 |url|,
 |name|,
-|domain| and
-|path|,
+|domain|,
+|path|, and
+|partitioned|
 run the following steps:
 
 1. If |path| is not null, then run these steps:
@@ -1220,8 +1216,9 @@ run the following steps:
     |value|,
     |expires|,
     |domain|,
-    |path|, and
-    |sameSite|.
+    |path|,
+    |sameSite|, and
+    |partitioned|.
 
 </div>
 
