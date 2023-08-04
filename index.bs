@@ -701,7 +701,6 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
-1. Let |partitioned| be true if |options|["{{CookieInit/partitioned}}"] is present and true, or false otherwise.
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
@@ -712,7 +711,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
         |options|["{{CookieInit/domain}}"],
         |options|["{{CookieInit/path}}"],
         |options|["{{CookieInit/sameSite}}"], and
-        |partitioned|.
+        |options|["{{CookieInit/partitioned}}"].
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
@@ -768,8 +767,8 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
         |url|,
         |options|["{{CookieStoreDeleteOptions/name}}"],
         |options|["{{CookieStoreDeleteOptions/domain}}"],
-        |options|["{{CookieStoreDeleteOptions/path}}"],
-        |options|["{{CookieStoreDeleteOptions/partitioned}}"]
+        |options|["{{CookieStoreDeleteOptions/path}}"], and
+        |options|["{{CookieStoreDeleteOptions/partitioned}}"].
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
