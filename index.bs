@@ -513,12 +513,14 @@ dictionary CookieInit {
   USVString? domain = null;
   USVString path = "/";
   CookieSameSite sameSite = "strict";
+  boolean partitioned = false;
 };
 
 dictionary CookieStoreDeleteOptions {
   required USVString name;
   USVString? domain = null;
   USVString path = "/";
+  boolean partitioned = false;
 };
 
 dictionary CookieListItem {
@@ -529,6 +531,7 @@ dictionary CookieListItem {
   DOMHighResTimeStamp? expires;
   boolean secure;
   CookieSameSite sameSite;
+  boolean partitioned;
 };
 
 typedef sequence<CookieListItem> CookieList;
@@ -706,8 +709,9 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
         |options|["{{CookieInit/value}}"],
         |options|["{{CookieInit/expires}}"],
         |options|["{{CookieInit/domain}}"],
-        |options|["{{CookieInit/path}}"], and
-        |options|["{{CookieInit/sameSite}}"].
+        |options|["{{CookieInit/path}}"],
+        |options|["{{CookieInit/sameSite}}"], and
+        |options|["{{CookieInit/partitioned}}"].
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
@@ -762,8 +766,9 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
     1. Let |r| be the result of running [=delete a cookie=] with
         |url|,
         |options|["{{CookieStoreDeleteOptions/name}}"],
-        |options|["{{CookieStoreDeleteOptions/domain}}"], and
-        |options|["{{CookieStoreDeleteOptions/path}}"].
+        |options|["{{CookieStoreDeleteOptions/domain}}"],
+        |options|["{{CookieStoreDeleteOptions/path}}"], and
+        |options|["{{CookieStoreDeleteOptions/partitioned}}"].
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
@@ -1084,6 +1089,7 @@ To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps
         : \``Lax`\`
         :: Let |sameSite| be "{{CookieSameSite/lax}}".
     </dl>
+1. Let |partitioned| be a boolean indicating that the user agent supports [cookie partitioning](https://github.com/privacycg/CHIPS) and that that |cookie| has a partition key.
 1. Return «[
     "name" → |name|,
     "value" → |value|,
@@ -1091,7 +1097,8 @@ To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps
     "path" → |path|,
     "expires" → |expires|,
     "secure" → |secure|,
-    "sameSite" → |sameSite|
+    "sameSite" → |sameSite|,
+    "partitioned" → |partitioned|
     ]»
 
 Note: The |cookie|'s
@@ -1116,8 +1123,9 @@ To <dfn>set a cookie</dfn> with
 |value|,
 optional |expires|,
 |domain|,
-|path|, and
-|sameSite|,
+|path|,
+|sameSite|, and
+|partitioned|
 run the following steps:
 
 1. If |name| or |value| contain U+003B (`;`), any [=C0 control=] character except U+0009 (the horizontal tab character), or U+007F, then return failure.
@@ -1156,6 +1164,7 @@ run the following steps:
         : "{{CookieSameSite/lax}}"
         :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
     </dl>
+1. If |partitioned| is true, [=list/Append=] \``Partitioned`\`/\`\` to |attributes|.
 1. Perform the steps defined in [[RFC6265bis#section-5.6]]<!-- Storage Model --> for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
     |encodedName| as <var ignore>cookie-name</var>,
@@ -1180,8 +1189,9 @@ run the following steps:
 To <dfn>delete a cookie</dfn> with
 |url|,
 |name|,
-|domain| and
-|path|,
+|domain|,
+|path|, and
+|partitioned|
 run the following steps:
 
 1. If |path| is not null, then run these steps:
@@ -1205,8 +1215,9 @@ run the following steps:
     |value|,
     |expires|,
     |domain|,
-    |path|, and
-    |sameSite|.
+    |path|,
+    |sameSite|, and
+    |partitioned|.
 
 </div>
 

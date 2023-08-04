@@ -14,9 +14,12 @@
   + [Read a cookie](#read-a-cookie)
   + [Read multiple cookies](#read-multiple-cookies)
   + [Read the cookies for a specific URL](#read-the-cookies-for-a-specific-url)
+  + [Read a partitioned cookie](#read-a-partitioned-cookie)
 * [The Modifications API](#the-modifications-api)
   + [Write a cookie](#write-a-cookie)
+  + [Write a partitioned cookie](#write-a-partitioned-cookie)
   + [Delete a cookie](#delete-a-cookie)
+  + [Delete a partitioned cookie](#delete-a-partitioned-cookie)
   + [Access all the cookie data](#access-all-the-cookie-data)
 * [The Change Events API](#the-change-events-api)
   + [Get change events in documents](#get-change-events-in-documents)
@@ -263,6 +266,23 @@ any URL under their scope.
 Documents can only obtain the cookies at their current URL. In other words,
 the only valid `url` value in Document contexts is the document's URL.
 
+### Read a partitioned cookie
+
+The cookie objects will have a boolean value indicating if the cookie is partitioned.
+
+```javascript
+// Read a cookie set without the Partitioned attribute.
+const cookie = await cookieStore.get('session_id');
+console.log(cookie.partitioned);  // -> false
+
+// Read a Partitioned cookie from a third-party context.
+const cookie = await cookieStore.get({
+  name: '__Host-third_party_session_id',
+  partitioned: true
+});
+console.log(cookie.partitioned);  // -> true
+```
+
 ## The Modifications API
 
 Both documents and service workers access the same modification API, via the
@@ -292,6 +312,22 @@ await cookieStore.set({
 });
 ```
 
+### Write a partitioned cookie
+
+If the user agent supports [cookie partitioning](https://github.com/WICG/CHIPS)
+then you can set a partitioned cookie in a third-party context using the following.
+
+```javascript
+await cookieStore.set({
+  name: '__Host-third_party_session_id',
+  value: 'foobar',
+  path: '/',
+  sameSite: 'none',
+  partitioned: true
+  // `Secure` is implicitly set
+});
+```
+
 ### Delete a cookie
 
 ```javascript
@@ -315,6 +351,24 @@ try {
   console.error(`Failed to delete cookie: ${e}`);
 }
 ```
+
+### Delete a partitioned cookie
+
+If the user agent supports [cookie partitioning](https://github.com/WICG/CHIPS)
+then it is possible for a site to set both a partitioned and unpartitioned
+cookie with the same name.
+
+To delete a partitioned cookie, the `partitioned` parameter must be provided:
+
+```javascript
+await cookieStore.delete({
+  name: '__Host-third_party_session_id',
+  partitioned: true
+});
+```
+
+If the site wants to only delete the unpartitioned cookie, change the `partitioned`
+field to `false` or omit the property.  
 
 ### Access all the cookie data
 
