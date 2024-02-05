@@ -895,8 +895,7 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
 The {{ServiceWorkerRegistration}} interface is extended to give access to a {{CookieStoreManager}} via {{ServiceWorkerRegistration/cookies}} which provides the interface for subscribing to cookie changes.
 
 <xmp class=idl>
-[Exposed=(ServiceWorker,Window),
- SecureContext]
+[Exposed=(ServiceWorker,Window)]
 partial interface ServiceWorkerRegistration {
   [SameObject] readonly attribute CookieStoreManager cookies;
 };
@@ -1009,7 +1008,6 @@ The <dfn attribute for=Window>cookieStore</dfn> getter steps are to return [=/th
 <!-- ============================================================ -->
 
 <xmp class=idl>
-[SecureContext]
 partial interface ServiceWorkerGlobalScope {
   [SameObject] readonly attribute CookieStore cookieStore;
 
