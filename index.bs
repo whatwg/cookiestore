@@ -682,12 +682,20 @@ The <dfn method for=CookieStore>set(|name|, |value|)</dfn> method steps are:
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
+1. Let |domain| be null.
+1. Let |path| be "/".
+1. Let |sameSite| be {{CookieSameSite/strict}}.
+1. Let |partitioned| be false.
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
         |url|,
         |name|,
-        |value|.
+        |value|,
+        |domain|,
+        |path|,
+        |sameSite|, and
+        |partitioned|.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
@@ -1148,12 +1156,11 @@ run the following steps:
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] \``Domain`\`/|encodedDomain| to |attributes|.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
-1. If |path| is not null, then run these steps:
-    1. If |path| does not start with U+002F (`/`), then return failure.
-    1. If |path| does not end with U+002F (`/`), then append U+002F (`/`) to |path|.
-    1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
-    1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
-    1. [=list/Append=] \``Path`\`/|encodedPath| to |attributes|.
+1. If |path| does not start with U+002F (`/`), then return failure.
+1. If |path| does not end with U+002F (`/`), then append U+002F (`/`) to |path|.
+1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
+1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
+1. [=list/Append=] \``Path`\`/|encodedPath| to |attributes|.
 1. [=list/Append=] \``Secure`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
     <dl class=switch>
