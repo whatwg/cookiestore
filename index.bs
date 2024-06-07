@@ -43,6 +43,8 @@ spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
 <pre class=link-defaults>
 spec:service-workers; type:dfn; for:/; text:service worker
 spec:service-workers; type:dfn; for:/; text:service worker registration
+spec:dom; type:dfn; text:document
+spec:webidl; type:exception; text:TypeError
 </pre>
 
 <style>
