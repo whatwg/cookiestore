@@ -20,9 +20,9 @@ Assume Explicit For: yes
 
 <pre class=biblio>
 {
-  "RFC6265bis": {
-    "authors": [ "L. Chen", "S. Englehardt", "M. West", "J. Wilander" ],
-    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis",
+  "RFC6265BIS-14": {
+    "authors": [ "S. Bingler", "M. West", "J. Wilander" ],
+    "href": "https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-14",
     "title": "Cookies: HTTP State Management Mechanism",
     "publisher": "IETF",
     "status": "Internet-Draft"
@@ -86,7 +86,7 @@ main #speclogo { position: absolute; right: 20px; top: 30px; }
 
 This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [[Service-Workers|service workers]].
 
-[[RFC6265bis|HTTP cookies]] have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](https://montulli.blogspot.com/2013/05/the-reasoning-behind-web-cookies.html) for the web.
+[[RFC6265BIS-14|HTTP cookies]] have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](https://montulli.blogspot.com/2013/05/the-reasoning-behind-web-cookies.html) for the web.
 
 The synchronous single-threaded script-level {{Document/cookie|document.cookie}} interface to cookies has been a source of [complexity and performance woes](https://lists.w3.org/Archives/Public/public-whatwg-archive/2009Sep/0083.html) further exacerbated by the move in many browsers from:
   - a single browser process,
@@ -419,10 +419,10 @@ Checking change subscriptions:
 ## Cookie ## {#cookie-concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie</dfn> is normatively defined for user agents by [[RFC6265bis#section-5]]<!-- User Agent Requirements -->.
+A <dfn>cookie</dfn> is normatively defined for user agents by [[RFC6265BIS-14#name-user-agent-requirements|Cookies § User Agent Requirements]].
 
 <div dfn-for=cookie>
-Per [[RFC6265bis#section-5.6]]<!-- Storage Model -->, a [=cookie=] has the following fields:
+Per [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]], a [=cookie=] has the following fields:
 <dfn>name</dfn>,
 <dfn>value</dfn>,
 <dfn>expiry-time</dfn>,
@@ -438,9 +438,9 @@ Per [[RFC6265bis#section-5.6]]<!-- Storage Model -->, a [=cookie=] has the follo
 
 </div>
 
-A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag. This is more formally enforced in the processing model, which consults [[RFC6265bis#section-5.7]]<!-- Retrieval Model --> at appropriate points.
+A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag. This is more formally enforced in the processing model, which consults [[RFC6265BIS-14#name-retrieval-model|Cookies § Retrieval Model]] at appropriate points.
 
-A cookie is also subject to certain size limits. Per [[RFC6265bis#section-5.6]]<!-- Storage Model -->:
+A cookie is also subject to certain size limits. Per [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]]:
 * The combined lengths of the name and value fields must not be greater than 4096 [=bytes=] (the <dfn for=cookie>maximum name/value pair size</dfn>).
 * The length of every field except the name and value fields must not be greater than 1024 [=bytes=] (the <dfn for=cookie>maximum attribute value size</dfn>).
 
@@ -450,7 +450,7 @@ NOTE: [=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
 ## Cookie Store ## {#cookie-store--concept}
 <!-- ============================================================ -->
 
-A <dfn>cookie store</dfn> is normatively defined for user agents by [[!RFC6265bis|Cookies: HTTP State Management Mechanism §User Agent Requirements]].
+A <dfn>cookie store</dfn> is normatively defined for user agents by [[RFC6265BIS-14#name-user-agent-requirements|Cookies § User Agent Requirements]].
 
 When any of the following conditions occur for a [=cookie store=], perform the steps to [=process cookie changes=].
 
@@ -1044,7 +1044,7 @@ Note: This is the same representation used for [=time values=] in [[ECMAScript]]
 To <dfn>date serialize</dfn> a {{DOMHighResTimeStamp}} |millis|,
 let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
 (assuming that there are exactly 86,400,000 milliseconds per day),
-and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[RFC6265bis#section-5.1.1]]<!-- Dates -->.
+and return a [=byte sequence=] corresponding to the closest `cookie-date` representation of |dateTime| according to [[RFC6265BIS-14#name-dates|Cookies § Dates]].
 </div>
 
 
@@ -1059,7 +1059,7 @@ To <dfn>query cookies</dfn> with
 optional |name|,
 run the following steps:
 
-1. Perform the steps defined in [[RFC6265bis#section-5.7]]<!-- Retrieval Model --> to compute the "cookie-string from a given cookie store"
+1. Perform the steps defined in [[RFC6265BIS-14#name-retrieval-model|Cookies § Retrieval Model]] to compute the "cookie-string from a given cookie store"
     with |url| as <var ignore>request-uri</var>.
     The |cookie-string| itself is ignored, but the intermediate |cookie-list| is used in subsequent steps.
 
@@ -1172,7 +1172,7 @@ run the following steps:
         :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
     </dl>
 1. If |partitioned| is true, [=list/Append=] \``Partitioned`\`/\`\` to |attributes|.
-1. Perform the steps defined in [[RFC6265bis#section-5.6]]<!-- Storage Model --> for when the user agent "receives a cookie" with
+1. Perform the steps defined in [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]] for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
     |encodedName| as <var ignore>cookie-name</var>,
     |encodedValue| as <var ignore>cookie-value</var>, and
@@ -1181,7 +1181,7 @@ run the following steps:
     For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
 1. Return success.
 
-    Note: Storing the cookie may still fail due to requirements in [[!RFC6265bis]]
+    Note: Storing the cookie may still fail due to requirements in [[!RFC6265BIS-14]]
     but these steps will be considered successful.
 
 </div>
@@ -1269,7 +1269,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
 <div algorithm>
 
 The <dfn>observable changes</dfn> for |url| are the [=/set=] of [=cookie changes=] to [=cookies=] in a [=cookie store=]
-which meet the requirements in step 1 of [[RFC6265bis#section-5.7.3]]<!-- Retrieval Algorithm -->'s steps to compute the "cookie-string from a given cookie store"
+which meet the requirements in step 1 of [[RFC6265BIS-14#name-retrieval-algorithm|Cookies § Retrieval Algorithm]]'s steps to compute the "cookie-string from a given cookie store"
 with |url| as <var ignore>request-uri</var>, for a "non-HTTP" API.
 
 </div>
@@ -1359,7 +1359,7 @@ This API only allows writes for `Secure` cookies to encourage better decisions a
 
 Some existing cookie behavior (especially domain-rather-than-origin orientation, [=non-secure contexts=] being able to set cookies readable in [=secure contexts=], and script being able to set cookies unreadable from script contexts) may be quite surprising from a web security standpoint.
 
-Other surprises are documented in [[RFC6265bis#section-1]]<!-- Introduction --> - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
+Other surprises are documented in [[RFC6265BIS-14#name-introduction|Cookies § Introduction]] - for instance, a cookie may be set for a superdomain (e.g. app.example.com may set a cookie for the whole example.com domain), and a cookie may be readable across all port numbers on a given domain name.
 
 Further complicating this are historical differences in cookie-handling across major browsers, although some of those (e.g. port number handling) are now handled with more consistency than they once were.
 
