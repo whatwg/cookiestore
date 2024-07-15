@@ -1148,9 +1148,9 @@ run the following steps:
 1. Let |host| be |url|'s [=url/host=]
 1. Let |attributes| be a new [=/list=].
 1. If |domain| is not null, then run these steps:
-    1. If |domain| starts with U+002D (`.`), then return failure.
+    1. If |domain| starts with U+002E (`.`), then return failure.
     1. If |host| does not equal |domain| and
-        |host| does not end with U+002D (`.`) followed by |domain|,
+        |host| does not end with U+002E (`.`) followed by |domain|,
         then return failure.
     1. Let |encodedDomain| be the result of [=UTF-8 encode|UTF-8 encoding=] |domain|.
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
