@@ -1210,7 +1210,7 @@ run the following steps:
     Note: The exact value of |expires| is not important for the purposes of this algorithm,
     as long as it is in the past.
 
-1. Let |value| be the empty string.
+1. Let |value| be any non-empty user-agent supplied string.
 1. Let |sameSite| be "{{CookieSameSite/strict}}".
 
     Note: The values for |value|, and |sameSite| will not be persisted
