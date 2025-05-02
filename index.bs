@@ -6,7 +6,6 @@ Status: CG-DRAFT
 Group: WICG
 ED: https://wicg.github.io/cookie-store/
 Repository: WICG/cookie-store
-Editor: Anusha Muley, Google Inc. https://google.com, anushamuley@google.com
 Editor: Dylan Cutler, Google Inc. https://google.com, dylancutler@google.com
 Favicon: logo-cookies.svg
 Former Editor: Ayu Ishii, Google Inc. https://google.com, ayui@google.com
