@@ -6,9 +6,10 @@ Status: CG-DRAFT
 Group: WICG
 ED: https://wicg.github.io/cookie-store/
 Repository: WICG/cookie-store
-Editor: Ayu Ishii, Google Inc. https://google.com, ayui@google.com
-Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
+Editor: Dylan Cutler, Google Inc. https://google.com, dylancutler@google.com
 Favicon: logo-cookies.svg
+Former Editor: Ayu Ishii, Google Inc. https://google.com, ayui@google.com
+Former Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
 Former Editor: Raymond Toy, Google Inc. https://google.com, rtoy@google.com
 Former Editor: Victor Costan, Google Inc. https://google.com, costan@google.com
 Markup Shorthands: markdown yes, css no, biblio yes
