@@ -710,14 +710,16 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
+1. Let |domain| be null.
+1. If |options|["{{CookieStoreSetOptions/domain}}"] is present, set |domain| to the result of [=host parser|host parsing=] |options|["{{CookieStoreSetOptions/domain}}"].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
+        |domain|,
         |url|,
         |options|["{{CookieInit/name}}"],
         |options|["{{CookieInit/value}}"],
         |options|["{{CookieInit/expires}}"],
-        |options|["{{CookieInit/domain}}"],
         |options|["{{CookieInit/path}}"],
         |options|["{{CookieInit/sameSite}}"], and
         |options|["{{CookieInit/partitioned}}"].
