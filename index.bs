@@ -710,16 +710,14 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
-1. Let |domain| be null.
-1. If |options|["{{CookieStoreSetOptions/domain}}"] is present, set |domain| to the result of [=host parser|host parsing=] |options|["{{CookieStoreSetOptions/domain}}"].
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
-        |domain|,
         |url|,
         |options|["{{CookieInit/name}}"],
         |options|["{{CookieInit/value}}"],
         |options|["{{CookieInit/expires}}"],
+        |options|["{{CookieInit/domain}}"],
         |options|["{{CookieInit/path}}"],
         |options|["{{CookieInit/sameSite}}"], and
         |options|["{{CookieInit/partitioned}}"].
@@ -1152,10 +1150,11 @@ run the following steps:
 1. Let |attributes| be a new [=/list=].
 1. If |domain| is not null, then run these steps:
     1. If |domain| starts with U+002E (`.`), then return failure.
-    1. If |host| does not equal |domain| and
-        |host| does not end with U+002E (`.`) followed by |domain|,
+    1. Let |parsedDomain| be the result of [=host parser|host parsing=] |domain|.
+    1. If |host| does not equal |parsedDomain| and
+        |host| does not end with U+002E (`.`) followed by |parsedDomain|,
         then return failure.
-    1. Let |encodedDomain| be the result of [=UTF-8 encode|UTF-8 encoding=] |domain|.
+    1. Let |encodedDomain| be the result of [=UTF-8 encode|UTF-8 encoding=] |parsedDomain|.
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] \``Domain`\`/|encodedDomain| to |attributes|.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
