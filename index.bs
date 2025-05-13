@@ -1151,6 +1151,7 @@ run the following steps:
 1. If |domain| is not null, then run these steps:
     1. If |domain| starts with U+002E (`.`), then return failure.
     1. Let |parsedDomain| be the result of [=host parser|host parsing=] |domain|.
+    1. If |parsedDomain| is a failure, then return failure.
     1. If |host| does not equal |parsedDomain| and
         |host| does not end with U+002E (`.`) followed by |parsedDomain|,
         then return failure.
