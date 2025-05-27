@@ -1141,8 +1141,10 @@ run the following steps:
 
     ISSUE(httpwg/http-extensions#1593): Note that it's up for discussion whether these character restrictions should also apply to |expires|, |domain|, |path|, and |sameSite| as well.
 
-1. If |name|'s [=string/length=] is 0 and |value| contains U+003D (=), then return failure.
-1. If |name|'s [=string/length=] is 0 and |value|'s [=string/length=] is 0, then return failure.
+1. If |name|'s [=string/length=] is 0:
+    1. If |value| contains U+003D (=), then return failure.
+    1. If |value|'s [=string/length=] is 0, then return failure.
+    1. If |value|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\` or \``__secure-`\`, then return failure. 
 1. Let |encodedName| be the result of [=UTF-8 encode|UTF-8 encoding=] |name|.
 1. Let |encodedValue| be the result of [=UTF-8 encode|UTF-8 encoding=] |value|.
 1. If the [=byte sequence=] [=byte sequence/length=] of |encodedName| plus the [=byte sequence=] [=byte sequence/length=] of |encodedValue| is greater than the <a for=cookie>maximum name/value pair size</a>, then return failure.
@@ -1150,6 +1152,7 @@ run the following steps:
 1. Let |attributes| be a new [=/list=].
 1. If |domain| is not null, then run these steps:
     1. If |domain| starts with U+002E (.), then return failure.
+    1. If |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
     1. If |host| does not equal |domain| and
         |host| does not end with U+002E (.) followed by |domain|,
         then return failure.
@@ -1159,6 +1162,7 @@ run the following steps:
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. If |path| is not null:
     1. If |path| does not start with U+002F (/), then return failure.
+    1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure. 
     1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] \``Path`\`/|encodedPath| to |attributes|.
