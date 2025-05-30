@@ -1209,7 +1209,9 @@ run the following steps:
     as long as it is in the past.
 
 1. Let |value| be the empty string. 
+
 1. If |name|'s [=string/length=] is 0, then set |value| to any non-empty [=implementation-defined=] string.
+
 1. Let |sameSite| be "{{CookieSameSite/strict}}".
 
     Note: The values for |value|, and |sameSite| will not be persisted
