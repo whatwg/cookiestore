@@ -1154,7 +1154,9 @@ run the following steps:
     1. If |domain| starts with U+002E (.), then return failure.
     1. If |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
     1. If |domain| [=is a registrable domain suffix of or is equal to|is not a registrable domain suffix of and is not equal to=] |host|, then return failure.
-    1. Let |encodedDomain| be the result of [=UTF-8 encode|UTF-8 encoding=] |domain|.
+    1. Let |parsedDomain| be the result of [=host parser|host parsing=] |domain|.
+    1. If |parsedDomain| is a failure, then return failure.
+    1. Let |encodedDomain| be the result of [=UTF-8 encode|UTF-8 encoding=] |parsedDomain|.
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] \``Domain`\`/|encodedDomain| to |attributes|.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
