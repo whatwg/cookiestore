@@ -1,0 +1,25 @@
+{
+  "transitionStatus": "Shipping",
+  "intendedImplementations": [
+    "Chrome",
+    "Firefox"
+  ],
+  "implementations": [
+    "Chrome",
+    "Firefox"
+  ],
+  "intendedOrganization": "WHATWG",
+  "intendedGroup": "WHATWG",
+  "transitionPlan": {
+    "decisionToMigrate": null,
+    "decisionToReceive": null,
+    "ongoingDiscussions": [
+      "https://github.com/WICG/cookie-store/issues/186",
+      "https://github.com/whatwg/sg/issues/252"
+    ]
+  },
+  "notes": [
+    "It's already in the W3C Web Apps WG charter",
+    "The latest discussions aim to move the Cookie Store API to the WHATWG"
+  ]
+}
