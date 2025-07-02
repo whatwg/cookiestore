@@ -1141,6 +1141,7 @@ run the following steps:
 
     ISSUE(httpwg/http-extensions#1593): Note that it's up for discussion whether these character restrictions should also apply to |expires|, |domain|, |path|, and |sameSite| as well.
 
+1. If |name| contains U+003D (=), then return failure.
 1. If |name|'s [=string/length=] is 0:
     1. If |value| contains U+003D (=), then return failure.
     1. If |value|'s [=string/length=] is 0, then return failure.
