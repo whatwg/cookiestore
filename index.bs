@@ -1145,8 +1145,8 @@ run the following steps:
 1. If |name|'s [=string/length=] is 0:
     1. If |value| contains U+003D (=), then return failure.
     1. If |value|'s [=string/length=] is 0, then return failure.
-    1. If |value|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, \``__http-`\`, or \``__secure-`\`, then return failure. 
-1. If |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__http-`\`, then return failure.
+    1. If |value|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, \``__hosthttp-`\`, \``__http-`\`, or \``__secure-`\`, then return failure. 
+1. If |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__http-`\` or \``__hosthttp-`\`, then return failure.
 1. Let |encodedName| be the result of [=UTF-8 encode|UTF-8 encoding=] |name|.
 1. Let |encodedValue| be the result of [=UTF-8 encode|UTF-8 encoding=] |value|.
 1. If the [=byte sequence=] [=byte sequence/length=] of |encodedName| plus the [=byte sequence=] [=byte sequence/length=] of |encodedValue| is greater than the <a for=cookie>maximum name/value pair size</a>, then return failure.
