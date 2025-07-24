@@ -1137,8 +1137,8 @@ optional |expires|,
 |partitioned|
 run the following steps:
 
-1. Set |name| to |name|, [=stripped leading and trailing ASCII whitespace=].
-1. Set |value| to |value|, [=stripped leading and trailing ASCII whitespace=].
+1. Remove all U+0009 or U+0020 characters that are at the start or the end of |name|.
+1. Remove all U+0009 or U+0020 characters that are at the start or the end of |value|.
 1. If |name| or |value| contain U+003B (;), any [=C0 control=] character except U+0009 TAB, or U+007F DELETE, then return failure.
 
     ISSUE(httpwg/http-extensions#1593): Note that it's up for discussion whether these character restrictions should also apply to |expires|, |domain|, |path|, and |sameSite| as well.
