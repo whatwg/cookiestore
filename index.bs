@@ -1147,7 +1147,7 @@ run the following steps:
     1. If |value|'s [=string/length=] is 0, then return failure.
     1. If |value|, [=byte-lowercased=] and [=stripped leading and trailing ASCII whitespace=],
           [=byte sequence/starts with=] \``__host-`\`, \``__hosthttp-`\`, \``__http-`\`, or \``__secure-`\`,
-          then return failure. 
+          then return failure.
 1. If |name|, [=byte-lowercased=] and [=stripped leading and trailing ASCII whitespace=],
       [=byte sequence/starts with=] \``__http-`\` or \``__hosthttp-`\`, then return failure.
 1. Let |encodedName| be the result of [=UTF-8 encode|UTF-8 encoding=] |name|.
