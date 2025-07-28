@@ -75,7 +75,7 @@ main #speclogo { position: absolute; right: 20px; top: 30px; }
 
 *This section is non-normative.*
 
-This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [[Service-Workers|service workers]].
+This standard defines an asynchronous cookie API for scripts running in HTML documents and [[Service-Workers|service workers]].
 
 [[RFC6265BIS-14|HTTP cookies]] have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](https://montulli.blogspot.com/2013/05/the-reasoning-behind-web-cookies.html) for the web.
 
@@ -84,7 +84,7 @@ The synchronous single-threaded script-level {{Document/cookie|document.cookie}}
   - a single-threaded event loop model, and
   - no general expectation of responsiveness for scripted event handling while processing cookie operations
 
-... to the modern web which strives for smoothly responsive high performance:
+… to the modern web which strives for smoothly responsive high performance:
   - in multiple browser processes,
   - with a multithreaded, multiple-event loop model, and
   - with an expectation of responsiveness on human-reflex time scales.
@@ -94,13 +94,11 @@ On the modern web a cookie operation in one part of a web application cannot blo
   - the rest of the web origin, or
   - the browser as a whole.
 
-Newer parts of the web built in service workers [need access to cookies too](https://github.com/w3c/ServiceWorker/issues/707) but cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
+Newer parts of the web built in service workers [need access to cookies too](https://github.com/w3c/ServiceWorker/issues/707) but cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface at all as they both have no document and also cannot block the event loop as that would interfere with handling of unrelated events.
 
 <!-- ============================================================ -->
-## A Taste of the Proposed Change ## {#intro-proposed-change}
+## Alternative to `document.cookie` ## {#intro-proposed-change}
 <!-- ============================================================ -->
-
-Although it is tempting to [rethink cookies](https://discourse.wicg.io/t/rethinking-cookies/744) entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.
 
 Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in `Set-Cookie` format:
 
@@ -148,15 +146,15 @@ cookieStore.set(
 ```
 </div>
 
-This also has the advantage of not relying on `document` and not blocking, which together make it usable from [[Service-Workers|Service Workers]], which otherwise do not have cookie access from script.
+This also has the advantage of not relying on document and not blocking, which together make it usable from [[Service-Workers|Service Workers]], which otherwise do not have cookie access from script.
 
-This proposal also includes a power-efficient monitoring API to replace `setTimeout`-based polling cookie monitors with cookie change observers.
+This standard also includes a power-efficient monitoring API to replace `setTimeout`-based polling cookie monitors with cookie change observers.
 
 <!-- ============================================================ -->
 ## Summary ## {#intro-summary}
 <!-- ============================================================ -->
 
-This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:
+In short, this API offers the following functionality:
 
     * [[#intro-modify|write]] (or "set") and delete (or "expire") cookies
     * [[#intro-query|read]] (or "get") [=script-visible=] cookies
@@ -435,7 +433,7 @@ A cookie is also subject to certain size limits. Per [[RFC6265BIS-14#name-storag
 * The combined lengths of the name and value fields must not be greater than 4096 [=bytes=] (the <dfn for=cookie>maximum name/value pair size</dfn>).
 * The length of every field except the name and value fields must not be greater than 1024 [=bytes=] (the <dfn for=cookie>maximum attribute value size</dfn>).
 
-NOTE: [=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
+<p class=note>[=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
 
 <!-- ============================================================ -->
 ## Cookie Store ## {#cookie-store--concept}
@@ -1380,7 +1378,7 @@ Today writing to {{Document/cookie|document.cookie}} in contexts where script-in
 Likewise, today reading {{Document/cookie|document.cookie}} in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.
 
 <!-- ============================================================ -->
-# Privacy Considerations # {#privacy}
+# Privacy considerations # {#privacy}
 <!-- ============================================================ -->
 
 <!-- ============================================================ -->
@@ -1420,6 +1418,7 @@ Lukasz Olejnik,
 Marijn Kruisselbrink,
 Mike West,
 Raymond Toy,
+Rupin Mittal,
 Tab Atkins, and
 Victor Costan
 for helping craft this standard.
