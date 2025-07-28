@@ -129,7 +129,7 @@ cookieStore.set(
 ```
 </div>
 
-This also has the advantage of not relying on document and not blocking, which together make it usable from [[Service-Workers|Service Workers]], which otherwise do not have cookie access from script.
+This also has the advantage of not relying on document and not blocking, which together make it usable from [=service workers=], which otherwise do not have cookie access from script.
 
 This standard also includes a power-efficient monitoring API to replace `setTimeout`-based polling cookie monitors with cookie change observers.
 
@@ -148,7 +148,7 @@ In short, this API offers the following functionality:
         * ... for script-supplied in-scope request paths in [[Service-Workers|service worker]] contexts
 
 <!-- ============================================================ -->
-## Querying Cookies ## {#intro-query}
+## Querying cookies ## {#intro-query}
 <!-- ============================================================ -->
 
 Both [=documents=] and [=service workers=] access the same query API, via the
@@ -233,7 +233,7 @@ if (cookie.secure)
 
 
 <!-- ============================================================ -->
-## Modifying Cookies ## {#intro-modify}
+## Modifying cookies ## {#intro-modify}
 <!-- ============================================================ -->
 
 Both [=documents=] and [=service workers=] access the same modification API, via the
@@ -302,7 +302,7 @@ try {
 
 
 <!-- ============================================================ -->
-## Monitoring Cookies ## {#intro-monitor}
+## Monitoring cookies ## {#intro-monitor}
 <!-- ============================================================ -->
 
 To avoid polling, it is possible to observe changes to cookies.
@@ -419,7 +419,7 @@ A cookie is also subject to certain size limits. Per [[RFC6265BIS-14#name-storag
 <p class=note>[=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
 
 <!-- ============================================================ -->
-## Cookie Store ## {#cookie-store--concept}
+## Cookie store ## {#cookie-store--concept}
 <!-- ============================================================ -->
 
 A <dfn>cookie store</dfn> is normatively defined for user agents by [[RFC6265BIS-14#name-user-agent-requirements|Cookies § User Agent Requirements]].
@@ -431,7 +431,7 @@ When any of the following conditions occur for a [=cookie store=], perform the s
 * A user agent removes excess [=cookies=] from the [=cookie store=].
 
 <!-- ============================================================ -->
-## Extensions to Service Worker ## {#service-worker-extensions}
+## Extensions to Service Workers ## {#service-worker-extensions}
 <!-- ============================================================ -->
 
 [[Service-Workers]] defines [=service worker registration=], which this specification extends.
@@ -444,7 +444,7 @@ a [=tuple=] of <dfn>name</dfn> and <dfn>url</dfn>.
 
 
 <!-- ============================================================ -->
-# The {{CookieStore}} Interface # {#CookieStore}
+# The {{CookieStore}} interface # {#CookieStore}
 <!-- ============================================================ -->
 
 <xmp class=idl>
@@ -753,7 +753,7 @@ The <dfn method for=CookieStore>delete(|options|)</dfn> method steps are:
 
 
 <!-- ============================================================ -->
-# The {{CookieStoreManager}} Interface # {#CookieStoreManager}
+# The {{CookieStoreManager}} interface # {#CookieStoreManager}
 <!-- ============================================================ -->
 
 A {{CookieStoreManager}} has an associated <dfn for=CookieStoreManager>registration</dfn> which is a [=service worker registration=].
@@ -899,7 +899,7 @@ navigator.serviceWorker.register('sw.js').then(registration => {
 
 
 <!-- ============================================================ -->
-# Event Interfaces # {#event-interfaces}
+# Event interfaces # {#event-interfaces}
 <!-- ============================================================ -->
 
 <!-- ============================================================ -->
@@ -953,7 +953,7 @@ dictionary ExtendableCookieChangeEventInit : ExtendableEventInit {
 The {{ExtendableCookieChangeEvent/changed}} and {{ExtendableCookieChangeEvent/deleted}} attributes must return the value they were initialized to.
 
 <!-- ============================================================ -->
-# Global Interfaces # {#globals}
+# Global interfaces # {#globals}
 <!-- ============================================================ -->
 
 A {{CookieStore}} is accessed by script using an attribute in the global
@@ -1014,7 +1014,7 @@ and return a [=byte sequence=] corresponding to the closest `cookie-date` repres
 
 
 <!-- ============================================================ -->
-## Query Cookies ## {#query-cookies-algorithm}
+## Query cookies ## {#query-cookies-algorithm}
 <!-- ============================================================ -->
 
 <div algorithm>
@@ -1085,7 +1085,7 @@ attributes are not exposed to script.
 </div>
 
 <!-- ============================================================ -->
-## Set a Cookie ## {#set-cookie-algorithm}
+## Set a cookie ## {#set-cookie-algorithm}
 <!-- ============================================================ -->
 
 <div algorithm>
@@ -1160,7 +1160,7 @@ run the following steps:
 
 
 <!-- ============================================================ -->
-## Delete a Cookie ## {#delete-cookie-algorithm}
+## Delete a cookie ## {#delete-cookie-algorithm}
 <!-- ============================================================ -->
 
 <div algorithm>
@@ -1201,7 +1201,7 @@ run the following steps:
 
 
 <!-- ============================================================ -->
-## Process Changes ## {#process-changes}
+## Process changes ## {#process-changes}
 <!-- ============================================================ -->
 
 <div algorithm>
@@ -1288,7 +1288,7 @@ To <dfn>prepare lists</dfn> from |changes|, run the following steps:
 
 
 <!-- ============================================================ -->
-# Security Considerations # {#security}
+# Security considerations # {#security}
 <!-- ============================================================ -->
 
 Other than cookie access from service worker contexts, this API is not intended to expose any new capabilities to the web.
