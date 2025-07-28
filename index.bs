@@ -723,7 +723,7 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
     : await cookieStore . {{CookieStore/delete(name)|delete}}(<var ignore>name</var>)
     : await cookieStore . {{CookieStore/delete(options)|delete}}(<var ignore>options</var>)
 
-    ::  Deletes (expires) a cookie with the given name or name and optional domain and path.
+    ::  Deletes (expires) a cookie with the given name or name and <span class=allow-2119>optional</span> domain and path.
 </dl>
 
 
@@ -797,7 +797,7 @@ interface CookieStoreManager {
 <dl class=domintro>
     : await |registration| . cookies . {{CookieStoreManager/subscribe()|subscribe}}(<var ignore>subscriptions</var>)
 
-    ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}} and {{CookieStoreGetOptions/url}} properties.
+    ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with <span class=allow-2119>optional</span> {{CookieStoreGetOptions/name}} and {{CookieStoreGetOptions/url}} properties.
 
         Once subscribed, notifications are delivered as "`cookiechange`" events fired against the [=Service Worker=]'s global scope:
 </dl>
