@@ -1,49 +1,33 @@
-<img src="https://wicg.github.io/cookie-store/logo-cookies.svg" height="100" align=right>
+This repository hosts the [Cookie Store API Standard](https://cookiestore.spec.whatwg.org/).
 
-# Cookie Store API
+## Code of conduct
 
-[![CI](https://github.com/WICG/cookie-store/actions/workflows/auto-publish.yml/badge.svg)](https://github.com/WICG/cookie-store/actions/workflows/auto-publish.yml)
+We are committed to providing a friendly, safe, and welcoming environment for all. Please read and respect the [Code of Conduct](https://whatwg.org/code-of-conduct).
 
-This repository documents an API for accessing HTTP cookies asynchronously from
-Document and Service Worker global contexts.
+## Contribution opportunities
 
-* [The explainer](explainer.md) is a developer-oriented preview of the API.
-* [The specification draft](https://wicg.github.io/cookie-store/) is aimed at
-  browser developers.
+Folks notice minor and larger issues with the Cookie Store API Standard all the time and we'd love your help fixing those. Pull requests for typographical and grammar errors are also most welcome.
 
-The API has a test suite in the
-[Web Platform Tests project](https://web-platform-tests.org/).
+Issues labeled ["good first issue"](https://github.com/whatwg/cookiestore/labels/good%20first%20issue) are a good place to get a taste for editing the Cookie Store API Standard. Note that we don't assign issues and there's no reason to ask for availability either, just provide a pull request.
 
-* Read the
-  [test code](https://github.com/w3c/web-platform-tests/tree/master/cookie-store)
-  for example usage.
-* See the [test passing rates across browsers](https://wpt.fyi/cookie-store/).
-* [Run the tests in your own browser](https://w3c-test.org/cookie-store/).
+If you are thinking of suggesting a new feature, read through the [FAQ](https://whatwg.org/faq) and [Working Mode](https://whatwg.org/working-mode) documents to get yourself familiarized with the process.
 
+We'd be happy to help you with all of this [on Chat](https://whatwg.org/chat).
 
-## Resources
+## Pull requests
 
-This API is inspired by and loosely based on the following discussions.
+In short, change `index.bs` and submit your patch, with a [good commit message](https://github.com/whatwg/meta/blob/main/COMMITTING.md).
 
-* https://github.com/slightlyoff/ServiceWorker/issues/707
-* https://github.com/WICG/async-cookies-api/issues/14
+Please add your name to the Acknowledgments section in your first pull request, even for trivial fixes. The names are sorted lexicographically.
 
-[cookie change events](https://github.com/patrickkettner/cookie-change-events)
-is a concurrently developed API proposal that also addresses the synchronous
-nature of `document.cookie`.
+To ensure your patch meets all the necessary requirements, please also see the [Contributor Guidelines](https://github.com/whatwg/meta/blob/main/CONTRIBUTING.md). Editors of the Cookie Store API Standard are expected to follow the [Maintainer Guidelines](https://github.com/whatwg/meta/blob/main/MAINTAINERS.md).
 
-The Cookie Store API has also been discussed in the following places.
+## Tests
 
-* [WICG discourse thread](https://discourse.wicg.io/t/rfc-proposal-for-an-asynchronous-cookies-api/1652)
-* [Blink intent-to-implement](https://groups.google.com/a/chromium.org/d/msg/blink-dev/gU-tSdjR4rA/hAYgmxiHCAAJ)
+Tests are an essential part of the standardization process and will need to be created or adjusted as changes to the standard are made. Tests for the Cookie Store API Standard can be found in the `cookiestore/` directory of [`web-platform-tests/wpt`](https://github.com/web-platform-tests/wpt).
 
-The best resource for understanding the deep technical aspects of cookies is
-the most recent draft of
-[RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03).
+A dashboard showing the tests running against browser engines can be seen at [wpt.fyi/results/cookiestore](https://wpt.fyi/results/cookiestore).
 
-This API aims to replace
-[document.cookie](https://www.w3.org/TR/html/dom.html#dom-document-cookie)
-and
-[navigator.cookieEnabled](https://www.w3.org/TR/html/webappapis.html#cookies).
+## Building "locally"
 
-This API is also known as the *Async Cookies API*.
+For quick local iteration, run `make`; this will use a web service to build the standard, so that you don't have to install anything. See more in the [Contributor Guidelines](https://github.com/whatwg/meta/blob/main/CONTRIBUTING.md#building).

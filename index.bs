@@ -1,22 +1,12 @@
-<pre class='metadata'>
-Title: Cookie Store API
-Shortname: cookie-store
-Level: 1
-Status: CG-DRAFT
-Group: WICG
-ED: https://wicg.github.io/cookie-store/
-Repository: WICG/cookie-store
-Editor: Dylan Cutler, Google Inc. https://google.com, dylancutler@google.com
-Favicon: logo-cookies.svg
-Former Editor: Ayu Ishii, Google Inc. https://google.com, ayui@google.com
-Former Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
-Former Editor: Raymond Toy, Google Inc. https://google.com, rtoy@google.com
-Former Editor: Victor Costan, Google Inc. https://google.com, costan@google.com
+<pre class=metadata>
+Group: WHATWG
+H1: Cookie Store API
+Shortname: cookiestore
+Text Macro: TWITTER cookiestoreapi
+Abstract: An asynchronous JavaScript cookies API for documents and service workers.
 Markup Shorthands: markdown yes, css no, biblio yes
-Abstract: An asynchronous Javascript cookies API for documents and service workers
-Test Suite: https://github.com/web-platform-tests/wpt/tree/master/cookie-store
-Include MDN Panels: yes
 Assume Explicit For: yes
+Level: 1
 </pre>
 
 <pre class=biblio>
@@ -35,10 +25,6 @@ Assume Explicit For: yes
 spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
     type: dfn
         text: time values; url: sec-time-values-and-time-range
-spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
-    urlPrefix: webappapis.html
-        type: dfn
-            text: DOM manipulation task source; url: dom-manipulation-task-source
 </pre>
 
 <pre class=link-defaults>
@@ -85,7 +71,7 @@ main #speclogo { position: absolute; right: 20px; top: 30px; }
 
 *This section is non-normative.*
 
-This is a proposal to bring an asynchronous cookie API to scripts running in HTML documents and [[Service-Workers|service workers]].
+This standard defines an asynchronous cookie API for scripts running in HTML documents and [[Service-Workers|service workers]].
 
 [[RFC6265BIS-14|HTTP cookies]] have, since their origins at Netscape [(documentation preserved by archive.org)](https://web.archive.org/web/0/http://wp.netscape.com/newsref/std/cookie_spec.html), provided a [valuable state-management mechanism](https://montulli.blogspot.com/2013/05/the-reasoning-behind-web-cookies.html) for the web.
 
@@ -94,7 +80,7 @@ The synchronous single-threaded script-level {{Document/cookie|document.cookie}}
   - a single-threaded event loop model, and
   - no general expectation of responsiveness for scripted event handling while processing cookie operations
 
-... to the modern web which strives for smoothly responsive high performance:
+… to the modern web which strives for smoothly responsive high performance:
   - in multiple browser processes,
   - with a multithreaded, multiple-event loop model, and
   - with an expectation of responsiveness on human-reflex time scales.
@@ -104,17 +90,15 @@ On the modern web a cookie operation in one part of a web application cannot blo
   - the rest of the web origin, or
   - the browser as a whole.
 
-Newer parts of the web built in service workers [need access to cookies too](https://github.com/w3c/ServiceWorker/issues/707) but cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface at all as they both have no `document` and also cannot block the event loop as that would interfere with handling of unrelated events.
+Newer parts of the web built in service workers [need access to cookies too](https://github.com/w3c/ServiceWorker/issues/707) but cannot use the synchronous, blocking {{Document/cookie|document.cookie}} interface at all as they both have no document and also cannot block the event loop as that would interfere with handling of unrelated events.
 
 <!-- ============================================================ -->
-## A Taste of the Proposed Change ## {#intro-proposed-change}
+## Alternative to `document.cookie` ## {#intro-proposed-change}
 <!-- ============================================================ -->
-
-Although it is tempting to [rethink cookies](https://discourse.wicg.io/t/rethinking-cookies/744) entirely, web sites today continue to rely heavily on them, and the script APIs for using them are largely unchanged over their first decades of usage.
 
 Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in `Set-Cookie` format:
 
-<div class=example>
+<div class=example id=example-e33babf4>
 ```js
 document.cookie =
   '__Secure-COOKIENAME=cookie-value' +
@@ -137,7 +121,7 @@ if (String(document.cookie).match(successRegExp)) {
 
 What if you could instead write:
 
-<div class=example>
+<div class=example id=example-e2699daa>
 ```js
 const one_day_ms = 24 * 60 * 60 * 1000;
 cookieStore.set(
@@ -158,15 +142,15 @@ cookieStore.set(
 ```
 </div>
 
-This also has the advantage of not relying on `document` and not blocking, which together make it usable from [[Service-Workers|Service Workers]], which otherwise do not have cookie access from script.
+This also has the advantage of not relying on document and not blocking, which together make it usable from [[Service-Workers|Service Workers]], which otherwise do not have cookie access from script.
 
-This proposal also includes a power-efficient monitoring API to replace `setTimeout`-based polling cookie monitors with cookie change observers.
+This standard also includes a power-efficient monitoring API to replace `setTimeout`-based polling cookie monitors with cookie change observers.
 
 <!-- ============================================================ -->
 ## Summary ## {#intro-summary}
 <!-- ============================================================ -->
 
-This proposal outlines an asynchronous API using Promises/async functions for the following cookie operations:
+In short, this API offers the following functionality:
 
     * [[#intro-modify|write]] (or "set") and delete (or "expire") cookies
     * [[#intro-query|read]] (or "get") [=script-visible=] cookies
@@ -192,7 +176,7 @@ Both methods take the same arguments, which can be either:
 
 The {{CookieStore/get()}} method is essentially a form of {{CookieStore/getAll()}} that only returns the first result.
 
-<div class=example>
+<div class=example id=example-75b57f43>
 Reading a cookie:
 
 ```js
@@ -210,7 +194,7 @@ try {
 </div>
 
 
-<div class=example>
+<div class=example id=example-9453f9c5>
 Reading multiple cookies:
 
 ```js
@@ -228,7 +212,7 @@ try {
 [=Service workers=] can obtain the list of cookies that would be sent by a [=/fetch=] to
 any URL under their [=service worker registration/scope url|scope=].
 
-<div class=example>
+<div class=example id=example-2f07df9d>
 Read the cookies for a specific URL (in a [=service worker=]):
 
 ```js
@@ -243,7 +227,7 @@ the only valid {{CookieStoreGetOptions/url}} value in [=Document=] contexts is t
 
 The objects returned by {{CookieStore/get()}} and {{CookieStore/getAll()}} contain all the relevant information in the cookie store, not just the [=cookie/name=] and the [=cookie/value=] as in the older {{Document/cookie|document.cookie}} API.
 
-<div class=example>
+<div class=example id=example-74bb82cb>
 Accessing all the cookie data:
 
 ```js
@@ -270,7 +254,7 @@ Both [=documents=] and [=service workers=] access the same modification API, via
 
 Cookies are created or modified (written) using the {{CookieStore/set(name, value)|set()}} method.
 
-<div class=example>
+<div class=example id=example-cf76b712>
 Write a cookie:
 
 ```js
@@ -299,7 +283,7 @@ await cookieStore.set({
 
 Cookies are deleted (expired) using the {{CookieStore/delete(name)|delete()}} method.
 
-<div class=example>
+<div class=example id=example-7990c896>
 Delete a cookie:
 
 ```js
@@ -313,7 +297,7 @@ try {
 
 Under the hood, deleting a cookie is done by changing the cookie's expiration date to the past, which still works.
 
-<div class=example>
+<div class=example id=example-e0eca546>
 Deleting a cookie by changing the expiry date:
 
 ```js
@@ -338,7 +322,7 @@ To avoid polling, it is possible to observe changes to cookies.
 
 In [=documents=], `change` events are fired for all relevant cookie changes.
 
-<div class=example>
+<div class=example id=example-7e599641>
 Register for `change` events in documents:
 
 ```js
@@ -357,7 +341,7 @@ cookieStore.addEventListener('change', event => {
 
 In [=service workers=], `cookiechange` events are fired against the global scope, but an explicit subscription is required, associated with the service worker's registration.
 
-<div class=example>
+<div class=example id=example-1ce710fe>
 Register for `cookiechange` events in a service worker:
 
 ```js
@@ -393,14 +377,14 @@ subscriptions are persisted for with the [=service worker registration=].
 Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}.
 The complexity of fine-grained subscriptions is justified
 by the cost of dispatching an irrelevant cookie change event to a [=service worker=],
-which is is much higher than the cost of dispatching an equivalent event
+which is much higher than the cost of dispatching an equivalent event
 to a {{Window}}. Specifically, dispatching an event to a [=service worker=] might
 require waking up the worker, which has a significant impact on battery life.
 
 The {{CookieStoreManager/getSubscriptions()}} allows a [=service worker=] to introspect
 the subscriptions that have been made.
 
-<div class=example>
+<div class=example id=example-5e735d9a>
 Checking change subscriptions:
 
 ```js
@@ -445,7 +429,7 @@ A cookie is also subject to certain size limits. Per [[RFC6265BIS-14#name-storag
 * The combined lengths of the name and value fields must not be greater than 4096 [=bytes=] (the <dfn for=cookie>maximum name/value pair size</dfn>).
 * The length of every field except the name and value fields must not be greater than 1024 [=bytes=] (the <dfn for=cookie>maximum attribute value size</dfn>).
 
-NOTE: [=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
+<p class=note>[=Cookie=] attribute-values are stored as [=byte sequences=], not strings.
 
 <!-- ============================================================ -->
 ## Cookie Store ## {#cookie-store--concept}
@@ -542,7 +526,7 @@ typedef sequence<CookieListItem> CookieList;
 ## The {{CookieStore/get()}} method ## {#CookieStore-get}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : |cookie| = await cookieStore . {{CookieStore/get(name)|get}}(<var ignore>name</var>)
     : |cookie| = await cookieStore . {{CookieStore/get(options)|get}}(<var ignore>options</var>)
 
@@ -550,8 +534,7 @@ typedef sequence<CookieListItem> CookieList;
         for a given cookie name (or other options).
         In a service worker context this defaults to the path of the service worker's registered scope.
         In a document it defaults to the path of the current document and does not respect changes from {{History/replaceState()}} or {{Document/domain|document.domain}}.
-
-</div>
+</dl>
 
 <div algorithm>
 The <dfn method for=CookieStore>get(|name|)</dfn> method steps are:
@@ -602,15 +585,14 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 ## The {{CookieStore/getAll()}} method ## {#CookieStore-getAll}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : |cookies| = await cookieStore . {{CookieStore/getAll(name)|getAll}}(<var ignore>name</var>)
     : |cookies| = await cookieStore . {{CookieStore/getAll(options)|getAll}}(<var ignore>options</var>)
 
     ::  Returns a promise resolving to the all in-scope [=script-visible=] value for a given cookie name (or other options).
         In a service worker context this defaults to the path of the service worker's registered scope.
         In a document it defaults to the path of the current document and does not respect changes from {{History/replaceState()}} or {{Document/domain|document.domain}}.
-
-</div>
+</dl>
 
 
 <div algorithm>
@@ -661,7 +643,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 ## The {{CookieStore/set(name, value)|set()}} method ## {#CookieStore-set}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : await cookieStore . {{CookieStore/set(name, value)|set}}(<var ignore>name</var>, <var ignore>value</var>)
     : await cookieStore . {{CookieStore/set(options)|set}}(<var ignore>options</var>)
 
@@ -673,8 +655,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
         * Domain: same as the domain of the current document or service worker's location
         * No expiry date
         * SameSite: strict
-
-</div>
+</dl>
 
 <div algorithm>
 The <dfn method for=CookieStore>set(|name|, |value|)</dfn> method steps are:
@@ -732,13 +713,12 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 ## The {{CookieStore/delete(name)|delete()}} method ## {#CookieStore-delete}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : await cookieStore . {{CookieStore/delete(name)|delete}}(<var ignore>name</var>)
     : await cookieStore . {{CookieStore/delete(options)|delete}}(<var ignore>options</var>)
 
-    ::  Deletes (expires) a cookie with the given name or name and optional domain and path.
-
-</div>
+    ::  Deletes (expires) a cookie with the given name or name and <span class=allow-2119>optional</span> domain and path.
+</dl>
 
 
 <div algorithm>
@@ -808,14 +788,13 @@ interface CookieStoreManager {
 ## The {{CookieStoreManager/subscribe()|subscribe()}} method ## {#CookieStoreManager-subscribe}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : await |registration| . cookies . {{CookieStoreManager/subscribe()|subscribe}}(<var ignore>subscriptions</var>)
 
-    ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}} and {{CookieStoreGetOptions/url}} properties.
+    ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with <span class=allow-2119>optional</span> {{CookieStoreGetOptions/name}} and {{CookieStoreGetOptions/url}} properties.
 
         Once subscribed, notifications are delivered as "`cookiechange`" events fired against the [=Service Worker=]'s global scope:
-
-</div>
+</dl>
 
 
 <div algorithm>
@@ -842,12 +821,11 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
 ## The {{CookieStoreManager/getSubscriptions()}} method ## {#CookieStoreManager-getSubscriptions}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : |subscriptions| = await |registration| . cookies . {{CookieStoreManager/getSubscriptions()}}
 
     ::  This method returns a promise which resolves to a list of the cookie change subscriptions made for this Service Worker registration.
-
-</div>
+</dl>
 
 <div algorithm>
 The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are:
@@ -868,12 +846,11 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
 ## The {{CookieStoreManager/unsubscribe()|unsubscribe()}} method ## {#CookieStoreManager-unsubscribe}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : await |registration| . cookies . {{CookieStoreManager/unsubscribe()|unsubscribe}}(<var ignore>subscriptions</var>)
 
-    ::  Calling this method will stop the registered service worker from receiving previously subscribed events. The |subscriptions| argument should list subscriptions in the same form passed to {{CookieStoreManager/subscribe()}} or returned from {{CookieStoreManager/getSubscriptions()}}.
-
-</div>
+    ::  Calling this method will stop the registered service worker from receiving previously subscribed events. The |subscriptions| argument ought to list subscriptions in the same form passed to {{CookieStoreManager/subscribe()}} or returned from {{CookieStoreManager/getSubscriptions()}}.
+</dl>
 
 
 <div algorithm>
@@ -915,7 +892,7 @@ The {{CookieStoreManager}}'s [=CookieStoreManager/registration=] is equal to the
 
 The <dfn attribute for=ServiceWorkerRegistration>cookies</dfn> getter steps are to return [=this=]'s associated {{CookieStoreManager}} object.
 
-<div class=example>
+<div class=example id=example-45f94580>
 Subscribing to cookie changes from a Service Worker script:
 
 ```js
@@ -923,7 +900,7 @@ self.registration.cookies.subscribe([{name:'session-id'}]);
 ```
 </div>
 
-<div class=example>
+<div class=example id=example-254a868d>
 Subscribing to cookie changes from a script in a window context:
 
 ```js
@@ -1145,7 +1122,7 @@ run the following steps:
 1. If |name|'s [=string/length=] is 0:
     1. If |value| contains U+003D (=), then return failure.
     1. If |value|'s [=string/length=] is 0, then return failure.
-    1. If |value|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, \``__hosthttp-`\`, \``__http-`\`, or \``__secure-`\`, then return failure. 
+    1. If |value|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, \``__hosthttp-`\`, \``__http-`\`, or \``__secure-`\`, then return failure.
 1. If |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__http-`\` or \``__hosthttp-`\`, then return failure.
 1. Let |encodedName| be the result of [=UTF-8 encode|UTF-8 encoding=] |name|.
 1. Let |encodedValue| be the result of [=UTF-8 encode|UTF-8 encoding=] |value|.
@@ -1164,7 +1141,7 @@ run the following steps:
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. If |path| is not null:
     1. If |path| does not start with U+002F (/), then return failure.
-    1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure. 
+    1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
     1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] \``Path`\`/|encodedPath| to |attributes|.
@@ -1189,7 +1166,7 @@ run the following steps:
     For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
 1. Return success.
 
-    Note: Storing the cookie may still fail due to requirements in [[!RFC6265BIS-14]]
+    Note: Storing the cookie can still fail due to requirements in [[!RFC6265BIS-14]],
     but these steps will be considered successful.
 
 </div>
@@ -1214,7 +1191,7 @@ run the following steps:
     Note: The exact value of |expires| is not important for the purposes of this algorithm,
     as long as it is in the past.
 
-1. Let |value| be the empty string. 
+1. Let |value| be the empty string.
 
 1. If |name|'s [=string/length=] is 0, then set |value| to any non-empty [=implementation-defined=] string.
 
@@ -1397,7 +1374,7 @@ Today writing to {{Document/cookie|document.cookie}} in contexts where script-in
 Likewise, today reading {{Document/cookie|document.cookie}} in contexts where script-initiated cookie-reading is disallowed typically returns an empty string. However, a cooperating web server can verify that server-initiated cookie-writing and cookie-reading work and report this to the script (which still sees empty string) and the script can use this information to infer that script-initiated cookie-reading is disallowed.
 
 <!-- ============================================================ -->
-# Privacy Considerations # {#privacy}
+# Privacy considerations # {#privacy}
 <!-- ============================================================ -->
 
 <!-- ============================================================ -->
@@ -1421,6 +1398,7 @@ Alex Russell,
 Andrea Marchesini,
 Andrew Williams,
 Anne van Kesteren,
+Ayu Ishii
 Ben Kelly,
 Craig Francis,
 Daniel Appelquist,
@@ -1430,13 +1408,18 @@ Elliott Sprehn,
 Fagner Brack,
 Jake Archibald,
 Joel Weinberger,
+Joshua Bell,
 Kenneth Rohde Christiansen,
 Lukasz Olejnik,
-Marijn Kruisselbrink, and
-Mike West
-for helping craft this proposal.
+Marijn Kruisselbrink,
+Mike West,
+Raymond Toy,
+Rupin Mittal,
+Tab Atkins, and
+Victor Costan
+for helping craft this standard.
 
-Special thanks to Tab Atkins, Jr. for creating and maintaining
-[Bikeshed](https://github.com/tabatkins/bikeshed), the specification
-authoring tool used to create this document, and for his general
-authoring advice.
+This standard is written by Dylan Cutler ([Google](https://www.google.com/), [dylancutler@google.com](mailto:dylancutler@google.com)).
+
+
+<p boilerplate=ipr>This Living Standard was originally developed in the W3C WICG, where it was available under the [W3C Software and Document License](https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document).
