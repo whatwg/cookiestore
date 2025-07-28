@@ -383,7 +383,7 @@ subscriptions are persisted for with the [=service worker registration=].
 Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}.
 The complexity of fine-grained subscriptions is justified
 by the cost of dispatching an irrelevant cookie change event to a [=service worker=],
-which is is much higher than the cost of dispatching an equivalent event
+which is much higher than the cost of dispatching an equivalent event
 to a {{Window}}. Specifically, dispatching an event to a [=service worker=] might
 require waking up the worker, which has a significant impact on battery life.
 
