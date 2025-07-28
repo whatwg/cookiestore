@@ -104,7 +104,7 @@ Although it is tempting to [rethink cookies](https://discourse.wicg.io/t/rethink
 
 Today writing a cookie means blocking your event loop while waiting for the browser to synchronously update the cookie jar with a carefully-crafted cookie string in `Set-Cookie` format:
 
-<div class=example>
+<div class=example id=example-e33babf4>
 ```js
 document.cookie =
   '__Secure-COOKIENAME=cookie-value' +
@@ -127,7 +127,7 @@ if (String(document.cookie).match(successRegExp)) {
 
 What if you could instead write:
 
-<div class=example>
+<div class=example id=example-e2699daa>
 ```js
 const one_day_ms = 24 * 60 * 60 * 1000;
 cookieStore.set(
@@ -182,7 +182,7 @@ Both methods take the same arguments, which can be either:
 
 The {{CookieStore/get()}} method is essentially a form of {{CookieStore/getAll()}} that only returns the first result.
 
-<div class=example>
+<div class=example id=example-75b57f43>
 Reading a cookie:
 
 ```js
@@ -200,7 +200,7 @@ try {
 </div>
 
 
-<div class=example>
+<div class=example id=example-9453f9c5>
 Reading multiple cookies:
 
 ```js
@@ -218,7 +218,7 @@ try {
 [=Service workers=] can obtain the list of cookies that would be sent by a [=/fetch=] to
 any URL under their [=service worker registration/scope url|scope=].
 
-<div class=example>
+<div class=example id=example-2f07df9d>
 Read the cookies for a specific URL (in a [=service worker=]):
 
 ```js
@@ -233,7 +233,7 @@ the only valid {{CookieStoreGetOptions/url}} value in [=Document=] contexts is t
 
 The objects returned by {{CookieStore/get()}} and {{CookieStore/getAll()}} contain all the relevant information in the cookie store, not just the [=cookie/name=] and the [=cookie/value=] as in the older {{Document/cookie|document.cookie}} API.
 
-<div class=example>
+<div class=example id=example-74bb82cb>
 Accessing all the cookie data:
 
 ```js
@@ -260,7 +260,7 @@ Both [=documents=] and [=service workers=] access the same modification API, via
 
 Cookies are created or modified (written) using the {{CookieStore/set(name, value)|set()}} method.
 
-<div class=example>
+<div class=example id=example-cf76b712>
 Write a cookie:
 
 ```js
@@ -289,7 +289,7 @@ await cookieStore.set({
 
 Cookies are deleted (expired) using the {{CookieStore/delete(name)|delete()}} method.
 
-<div class=example>
+<div class=example id=example-7990c896>
 Delete a cookie:
 
 ```js
@@ -303,7 +303,7 @@ try {
 
 Under the hood, deleting a cookie is done by changing the cookie's expiration date to the past, which still works.
 
-<div class=example>
+<div class=example id=example-e0eca546>
 Deleting a cookie by changing the expiry date:
 
 ```js
@@ -328,7 +328,7 @@ To avoid polling, it is possible to observe changes to cookies.
 
 In [=documents=], `change` events are fired for all relevant cookie changes.
 
-<div class=example>
+<div class=example id=example-7e599641>
 Register for `change` events in documents:
 
 ```js
@@ -347,7 +347,7 @@ cookieStore.addEventListener('change', event => {
 
 In [=service workers=], `cookiechange` events are fired against the global scope, but an explicit subscription is required, associated with the service worker's registration.
 
-<div class=example>
+<div class=example id=example-1ce710fe>
 Register for `cookiechange` events in a service worker:
 
 ```js
@@ -390,7 +390,7 @@ require waking up the worker, which has a significant impact on battery life.
 The {{CookieStoreManager/getSubscriptions()}} allows a [=service worker=] to introspect
 the subscriptions that have been made.
 
-<div class=example>
+<div class=example id=example-5e735d9a>
 Checking change subscriptions:
 
 ```js
@@ -532,7 +532,7 @@ typedef sequence<CookieListItem> CookieList;
 ## The {{CookieStore/get()}} method ## {#CookieStore-get}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : |cookie| = await cookieStore . {{CookieStore/get(name)|get}}(<var ignore>name</var>)
     : |cookie| = await cookieStore . {{CookieStore/get(options)|get}}(<var ignore>options</var>)
 
@@ -540,8 +540,7 @@ typedef sequence<CookieListItem> CookieList;
         for a given cookie name (or other options).
         In a service worker context this defaults to the path of the service worker's registered scope.
         In a document it defaults to the path of the current document and does not respect changes from {{History/replaceState()}} or {{Document/domain|document.domain}}.
-
-</div>
+</dl>
 
 <div algorithm>
 The <dfn method for=CookieStore>get(|name|)</dfn> method steps are:
@@ -592,15 +591,14 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 ## The {{CookieStore/getAll()}} method ## {#CookieStore-getAll}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : |cookies| = await cookieStore . {{CookieStore/getAll(name)|getAll}}(<var ignore>name</var>)
     : |cookies| = await cookieStore . {{CookieStore/getAll(options)|getAll}}(<var ignore>options</var>)
 
     ::  Returns a promise resolving to the all in-scope [=script-visible=] value for a given cookie name (or other options).
         In a service worker context this defaults to the path of the service worker's registered scope.
         In a document it defaults to the path of the current document and does not respect changes from {{History/replaceState()}} or {{Document/domain|document.domain}}.
-
-</div>
+</dl>
 
 
 <div algorithm>
@@ -651,7 +649,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 ## The {{CookieStore/set(name, value)|set()}} method ## {#CookieStore-set}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : await cookieStore . {{CookieStore/set(name, value)|set}}(<var ignore>name</var>, <var ignore>value</var>)
     : await cookieStore . {{CookieStore/set(options)|set}}(<var ignore>options</var>)
 
@@ -663,8 +661,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
         * Domain: same as the domain of the current document or service worker's location
         * No expiry date
         * SameSite: strict
-
-</div>
+</dl>
 
 <div algorithm>
 The <dfn method for=CookieStore>set(|name|, |value|)</dfn> method steps are:
@@ -722,13 +719,12 @@ The <dfn method for=CookieStore>set(|options|)</dfn> method steps are:
 ## The {{CookieStore/delete(name)|delete()}} method ## {#CookieStore-delete}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : await cookieStore . {{CookieStore/delete(name)|delete}}(<var ignore>name</var>)
     : await cookieStore . {{CookieStore/delete(options)|delete}}(<var ignore>options</var>)
 
     ::  Deletes (expires) a cookie with the given name or name and optional domain and path.
-
-</div>
+</dl>
 
 
 <div algorithm>
@@ -798,14 +794,13 @@ interface CookieStoreManager {
 ## The {{CookieStoreManager/subscribe()|subscribe()}} method ## {#CookieStoreManager-subscribe}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : await |registration| . cookies . {{CookieStoreManager/subscribe()|subscribe}}(<var ignore>subscriptions</var>)
 
     ::  Subscribe to changes to cookies. Subscriptions can use the same options as {{CookieStore/get()}} and {{CookieStore/getAll()}}, with optional {{CookieStoreGetOptions/name}} and {{CookieStoreGetOptions/url}} properties.
 
         Once subscribed, notifications are delivered as "`cookiechange`" events fired against the [=Service Worker=]'s global scope:
-
-</div>
+</dl>
 
 
 <div algorithm>
@@ -832,12 +827,11 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
 ## The {{CookieStoreManager/getSubscriptions()}} method ## {#CookieStoreManager-getSubscriptions}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : |subscriptions| = await |registration| . cookies . {{CookieStoreManager/getSubscriptions()}}
 
     ::  This method returns a promise which resolves to a list of the cookie change subscriptions made for this Service Worker registration.
-
-</div>
+</dl>
 
 <div algorithm>
 The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are:
@@ -858,12 +852,11 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
 ## The {{CookieStoreManager/unsubscribe()|unsubscribe()}} method ## {#CookieStoreManager-unsubscribe}
 <!-- ============================================================ -->
 
-<div class="domintro note">
+<dl class=domintro>
     : await |registration| . cookies . {{CookieStoreManager/unsubscribe()|unsubscribe}}(<var ignore>subscriptions</var>)
 
-    ::  Calling this method will stop the registered service worker from receiving previously subscribed events. The |subscriptions| argument should list subscriptions in the same form passed to {{CookieStoreManager/subscribe()}} or returned from {{CookieStoreManager/getSubscriptions()}}.
-
-</div>
+    ::  Calling this method will stop the registered service worker from receiving previously subscribed events. The |subscriptions| argument ought to list subscriptions in the same form passed to {{CookieStoreManager/subscribe()}} or returned from {{CookieStoreManager/getSubscriptions()}}.
+</dl>
 
 
 <div algorithm>
@@ -905,7 +898,7 @@ The {{CookieStoreManager}}'s [=CookieStoreManager/registration=] is equal to the
 
 The <dfn attribute for=ServiceWorkerRegistration>cookies</dfn> getter steps are to return [=this=]'s associated {{CookieStoreManager}} object.
 
-<div class=example>
+<div class=example id=example-45f94580>
 Subscribing to cookie changes from a Service Worker script:
 
 ```js
@@ -913,7 +906,7 @@ self.registration.cookies.subscribe([{name:'session-id'}]);
 ```
 </div>
 
-<div class=example>
+<div class=example id=example-254a868d>
 Subscribing to cookie changes from a script in a window context:
 
 ```js
@@ -1179,7 +1172,7 @@ run the following steps:
     For the purposes of the steps, the newly-created cookie was received from a "non-HTTP" API.
 1. Return success.
 
-    Note: Storing the cookie may still fail due to requirements in [[!RFC6265BIS-14]]
+    Note: Storing the cookie can still fail due to requirements in [[!RFC6265BIS-14]],
     but these steps will be considered successful.
 
 </div>
