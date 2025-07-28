@@ -1,22 +1,12 @@
-<pre class='metadata'>
-Title: Cookie Store API
-Shortname: cookie-store
-Level: 1
-Status: CG-DRAFT
-Group: WICG
-ED: https://wicg.github.io/cookie-store/
-Repository: WICG/cookie-store
-Editor: Dylan Cutler, Google Inc. https://google.com, dylancutler@google.com
-Favicon: logo-cookies.svg
-Former Editor: Ayu Ishii, Google Inc. https://google.com, ayui@google.com
-Former Editor: Joshua Bell, Google Inc. https://google.com, jsbell@google.com
-Former Editor: Raymond Toy, Google Inc. https://google.com, rtoy@google.com
-Former Editor: Victor Costan, Google Inc. https://google.com, costan@google.com
+<pre class=metadata>
+Group: WHATWG
+H1: Cookie Store API
+Shortname: cookiestore
+Text Macro: TWITTER cookiestoreapi
+Abstract: An asynchronous JavaScript cookies API for documents and service workers.
 Markup Shorthands: markdown yes, css no, biblio yes
-Abstract: An asynchronous Javascript cookies API for documents and service workers
-Test Suite: https://github.com/web-platform-tests/wpt/tree/master/cookie-store
-Include MDN Panels: yes
 Assume Explicit For: yes
+Level: 1
 </pre>
 
 <pre class=biblio>
@@ -1145,7 +1135,7 @@ run the following steps:
 1. If |name|'s [=string/length=] is 0:
     1. If |value| contains U+003D (=), then return failure.
     1. If |value|'s [=string/length=] is 0, then return failure.
-    1. If |value|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, \``__hosthttp-`\`, \``__http-`\`, or \``__secure-`\`, then return failure. 
+    1. If |value|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, \``__hosthttp-`\`, \``__http-`\`, or \``__secure-`\`, then return failure.
 1. If |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__http-`\` or \``__hosthttp-`\`, then return failure.
 1. Let |encodedName| be the result of [=UTF-8 encode|UTF-8 encoding=] |name|.
 1. Let |encodedValue| be the result of [=UTF-8 encode|UTF-8 encoding=] |value|.
@@ -1164,7 +1154,7 @@ run the following steps:
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. If |path| is not null:
     1. If |path| does not start with U+002F (/), then return failure.
-    1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure. 
+    1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
     1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] \``Path`\`/|encodedPath| to |attributes|.
@@ -1214,7 +1204,7 @@ run the following steps:
     Note: The exact value of |expires| is not important for the purposes of this algorithm,
     as long as it is in the past.
 
-1. Let |value| be the empty string. 
+1. Let |value| be the empty string.
 
 1. If |name|'s [=string/length=] is 0, then set |value| to any non-empty [=implementation-defined=] string.
 
@@ -1421,6 +1411,7 @@ Alex Russell,
 Andrea Marchesini,
 Andrew Williams,
 Anne van Kesteren,
+Ayu Ishii
 Ben Kelly,
 Craig Francis,
 Daniel Appelquist,
@@ -1430,13 +1421,17 @@ Elliott Sprehn,
 Fagner Brack,
 Jake Archibald,
 Joel Weinberger,
+Joshua Bell,
 Kenneth Rohde Christiansen,
 Lukasz Olejnik,
-Marijn Kruisselbrink, and
-Mike West
-for helping craft this proposal.
+Marijn Kruisselbrink,
+Mike West,
+Raymond Toy,
+Tab Atkins, and
+Victor Costan
+for helping craft this standard.
 
-Special thanks to Tab Atkins, Jr. for creating and maintaining
-[Bikeshed](https://github.com/tabatkins/bikeshed), the specification
-authoring tool used to create this document, and for his general
-authoring advice.
+This standard is written by Dylan Cutler ([Google](https://www.google.com/), [dylancutler@google.com](mailto:dylancutler@google.com)).
+
+
+<p boilerplate=ipr>This Living Standard was originally developed in the W3C WICG, where it was available under the [W3C Software and Document License](https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document).
