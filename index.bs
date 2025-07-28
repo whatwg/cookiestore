@@ -25,10 +25,6 @@ Level: 1
 spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
     type: dfn
         text: time values; url: sec-time-values-and-time-range
-spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
-    urlPrefix: webappapis.html
-        type: dfn
-            text: DOM manipulation task source; url: dom-manipulation-task-source
 </pre>
 
 <pre class=link-defaults>
