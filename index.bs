@@ -498,12 +498,6 @@ dictionary CookieStoreDeleteOptions {
 dictionary CookieListItem {
   USVString name;
   USVString value;
-  USVString? domain;
-  USVString path;
-  DOMHighResTimeStamp? expires;
-  boolean secure;
-  CookieSameSite sameSite;
-  boolean partitioned;
 };
 
 typedef sequence<CookieListItem> CookieList;
@@ -1044,44 +1038,11 @@ run the following steps:
 </div>
 
 <div algorithm>
-
-To <dfn>create a {{CookieListItem}}</dfn> from |cookie|, run the following steps.
+To <dfn>create a {{CookieListItem}}</dfn> from a [=/cookie=] |cookie|:
 
 1. Let |name| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/name=].
 1. Let |value| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/value=].
-1. Let |domain| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/domain=].
-1. Let |path| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/path=].
-1. Let |expires| be |cookie|'s [=cookie/expiry-time=] ([=as a timestamp=]).
-1. Let |secure| be |cookie|'s [=cookie/secure-only-flag=].
-1. Switch on |cookie|'s [=cookie/same-site-flag=]:
-    <dl class=switch>
-        : \``None`\`
-        :: Let |sameSite| be "{{CookieSameSite/none}}".
-        : \``Strict`\`
-        :: Let |sameSite| be "{{CookieSameSite/strict}}".
-        : \``Lax`\`
-        :: Let |sameSite| be "{{CookieSameSite/lax}}".
-    </dl>
-1. Let |partitioned| be a boolean indicating that the user agent supports [cookie partitioning](https://github.com/privacycg/CHIPS) and that that |cookie| has a partition key.
-1. Return «[
-    "name" → |name|,
-    "value" → |value|,
-    "domain" → |domain|,
-    "path" → |path|,
-    "expires" → |expires|,
-    "secure" → |secure|,
-    "sameSite" → |sameSite|,
-    "partitioned" → |partitioned|
-    ]»
-
-Note: The |cookie|'s
-[=cookie/creation-time=],
-[=cookie/last-access-time=],
-[=cookie/persistent-flag=],
-[=cookie/host-only-flag=], and
-[=cookie/http-only-flag=]
-attributes are not exposed to script.
-
+1. Return «[ "{{CookieListItem/name}}" → |name|, "{{CookieListItem/value}}" → |value| ]».
 </div>
 
 <!-- ============================================================ -->
