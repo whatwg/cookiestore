@@ -397,20 +397,13 @@ A <dfn>cookie</dfn> is normatively defined for user agents by [[RFC6265BIS-14#na
 Per [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]], a [=cookie=] has the following fields:
 <dfn>name</dfn>,
 <dfn>value</dfn>,
-<dfn>expiry-time</dfn>,
 <dfn>domain</dfn>,
 <dfn>path</dfn>,
-<dfn>creation-time</dfn>,
-<dfn>last-access-time</dfn>,
-<dfn>persistent-flag</dfn>,
-<dfn>host-only-flag</dfn>,
-<dfn>secure-only-flag</dfn>,
-<dfn>http-only-flag</dfn>,
-<dfn>same-site-flag</dfn>.
+<dfn>http-only-flag</dfn>.
 
 </div>
 
-A cookie is <dfn>script-visible</dfn> when it is in-scope and does not have the `HttpOnly` cookie flag. This is more formally enforced in the processing model, which consults [[RFC6265BIS-14#name-retrieval-model|Cookies § Retrieval Model]] at appropriate points.
+A cookie is <dfn>script-visible</dfn> when it is in-scope and its [=cookie/http-only-flag=] is unset. This is more formally enforced in the processing model, which consults [[RFC6265BIS-14#name-retrieval-model|Cookies § Retrieval Model]] at appropriate points.
 
 A cookie is also subject to certain size limits. Per [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]]:
 * The combined lengths of the name and value fields must not be greater than 4096 [=bytes=] (the <dfn for=cookie>maximum name/value pair size</dfn>).
@@ -1038,11 +1031,13 @@ run the following steps:
 </div>
 
 <div algorithm>
+
 To <dfn>create a {{CookieListItem}}</dfn> from a [=/cookie=] |cookie|:
 
 1. Let |name| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/name=].
 1. Let |value| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/value=].
 1. Return «[ "{{CookieListItem/name}}" → |name|, "{{CookieListItem/value}}" → |value| ]».
+
 </div>
 
 <!-- ============================================================ -->
