@@ -1038,6 +1038,8 @@ To <dfn>create a {{CookieListItem}}</dfn> from a [=/cookie=] |cookie|:
 1. Let |value| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/value=].
 1. Return «[ "{{CookieListItem/name}}" → |name|, "{{CookieListItem/value}}" → |value| ]».
 
+Note: One implementation is known to expose information beyond _name_ and _value_.
+
 </div>
 
 <!-- ============================================================ -->
