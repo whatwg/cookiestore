@@ -555,7 +555,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
         |url| and
-        |options|["{{CookieStoreGetOptions/name}}"] [=with default=] null.
+        |options|["{{CookieStoreGetOptions/name}}"] [=map/with default=] null.
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], then [=/resolve=] |p| with null.
     1. Otherwise, [=/resolve=] |p| with the first item of |list|.
@@ -612,7 +612,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
         |url| and
-        |options|["{{CookieStoreGetOptions/name}}"] [=with default=] null.
+        |options|["{{CookieStoreGetOptions/name}}"] [=map/with default=] null.
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}}.
     1. Otherwise, [=/resolve=] |p| with |list|.
 1. Return |p|.
