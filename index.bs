@@ -1376,9 +1376,7 @@ Likewise, today reading {{Document/cookie|document.cookie}} in contexts where sc
 When a user clears cookies for an origin, the user agent needs to wipe all storage for that origin; including service workers and DOM-accessible storage for that origin. This is to prevent websites from restoring any user identifiers in persistent storage after a user initiates the action.
 
 
-<!-- ====================================================================== -->
-# Acknowledgements # {#acknowledgements}
-<!-- ====================================================================== -->
+<h2 class=no-num id=acknowledgements>Acknowledgments</h2>
 
 Thanks to Benjamin Sittler, who created the initial proposal for this API.
 
