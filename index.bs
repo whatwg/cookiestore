@@ -404,6 +404,13 @@ Per [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]], a [=cookie=] 
 
 </div>
 
+<div algorithm>
+
+To <dfn local-lt=normalize>normalize a cookie name or value</dfn> given a [=/string=] |input|:
+remove all U+0009 TAB and U+0020 SPACE that are at the start or end of |input|.
+
+</div>
+
 A cookie is <dfn>script-visible</dfn> when it is in-scope and its [=cookie/http-only-flag=] is unset. This is more formally enforced in the processing model, which consults [[RFC6265BIS-14#name-retrieval-model|Cookies § Retrieval Model]] at appropriate points.
 
 A cookie is also subject to certain size limits. Per [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]]:
@@ -548,7 +555,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
         |url| and
-        |options|["{{CookieStoreGetOptions/name}}"] (if present).
+        |options|["{{CookieStoreGetOptions/name}}"] [=with default=] null.
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. If |list| [=list/is empty=], then [=/resolve=] |p| with null.
     1. Otherwise, [=/resolve=] |p| with the first item of |list|.
@@ -605,7 +612,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Run the following steps [=in parallel=]:
     1. Let |list| be the results of running [=query cookies=] with
         |url| and
-        |options|["{{CookieStoreGetOptions/name}}"] (if present).
+        |options|["{{CookieStoreGetOptions/name}}"] [=with default=] null.
     1. If |list| is failure, then [=reject=] |p| with a {{TypeError}}.
     1. Otherwise, [=/resolve=] |p| with |list|.
 1. Return |p|.
@@ -781,6 +788,7 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
         1. Let |name| be |entry|["{{CookieStoreGetOptions/name}}"].
+        1. [=Normalize=] |name|.
         1. Let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
@@ -837,6 +845,7 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
         1. Let |name| be |entry|["{{CookieStoreGetOptions/name}}"].
+        1. [=Normalize=] |name|.
         1. Let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
@@ -1006,10 +1015,7 @@ and return a [=byte sequence=] corresponding to the closest `cookie-date` repres
 
 <div algorithm>
 
-To <dfn>query cookies</dfn> with
-|url| and
-optional |name|,
-run the following steps:
+To <dfn>query cookies</dfn> given a [=/URL=] |url| and [=/string=]-or-null |name|:
 
 1. Perform the steps defined in [[RFC6265BIS-14#name-retrieval-model|Cookies § Retrieval Model]] to compute the "cookie-string from a given cookie store"
     with |url| as <var ignore>request-uri</var>.
@@ -1020,7 +1026,8 @@ run the following steps:
 1. Let |list| be a new [=/list=].
 1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
-    1. If |name| is given, then run these steps:
+    1. If |name| is non-null:
+        1. [=Normalize=] |name|.
         1. Let |cookieName| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/name=].
         1. If |cookieName| does not equal |name|,
              then [=iteration/continue=].
@@ -1059,8 +1066,8 @@ optional |expires|,
 |partitioned|
 run the following steps:
 
-1. Remove all U+0009 TAB and U+0020 SPACE that are at the start or end of |name|.
-1. Remove all U+0009 TAB and U+0020 SPACE that are at the start or end of |value|.
+1. [=Normalize=] |name|.
+1. [=Normalize=] |value|.
 1. If |name| or |value| contain U+003B (;), any [=C0 control=] character except U+0009 TAB, or U+007F DELETE, then return failure.
 
     ISSUE(httpwg/http-extensions#1593): Note that it's up for discussion whether these character restrictions should also apply to |expires|, |domain|, |path|, and |sameSite| as well.
@@ -1137,6 +1144,8 @@ run the following steps:
 
     Note: The exact value of |expires| is not important for the purposes of this algorithm,
     as long as it is in the past.
+
+1. [=Normalize=] |name|.
 
 1. Let |value| be the empty string.
 
