@@ -1086,7 +1086,7 @@ run the following steps:
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] \``Domain`\`/|encodedDomain| to |attributes|.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
-1. If |path| is the empty string, then set |path| to the [=URL path serialization=] of |url|.
+1. If |path| is the empty string, then set |path| to the [=/URL path serializer|URL path serialization=] of |url|.
 1. If |path| does not start with U+002F (/), then return failure.
 1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
 1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
