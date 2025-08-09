@@ -5,6 +5,8 @@ Shortname: cookiestore
 Text Macro: TWITTER cookiestoreapi
 Abstract: An asynchronous JavaScript cookies API for documents and service workers.
 Translation: zh-Hans https://htmlspecs.com/cookiestore/
+Translation: ja https://jp.htmlspecs.com/cookiestore/
+Translation: ko https://ko.htmlspecs.com/cookiestore/
 Markup Shorthands: markdown yes, css no, biblio yes
 Assume Explicit For: yes
 Level: 1
