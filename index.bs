@@ -1095,13 +1095,12 @@ run the following steps:
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] \``Domain`\`/|encodedDomain| to |attributes|.
 1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
-1. If |path| is not null:
-    1. If |path| does not start with U+002F (/), then return failure.
-    1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
-    1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
-    1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
-    1. [=list/Append=] \``Path`\`/|encodedPath| to |attributes|.
-1. Otherwise, [=list/append=] \``Path`\`/ U+002F (/) to |attributes|.
+1. If |path| is the empty string, then set |path| to the [=/serialized cookie default path=] of |url|.
+1. If |path| does not start with U+002F (/), then return failure.
+1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
+1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
+1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
+1. [=list/Append=] \``Path`\`/|encodedPath| to |attributes|.
 1. [=list/Append=] \``Secure`\`/\`\` to |attributes|.
 1. Switch on |sameSite|:
     <dl class=switch>
