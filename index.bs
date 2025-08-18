@@ -545,8 +545,8 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
-1. If |options| is empty, then return [=a promise rejected with=] a {{TypeError}}.
-1. If |options|["{{CookieStoreGetOptions/url}}"] is present, then run these steps:
+1. If |options| [=map/is empty=], then return [=a promise rejected with=] a {{TypeError}}.
+1. If |options|["{{CookieStoreGetOptions/url}}"] [=map/exists=]:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
     1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
         then return [=a promise rejected with=] a {{TypeError}}.
@@ -603,7 +603,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
-1. If |options|["{{CookieStoreGetOptions/url}}"] is present, then run these steps:
+1. If |options|["{{CookieStoreGetOptions/url}}"] [=map/exists=]:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
     1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
         then return [=a promise rejected with=] a {{TypeError}}.
@@ -648,20 +648,17 @@ The <dfn method for=CookieStore>set(|name|, |value|)</dfn> method steps are:
 1. Let |origin| be |settings|'s [=environment settings object/origin=].
 1. If |origin| is an [=opaque origin=], then return [=a promise rejected with=] a "{{SecurityError}}" {{DOMException}}.
 1. Let |url| be |settings|'s [=environment/creation URL=].
-1. Let |domain| be null.
-1. Let |path| be "/".
-1. Let |sameSite| be {{CookieSameSite/strict}}.
-1. Let |partitioned| be false.
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
         |url|,
         |name|,
         |value|,
-        |domain|,
-        |path|,
-        |sameSite|, and
-        |partitioned|.
+        null,
+        null,
+        "`/`",
+        "{{CookieSameSite/strict}}", and
+        false.
     1. If |r| is failure, then [=reject=] |p| with a {{TypeError}} and abort these steps.
     1. [=/Resolve=] |p| with undefined.
 1. Return |p|.
@@ -818,7 +815,7 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
 1. Let |p| be [=a new promise=].
 1. Run the following steps [=in parallel=]:
     1. Let |subscriptions| be |registration|'s associated [=cookie change subscription list=].
-    1. Let |result| be a new [=/list=].
+    1. Let |result| be « ».
     1. [=list/For each=] |subscription| in |subscriptions|, run these steps:
         1. [=list/Append=] «[ "name" → |subscription|'s [=cookie change subscription/name=], "url" → |subscription|'s [=cookie change subscription/url=]]» to |result|.
     1. [=/Resolve=] |p| with |result|.
@@ -1017,7 +1014,7 @@ and return a [=byte sequence=] corresponding to the closest `cookie-date` repres
 
 <div algorithm>
 
-To <dfn>query cookies</dfn> given a [=/URL=] |url| and [=/string=]-or-null |name|:
+To <dfn>query cookies</dfn> given a [=/URL=] |url| and [=/scalar value string=]-or-null |name|:
 
 1. Perform the steps defined in [[RFC6265BIS-14#name-retrieval-model|Cookies § Retrieval Model]] to compute the "cookie-string from a given cookie store"
     with |url| as <var ignore>request-uri</var>.
@@ -1025,8 +1022,8 @@ To <dfn>query cookies</dfn> given a [=/URL=] |url| and [=/string=]-or-null |name
 
     For the purposes of the steps, the |cookie-string| is being generated for a "non-HTTP" API.
 
-1. Let |list| be a new [=/list=].
-1. [=list/For each=] |cookie| in |cookie-list|, run these steps:
+1. Let |list| be « ».
+1. [=list/For each=] |cookie| of |cookie-list|:
     1. Assert: |cookie|'s [=cookie/http-only-flag=] is false.
     1. If |name| is non-null:
         1. [=Normalize=] |name|.
@@ -1057,16 +1054,14 @@ Note: One implementation is known to expose information beyond _name_ and _value
 
 <div algorithm>
 
-To <dfn>set a cookie</dfn> with
-|url|,
-|name|,
-|value|,
-optional |expires|,
-|domain|,
-|path|,
-|sameSite|, and
-|partitioned|
-run the following steps:
+To <dfn>set a cookie</dfn> given a [=/URL=] |url|,
+[=/scalar value string=] |name|,
+[=/scalar value string=] |value|,
+{{DOMHighResTimeStamp}}-or-null |expires|,
+[=/scalar value string=]-or-null |domain|,
+[=/scalar value string=] |path|,
+[=/string=] |sameSite|, and
+[=/boolean=] |partitioned|:
 
 1. [=Normalize=] |name|.
 1. [=Normalize=] |value|.
@@ -1084,8 +1079,8 @@ run the following steps:
 1. Let |encodedValue| be the result of [=UTF-8 encode|UTF-8 encoding=] |value|.
 1. If the [=byte sequence=] [=byte sequence/length=] of |encodedName| plus the [=byte sequence=] [=byte sequence/length=] of |encodedValue| is greater than the <a for=cookie>maximum name/value pair size</a>, then return failure.
 1. Let |host| be |url|'s [=url/host=]
-1. Let |attributes| be a new [=/list=].
-1. If |domain| is not null, then run these steps:
+1. Let |attributes| be « ».
+1. If |domain| is non-null:
     1. If |domain| starts with U+002E (.), then return failure.
     1. If |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
     1. If |domain| [=is a registrable domain suffix of or is equal to|is not a registrable domain suffix of and is not equal to=] |host|, then return failure.
@@ -1093,25 +1088,25 @@ run the following steps:
     1. Assert: |parsedDomain| is not failure.
     1. Let |encodedDomain| be the result of [=UTF-8 encode|UTF-8 encoding=] |parsedDomain|.
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
-    1. [=list/Append=] \``Domain`\`/|encodedDomain| to |attributes|.
-1. If |expires| is given, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
+    1. [=list/Append=] (\``Domain`\`, |encodedDomain|) to |attributes|.
+1. If |expires| is non-null, then [=list/append=] \``Expires`\`/|expires| ([=date serialized=]) to |attributes|.
 1. If |path| is the empty string, then set |path| to the [=/serialized cookie default path=] of |url|.
 1. If |path| does not start with U+002F (/), then return failure.
 1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
 1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
 1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
-1. [=list/Append=] \``Path`\`/|encodedPath| to |attributes|.
-1. [=list/Append=] \``Secure`\`/\`\` to |attributes|.
+1. [=list/Append=] (\``Path`\`, |encodedPath|) to |attributes|.
+1. [=list/Append=] (\``Secure`\`, \`\`) to |attributes|.
 1. Switch on |sameSite|:
     <dl class=switch>
         : "{{CookieSameSite/none}}"
-        :: [=list/Append=] \``SameSite`\`/\``None`\` to |attributes|.
+        :: [=list/Append=] (\``SameSite`\`, \``None`\`) to |attributes|.
         : "{{CookieSameSite/strict}}"
-        :: [=list/Append=] \``SameSite`\`/\``Strict`\` to |attributes|.
+        :: [=list/Append=] (\``SameSite`\`, \``Strict`\`) to |attributes|.
         : "{{CookieSameSite/lax}}"
-        :: [=list/Append=] \``SameSite`\`/\``Lax`\` to |attributes|.
+        :: [=list/Append=] (\``SameSite`\`, \``Lax`\`) to |attributes|.
     </dl>
-1. If |partitioned| is true, [=list/Append=] \``Partitioned`\`/\`\` to |attributes|.
+1. If |partitioned| is true, [=list/Append=] (``Partitioned`\`, \`\`) to |attributes|.
 1. Perform the steps defined in [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]] for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
     |encodedName| as <var ignore>cookie-name</var>,
@@ -1133,13 +1128,12 @@ run the following steps:
 
 <div algorithm>
 
-To <dfn>delete a cookie</dfn> with
-|url|,
-|name|,
-|domain|,
-|path|, and
-|partitioned|
-run the following steps:
+To <dfn>delete a cookie</dfn> given
+a [=/URL=] |url|,
+[=/scalar value string=] |name|,
+[=/scalar value string=]-or-null |domain|,
+[=/scalar value string=] |path|, and
+[=/boolean=] |partitioned|:
 
 1. Let |expires| be the earliest representable date represented [=as a timestamp=].
 
@@ -1239,8 +1233,8 @@ To <dfn>fire a change event</dfn> named |type| with |changes| at |target|, run t
 
 To <dfn>prepare lists</dfn> from |changes|, run the following steps:
 
-1. Let |changedList| be a new [=/list=].
-1. Let |deletedList| be a new [=/list=].
+1. Let |changedList| be « ».
+1. Let |deletedList| be « ».
 1. [=set/For each=] |change| in |changes|, run these steps:
     1. Let |item| be the result of running [=create a CookieListItem=] from |change|'s cookie.
     1. If |change|'s type is *changed*, then [=list/append=] |item| to |changedList|.
