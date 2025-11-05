@@ -1,5 +1,7 @@
 <pre class=metadata>
 Group: WHATWG
+Status: RD
+Date: 2025-11-05
 H1: Cookie Store API
 Shortname: cookiestore
 Text Macro: TWITTER cookiestoreapi
