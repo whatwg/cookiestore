@@ -443,7 +443,7 @@ When any of the following conditions occur for a [=cookie store=], perform the s
 A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=/list=];
 each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
 <span dfn-for="cookie change subscription">
-a [=tuple=] of <dfn>name</dfn> and <dfn>url</dfn>.
+a [=tuple=] of an optional <dfn>name</dfn> and a <dfn>url</dfn>.
 </span>
 
 
@@ -790,9 +790,10 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
-        1. Let |name| be |entry|["{{CookieStoreGetOptions/name}}"].
+        1. Let |name| be the |entry|["{{CookieStoreGetOptions/name}}"] if it [=map/exists=].
         1. [=Normalize=] |name|.
-        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
+        1. Let |url| be |registration|'s [=service worker registration/scope url=].
+        1. If ["{{CookieStoreGetOptions/url}}"] [=map/exists=], then let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
@@ -847,9 +848,10 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
-        1. Let |name| be |entry|["{{CookieStoreGetOptions/name}}"].
+        1. Let |name| be the |entry|["{{CookieStoreGetOptions/name}}"] if it [=map/exists=], otherwise let it be null.
         1. [=Normalize=] |name|.
-        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
+        1. Let |url| be |registration|'s [=service worker registration/scope url=].
+        1. If ["{{CookieStoreGetOptions/url}}"] [=map/exists=], then let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
         1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
@@ -1174,7 +1176,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
             1. If |change| is not [=set/contains|in=] the [=observable changes=] for |subscription|'s [=cookie change subscription/url=],
                 then [=iteration/continue=].
             1. Let |cookieName| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/name=].
-            1. If |cookieName| equals |subscription|'s [=cookie change subscription/name=],
+            1. If |subscription|'s [=cookie change subscription/name=] is null, or if |cookieName| equals |subscription|'s [=cookie change subscription/name=],
                 then [=set/append=] |change| to |changes| and [=iteration/break=].
     1. If |changes| [=set/is empty=], then [=iteration/continue=].
     1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] from |changes|.
