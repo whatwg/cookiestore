@@ -443,7 +443,7 @@ When any of the following conditions occur for a [=cookie store=], perform the s
 A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=/list=];
 each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
 <span dfn-for="cookie change subscription">
-a [=tuple=] of a <dfn>name</dfn> (a [=string=] or null) and a <dfn>url</dfn>.
+a [=tuple=] of <dfn>name</dfn> (a [=string=] or null) and <dfn>url</dfn>.
 </span>
 
 
