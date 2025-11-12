@@ -443,7 +443,7 @@ When any of the following conditions occur for a [=cookie store=], perform the s
 A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=/list=];
 each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
 <span dfn-for="cookie change subscription">
-a [=tuple=] of an optional <dfn>name</dfn> and a <dfn>url</dfn>.
+a [=tuple=] of a <dfn>name</dfn> (a [=string=] or null) and a <dfn>url</dfn>.
 </span>
 
 
@@ -790,12 +790,13 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
-        1. Let |name| be the |entry|["{{CookieStoreGetOptions/name}}"] if it [=map/exists=].
-        1. [=Normalize=] |name|.
+        1. Let |name| be null.
+        1. If ["{{CookieStoreGetOptions/name}}"] [=map/exists=]:
+            1. Set |name| to |entry|["{{CookieStoreGetOptions/name}}"].
+            1. [=Normalize=] |name|.
         1. Let |url| be |registration|'s [=service worker registration/scope url=].
-        1. If ["{{CookieStoreGetOptions/url}}"] [=map/exists=], then let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-        1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
-            then [=reject=] |p| with a {{TypeError}} and abort these steps.
+        1. If ["{{CookieStoreGetOptions/url}}"] [=map/exists=], then set |url| to the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
+        1. If |url| is failure, or if |url| does not start with |registration|'s [=service worker registration/scope url=], then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. If |subscription list| does not already [=list/contain=] |subscription|, then [=list/append=] |subscription| to |subscription list|.
     1. [=/Resolve=] |p| with undefined.
@@ -848,12 +849,13 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
-        1. Let |name| be the |entry|["{{CookieStoreGetOptions/name}}"] if it [=map/exists=], otherwise let it be null.
-        1. [=Normalize=] |name|.
+        1. Let |name| be null.
+        1. If ["{{CookieStoreGetOptions/name}}"] [=map/exists=]:
+            1. Set |name| to |entry|["{{CookieStoreGetOptions/name}}"].
+            1. [=Normalize=] |name|.
         1. Let |url| be |registration|'s [=service worker registration/scope url=].
-        1. If ["{{CookieStoreGetOptions/url}}"] [=map/exists=], then let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-        1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
-            then [=reject=] |p| with a {{TypeError}} and abort these steps.
+        1. If ["{{CookieStoreGetOptions/url}}"] [=map/exists=], then set |url| to the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
+        1. If |url| is failure, or if |url| does not start with |registration|'s [=service worker registration/scope url=], then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. [=list/Remove=] any [=list/item=] from |subscription list| equal to |subscription|.
     1. [=/Resolve=] |p| with undefined.
