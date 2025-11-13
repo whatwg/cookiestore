@@ -27,8 +27,8 @@ Level: 1
 
 <pre class=anchors>
 spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
-    type: dfn
-        text: time values; url: sec-time-values-and-time-range
+    type: dfn; text: time values; url: sec-time-values-and-time-range
+    type: dfn; text: ToString; url: sec-tostring
 </pre>
 
 <pre class=link-defaults>
@@ -1066,7 +1066,7 @@ To <dfn>set a cookie</dfn> given a [=/URL=] |url|,
 [=/scalar value string=] |path|,
 [=/string=] |sameSite|,
 [=/boolean=] |partitioned|, and
-[=/long long=]-or-null maxAge:
+[=/64-bit signed integer=]-or-null |maxAge|:
 
 1. [=Normalize=] |name|.
 1. [=Normalize=] |value|.
@@ -1111,8 +1111,8 @@ To <dfn>set a cookie</dfn> given a [=/URL=] |url|,
         : "{{CookieSameSite/lax}}"
         :: [=list/Append=] (\``SameSite`\`, \``Lax`\`) to |attributes|.
     </dl>
-1. If |partitioned| is true, [=list/Append=] (``Partitioned`\`, \`\`) to |attributes|.
-1. If |maxAge| is non-null, then [=list/append=] (\``Max-Age`\`, |maxAge|) to |attributes|.
+1. If |partitioned| is true, [=list/Append=] (\``Partitioned`\`, \`\`) to |attributes|.
+1. If |maxAge| is non-null, then [=list/append=] (\``Max-Age`\`, [=ToString=](|maxAge|)) to |attributes|.
 1. Perform the steps defined in [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]] for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
     |encodedName| as <var ignore>cookie-name</var>,
