@@ -1094,7 +1094,10 @@ To <dfn>set a cookie</dfn> given a [=/URL=] |url|,
     1. Let |encodedDomain| be the result of [=UTF-8 encode|UTF-8 encoding=] |parsedDomain|.
     1. If the [=byte sequence=] [=byte sequence/length=] of |encodedDomain| is greater than the [=cookie/maximum attribute value size=], then return failure.
     1. [=list/Append=] (\``Domain`\`, |encodedDomain|) to |attributes|.
-1. If |expires| is non-null, then [=list/append=] (\``Expires`\`, |expires| ([=date serialized=])) to |attributes|.
+1. If |expires| is non-null:
+    1. If |maxAge| is non-null, then return failure. 
+    1. [=list/Append=] (\``Expires`\`, |expires| ([=date serialized=])) to |attributes|.
+1. Otherwise, if |maxAge| is non-null, then [=list/append=] (\``Max-Age`\`, [=ToString=](|maxAge|)) to |attributes|.
 1. If |path| is the empty string, then set |path| to the [=/serialized cookie default path=] of |url|.
 1. If |path| does not start with U+002F (/), then return failure.
 1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
@@ -1112,7 +1115,6 @@ To <dfn>set a cookie</dfn> given a [=/URL=] |url|,
         :: [=list/Append=] (\``SameSite`\`, \``Lax`\`) to |attributes|.
     </dl>
 1. If |partitioned| is true, [=list/Append=] (\``Partitioned`\`, \`\`) to |attributes|.
-1. If |maxAge| is non-null, then [=list/append=] (\``Max-Age`\`, [=ToString=](|maxAge|)) to |attributes|.
 1. Perform the steps defined in [[RFC6265BIS-14#name-storage-model|Cookies § Storage Model]] for when the user agent "receives a cookie" with
     |url| as <var ignore>request-uri</var>,
     |encodedName| as <var ignore>cookie-name</var>,
