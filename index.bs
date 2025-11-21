@@ -1143,27 +1143,20 @@ a [=/URL=] |url|,
 [=/scalar value string=] |path|, and
 [=/boolean=] |partitioned|:
 
-1. Let |expires| be the earliest representable date represented [=as a timestamp=].
-
-    Note: The exact value of |expires| is not important for the purposes of this algorithm,
-    as long as it is in the past.
-
+1. Let |maxAge| be 0.
 1. [=Normalize=] |name|.
-
 1. Let |value| be the empty string.
-
 1. If |name|'s [=string/length=] is 0, then set |value| to any non-empty [=implementation-defined=] string.
-
 1. Return the results of running [=set a cookie=] with
     |url|,
     |name|,
     |value|,
-    |expires|,
+    null,
     |domain|,
     |path|,
     "{{CookieSameSite/strict}}",
     |partitioned|, and
-    null.
+    |maxAge|.
 
 </div>
 
