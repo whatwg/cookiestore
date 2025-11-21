@@ -996,15 +996,6 @@ The <dfn attribute for=ServiceWorkerGlobalScope>cookieStore</dfn> getter steps a
 
 
 <div algorithm>
-To represent a date and time |dateTime| <dfn>as a timestamp</dfn>,
-return the number of milliseconds from 00:00:00 UTC, 1 January 1970 to |dateTime|
-(assuming that there are exactly 86,400,000 milliseconds per day).
-
-Note: This is the same representation used for [=time values=] in [[ECMAScript]].
-</div>
-
-
-<div algorithm>
 To <dfn>date serialize</dfn> a {{DOMHighResTimeStamp}} |millis|,
 let |dateTime| be the date and time |millis| milliseconds after 00:00:00 UTC, 1 January 1970
 (assuming that there are exactly 86,400,000 milliseconds per day),
