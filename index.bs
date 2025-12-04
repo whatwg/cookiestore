@@ -1134,7 +1134,6 @@ a [=/URL=] |url|,
 [=/scalar value string=] |path|, and
 [=/boolean=] |partitioned|:
 
-1. Let |maxAge| be 0.
 1. [=Normalize=] |name|.
 1. Let |value| be the empty string.
 1. If |name|'s [=string/length=] is 0, then set |value| to any non-empty [=implementation-defined=] string.
@@ -1146,8 +1145,8 @@ a [=/URL=] |url|,
     |domain|,
     |path|,
     "{{CookieSameSite/strict}}",
-    |partitioned|, and
-    |maxAge|.
+    |partitioned|,
+    and 0.
 
 </div>
 
