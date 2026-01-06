@@ -796,7 +796,7 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
             1. [=Normalize=] |name|.
         1. Let |url| be |registration|'s [=service worker registration/scope url=].
         1. If |entry|["{{CookieStoreGetOptions/url}}"] [=map/exists=], then set |url| to the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-        1. If |url| is failure or if |url| does not start with |registration|'s [=service worker registration/scope url=], then [=reject=] |p| with a {{TypeError}} and abort these steps.
+        1. If |url| is failure or if |url| does not [=string/start with=] |registration|'s [=service worker registration/scope url=], then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. If |subscription list| does not already [=list/contain=] |subscription|, then [=list/append=] |subscription| to |subscription list|.
     1. [=/Resolve=] |p| with undefined.
@@ -855,7 +855,7 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
             1. [=Normalize=] |name|.
         1. Let |url| be |registration|'s [=service worker registration/scope url=].
         1. If |entry|["{{CookieStoreGetOptions/url}}"] [=map/exists=], then set |url| to the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-        1. If |url| is failure or |url| does not start with |registration|'s [=service worker registration/scope url=], then [=reject=] |p| with a {{TypeError}} and abort these steps.
+        1. If |url| is failure or |url| does not [=string/start with=] |registration|'s [=service worker registration/scope url=], then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. [=list/Remove=] any [=list/item=] from |subscription list| equal to |subscription|.
     1. [=/Resolve=] |p| with undefined.
@@ -1094,7 +1094,7 @@ To <dfn>set a cookie</dfn> given a [=/URL=] |url|,
     1. [=list/Append=] (\``Expires`\`, |expires| ([=date serialized=])) to |attributes|.
 1. Otherwise, if |maxAge| is non-null, then [=list/append=] (\``Max-Age`\`, [=ToString=](|maxAge|)) to |attributes|.
 1. If |path| is the empty string, then set |path| to the [=/serialized cookie default path=] of |url|.
-1. If |path| does not start with U+002F (/), then return failure.
+1. If |path| does not [=string/start with=] U+002F (/), then return failure.
 1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
 1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
 1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
