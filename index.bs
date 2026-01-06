@@ -855,7 +855,7 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
             1. [=Normalize=] |name|.
         1. Let |url| be |registration|'s [=service worker registration/scope url=].
         1. If |entry|["{{CookieStoreGetOptions/url}}"] [=map/exists=], then set |url| to the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-        1. If |url| is failure or if |url| does not start with |registration|'s [=service worker registration/scope url=], then [=reject=] |p| with a {{TypeError}} and abort these steps.
+        1. If |url| is failure or |url| does not start with |registration|'s [=service worker registration/scope url=], then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. [=list/Remove=] any [=list/item=] from |subscription list| equal to |subscription|.
     1. [=/Resolve=] |p| with undefined.
@@ -1178,7 +1178,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
             1. If |change| is not [=set/contains|in=] the [=observable changes=] for |subscription|'s [=cookie change subscription/url=],
                 then [=iteration/continue=].
             1. Let |cookieName| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/name=].
-            1. If |subscription|'s [=cookie change subscription/name=] is null, or if |cookieName| equals |subscription|'s [=cookie change subscription/name=],
+            1. If |subscription|'s [=cookie change subscription/name=] is null or |cookieName| is |subscription|'s [=cookie change subscription/name=],
                 then [=set/append=] |change| to |changes| and [=iteration/break=].
     1. If |changes| [=set/is empty=], then [=iteration/continue=].
     1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] from |changes|.
