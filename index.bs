@@ -1057,7 +1057,7 @@ To <dfn>set a cookie</dfn> given a [=/URL=] |url|,
 [=/scalar value string=] |path|,
 [=/string=] |sameSite|,
 [=/boolean=] |partitioned|, and
-[=/64-bit signed integer=]-or-null |maxAge|:
+[=/64-bit signed integer=]-or-null |maxAge| in seconds:
 
 1. [=Normalize=] |name|.
 1. [=Normalize=] |value|.
