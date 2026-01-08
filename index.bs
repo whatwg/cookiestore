@@ -641,6 +641,8 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
         * Domain: same as the domain of the current document or service worker's location
         * No expiry date
         * SameSite: strict
+
+        If provided, {{CookieInit/maxAge}} is interpreted in seconds.
 </dl>
 
 <div algorithm>
@@ -1057,7 +1059,7 @@ To <dfn>set a cookie</dfn> given a [=/URL=] |url|,
 [=/scalar value string=] |path|,
 [=/string=] |sameSite|,
 [=/boolean=] |partitioned|, and
-[=/64-bit signed integer=]-or-null |maxAge| in seconds:
+[=/64-bit signed integer=]-or-null |maxAge|:
 
 1. [=Normalize=] |name|.
 1. [=Normalize=] |value|.
