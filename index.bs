@@ -443,7 +443,7 @@ When any of the following conditions occur for a [=cookie store=], perform the s
 A [=service worker registration=] has an associated <dfn>cookie change subscription list</dfn> which is a [=/list=];
 each member is a <dfn>cookie change subscription</dfn>. A [=cookie change subscription=] is
 <span dfn-for="cookie change subscription">
-a [=tuple=] of <dfn>name</dfn> and <dfn>url</dfn>.
+a [=tuple=] of <dfn>name</dfn> (a [=string=] or null) and <dfn>url</dfn>.
 </span>
 
 
@@ -790,10 +790,14 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
-        1. Let |name| be |entry|["{{CookieStoreGetOptions/name}}"].
-        1. [=Normalize=] |name|.
-        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-        1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
+        1. Let |name| be null.
+        1. If |entry|["{{CookieStoreGetOptions/name}}"] [=map/exists=]:
+            1. Set |name| to |entry|["{{CookieStoreGetOptions/name}}"].
+            1. [=Normalize=] |name|.
+        1. Let |url| be |registration|'s [=service worker registration/scope url=].
+        1. If |entry|["{{CookieStoreGetOptions/url}}"] [=map/exists=],
+            then set |url| to the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
+        1. If |url| is failure or |url| does not [=string/start with=] with |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. If |subscription list| does not already [=list/contain=] |subscription|, then [=list/append=] |subscription| to |subscription list|.
@@ -847,10 +851,14 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
 1. Run the following steps [=in parallel=]:
     1. Let |subscription list| be |registration|'s associated [=cookie change subscription list=].
     1. [=list/For each=] |entry| in |subscriptions|, run these steps:
-        1. Let |name| be |entry|["{{CookieStoreGetOptions/name}}"].
-        1. [=Normalize=] |name|.
-        1. Let |url| be the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-        1. If |url| does not start with |registration|'s [=service worker registration/scope url=],
+        1. Let |name| be null.
+        1. If |entry|["{{CookieStoreGetOptions/name}}"] [=map/exists=]:
+            1. Set |name| to |entry|["{{CookieStoreGetOptions/name}}"].
+            1. [=Normalize=] |name|.
+        1. Let |url| be |registration|'s [=service worker registration/scope url=].
+        1. If |entry|["{{CookieStoreGetOptions/url}}"] [=map/exists=],
+            then set |url| to the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
+        1. If |url| is failure or |url| does not [=string/start with=] |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. [=list/Remove=] any [=list/item=] from |subscription list| equal to |subscription|.
@@ -1090,7 +1098,7 @@ To <dfn>set a cookie</dfn> given a [=/URL=] |url|,
     1. [=list/Append=] (\``Expires`\`, |expires| ([=date serialized=])) to |attributes|.
 1. Otherwise, if |maxAge| is non-null, then [=list/append=] (\``Max-Age`\`, [=ToString=](|maxAge|)) to |attributes|.
 1. If |path| is the empty string, then set |path| to the [=/serialized cookie default path=] of |url|.
-1. If |path| does not start with U+002F (/), then return failure.
+1. If |path| does not [=string/start with=] U+002F (/), then return failure.
 1. If |path| is not U+002F (/), and |name|, [=byte-lowercased=], [=byte sequence/starts with=] \``__host-`\`, then return failure.
 1. Let |encodedPath| be the result of [=UTF-8 encode|UTF-8 encoding=] |path|.
 1. If the [=byte sequence=] [=byte sequence/length=] of |encodedPath| is greater than the [=cookie/maximum attribute value size=], then return failure.
@@ -1174,7 +1182,7 @@ To <dfn>process cookie changes</dfn>, run the following steps:
             1. If |change| is not [=set/contains|in=] the [=observable changes=] for |subscription|'s [=cookie change subscription/url=],
                 then [=iteration/continue=].
             1. Let |cookieName| be the result of running [=UTF-8 decode without BOM=] on |cookie|'s [=cookie/name=].
-            1. If |cookieName| equals |subscription|'s [=cookie change subscription/name=],
+            1. If |subscription|'s [=cookie change subscription/name=] is null or |cookieName| is |subscription|'s [=cookie change subscription/name=],
                 then [=set/append=] |change| to |changes| and [=iteration/break=].
     1. If |changes| [=set/is empty=], then [=iteration/continue=].
     1. Let |changedList| and |deletedList| be the result of running [=prepare lists=] from |changes|.
