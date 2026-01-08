@@ -550,7 +550,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. If |options| [=map/is empty=], then return [=a promise rejected with=] a {{TypeError}}.
 1. If |options|["{{CookieStoreGetOptions/url}}"] [=map/exists=]:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-    1. If |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
+    1. If |parsed| is failure or |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
         then return [=a promise rejected with=] a {{TypeError}}.
@@ -607,7 +607,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. If |options|["{{CookieStoreGetOptions/url}}"] [=map/exists=]:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-    1. If |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
+    1. If |parsed| is failure or |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
         then return [=a promise rejected with=] a {{TypeError}}.
