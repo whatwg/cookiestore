@@ -641,6 +641,8 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
         * Domain: same as the domain of the current document or service worker's location
         * No expiry date
         * SameSite: strict
+
+        If provided, {{CookieInit/maxAge}} is interpreted in seconds.
 </dl>
 
 <div algorithm>
