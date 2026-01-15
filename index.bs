@@ -518,7 +518,7 @@ typedef sequence<CookieListItem> CookieList;
 
     ::  Returns a promise resolving to the first in-scope [=script-visible=] value
         for a given cookie name (or other options).
-        In a service worker context this defaults to the path of the service worker's registered scope.
+        In a service worker context this defaults to the path of the service worker's [=service worker/script url=].
         In a document it defaults to the path of the current document and does not respect changes from {{History/replaceState()}} or {{Document/domain|document.domain}}.
 </dl>
 
@@ -550,7 +550,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
 1. If |options| [=map/is empty=], then return [=a promise rejected with=] a {{TypeError}}.
 1. If |options|["{{CookieStoreGetOptions/url}}"] [=map/exists=]:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-    1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
+    1. If |parsed| is failure or |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
         then return [=a promise rejected with=] a {{TypeError}}.
@@ -576,7 +576,7 @@ The <dfn method for=CookieStore>get(|options|)</dfn> method steps are:
     : |cookies| = await cookieStore . {{CookieStore/getAll(options)|getAll}}(<var ignore>options</var>)
 
     ::  Returns a promise resolving to the all in-scope [=script-visible=] value for a given cookie name (or other options).
-        In a service worker context this defaults to the path of the service worker's registered scope.
+        In a service worker context this defaults to the path of the service worker's [=service worker/script url=].
         In a document it defaults to the path of the current document and does not respect changes from {{History/replaceState()}} or {{Document/domain|document.domain}}.
 </dl>
 
@@ -607,7 +607,7 @@ The <dfn method for=CookieStore>getAll(|options|)</dfn> method steps are:
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. If |options|["{{CookieStoreGetOptions/url}}"] [=map/exists=]:
     1. Let |parsed| be the result of [=basic URL parser|parsing=] |options|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-    1. If [=/this=]'s [=/relevant global object=] is a {{Window}} object and |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
+    1. If |parsed| is failure or |parsed| does not [=url/equal=] |url| with [=url/equals/exclude fragments=] set to true,
         then return [=a promise rejected with=] a {{TypeError}}.
     1. If |parsed|'s [=url/origin=] and |url|'s [=url/origin=] are not the [=same origin=],
         then return [=a promise rejected with=] a {{TypeError}}.
@@ -1344,6 +1344,7 @@ Alex Russell,
 Andrea Marchesini,
 Andrew Williams,
 Anne van Kesteren,
+Anusha Muley,
 Ayu Ishii
 Ben Kelly,
 Craig Francis,
