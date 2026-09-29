@@ -30,7 +30,8 @@ spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
     type: dfn; text: time values; url: sec-time-values-and-time-range
     type: dfn; text: ToString; url: sec-tostring
 spec: html; urlPrefix: https://html.spec.whatwg.org/
-    type: dfn; text: navigation conditions potentially changed; url: #navigation-conditions-potentially-changed
+    type: dfn; text: mark navigation conditions as potentially changed; url: #mark-navigation-conditions-changed
+
 </pre>
 
 <pre class=link-defaults>
@@ -656,9 +657,7 @@ The <dfn method for=CookieStore>set(|name|, |value|)</dfn> method steps are:
 1. Let |url| be |settings|'s [=environment/creation URL=].
 1. Let |p| be [=a new promise=].
 1. Let |global| be [=/this=]'s [=/relevant global object=].
-1. If the |global| is a {{Window}} object:
-    1. Let |navigable| be |global|'s [=associated Document=]'s [=node navigable=].
-    1. If |navigable| is non-null, then set |navigable|'s [=navigation conditions potentially changed=] to true.
+1. If |global| is a {{Window}} object, then [=mark navigation conditions as potentially changed=] given |global|'s [=associated Document=].
 1. Run the following steps [=in parallel=]:
     1. Let |r| be the result of running [=set a cookie=] with
         |url|,
