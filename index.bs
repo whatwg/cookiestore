@@ -32,6 +32,7 @@ spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
 </pre>
 
 <pre class=link-defaults>
+spec:html; type:attribute; text:domain
 spec:service-workers; type:dfn; for:/; text:service worker
 spec:service-workers; type:dfn; for:/; text:service worker registration
 </pre>
