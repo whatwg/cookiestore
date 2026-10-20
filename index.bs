@@ -29,9 +29,6 @@ Level: 1
 spec: ecma262; urlPrefix: https://tc39.github.io/ecma262/
     type: dfn; text: time values; url: sec-time-values-and-time-range
     type: dfn; text: ToString; url: sec-tostring
-spec: html; urlPrefix: https://html.spec.whatwg.org/
-    type: dfn; text: mark navigation conditions as potentially changed; url: #mark-navigation-conditions-changed
-
 </pre>
 
 <pre class=link-defaults>
