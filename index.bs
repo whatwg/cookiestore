@@ -223,15 +223,20 @@ The objects returned by {{CookieStore/get()}} and {{CookieStore/getAll()}} conta
 Accessing all the cookie data:
 
 ```js
-await cookie = cookieStore.get('session_id');
-console.log(`Cookie scope - Domain: ${cookie.domain} Path: ${cookie.path}`);
-if (cookie.expires === null) {
-  console.log('Cookie expires at the end of the session');
+const cookie = await cookieStore.get('session_id');
+if (cookie) {
+  console.log(`Cookie scope - Domain: ${cookie.domain} Path: ${cookie.path}`);
+  if (cookie.expires === null) {
+    console.log('Cookie expires at the end of the session');
+  } else {
+    console.log(`Cookie expires at: ${cookie.expires}`);
+  }
+  if (cookie.secure) {
+    console.log('The cookie is restricted to secure origins');
+  }
 } else {
-  console.log(`Cookie expires at: ${cookie.expires}`);
+  console.log('Cookie not found');
 }
-if (cookie.secure)
-  console.log('The cookie is restricted to secure origins');
 ```
 
 </div>
