@@ -217,31 +217,6 @@ await cookieStore.getAll({url: '/admin'});
 [=Documents=] can only obtain the cookies at their current URL. In other words,
 the only valid {{CookieStoreGetOptions/url}} value in [=Document=] contexts is the document's URL.
 
-The objects returned by {{CookieStore/get()}} and {{CookieStore/getAll()}} contain all the relevant information in the cookie store, not just the [=cookie/name=] and the [=cookie/value=] as in the older {{Document/cookie|document.cookie}} API.
-
-<div class=example id=example-74bb82cb>
-Accessing all the cookie data:
-
-```js
-const cookie = await cookieStore.get('session_id');
-if (cookie) {
-  console.log(`Cookie scope - Domain: ${cookie.domain} Path: ${cookie.path}`);
-  if (cookie.expires === null) {
-    console.log('Cookie expires at the end of the session');
-  } else {
-    console.log(`Cookie expires at: ${cookie.expires}`);
-  }
-  if (cookie.secure) {
-    console.log('The cookie is restricted to secure origins');
-  }
-} else {
-  console.log('Cookie not found');
-}
-```
-
-</div>
-
-
 <!-- ============================================================ -->
 ## Modifying cookies ## {#intro-modify}
 <!-- ============================================================ -->
