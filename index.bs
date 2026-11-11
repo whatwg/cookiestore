@@ -213,8 +213,9 @@ await cookieStore.getAll({url: self.location.href});
 
 </div>
 
-[=Documents=] can only obtain the cookies at their current URL. In other words,
-the only valid {{CookieStoreGetOptions/url}} value in [=Document=] contexts is the document's URL.
+In [=documents=], {{CookieStore/get()}} and {{CookieStore/getAll()}} use the
+document's [=environment/creation URL=]. If supplied, {{CookieStoreGetOptions/url}}
+must match that URL, ignoring the fragment.
 
 The objects returned by {{CookieStore/get()}} and {{CookieStore/getAll()}} contain all the relevant information in the cookie store, not just the [=cookie/name=] and the [=cookie/value=] as in the older {{Document/cookie|document.cookie}} API.
 

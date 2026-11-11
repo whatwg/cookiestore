@@ -546,14 +546,10 @@ Service Workers can currently access the cookies of any URL under their scope. F
 
 ### Expiration Dates
 
-This proposal side-steps date parsing issues by only accepting
-[timestamps](https://heycam.github.io/webidl/#DOMTimeStamp)
-(milliseconds since UNIX epoch), like
-[the lastModified attribute](https://w3c.github.io/FileAPI/#file-attrs) in the
-File API.
-
-JavaScript Date objects will be automatically converted to timestamps thanks to
-[implicit conversions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/valueOf).
+The `expires` option takes an absolute timestamp in milliseconds since the Unix
+epoch. JavaScript `Date` objects are converted to their numeric timestamps.
+The `maxAge` option specifies the cookie's lifetime in seconds. If both options
+are non-null, `cookieStore.set()` rejects with a `TypeError`.
 
 ## Design Decisions
 
@@ -573,8 +569,8 @@ This API defaults cookies to "Domain"-less, which in conjunction with "Secure" p
 behavior in most modern browsers. When practical the `__Host-` cookie name prefix should be used with these cookies so that cooperating browsers origin-scope them.
 
 ### Serializing Expiration Dates
-Serialization of expiration times for non-session cookies in a special cookie-specific format has proven cumbersome,
-so this API allows JavaScript Date objects and numeric timestamps (milliseconds since the beginning of the Unix epoch) to be used instead. The inconsistently-implemented Max-Age parameter is not exposed, although similar functionality is available for the specific case of expiring a cookie.
+The API serializes `expires` and `maxAge` to the corresponding `Expires` and
+`Max-Age` cookie attributes.
 
 ### HTTP Cookie Header Serialization
 Cookies without U+003D (=) code points in their HTTP Cookie header serialization are treated as having an empty name, consistent with the majority of current browsers. Cookies with an empty name cannot be set using values containing U+003D (=) code points as this would result in ambiguous serializations in the majority of current browsers.
