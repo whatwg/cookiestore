@@ -95,7 +95,7 @@ Today writing a cookie means blocking your event loop while waiting for the brow
 document.cookie =
   '__Secure-COOKIENAME=cookie-value' +
   '; Path=/' +
-  '; expires=Fri, 12 Aug 2016 23:05:17 GMT' +
+  '; Max-Age=86400' +
   '; Secure' +
   '; Domain=example.org';
 // now we could assume the write succeeded, but since
@@ -146,8 +146,7 @@ In short, this API offers the following functionality:
 
     * [[#intro-modify|write]] (or "set") and delete (or "expire") cookies
     * [[#intro-query|read]] (or "get") [=script-visible=] cookies
-        * ... including for specified in-scope request paths in
-            [[Service-Workers|service worker]] contexts
+        * ... for the [=service worker/script url=] in [[Service-Workers|service worker]] contexts
     * [[#intro-monitor|monitor]] [=script-visible=] cookies for changes using `CookieChangeEvent`
         * ... in long-running script contexts (e.g. `document`)
         * ... for script-supplied in-scope request paths in [[Service-Workers|service worker]] contexts
@@ -201,21 +200,22 @@ try {
 </div>
 
 
-[=Service workers=] can obtain the list of cookies that would be sent by a [=/fetch=] to
-any URL under their [=service worker registration/scope url|scope=].
+In a [=service worker=], {{CookieStore/get()}} and {{CookieStore/getAll()}} use the
+worker's [=service worker/script url=]. If supplied, {{CookieStoreGetOptions/url}} must match
+that URL, ignoring the fragment.
 
 <div class=example id=example-2f07df9d>
-Read the cookies for a specific URL (in a [=service worker=]):
+Read cookies for the service worker's script URL:
 
 ```js
-await cookieStore.getAll({url: '/admin'});
+await cookieStore.getAll({url: self.location.href});
 ```
-
 
 </div>
 
-[=Documents=] can only obtain the cookies at their current URL. In other words,
-the only valid {{CookieStoreGetOptions/url}} value in [=Document=] contexts is the document's URL.
+In [=documents=], {{CookieStore/get()}} and {{CookieStore/getAll()}} use the
+document's [=environment/creation URL=]. If supplied, {{CookieStoreGetOptions/url}}
+must match that URL, ignoring the fragment.
 
 The objects returned by {{CookieStore/get()}} and {{CookieStore/getAll()}} contain all the relevant information in the cookie store, not just the [=cookie/name=] and the [=cookie/value=] as in the older {{Document/cookie|document.cookie}} API.
 
