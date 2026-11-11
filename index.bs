@@ -300,11 +300,11 @@ Register for `change` events in documents:
 ```js
 cookieStore.addEventListener('change', event => {
   console.log(`${event.changed.length} changed cookies`);
-  for (const cookie in event.changed)
+  for (const cookie of event.changed)
     console.log(`Cookie ${cookie.name} changed to ${cookie.value}`);
 
   console.log(`${event.deleted.length} deleted cookies`);
-  for (const cookie in event.deleted)
+  for (const cookie of event.deleted)
     console.log(`Cookie ${cookie.name} deleted`);
 });
 ```
@@ -318,7 +318,7 @@ Register for `cookiechange` events in a service worker:
 
 ```js
 self.addEventListener('activate', (event) => {
-  event.waitUntil(async () => {
+  event.waitUntil((async () => {
     // Snapshot current state of subscriptions.
     const subscriptions = await self.registration.cookies.getSubscriptions();
 
@@ -330,7 +330,7 @@ self.addEventListener('activate', (event) => {
         name: 'session_id',  // Get change events for cookies named session_id.
       }
     ]);
-  });
+  })());
 });
 
 self.addEventListener('cookiechange', event => {
