@@ -14,13 +14,11 @@
   + [Read a cookie](#read-a-cookie)
   + [Read multiple cookies](#read-multiple-cookies)
   + [Read the cookies for a specific URL](#read-the-cookies-for-a-specific-url)
-  + [Read a partitioned cookie](#read-a-partitioned-cookie)
 * [The Modifications API](#the-modifications-api)
   + [Write a cookie](#write-a-cookie)
   + [Write a partitioned cookie](#write-a-partitioned-cookie)
   + [Delete a cookie](#delete-a-cookie)
   + [Delete a partitioned cookie](#delete-a-partitioned-cookie)
-  + [Access all the cookie data](#access-all-the-cookie-data)
 * [The Change Events API](#the-change-events-api)
   + [Get change events in documents](#get-change-events-in-documents)
   + [Get change events in service workers](#get-change-events-in-service-workers)
@@ -45,8 +43,8 @@ This proposal has the following main goals.
 While accomplishing the goals above, the proposal gained the following
 nice-to-have properties.
 
-* Cookies expose the parsed components of the cookie-related HTTP headers.
-  Script does not need to parse or serialize HTTP headers.
+* The API exposes cookie names and values directly and accepts structured
+  options for writes. Script does not need to parse or serialize HTTP headers.
 
 * The APIs have a well-defined mechanism for reporting cookie storage errors.
   Script does not need to issue a read request to verify the result of the
@@ -184,7 +182,7 @@ because Web developers expect that the cookie change would be reflected in a
 
 ```javascript
 document.getElementById('opt-out-button').addEventListener('click', () => {
-  document.cookie = 'opt_out=1; Expires=Wed, 1 Jan 2025 00:00:00 GMT; Secure';
+  document.cookie = 'opt_out=1; Max-Age=31536000; Secure';
 });
 document.getElementById('opt-in-button').addEventListener('click', () => {
   // Cookies are deleted by setting their expiration dates in the past.
@@ -197,8 +195,11 @@ the main thread.
 
 ```javascript
 document.getElementById('opt-out-button').addEventListener('click', async () => {
-  await cookieStore.set({ name: 'opt_out', value: '1',
-                          expires: new Date('Wed, 1 Jan 2025 00:00:00 GMT') });
+  await cookieStore.set({
+    name: 'opt_out',
+    value: '1',
+    expires: Date.now() + 365 * 24 * 60 * 60 * 1000
+  });
 });
 document.getElementById('opt-in-button').addEventListener('click', async () => {
   await cookieStore.delete({ name: 'opt_out' });
@@ -252,35 +253,14 @@ In other words, `get` and `getAll` take the same arguments, which can be
 
 ### Read the cookies for a specific URL
 
-Cookies are URL-scoped, so fetches to different URLs may include different
-cookies, even when the URLs have the same origin. The application can specify
-the URL whose associated cookies will be read.
+The query URL is the document's creation URL or the service worker's script
+URL. If a `url` option is supplied to `get` or `getAll`, it must match that
+URL, ignoring the fragment.
+
+For example, in a service worker:
 
 ```javascript
-await cookieStore.getAll({url: '/admin'});
-```
-
-Service workers can obtain the list of cookies that would be sent by a fetch to
-any URL under their scope.
-
-Documents can only obtain the cookies at their current URL. In other words,
-the only valid `url` value in Document contexts is the document's URL.
-
-### Read a partitioned cookie
-
-The cookie objects will have a boolean value indicating if the cookie is partitioned.
-
-```javascript
-// Read a cookie set without the Partitioned attribute.
-const cookie = await cookieStore.get('session_id');
-console.log(cookie.partitioned);  // -> false
-
-// Read a Partitioned cookie from a third-party context.
-const cookie = await cookieStore.get({
-  name: '__Host-third_party_session_id',
-  partitioned: true
-});
-console.log(cookie.partitioned);  // -> true
+await cookieStore.getAll({url: self.location.href});
 ```
 
 ## The Modifications API
@@ -369,24 +349,6 @@ await cookieStore.delete({
 
 If the site wants to only delete the unpartitioned cookie, change the `partitioned`
 field to `false` or omit the property.  
-
-### Access all the cookie data
-
-The objects returned by `get` and `getAll` contain all the information in the
-cookie store, not just the name and the value.
-
-```javascript
-const cookie = await cookieStore.get('session_id');
-console.log(`Cookie scope - Domain: ${cookie.domain} Path: ${cookie.path}`);
-if (cookie.expires === null) {
-  console.log('Cookie expires at the end of the session');
-} else {
-  console.log(`Cookie expires at: ${cookie.expires}`);
-}
-if (cookie.secure)
-  console.log('The cookie is restricted to secure origins');
-```
-
 
 ## The Change Events API
 
@@ -569,18 +531,12 @@ super-domains (up to eTLD+1)?
 
 #### URLs
 
-The query and change event APIs
-* remove the last path segment from URLs that don't end in `/`
-* resolve relative URLs based on the current document / service worker's URL
+For `get` and `getAll`, relative URLs are resolved against the caller's API
+base URL. The result must match the document's creation URL or the service
+worker's script URL, ignoring the fragment.
 
-The current document / service worker URL can only become
-relevant for cookies created by `document.cookie` or by HTTP responses.
-
-Document contexts may only use the current document's URL into the query API.
-The change events API exposed to documents does not accept URLs.
-
-Service workers may pass any URL under their scopes into the query or
-change event API.
+Change events in documents do not accept URLs. Service worker cookie change
+subscriptions can specify URLs within the registration's scope.
 
 #### Service Worker Scope
 
@@ -605,7 +561,7 @@ JavaScript Date objects will be automatically converted to timestamps thanks to
 This API defaults cookie paths to `/` for cookie write operations, including deletion/expiration. The implicit relative path-scoping of cookies to `.` has caused a lot of additional complexity for relatively little gain given their security equivalence under the same-origin policy and the difficulties arising from multiple same-named cookies at overlapping paths on the same domain. Cookie paths without a trailing `/` are treated as if they had a trailing `/` appended for cookie write operations. Cookie paths must start with `/` for write operations, and must not contain any `..` path segments. Query parameters and URL fragments are not allowed in paths for cookie write operations.
 
 ### URL Behavior
-URLs without a trailing `/` are treated as if the final path segment had been removed for cookie read operations, including change monitoring. Paths for cookie read operations are resolved relative to the default read cookie path.
+See [URLs](#urls) for cookie queries and change subscriptions.
 
 ### Secure Cookies
 This API only allows writing [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-06#section-5.3.5) cookies. This is intended to prevent unintentional leakage to unsecured connections on the same domain. Furthermore, it disallows (to the extent permitted by the browser implementation) creation or modification of `Secure` flagged cookies from unsecured web origins and enforces special rules for the [`Host`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-06#section-4.1.3.2) and [`Secure`](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-06#section-4.1.3.1) cookie name prefixes.
