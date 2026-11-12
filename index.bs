@@ -780,7 +780,7 @@ The <dfn method for=CookieStoreManager>subscribe(|subscriptions|)</dfn> method s
         1. Let |url| be |registration|'s [=service worker registration/scope url=].
         1. If |entry|["{{CookieStoreGetOptions/url}}"] [=map/exists=],
             then set |url| to the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-        1. If |url| is failure or |url| does not [=string/start with=] |registration|'s [=service worker registration/scope url=],
+        1. If |url| is failure or the [=URL serializer|serialization=] of |url| does not [=string/start with=] the [=URL serializer|serialization=] of |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. If |subscription list| does not already [=list/contain=] |subscription|, then [=list/append=] |subscription| to |subscription list|.
@@ -841,7 +841,7 @@ The <dfn method for=CookieStoreManager>unsubscribe(|subscriptions|)</dfn> method
         1. Let |url| be |registration|'s [=service worker registration/scope url=].
         1. If |entry|["{{CookieStoreGetOptions/url}}"] [=map/exists=],
             then set |url| to the result of [=basic URL parser|parsing=] |entry|["{{CookieStoreGetOptions/url}}"] with |settings|'s [=environment settings object/API base URL=].
-        1. If |url| is failure or |url| does not [=string/start with=] |registration|'s [=service worker registration/scope url=],
+        1. If |url| is failure or the [=URL serializer|serialization=] of |url| does not [=string/start with=] the [=URL serializer|serialization=] of |registration|'s [=service worker registration/scope url=],
             then [=reject=] |p| with a {{TypeError}} and abort these steps.
         1. Let |subscription| be the [=cookie change subscription=] (|name|, |url|).
         1. [=list/Remove=] any [=list/item=] from |subscription list| equal to |subscription|.
