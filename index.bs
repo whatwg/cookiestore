@@ -809,7 +809,7 @@ The <dfn method for=CookieStoreManager>getSubscriptions()</dfn> method steps are
     1. Let |result| be « ».
     1. [=list/For each=] |subscription| in |subscriptions|, run these steps:
         1. Let |options| be «[ "{{CookieStoreGetOptions/url}}" → the [=URL serializer|serialization=] of |subscription|'s [=cookie change subscription/url=] ]».
-        1. If |subscription|'s [=cookie change subscription/name=] is not null, set |options|["{{CookieStoreGetOptions/name}}"] to |subscription|'s [=cookie change subscription/name=].
+        1. If |subscription|'s [=cookie change subscription/name=] is not null, then set |options|["{{CookieStoreGetOptions/name}}"] to |subscription|'s [=cookie change subscription/name=].
         1. [=list/Append=] |options| to |result|.
     1. [=/Resolve=] |p| with |result|.
 1. Return |p|.
